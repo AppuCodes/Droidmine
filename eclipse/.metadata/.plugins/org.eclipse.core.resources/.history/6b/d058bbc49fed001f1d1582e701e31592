@@ -1,0 +1,34 @@
+package org.apache.logging.log4j;
+
+public class Logger
+{
+    private String name;
+    
+    public Logger(String name)
+    {
+        this.name = name;
+    }
+    
+    public void info(String message)
+    {
+        System.out.println("[" + name + "] " + message);
+    }
+    
+    public void warn(String message, Object[] objects)
+    {
+        System.out.printf(message, objects);
+    }
+    
+    public void error(Object object)
+    {
+        System.err.println(object);
+    }
+    
+    public void error(String message, Object object)
+    {
+        System.err.println(message + " " + object);
+    }
+    
+    public void warn(String message) { info(message); }
+    public void fatal(Object object) { error(object); }
+}

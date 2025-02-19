@@ -1,0 +1,107 @@
+package net.minecraft.realms;
+
+import java.net.Proxy;
+
+import com.google.common.util.concurrent.ListenableFuture;
+import com.mojang.authlib.GameProfile;
+import com.mojang.util.UUIDTypeAdapter;
+
+import net.droidmine.Session;
+import net.minecraft.client.ClientEngine;
+import net.minecraft.world.WorldSettings;
+
+public class Realms
+{
+    public static boolean isTouchScreen()
+    {
+        return ClientEngine.get().options.touchscreen;
+    }
+
+    public static Proxy getProxy()
+    {
+        return ClientEngine.get().getProxy();
+    }
+
+    public static String sessionId()
+    {
+        Session session = ClientEngine.get().getSession();
+        return session == null ? null : "";
+    }
+
+    public static String userName()
+    {
+        Session session = ClientEngine.get().getSession();
+        return session == null ? null : session.name;
+    }
+
+    public static long currentTimeMillis()
+    {
+        return ClientEngine.getSystemTime();
+    }
+
+    public static String getSessionId()
+    {
+        return "";
+    }
+
+    public static String getUUID()
+    {
+        return ClientEngine.get().getSession().playerID;
+    }
+
+    public static String getName()
+    {
+        return ClientEngine.get().getSession().name;
+    }
+
+    public static String uuidToName(String p_uuidToName_0_)
+    {
+        return ClientEngine.get().getSessionService().fillProfileProperties(new GameProfile(UUIDTypeAdapter.fromString(p_uuidToName_0_), (String)null), false).getName();
+    }
+
+    public static void setScreen(RealmsScreen p_setScreen_0_)
+    {
+        ClientEngine.get().displayGuiScreen(p_setScreen_0_.getProxy());
+    }
+
+    public static String getGameDirectoryPath()
+    {
+        return ClientEngine.get().mcDataDir.getAbsolutePath();
+    }
+
+    public static int survivalId()
+    {
+        return WorldSettings.GameType.SURVIVAL.getID();
+    }
+
+    public static int creativeId()
+    {
+        return WorldSettings.GameType.CREATIVE.getID();
+    }
+
+    public static int adventureId()
+    {
+        return WorldSettings.GameType.ADVENTURE.getID();
+    }
+
+    public static int spectatorId()
+    {
+        return WorldSettings.GameType.SPECTATOR.getID();
+    }
+
+    public static void setConnectedToRealms(boolean p_setConnectedToRealms_0_)
+    {
+        ClientEngine.get().func_181537_a(p_setConnectedToRealms_0_);
+    }
+
+    public static ListenableFuture<Object> downloadResourcePack(String p_downloadResourcePack_0_, String p_downloadResourcePack_1_)
+    {
+        ListenableFuture<Object> listenablefuture = ClientEngine.get().getResourcePackRepository().downloadResourcePack(p_downloadResourcePack_0_, p_downloadResourcePack_1_);
+        return listenablefuture;
+    }
+
+    public static void clearResourcePack()
+    {
+        ClientEngine.get().getResourcePackRepository().func_148529_f();
+    }
+}

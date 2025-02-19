@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="crashReportFile"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="crashreportfile"/>
+			<item value="crashreport"/>
+			<item value="crash-reports"/>
+			<item value="saved"/>
+			<item value="crash report save"/>
+			<item value="onupda"/>
+			<item value="displayInGameMenu"/>
+			<item value="menu"/>
+			<item value="ClientEngine"/>
+			<item value="sendQ"/>
+			<item value="send"/>
+			<item value="rotationYaw"/>
+			<item value="async"/>
+			<item value="RotationYaw"/>
+			<item value="rotationYAW"/>
+		</list>
+		<list key="replacehistory">
+			<item value="port "/>
+			<item value="a"/>
+			<item value="port"/>
+			<item value="server"/>
+			<item value=","/>
+			<item value="add("/>
+			<item value="partialTicks"/>
+			<item value="this.player"/>
+			<item value="this.world"/>
+			<item value="alpha"/>
+			<item value="blue"/>
+			<item value="green"/>
+			<item value="red"/>
+			<item value="box"/>
+			<item value="x("/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1057"/>
+		<item key="DIALOG_Y_ORIGIN" value="274"/>
+		<item key="DIALOG_WIDTH" value="511"/>
+		<item key="DIALOG_HEIGHT" value="523"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+</section>

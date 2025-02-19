@@ -1,0 +1,16 @@
+package net.minecraft.util;
+
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+public class LoggingPrintStream extends PrintStream
+{
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final String domain;
+
+    public LoggingPrintStream(String domainIn, OutputStream outStream)
+    {
+        super(outStream);
+        this.domain = domainIn;
+    }
+}

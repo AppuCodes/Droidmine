@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;appleclient.mods.impl.EntitySelection&apos; to &apos;NoHurtCam&apos;&#x0D;&#x0A;- Original project: &apos;Client&apos;&#x0D;&#x0A;- Original element: &apos;appleclient.mods.impl.EntitySelection&apos;&#x0D;&#x0A;- Renamed element: &apos;appleclient.mods.impl.NoHurtCam&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;EntitySelection&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;appleclient.mods.impl{EntitySelection.java[EntitySelection" matchStrategy="1" name="NoHurtCam" qualified="false" references="true" similarDeclarations="false" stamp="1731464433104" textual="false" version="1.0"/>
+</session>

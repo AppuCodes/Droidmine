@@ -1,0 +1,23 @@
+package org.apache.logging.log4j;
+
+public class Logger
+{
+    private String name;
+    
+    public Logger(String name)
+    {
+        this.name = name;
+    }
+
+    public void error(Object object)
+    {
+        System.err.println(object);
+    }
+    
+    public void fatal(Object object) { error(object); }
+
+    public void warn(String string) {
+        // TODO Auto-generated method stub
+        
+    }
+}

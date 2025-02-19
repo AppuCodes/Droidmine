@@ -1,0 +1,20 @@
+package net.droidmine;
+
+public class Session
+{
+    public final String name, playerID, token, sessionType;
+    public String uuid;
+    
+    public static Session offlineMode(String name)
+    {
+        return new Session(name, name, name, "offline");
+    }
+    
+    /** opens an authentication window if not cached. */
+    public static Session microsoft()
+    {
+        return new Session("Droidmine", "", "", "online");
+    }
+    
+    private Session(String name, String playerID, String token, String sessionType) { this.name = name; this.playerID = playerID; this.token = token; this.sessionType = sessionType; }
+}
