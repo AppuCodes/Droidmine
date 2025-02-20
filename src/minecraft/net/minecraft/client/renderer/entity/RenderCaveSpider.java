@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.util.ResourceLocation;
@@ -8,9 +9,9 @@ public class RenderCaveSpider extends RenderSpider<EntityCaveSpider>
 {
     private static final ResourceLocation caveSpiderTextures = new ResourceLocation("textures/entity/spider/cave_spider.png");
 
-    public RenderCaveSpider(RenderManager renderManagerIn)
+    public RenderCaveSpider(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn);
+        super(renderManagerIn, mc);
         this.shadowSize *= 0.7F;
     }
 

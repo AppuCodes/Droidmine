@@ -1,5 +1,6 @@
 package net.minecraft.client.resources.model;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IResourceManager;
@@ -35,6 +36,9 @@ public class ModelManager implements IResourceManagerReloadListener
         }
         else
         {
+            if (ClientEngine.get().isHeadless())
+                return null;
+
             IBakedModel ibakedmodel = (IBakedModel)this.modelRegistry.getObject(modelLocation);
             return ibakedmodel == null ? this.defaultModel : ibakedmodel;
         }

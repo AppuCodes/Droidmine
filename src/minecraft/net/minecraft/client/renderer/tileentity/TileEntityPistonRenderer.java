@@ -20,7 +20,12 @@ import net.minecraft.world.World;
 
 public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEntityPiston>
 {
-    private final BlockRendererDispatcher blockRenderer = ClientEngine.get().getBlockRendererDispatcher();
+//    private BlockRendererDispatcher blockRenderer;
+//
+//    public TileEntityPistonRenderer()
+//    {
+//        blockRenderer = engine.getBlockRendererDispatcher();
+//    }
 
     public void renderTileEntityAt(TileEntityPiston te, double x, double y, double z, float partialTicks, int destroyStage)
     {
@@ -37,16 +42,7 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
             GlStateManager.blendFunc(770, 771);
             GlStateManager.enableBlend();
             GlStateManager.disableCull();
-
-            if (ClientEngine.isAmbientOcclusionEnabled())
-            {
-                GlStateManager.shadeModel(7425);
-            }
-            else
-            {
-                GlStateManager.shadeModel(7424);
-            }
-
+            GlStateManager.shadeModel(7424);
             worldrenderer.begin(7, DefaultVertexFormats.BLOCK);
             worldrenderer.setTranslation((double)((float)x - (float)blockpos.getX() + te.getOffsetX(partialTicks)), (double)((float)y - (float)blockpos.getY() + te.getOffsetY(partialTicks)), (double)((float)z - (float)blockpos.getZ() + te.getOffsetZ(partialTicks)));
             World world = this.getWorld();
@@ -54,21 +50,21 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
             if (block == Blocks.piston_head && te.getProgress(partialTicks) < 0.5F)
             {
                 iblockstate = iblockstate.withProperty(BlockPistonExtension.SHORT, Boolean.valueOf(true));
-                this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate, world, blockpos), iblockstate, blockpos, worldrenderer, true);
+                // this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate, world, blockpos), iblockstate, blockpos, worldrenderer, true);
             }
             else if (te.shouldPistonHeadBeRendered() && !te.isExtending())
             {
                 BlockPistonExtension.EnumPistonType blockpistonextension$enumpistontype = block == Blocks.sticky_piston ? BlockPistonExtension.EnumPistonType.STICKY : BlockPistonExtension.EnumPistonType.DEFAULT;
                 IBlockState iblockstate1 = Blocks.piston_head.getDefaultState().withProperty(BlockPistonExtension.TYPE, blockpistonextension$enumpistontype).withProperty(BlockPistonExtension.FACING, iblockstate.getValue(BlockPistonBase.FACING));
                 iblockstate1 = iblockstate1.withProperty(BlockPistonExtension.SHORT, Boolean.valueOf(te.getProgress(partialTicks) >= 0.5F));
-                this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate1, world, blockpos), iblockstate1, blockpos, worldrenderer, true);
+                // this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate1, world, blockpos), iblockstate1, blockpos, worldrenderer, true);
                 worldrenderer.setTranslation((double)((float)x - (float)blockpos.getX()), (double)((float)y - (float)blockpos.getY()), (double)((float)z - (float)blockpos.getZ()));
                 iblockstate.withProperty(BlockPistonBase.EXTENDED, Boolean.valueOf(true));
-                this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate, world, blockpos), iblockstate, blockpos, worldrenderer, true);
+                // this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate, world, blockpos), iblockstate, blockpos, worldrenderer, true);
             }
             else
             {
-                this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate, world, blockpos), iblockstate, blockpos, worldrenderer, false);
+                // this.blockRenderer.getBlockModelRenderer().renderModel(world, this.blockRenderer.getModelFromBlockState(iblockstate, world, blockpos), iblockstate, blockpos, worldrenderer, false);
             }
 
             worldrenderer.setTranslation(0.0D, 0.0D, 0.0D);

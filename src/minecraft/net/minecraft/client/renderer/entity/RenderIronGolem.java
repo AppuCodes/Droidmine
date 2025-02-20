@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelIronGolem;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerIronGolemFlower;
@@ -10,9 +11,9 @@ public class RenderIronGolem extends RenderLiving<EntityIronGolem>
 {
     private static final ResourceLocation ironGolemTextures = new ResourceLocation("textures/entity/iron_golem.png");
 
-    public RenderIronGolem(RenderManager renderManagerIn)
+    public RenderIronGolem(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelIronGolem(), 0.5F);
+        super(renderManagerIn, new ModelIronGolem(), 0.5F, mc);
         this.addLayer(new LayerIronGolemFlower(this));
     }
 

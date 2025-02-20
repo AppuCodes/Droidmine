@@ -34,14 +34,6 @@ public class GuiWinGame extends GuiScreen
      */
     public void updateScreen()
     {
-        SoundHandler soundhandler = this.mc.getSoundHandler();
-
-        if (this.field_146581_h == 0)
-        {
-            soundhandler.resumeSounds();
-        }
-
-        soundhandler.update();
         ++this.field_146581_h;
         float f = (float)(this.field_146579_r + this.height + this.height + 24) / this.field_146578_s;
 

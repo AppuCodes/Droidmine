@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -20,6 +21,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
+import net.minecraft.optifine.Config;
+import net.minecraft.optifine.Reflector;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -28,8 +31,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import optifine.Config;
-import optifine.Reflector;
 
 public class EffectRenderer
 {
@@ -122,13 +123,13 @@ public class EffectRenderer
     /**
      * Spawns the relevant particle according to the particle id.
      */
-    public EntityFX spawnEffectParticle(int particleId, double p_178927_2_, double p_178927_4_, double p_178927_6_, double p_178927_8_, double p_178927_10_, double p_178927_12_, int... p_178927_14_)
+    public EntityFX spawnEffectParticle(int particleId, double p_178927_2_, double p_178927_4_, double p_178927_6_, double p_178927_8_, double p_178927_10_, double p_178927_12_, ClientEngine mc, int... p_178927_14_)
     {
         IParticleFactory iparticlefactory = (IParticleFactory)this.particleTypes.get(Integer.valueOf(particleId));
 
         if (iparticlefactory != null)
         {
-            EntityFX entityfx = iparticlefactory.getEntityFX(particleId, this.worldObj, p_178927_2_, p_178927_4_, p_178927_6_, p_178927_8_, p_178927_10_, p_178927_12_, p_178927_14_);
+            EntityFX entityfx = iparticlefactory.getEntityFX(particleId, this.worldObj, p_178927_2_, p_178927_4_, p_178927_6_, p_178927_8_, p_178927_10_, p_178927_12_, mc, p_178927_14_);
 
             if (entityfx != null)
             {
@@ -377,7 +378,7 @@ public class EffectRenderer
         this.particleEmitters.clear();
     }
 
-    public void addBlockDestroyEffects(BlockPos pos, IBlockState state)
+    public void addBlockDestroyEffects(BlockPos pos, IBlockState state, ClientEngine mc)
     {
         boolean flag;
 
@@ -406,7 +407,7 @@ public class EffectRenderer
                         double d0 = (double)pos.getX() + ((double)i + 0.5D) / (double)b0;
                         double d1 = (double)pos.getY() + ((double)j + 0.5D) / (double)b0;
                         double d2 = (double)pos.getZ() + ((double)k + 0.5D) / (double)b0;
-                        this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, state)).func_174846_a(pos));
+                        this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, state, mc)).func_174846_a(pos));
                     }
                 }
             }
@@ -416,7 +417,7 @@ public class EffectRenderer
     /**
      * Adds block hit particles for the specified block
      */
-    public void addBlockHitEffects(BlockPos pos, EnumFacing side)
+    public void addBlockHitEffects(BlockPos pos, EnumFacing side, ClientEngine mc)
     {
         IBlockState iblockstate = this.worldObj.getBlockState(pos);
         Block block = iblockstate.getBlock();
@@ -461,7 +462,7 @@ public class EffectRenderer
                 d0 = (double)i + block.getBlockBoundsMaxX() + (double)f;
             }
 
-            this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate)).func_174846_a(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+            this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate, mc)).func_174846_a(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
         }
     }
 
@@ -516,14 +517,14 @@ public class EffectRenderer
         return false;
     }
 
-    public void addBlockHitEffects(BlockPos p_addBlockHitEffects_1_, MovingObjectPosition p_addBlockHitEffects_2_)
+    public void addBlockHitEffects(BlockPos p_addBlockHitEffects_1_, MovingObjectPosition p_addBlockHitEffects_2_, ClientEngine mc)
     {
         Block block = this.worldObj.getBlockState(p_addBlockHitEffects_1_).getBlock();
         boolean flag = Reflector.callBoolean(block, Reflector.ForgeBlock_addHitEffects, new Object[] {this.worldObj, p_addBlockHitEffects_2_, this});
 
         if (block != null && !flag)
         {
-            this.addBlockHitEffects(p_addBlockHitEffects_1_, p_addBlockHitEffects_2_.sideHit);
+            this.addBlockHitEffects(p_addBlockHitEffects_1_, p_addBlockHitEffects_2_.sideHit, mc);
         }
     }
 }

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerCreeperCharge;
@@ -11,9 +12,9 @@ public class RenderCreeper extends RenderLiving<EntityCreeper>
 {
     private static final ResourceLocation creeperTextures = new ResourceLocation("textures/entity/creeper/creeper.png");
 
-    public RenderCreeper(RenderManager renderManagerIn)
+    public RenderCreeper(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelCreeper(), 0.5F);
+        super(renderManagerIn, new ModelCreeper(), 0.5F, mc);
         this.addLayer(new LayerCreeperCharge(this));
     }
 

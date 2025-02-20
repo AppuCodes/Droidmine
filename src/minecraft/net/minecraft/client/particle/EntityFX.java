@@ -40,10 +40,12 @@ public class EntityFX extends Entity
     public static double interpPosX;
     public static double interpPosY;
     public static double interpPosZ;
+    private ClientEngine mc;
 
-    protected EntityFX(World worldIn, double posXIn, double posYIn, double posZIn)
+    protected EntityFX(World worldIn, double posXIn, double posYIn, double posZIn, ClientEngine mc)
     {
         super(worldIn);
+        this.mc = mc;
         this.particleAlpha = 1.0F;
         this.setSize(0.2F, 0.2F);
         this.setPosition(posXIn, posYIn, posZIn);
@@ -58,9 +60,9 @@ public class EntityFX extends Entity
         this.particleAge = 0;
     }
 
-    public EntityFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
+    public EntityFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc)
     {
-        this(worldIn, xCoordIn, yCoordIn, zCoordIn);
+        this(worldIn, xCoordIn, yCoordIn, zCoordIn, mc);
         this.motionX = xSpeedIn + (Math.random() * 2.0D - 1.0D) * 0.4000000059604645D;
         this.motionY = ySpeedIn + (Math.random() * 2.0D - 1.0D) * 0.4000000059604645D;
         this.motionZ = zSpeedIn + (Math.random() * 2.0D - 1.0D) * 0.4000000059604645D;
@@ -100,11 +102,11 @@ public class EntityFX extends Entity
     {
         if (this.particleAlpha == 1.0F && alpha < 1.0F)
         {
-            ClientEngine.get().effectRenderer.moveToAlphaLayer(this);
+            mc.effectRenderer.moveToAlphaLayer(this);
         }
         else if (this.particleAlpha < 1.0F && alpha == 1.0F)
         {
-            ClientEngine.get().effectRenderer.moveToNoAlphaLayer(this);
+            mc.effectRenderer.moveToNoAlphaLayer(this);
         }
 
         this.particleAlpha = alpha;

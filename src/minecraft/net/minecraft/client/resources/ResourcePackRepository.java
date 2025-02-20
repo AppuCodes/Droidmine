@@ -58,56 +58,21 @@ public class ResourcePackRepository
     private ListenableFuture<Object> field_177322_i;
     private List<ResourcePackRepository.Entry> repositoryEntriesAll = Lists.<ResourcePackRepository.Entry>newArrayList();
     private List<ResourcePackRepository.Entry> repositoryEntries = Lists.<ResourcePackRepository.Entry>newArrayList();
+    private ClientEngine mc;
 
-    public ResourcePackRepository(File dirResourcepacksIn, File dirServerResourcepacksIn, IResourcePack rprDefaultResourcePackIn, IMetadataSerializer rprMetadataSerializerIn, GameOptions settings)
+    public ResourcePackRepository(File dirResourcepacksIn, File dirServerResourcepacksIn, IResourcePack rprDefaultResourcePackIn, IMetadataSerializer rprMetadataSerializerIn, GameOptions settings, ClientEngine mc)
     {
         this.dirResourcepacks = dirResourcepacksIn;
         this.dirServerResourcepacks = dirServerResourcepacksIn;
         this.rprDefaultResourcePack = rprDefaultResourcePackIn;
         this.rprMetadataSerializer = rprMetadataSerializerIn;
-        this.fixDirResourcepacks();
         this.updateRepositoryEntriesAll();
-        Iterator<String> iterator = settings.resourcePacks.iterator();
-
-        while (iterator.hasNext())
-        {
-            String s = (String)iterator.next();
-
-            for (ResourcePackRepository.Entry resourcepackrepository$entry : this.repositoryEntriesAll)
-            {
-                if (resourcepackrepository$entry.getResourcePackName().equals(s))
-                {
-                    if (resourcepackrepository$entry.func_183027_f() == 1 || settings.field_183018_l.contains(resourcepackrepository$entry.getResourcePackName()))
-                    {
-                        this.repositoryEntries.add(resourcepackrepository$entry);
-                        break;
-                    }
-
-                    iterator.remove();
-                    logger.warn("Removed selected resource pack {} because it\'s no longer compatible", new Object[] {resourcepackrepository$entry.getResourcePackName()});
-                }
-            }
-        }
-    }
-
-    private void fixDirResourcepacks()
-    {
-        if (this.dirResourcepacks.exists())
-        {
-            if (!this.dirResourcepacks.isDirectory() && (!this.dirResourcepacks.delete() || !this.dirResourcepacks.mkdirs()))
-            {
-                logger.warn("Unable to recreate resourcepack folder, it exists but is not a directory: " + this.dirResourcepacks);
-            }
-        }
-        else if (!this.dirResourcepacks.mkdirs())
-        {
-            logger.warn("Unable to create resourcepack folder: " + this.dirResourcepacks);
-        }
+        this.mc = mc;
     }
 
     private List<File> getResourcePackFiles()
     {
-        return this.dirResourcepacks.isDirectory() ? Arrays.asList(this.dirResourcepacks.listFiles(resourcePackFilter)) : Collections.<File>emptyList();
+        return Collections.<File>emptyList();
     }
 
     public void updateRepositoryEntriesAll()
@@ -215,8 +180,8 @@ public class ResourcePackRepository
 
             this.func_183028_i();
             final GuiScreenWorking guiscreenworking = new GuiScreenWorking();
-            Map<String, String> map = ClientEngine.getSessionInfo();
-            final ClientEngine minecraft = ClientEngine.get();
+            Map<String, String> map = mc.getSessionInfo();
+            final ClientEngine minecraft = mc;
             Futures.getUnchecked(minecraft.addScheduledTask(new Runnable()
             {
                 public void run()
@@ -266,7 +231,7 @@ public class ResourcePackRepository
     public ListenableFuture<Object> setResourcePackInstance(File p_177319_1_)
     {
         this.resourcePackInstance = new FileResourcePack(p_177319_1_);
-        return ClientEngine.get().scheduleResourcesRefresh();
+        return mc.scheduleResourcesRefresh();
     }
 
     /**
@@ -293,7 +258,7 @@ public class ResourcePackRepository
             if (this.resourcePackInstance != null)
             {
                 this.resourcePackInstance = null;
-                ClientEngine.get().scheduleResourcesRefresh();
+                mc.scheduleResourcesRefresh();
             }
         }
         finally

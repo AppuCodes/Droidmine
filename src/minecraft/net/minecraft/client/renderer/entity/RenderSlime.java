@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerSlimeGel;
@@ -11,9 +12,9 @@ public class RenderSlime extends RenderLiving<EntitySlime>
 {
     private static final ResourceLocation slimeTextures = new ResourceLocation("textures/entity/slime/slime.png");
 
-    public RenderSlime(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RenderSlime(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
-        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+        super(renderManagerIn, modelBaseIn, shadowSizeIn, mc);
         this.addLayer(new LayerSlimeGel(this));
     }
 

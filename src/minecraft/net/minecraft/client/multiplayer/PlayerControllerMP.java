@@ -294,12 +294,6 @@ public class PlayerControllerMP
             else
             {
                 this.curBlockDamageMP += block.getPlayerRelativeBlockHardness(this.mc.player, this.mc.player.worldObj, posBlock);
-
-                if (this.stepSoundTickCounter % 4.0F == 0.0F)
-                {
-                    this.mc.getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation(block.stepSound.getStepSound()), (block.stepSound.getVolume() + 1.0F) / 8.0F, block.stepSound.getFrequency() * 0.5F, (float)posBlock.getX() + 0.5F, (float)posBlock.getY() + 0.5F, (float)posBlock.getZ() + 0.5F));
-                }
-
                 ++this.stepSoundTickCounter;
 
                 if (this.curBlockDamageMP >= 1.0F)

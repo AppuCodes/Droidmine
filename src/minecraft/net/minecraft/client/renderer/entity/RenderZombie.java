@@ -2,6 +2,8 @@ package net.minecraft.client.renderer.entity;
 
 import com.google.common.collect.Lists;
 import java.util.List;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.model.ModelZombieVillager;
@@ -22,9 +24,9 @@ public class RenderZombie extends RenderBiped<EntityZombie>
     private final List<LayerRenderer<EntityZombie>> field_177121_n;
     private final List<LayerRenderer<EntityZombie>> field_177122_o;
 
-    public RenderZombie(RenderManager renderManagerIn)
+    public RenderZombie(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelZombie(), 0.5F, 1.0F);
+        super(renderManagerIn, new ModelZombie(), 0.5F, 1.0F, mc);
         LayerRenderer layerrenderer = (LayerRenderer)this.layerRenderers.get(0);
         this.field_82434_o = this.modelBipedMain;
         this.zombieVillagerModel = new ModelZombieVillager();

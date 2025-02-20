@@ -15,14 +15,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.optifine.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
-import optifine.CapeUtils;
-import optifine.Config;
-import optifine.PlayerConfigurations;
-import optifine.Reflector;
 
 public abstract class AbstractClientPlayer extends EntityPlayer
 {
@@ -30,10 +27,12 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     private ResourceLocation locationOfCape = null;
     private String nameClear = null;
     private static final String __OBFID = "CL_00000935";
+    protected ClientEngine mc;
 
-    public AbstractClientPlayer(World worldIn, GameProfile playerProfile)
+    public AbstractClientPlayer(World worldIn, GameProfile playerProfile, ClientEngine mc)
     {
         super(worldIn, playerProfile);
+        this.mc = mc;
         this.nameClear = playerProfile.getName();
 
         if (this.nameClear != null && !this.nameClear.isEmpty())
@@ -50,7 +49,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
      */
     public boolean isSpectator()
     {
-        NetworkPlayerInfo networkplayerinfo = ClientEngine.get().getNetHandler().getPlayerInfo(this.getGameProfile().getId());
+        NetworkPlayerInfo networkplayerinfo = mc.getNetHandler().getPlayerInfo(this.getGameProfile().getId());
         return networkplayerinfo != null && networkplayerinfo.getGameType() == WorldSettings.GameType.SPECTATOR;
     }
 
@@ -66,7 +65,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     {
         if (this.playerInfo == null)
         {
-            this.playerInfo = ClientEngine.get().getNetHandler().getPlayerInfo(this.getUniqueID());
+            this.playerInfo = mc.getNetHandler().getPlayerInfo(this.getUniqueID());
         }
 
         return this.playerInfo;
@@ -107,9 +106,9 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         }
     }
 
-    public static ThreadDownloadImageData getDownloadImageSkin(ResourceLocation resourceLocationIn, String username)
+    public static ThreadDownloadImageData getDownloadImageSkin(ResourceLocation resourceLocationIn, String username, ClientEngine mc)
     {
-        TextureManager texturemanager = ClientEngine.get().getTextureManager();
+        TextureManager texturemanager = mc.getTextureManager();
         Object object = texturemanager.getTexture(resourceLocationIn);
 
         if (object == null)

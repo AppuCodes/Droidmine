@@ -26,29 +26,30 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
+import net.minecraft.optifine.Config;
+import net.minecraft.optifine.Reflector;
+import net.minecraft.optifine.shadersmod.client.ShadersTex;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
-import optifine.Config;
-import optifine.Reflector;
 
 import org.lwjgl.opengl.GL11;
-import shadersmod.client.ShadersTex;
 
 public class RenderItemFrame extends Render
 {
     private static final ResourceLocation mapBackgroundTextures = new ResourceLocation("textures/map/map_background.png");
-    private final ClientEngine mc = ClientEngine.get();
+    private final ClientEngine mc;
     private final ModelResourceLocation itemFrameModel = new ModelResourceLocation("item_frame", "normal");
     private final ModelResourceLocation mapModel = new ModelResourceLocation("item_frame", "map");
     private RenderItem itemRenderer;
     private static final String __OBFID = "CL_00001002";
 
-    public RenderItemFrame(RenderManager renderManagerIn, RenderItem itemRendererIn)
+    public RenderItemFrame(RenderManager renderManagerIn, RenderItem itemRendererIn, ClientEngine mc)
     {
         super(renderManagerIn);
         this.itemRenderer = itemRendererIn;
+        this.mc = mc;
     }
 
     /**
@@ -196,7 +197,7 @@ public class RenderItemFrame extends Render
 
     protected void renderName(EntityItemFrame entity, double x, double y, double z)
     {
-        if (ClientEngine.isGuiEnabled() && entity.getDisplayedItem() != null && entity.getDisplayedItem().hasDisplayName() && this.renderManager.pointedEntity == entity)
+        if (mc.isGuiEnabled() && entity.getDisplayedItem() != null && entity.getDisplayedItem().hasDisplayName() && this.renderManager.pointedEntity == entity)
         {
             float f = 1.6F;
             float f1 = 0.016666668F * f;

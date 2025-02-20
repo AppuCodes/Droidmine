@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelWitch;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItemWitch;
@@ -11,9 +12,9 @@ public class RenderWitch extends RenderLiving<EntityWitch>
 {
     private static final ResourceLocation witchTextures = new ResourceLocation("textures/entity/witch.png");
 
-    public RenderWitch(RenderManager renderManagerIn)
+    public RenderWitch(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelWitch(0.0F), 0.5F);
+        super(renderManagerIn, new ModelWitch(0.0F), 0.5F, mc);
         this.addLayer(new LayerHeldItemWitch(this));
     }
 

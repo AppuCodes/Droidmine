@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelGuardian;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -22,9 +23,9 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
     private static final ResourceLocation GUARDIAN_BEAM_TEXTURE = new ResourceLocation("textures/entity/guardian_beam.png");
     int field_177115_a;
 
-    public RenderGuardian(RenderManager renderManagerIn)
+    public RenderGuardian(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelGuardian(), 0.5F);
+        super(renderManagerIn, new ModelGuardian(), 0.5F, mc);
         this.field_177115_a = ((ModelGuardian)this.mainModel).func_178706_a();
     }
 

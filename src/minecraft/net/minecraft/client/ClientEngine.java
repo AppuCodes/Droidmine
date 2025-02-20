@@ -98,10 +98,6 @@ public class ClientEngine implements IThreadListener
     /** The RenderEngine instance used by Minecraft */
     private TextureManager renderEngine;
 
-    /**
-     * Set to 'this' in Minecraft constructor; used by some settings get methods
-     */
-    private static ClientEngine theMinecraft;
     public PlayerControllerMP playerController;
     private boolean fullscreen;
     private boolean hasCrashed;
@@ -194,10 +190,6 @@ public class ClientEngine implements IThreadListener
     private NetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
 
-    /**
-     * Keeps track of how long the debug crash keycombo (F3+C) has been pressed for, in order to crash after 10 seconds.
-     */
-    private long debugCrashKeyPressTime = -1L;
     private IReloadableResourceManager mcResourceManager;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
     private final List<IResourcePack> defaultResourcePacks = Lists.<IResourcePack>newArrayList();
@@ -206,7 +198,6 @@ public class ClientEngine implements IThreadListener
     private LanguageManager mcLanguageManager;
     private Framebuffer framebufferMc;
     private TextureMap textureMapBlocks;
-    private SoundHandler mcSoundHandler;
     private ResourceLocation mojangLogo;
     private final MinecraftSessionService sessionService;
     private SkinManager skinManager;
@@ -244,7 +235,6 @@ public class ClientEngine implements IThreadListener
 
     public ClientEngine(GameConfiguration gameConfig)
     {
-        theMinecraft = this;
         this.mcDataDir = gameConfig.folderInfo.mcDataDir;
         this.fileAssets = gameConfig.folderInfo.assetsDir;
         this.fileResourcepacks = gameConfig.folderInfo.resourcePacksDir;
@@ -366,7 +356,7 @@ public class ClientEngine implements IThreadListener
         this.framebufferMc = new Framebuffer(this.displayWidth, this.displayHeight, true);
         this.framebufferMc.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
         this.registerMetadataSerializers();
-        this.mcResourcePackRepository = new ResourcePackRepository(this.fileResourcepacks, new File(this.mcDataDir, "server-resource-packs"), this.mcDefaultResourcePack, this.metadataSerializer_, this.options);
+        this.mcResourcePackRepository = new ResourcePackRepository(this.fileResourcepacks, new File(this.mcDataDir, "server-resource-packs"), this.mcDefaultResourcePack, this.metadataSerializer_, this.options, this);
         this.mcResourceManager = new SimpleReloadableResourceManager(this.metadataSerializer_);
         this.mcLanguageManager = new LanguageManager(this.metadataSerializer_, this.options.language);
         this.mcResourceManager.registerReloadListener(this.mcLanguageManager);
@@ -376,8 +366,6 @@ public class ClientEngine implements IThreadListener
         this.drawSplashScreen(this.renderEngine);
         this.skinManager = new SkinManager(this.renderEngine, new File(this.fileAssets, "skins"), this.sessionService);
         this.saveLoader = new AnvilSaveConverter(new File(this.mcDataDir, "saves"));
-        this.mcSoundHandler = new SoundHandler(this.mcResourceManager, this.options);
-        this.mcResourceManager.registerReloadListener(this.mcSoundHandler);
         this.fontRendererObj = new FontRenderer(this.options, new ResourceLocation("textures/font/ascii.png"), this.renderEngine, false);
 
         if (this.options.language != null)
@@ -423,14 +411,14 @@ public class ClientEngine implements IThreadListener
         this.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         this.textureMapBlocks.setBlurMipmapDirect(false, this.options.mipmapLevels > 0);
         this.modelManager = new ModelManager(this.textureMapBlocks);
-        this.mcResourceManager.registerReloadListener(this.modelManager);
+        if (!isHeadless()) this.mcResourceManager.registerReloadListener(this.modelManager);
         this.renderItem = new RenderItem(this.renderEngine, this.modelManager);
-        this.renderManager = new RenderManager(this.renderEngine, this.renderItem);
+        this.renderManager = new RenderManager(this.renderEngine, this.renderItem, this);
         this.itemRenderer = new ItemRenderer(this);
         this.mcResourceManager.registerReloadListener(this.renderItem);
         this.entityRenderer = new EntityRenderer(this, this.mcResourceManager);
         this.mcResourceManager.registerReloadListener(this.entityRenderer);
-        this.blockRenderDispatcher = new BlockRendererDispatcher(this.modelManager.getBlockModelShapes(), this.options);
+        this.blockRenderDispatcher = new BlockRendererDispatcher(this.modelManager.getBlockModelShapes(), this.options, this);
         this.mcResourceManager.registerReloadListener(this.blockRenderDispatcher);
         this.renderGlobal = new RenderGlobal(this);
         this.mcResourceManager.registerReloadListener(this.renderGlobal);
@@ -620,16 +608,6 @@ public class ClientEngine implements IThreadListener
     public void refreshResources()
     {
         List<IResourcePack> list = Lists.newArrayList(this.defaultResourcePacks);
-
-        for (ResourcePackRepository.Entry resourcepackrepository$entry : this.mcResourcePackRepository.getRepositoryEntries())
-        {
-            list.add(resourcepackrepository$entry.getResourcePack());
-        }
-
-        if (this.mcResourcePackRepository.getResourcePackInstance() != null)
-        {
-            list.add(this.mcResourcePackRepository.getResourcePackInstance());
-        }
 
         try
         {
@@ -836,7 +814,6 @@ public class ClientEngine implements IThreadListener
         }
         else
         {
-            this.mcSoundHandler.resumeSounds();
             this.setIngameFocus();
         }
     }
@@ -859,8 +836,6 @@ public class ClientEngine implements IThreadListener
             {
                 ;
             }
-
-            this.mcSoundHandler.unloadSounds();
         }
         finally
         {
@@ -917,7 +892,6 @@ public class ClientEngine implements IThreadListener
         }
 
         long i1 = System.nanoTime() - l;
-        this.mcSoundHandler.setListener(this.player, this.timer.renderPartialTicks);
         GlStateManager.pushMatrix();
         GlStateManager.clear(16640);
         this.framebufferMc.bindFramebuffer(true);
@@ -934,7 +908,7 @@ public class ClientEngine implements IThreadListener
         }
 
         this.prevFrameTime = System.nanoTime();
-        this.guiAchievement.updateAchievementWindow();
+        if (!isHeadless()) this.guiAchievement.updateAchievementWindow();
         this.framebufferMc.unbindFramebuffer();
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
@@ -1064,11 +1038,6 @@ public class ClientEngine implements IThreadListener
         if (this.currentScreen == null)
         {
             this.displayGuiScreen(new GuiIngameMenu());
-
-            if (this.isSingleplayer() && !this.theIntegratedServer.getPublic())
-            {
-                this.mcSoundHandler.pauseSounds();
-            }
         }
     }
 
@@ -1089,7 +1058,7 @@ public class ClientEngine implements IThreadListener
                 {
                     if (this.playerController.onPlayerDamageBlock(blockpos, this.hitResult.sideHit))
                     {
-                        this.effectRenderer.addBlockHitEffects(blockpos, this.hitResult.sideHit);
+                        this.effectRenderer.addBlockHitEffects(blockpos, this.hitResult.sideHit, this);
                         this.player.swingItem();
                     }
                 }
@@ -1472,23 +1441,6 @@ public class ClientEngine implements IThreadListener
                     KeyBinding.onTick(k);
                 }
 
-                if (this.debugCrashKeyPressTime > 0L)
-                {
-                    if (getSystemTime() - this.debugCrashKeyPressTime >= 6000L)
-                    {
-                        throw new ReportedException(new CrashReport("Manually triggered debug crash", new Throwable()));
-                    }
-
-                    if (!Keyboard.isKeyDown(46) || !Keyboard.isKeyDown(61))
-                    {
-                        this.debugCrashKeyPressTime = -1L;
-                    }
-                }
-                else if (Keyboard.isKeyDown(46) && Keyboard.isKeyDown(61))
-                {
-                    this.debugCrashKeyPressTime = getSystemTime();
-                }
-
                 this.dispatchKeypresses();
 
                 if (Keyboard.getEventKeyState())
@@ -1756,11 +1708,6 @@ public class ClientEngine implements IThreadListener
             this.entityRenderer.func_181022_b();
         }
 
-        if (!this.isGamePaused)
-        {
-            this.mcSoundHandler.update();
-        }
-
         if (this.world != null)
         {
             if (!this.isGamePaused)
@@ -1920,7 +1867,6 @@ public class ClientEngine implements IThreadListener
 
         if (worldClientIn == null && this.world != null)
         {
-            this.mcSoundHandler.stopSounds(); // Brought here to keep music playing
             this.mcResourcePackRepository.func_148529_f();
             this.ingameGUI.func_181029_i();
             this.setServerData((ServerData)null);
@@ -2011,26 +1957,23 @@ public class ClientEngine implements IThreadListener
         return this.player != null ? this.player.sendQueue : null;
     }
 
-    public static boolean isGuiEnabled()
+    public boolean isGuiEnabled()
     {
-        return theMinecraft == null || !theMinecraft.options.hideGUI;
+        return !options.hideGUI;
     }
 
-    public static boolean isFancyGraphicsEnabled()
+    public boolean isFancyGraphicsEnabled()
     {
-        return theMinecraft != null && theMinecraft.options.fancyGraphics;
+        return options.fancyGraphics;
     }
 
-    /**
-     * Returns if ambient occlusion is enabled
-     */
-    public static boolean isAmbientOcclusionEnabled()
+    public boolean isAmbientOcclusionEnabled()
     {
-        return theMinecraft != null && theMinecraft.options.ambientOcclusion != 0;
+        return options.ambientOcclusion != 0;
     }
 
     /**
-     * Called when user clicked he's mouse middle button (pick block)
+     * Called when user clicks their mouse's middle button (pick block)
      */
     private void middleClickMouse()
     {
@@ -2298,14 +2241,6 @@ public class ClientEngine implements IThreadListener
         return theCrash;
     }
 
-    /**
-     * Return the singleton Minecraft instance for the game
-     */
-    public static ClientEngine get()
-    {
-        return theMinecraft;
-    }
-
     public ListenableFuture<Object> scheduleResourcesRefresh()
     {
         return this.addScheduledTask(new Runnable()
@@ -2383,16 +2318,13 @@ public class ClientEngine implements IThreadListener
         return this.theIntegratedServer;
     }
 
-    public static void stopIntegratedServer()
+    public void stopIntegratedServer()
     {
-        if (theMinecraft != null)
-        {
-            IntegratedServer integratedserver = theMinecraft.getIntegratedServer();
+        IntegratedServer integratedserver = getIntegratedServer();
 
-            if (integratedserver != null)
-            {
-                integratedserver.stopServer();
-            }
+        if (integratedserver != null)
+        {
+            integratedserver.stopServer();
         }
     }
 
@@ -2471,11 +2403,6 @@ public class ClientEngine implements IThreadListener
     public boolean isGamePaused()
     {
         return this.isGamePaused;
-    }
-
-    public SoundHandler getSoundHandler()
-    {
-        return this.mcSoundHandler;
     }
 
     public void dispatchKeypresses()
@@ -2590,11 +2517,11 @@ public class ClientEngine implements IThreadListener
         return this.field_181542_y;
     }
 
-    public static Map<String, String> getSessionInfo()
+    public Map<String, String> getSessionInfo()
     {
         Map<String, String> map = Maps.<String, String>newHashMap();
-        map.put("X-Minecraft-Username", get().getSession().name);
-        map.put("X-Minecraft-UUID", get().getSession().playerID);
+        map.put("X-Minecraft-Username", getSession().name);
+        map.put("X-Minecraft-UUID", getSession().playerID);
         map.put("X-Minecraft-Version", "1.8.9");
         return map;
     }
@@ -2608,7 +2535,13 @@ public class ClientEngine implements IThreadListener
     {
         this.field_181541_X = p_181537_1_;
     }
-    
+
+    /* true if Droidmine is not specified with a window */
+    public boolean isHeadless()
+    {
+        return false;
+    }
+
     private void updateKeyBindState()
     {
         for (KeyBinding keyBinding : KeyBinding.keybindArray)

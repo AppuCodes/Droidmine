@@ -24,14 +24,14 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
     /** this field is used to indicate the 3-pixel wide arms */
     private boolean smallArms;
 
-    public RenderPlayer(RenderManager renderManager)
+    public RenderPlayer(RenderManager renderManager, ClientEngine mc)
     {
-        this(renderManager, false);
+        this(renderManager, false, mc);
     }
 
-    public RenderPlayer(RenderManager renderManager, boolean useSmallArms)
+    public RenderPlayer(RenderManager renderManager, boolean useSmallArms, ClientEngine mc)
     {
-        super(renderManager, new ModelPlayer(0.0F, useSmallArms), 0.5F);
+        super(renderManager, new ModelPlayer(0.0F, useSmallArms), 0.5F, mc);
         this.smallArms = useSmallArms;
         this.addLayer(new LayerBipedArmor(this));
         this.addLayer(new LayerHeldItem(this));

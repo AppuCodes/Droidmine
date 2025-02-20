@@ -6,27 +6,29 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.optifine.CustomColors;
+import net.minecraft.optifine.RenderEnv;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
-import optifine.CustomColors;
-import optifine.RenderEnv;
 
 public class BlockFluidRenderer
 {
     private TextureAtlasSprite[] atlasSpritesLava = new TextureAtlasSprite[2];
     private TextureAtlasSprite[] atlasSpritesWater = new TextureAtlasSprite[2];
     private static final String __OBFID = "CL_00002519";
+    private ClientEngine mc;
 
-    public BlockFluidRenderer()
+    public BlockFluidRenderer(ClientEngine mc)
     {
+        this.mc = mc;
         this.initAtlasSprites();
     }
 
     protected void initAtlasSprites()
     {
-        TextureMap texturemap = ClientEngine.get().getTextureMapBlocks();
+        TextureMap texturemap = mc.getTextureMapBlocks();
         this.atlasSpritesLava[0] = texturemap.getAtlasSprite("minecraft:blocks/lava_still");
         this.atlasSpritesLava[1] = texturemap.getAtlasSprite("minecraft:blocks/lava_flow");
         this.atlasSpritesWater[0] = texturemap.getAtlasSprite("minecraft:blocks/water_still");

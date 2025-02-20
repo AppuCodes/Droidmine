@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.layers.LayerMooshroomMushroom;
 import net.minecraft.entity.passive.EntityMooshroom;
@@ -9,9 +10,9 @@ public class RenderMooshroom extends RenderLiving<EntityMooshroom>
 {
     private static final ResourceLocation mooshroomTextures = new ResourceLocation("textures/entity/cow/mooshroom.png");
 
-    public RenderMooshroom(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RenderMooshroom(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
-        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+        super(renderManagerIn, modelBaseIn, shadowSizeIn, mc);
         this.addLayer(new LayerMooshroomMushroom(this));
     }
 

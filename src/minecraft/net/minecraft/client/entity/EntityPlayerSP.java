@@ -77,7 +77,6 @@ public class EntityPlayerSP extends AbstractClientPlayer
     private boolean hasValidHealth;
     private String clientBrand;
     public MovementInput movementInput;
-    protected ClientEngine mc;
 
     /**
      * Used to tell if the player pressed forward twice. If this is at 0 and it's pressed (And they are allowed to
@@ -104,10 +103,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public EntityPlayerSP(ClientEngine mcIn, World worldIn, NetHandlerPlayClient netHandler, StatFileWriter statFile)
     {
-        super(worldIn, netHandler.getGameProfile());
+        super(worldIn, netHandler.getGameProfile(), mcIn);
         this.sendQueue = netHandler;
         this.statWriter = statFile;
-        this.mc = mcIn;
         this.dimension = 0;
     }
 
@@ -132,11 +130,6 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public void mountEntity(Entity entityIn)
     {
         super.mountEntity(entityIn);
-
-        if (entityIn instanceof EntityMinecart)
-        {
-            this.mc.getSoundHandler().playSound(new MovingSoundMinecartRiding(this, (EntityMinecart)entityIn));
-        }
     }
 
     /**
@@ -716,11 +709,6 @@ public class EntityPlayerSP extends AbstractClientPlayer
             if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame())
             {
                 this.mc.displayGuiScreen((GuiScreen)null);
-            }
-
-            if (this.timeInPortal == 0.0F)
-            {
-                this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("portal.trigger"), this.rand.nextFloat() * 0.4F + 0.8F));
             }
 
             this.timeInPortal += 0.0125F;

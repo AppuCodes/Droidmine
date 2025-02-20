@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -12,9 +13,9 @@ public class RenderOcelot extends RenderLiving<EntityOcelot>
     private static final ResourceLocation redOcelotTextures = new ResourceLocation("textures/entity/cat/red.png");
     private static final ResourceLocation siameseOcelotTextures = new ResourceLocation("textures/entity/cat/siamese.png");
 
-    public RenderOcelot(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RenderOcelot(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
-        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+        super(renderManagerIn, modelBaseIn, shadowSizeIn, mc);
     }
 
     /**

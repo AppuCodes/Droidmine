@@ -19,9 +19,9 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
     private double otherPlayerMPYaw;
     private double otherPlayerMPPitch;
 
-    public EntityOtherPlayerMP(World worldIn, GameProfile gameProfileIn)
+    public EntityOtherPlayerMP(World worldIn, GameProfile gameProfileIn, ClientEngine mc)
     {
-        super(worldIn, gameProfileIn);
+        super(worldIn, gameProfileIn, mc);
         this.stepHeight = 0.0F;
         this.noClip = true;
         this.renderOffsetY = 0.25F;
@@ -153,7 +153,7 @@ public class EntityOtherPlayerMP extends AbstractClientPlayer
      */
     public void addChatMessage(IChatComponent component)
     {
-        ClientEngine.get().ingameGUI.getChatGUI().printChatMessage(component);
+        mc.ingameGUI.getChatGUI().printChatMessage(component);
     }
 
     /**

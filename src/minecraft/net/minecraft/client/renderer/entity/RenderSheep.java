@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.layers.LayerSheepWool;
 import net.minecraft.entity.passive.EntitySheep;
@@ -9,9 +10,9 @@ public class RenderSheep extends RenderLiving<EntitySheep>
 {
     private static final ResourceLocation shearedSheepTextures = new ResourceLocation("textures/entity/sheep/sheep.png");
 
-    public RenderSheep(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RenderSheep(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
-        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+        super(renderManagerIn, modelBaseIn, shadowSizeIn, mc);
         this.addLayer(new LayerSheepWool(this));
     }
 

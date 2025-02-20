@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
 import net.minecraft.entity.monster.EntitySpider;
@@ -9,9 +10,9 @@ public class RenderSpider<T extends EntitySpider> extends RenderLiving<T>
 {
     private static final ResourceLocation spiderTextures = new ResourceLocation("textures/entity/spider/spider.png");
 
-    public RenderSpider(RenderManager renderManagerIn)
+    public RenderSpider(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelSpider(), 1.0F);
+        super(renderManagerIn, new ModelSpider(), 1.0F, mc);
         this.addLayer(new LayerSpiderEyes(this));
     }
 

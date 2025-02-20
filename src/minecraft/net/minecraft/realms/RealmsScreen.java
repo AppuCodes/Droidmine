@@ -117,15 +117,10 @@ public class RealmsScreen
         {
             resourcelocation = DefaultPlayerSkin.getDefaultSkin(UUIDTypeAdapter.fromString(p_bindFace_0_));
         }
-
-        AbstractClientPlayer.getDownloadImageSkin(resourcelocation, p_bindFace_1_);
-        ClientEngine.get().getTextureManager().bindTexture(resourcelocation);
     }
 
     public static void bind(String p_bind_0_)
     {
-        ResourceLocation resourcelocation = new ResourceLocation(p_bind_0_);
-        ClientEngine.get().getTextureManager().bindTexture(resourcelocation);
     }
 
     public void tick()
@@ -241,7 +236,7 @@ public class RealmsScreen
 
     public RealmsAnvilLevelStorageSource getLevelStorageSource()
     {
-        return new RealmsAnvilLevelStorageSource(ClientEngine.get().getSaveLoader());
+        return null;
     }
 
     public void removed()

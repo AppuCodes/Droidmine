@@ -18,9 +18,9 @@ public class RenderHorse extends RenderLiving<EntityHorse>
     private static final ResourceLocation zombieHorseTextures = new ResourceLocation("textures/entity/horse/horse_zombie.png");
     private static final ResourceLocation skeletonHorseTextures = new ResourceLocation("textures/entity/horse/horse_skeleton.png");
 
-    public RenderHorse(RenderManager rendermanagerIn, ModelHorse model, float shadowSizeIn)
+    public RenderHorse(RenderManager rendermanagerIn, ModelHorse model, float shadowSizeIn, ClientEngine mc)
     {
-        super(rendermanagerIn, model, shadowSizeIn);
+        super(rendermanagerIn, model, shadowSizeIn, mc);
     }
 
     /**
@@ -92,7 +92,7 @@ public class RenderHorse extends RenderLiving<EntityHorse>
             if (resourcelocation == null)
             {
                 resourcelocation = new ResourceLocation(s);
-                ClientEngine.get().getTextureManager().loadTexture(resourcelocation, new LayeredTexture(horse.getVariantTexturePaths()));
+                mc.getTextureManager().loadTexture(resourcelocation, new LayeredTexture(horse.getVariantTexturePaths()));
                 field_110852_a.put(s, resourcelocation);
             }
 

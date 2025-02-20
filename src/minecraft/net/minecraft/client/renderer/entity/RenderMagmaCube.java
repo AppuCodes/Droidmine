@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelMagmaCube;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.monster.EntityMagmaCube;
@@ -9,9 +10,9 @@ public class RenderMagmaCube extends RenderLiving<EntityMagmaCube>
 {
     private static final ResourceLocation magmaCubeTextures = new ResourceLocation("textures/entity/slime/magmacube.png");
 
-    public RenderMagmaCube(RenderManager renderManagerIn)
+    public RenderMagmaCube(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelMagmaCube(), 0.25F);
+        super(renderManagerIn, new ModelMagmaCube(), 0.25F, mc);
     }
 
     /**

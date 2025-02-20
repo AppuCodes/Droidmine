@@ -1,11 +1,10 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelArmorStand;
 import net.minecraft.client.model.ModelArmorStandArmor;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
-import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
+import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.util.ResourceLocation;
 
@@ -16,9 +15,9 @@ public class ArmorStandRenderer extends RendererLivingEntity<EntityArmorStand>
      */
     public static final ResourceLocation TEXTURE_ARMOR_STAND = new ResourceLocation("textures/entity/armorstand/wood.png");
 
-    public ArmorStandRenderer(RenderManager p_i46195_1_)
+    public ArmorStandRenderer(RenderManager p_i46195_1_, ClientEngine mc)
     {
-        super(p_i46195_1_, new ModelArmorStand(), 0.0F);
+        super(p_i46195_1_, new ModelArmorStand(), 0.0F, mc);
         LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
         {
             protected void initArmor()

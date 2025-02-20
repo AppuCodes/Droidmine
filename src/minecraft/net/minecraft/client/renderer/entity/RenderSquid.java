@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.passive.EntitySquid;
@@ -9,9 +10,9 @@ public class RenderSquid extends RenderLiving<EntitySquid>
 {
     private static final ResourceLocation squidTextures = new ResourceLocation("textures/entity/squid.png");
 
-    public RenderSquid(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RenderSquid(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
-        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+        super(renderManagerIn, modelBaseIn, shadowSizeIn, mc);
     }
 
     /**

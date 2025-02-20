@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelSkeleton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
@@ -12,9 +13,9 @@ public class RenderSkeleton extends RenderBiped<EntitySkeleton>
     private static final ResourceLocation skeletonTextures = new ResourceLocation("textures/entity/skeleton/skeleton.png");
     private static final ResourceLocation witherSkeletonTextures = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
 
-    public RenderSkeleton(RenderManager renderManagerIn)
+    public RenderSkeleton(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelSkeleton(), 0.5F);
+        super(renderManagerIn, new ModelSkeleton(), 0.5F, mc);
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerBipedArmor(this)
         {

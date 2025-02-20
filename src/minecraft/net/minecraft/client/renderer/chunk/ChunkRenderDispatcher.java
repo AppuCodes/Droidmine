@@ -34,12 +34,15 @@ public class ChunkRenderDispatcher
     private final VertexBufferUploader vertexUploader = new VertexBufferUploader();
     private final Queue < ListenableFutureTask<? >> queueChunkUploads = Queues. < ListenableFutureTask<? >> newArrayDeque();
     private final ChunkRenderWorker renderWorker;
+    private ClientEngine mc;
 
-    public ChunkRenderDispatcher()
+    public ChunkRenderDispatcher(ClientEngine mc)
     {
+        this.mc = mc;
+        
         for (int i = 0; i < 2; ++i)
         {
-            ChunkRenderWorker chunkrenderworker = new ChunkRenderWorker(this);
+            ChunkRenderWorker chunkrenderworker = new ChunkRenderWorker(this, mc);
             Thread thread = threadFactory.newThread(chunkrenderworker);
             thread.start();
             this.listThreadedWorkers.add(chunkrenderworker);
@@ -50,7 +53,7 @@ public class ChunkRenderDispatcher
             this.queueFreeRenderBuilders.add(new RegionRenderCacheBuilder());
         }
 
-        this.renderWorker = new ChunkRenderWorker(this, new RegionRenderCacheBuilder());
+        this.renderWorker = new ChunkRenderWorker(this, new RegionRenderCacheBuilder(), mc);
     }
 
     public String getDebugInfo()
@@ -227,7 +230,7 @@ public class ChunkRenderDispatcher
 
     public ListenableFuture<Object> uploadChunk(final EnumWorldBlockLayer player, final WorldRenderer p_178503_2_, final RenderChunk chunkRenderer, final CompiledChunk compiledChunkIn)
     {
-        if (ClientEngine.get().isCallingFromMinecraftThread())
+        if (mc.isCallingFromMinecraftThread())
         {
             if (OpenGlHelper.useVbo())
             {

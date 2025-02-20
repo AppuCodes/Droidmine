@@ -25,13 +25,13 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
+import net.minecraft.optifine.Config;
+import net.minecraft.optifine.Reflector;
+import net.minecraft.optifine.shadersmod.client.Shaders;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import optifine.Config;
-import optifine.Reflector;
-import shadersmod.client.Shaders;
 
 public abstract class RendererLivingEntity<T extends EntityLivingBase> extends Render<T>
 {
@@ -42,14 +42,16 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     protected List<LayerRenderer<T>> layerRenderers = Lists.newArrayList();
     protected boolean renderOutlines = false;
     private static final String __OBFID = "CL_00001012";
+    protected ClientEngine mc;
     public static float NAME_TAG_RANGE = 64.0F;
     public static float NAME_TAG_RANGE_SNEAK = 32.0F;
 
-    public RendererLivingEntity(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RendererLivingEntity(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
         super(renderManagerIn);
         this.mainModel = modelBaseIn;
         this.shadowSize = shadowSizeIn;
+        this.mc = mc;
     }
 
     public <V extends EntityLivingBase, U extends LayerRenderer> boolean addLayer(U layer)
@@ -114,99 +116,102 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             }
 
             this.mainModel.isChild = entity.isChild();
-
-            try
+            
+            if (!mc.isHeadless())
             {
-                float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
-                float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
-                float f2 = f1 - f;
-
-                if (this.mainModel.isRiding && entity.ridingEntity instanceof EntityLivingBase)
+                try
                 {
-                    EntityLivingBase entitylivingbase = (EntityLivingBase)entity.ridingEntity;
-                    f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset, partialTicks);
-                    f2 = f1 - f;
-                    float f3 = MathHelper.wrapAngleTo180_float(f2);
+                    float f = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
+                    float f1 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
+                    float f2 = f1 - f;
 
-                    if (f3 < -85.0F)
+                    if (this.mainModel.isRiding && entity.ridingEntity instanceof EntityLivingBase)
                     {
-                        f3 = -85.0F;
+                        EntityLivingBase entitylivingbase = (EntityLivingBase)entity.ridingEntity;
+                        f = this.interpolateRotation(entitylivingbase.prevRenderYawOffset, entitylivingbase.renderYawOffset, partialTicks);
+                        f2 = f1 - f;
+                        float f3 = MathHelper.wrapAngleTo180_float(f2);
+
+                        if (f3 < -85.0F)
+                        {
+                            f3 = -85.0F;
+                        }
+
+                        if (f3 >= 85.0F)
+                        {
+                            f3 = 85.0F;
+                        }
+
+                        f = f1 - f3;
+
+                        if (f3 * f3 > 2500.0F)
+                        {
+                            f += f3 * 0.2F;
+                        }
                     }
 
-                    if (f3 >= 85.0F)
+                    float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+                    this.renderLivingAt(entity, x, y, z);
+                    float f7 = this.handleRotationFloat(entity, partialTicks);
+                    this.rotateCorpse(entity, f7, f, partialTicks);
+                    GlStateManager.enableRescaleNormal();
+                    GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+                    this.preRenderCallback(entity, partialTicks);
+                    float f4 = 0.0625F;
+                    GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
+                    float f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
+                    float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
+
+                    if (entity.isChild())
                     {
-                        f3 = 85.0F;
+                        f6 *= 3.0F;
                     }
 
-                    f = f1 - f3;
-
-                    if (f3 * f3 > 2500.0F)
+                    if (f5 > 1.0F)
                     {
-                        f += f3 * 0.2F;
+                        f5 = 1.0F;
                     }
+
+                    GlStateManager.enableAlpha();
+                    this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
+                    this.mainModel.setRotationAngles(f6, f5, f7, f2, f8, 0.0625F, entity);
+
+                    if (this.renderOutlines)
+                    {
+                        boolean flag1 = this.setScoreTeamColor(entity);
+                        this.renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
+
+                        if (flag1)
+                        {
+                            this.unsetScoreTeamColor();
+                        }
+                    }
+                    else
+                    {
+                        boolean flag = this.setDoRenderBrightness(entity, partialTicks);
+                        this.renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
+
+                        if (flag)
+                        {
+                            this.unsetBrightness();
+                        }
+
+                        GlStateManager.depthMask(true);
+
+                        if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).isSpectator())
+                        {
+                            this.renderLayers(entity, f6, f5, partialTicks, f7, f2, f8, 0.0625F);
+                        }
+                    }
+
+                    GlStateManager.disableRescaleNormal();
                 }
-
-                float f8 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-                this.renderLivingAt(entity, x, y, z);
-                float f7 = this.handleRotationFloat(entity, partialTicks);
-                this.rotateCorpse(entity, f7, f, partialTicks);
-                GlStateManager.enableRescaleNormal();
-                GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-                this.preRenderCallback(entity, partialTicks);
-                float f4 = 0.0625F;
-                GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
-                float f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
-                float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
-
-                if (entity.isChild())
+                catch (Exception exception)
                 {
-                    f6 *= 3.0F;
+                    logger.error((String)"Couldn\'t render entity", (Throwable)exception);
                 }
-
-                if (f5 > 1.0F)
-                {
-                    f5 = 1.0F;
-                }
-
-                GlStateManager.enableAlpha();
-                this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
-                this.mainModel.setRotationAngles(f6, f5, f7, f2, f8, 0.0625F, entity);
-
-                if (this.renderOutlines)
-                {
-                    boolean flag1 = this.setScoreTeamColor(entity);
-                    this.renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
-
-                    if (flag1)
-                    {
-                        this.unsetScoreTeamColor();
-                    }
-                }
-                else
-                {
-                    boolean flag = this.setDoRenderBrightness(entity, partialTicks);
-                    this.renderModel(entity, f6, f5, f7, f2, f8, 0.0625F);
-
-                    if (flag)
-                    {
-                        this.unsetBrightness();
-                    }
-
-                    GlStateManager.depthMask(true);
-
-                    if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).isSpectator())
-                    {
-                        this.renderLayers(entity, f6, f5, partialTicks, f7, f2, f8, 0.0625F);
-                    }
-                }
-
-                GlStateManager.disableRescaleNormal();
             }
-            catch (Exception exception)
-            {
-                logger.error((String)"Couldn\'t render entity", (Throwable)exception);
-            }
-
+            
             GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
             GlStateManager.enableTexture2D();
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
@@ -272,7 +277,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     protected void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_)
     {
         boolean flag = !entitylivingbaseIn.isInvisible();
-        boolean flag1 = !flag && !entitylivingbaseIn.isInvisibleToPlayer(ClientEngine.get().player);
+        boolean flag1 = !flag && !entitylivingbaseIn.isInvisibleToPlayer(mc.player);
 
         if (flag || flag1)
         {
@@ -553,7 +558,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                         GlStateManager.translate((float)x, (float)y + entity.height + 0.5F - (entity.isChild() ? entity.height / 2.0F : 0.0F), (float)z);
                         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
                         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-                        GlStateManager.rotate(ClientEngine.get().options.thirdPersonView == 2 ? -this.renderManager.playerViewX : this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+                        GlStateManager.rotate(mc.options.thirdPersonView == 2 ? -this.renderManager.playerViewX : this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
                         GlStateManager.scale(-0.02666667F, -0.02666667F, 0.02666667F);
                         GlStateManager.translate(0.0F, 9.374999F, 0.0F);
                         GlStateManager.disableLighting();
@@ -594,7 +599,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
     protected boolean canRenderName(T entity)
     {
-        EntityPlayerSP entityplayersp = ClientEngine.get().player;
+        EntityPlayerSP entityplayersp = mc.player;
 
         if (entity instanceof EntityPlayer && entity != entityplayersp)
         {
@@ -625,7 +630,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             }
         }
 
-        return ClientEngine.isGuiEnabled() && entity != this.renderManager.livingPlayer && !entity.isInvisibleToPlayer(entityplayersp) && entity.riddenByEntity == null;
+        return mc.isGuiEnabled() && entity != this.renderManager.livingPlayer && !entity.isInvisibleToPlayer(entityplayersp) && entity.riddenByEntity == null;
     }
 
     public void setRenderOutlines(boolean renderOutlinesIn)

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelGhast;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.monster.EntityGhast;
@@ -10,9 +11,9 @@ public class RenderGhast extends RenderLiving<EntityGhast>
     private static final ResourceLocation ghastTextures = new ResourceLocation("textures/entity/ghast/ghast.png");
     private static final ResourceLocation ghastShootingTextures = new ResourceLocation("textures/entity/ghast/ghast_shooting.png");
 
-    public RenderGhast(RenderManager renderManagerIn)
+    public RenderGhast(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelGhast(), 0.5F);
+        super(renderManagerIn, new ModelGhast(), 0.5F, mc);
     }
 
     /**

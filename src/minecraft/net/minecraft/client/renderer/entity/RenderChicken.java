@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.util.MathHelper;
@@ -9,9 +10,9 @@ public class RenderChicken extends RenderLiving<EntityChicken>
 {
     private static final ResourceLocation chickenTextures = new ResourceLocation("textures/entity/chicken.png");
 
-    public RenderChicken(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn)
+    public RenderChicken(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn, ClientEngine mc)
     {
-        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+        super(renderManagerIn, modelBaseIn, shadowSizeIn, mc);
     }
 
     /**

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
@@ -15,9 +16,9 @@ public class RenderVillager extends RenderLiving<EntityVillager>
     private static final ResourceLocation smithVillagerTextures = new ResourceLocation("textures/entity/villager/smith.png");
     private static final ResourceLocation butcherVillagerTextures = new ResourceLocation("textures/entity/villager/butcher.png");
 
-    public RenderVillager(RenderManager renderManagerIn)
+    public RenderVillager(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelVillager(0.0F), 0.5F);
+        super(renderManagerIn, new ModelVillager(0.0F), 0.5F, mc);
         this.addLayer(new LayerCustomHead(this.getMainModel().villagerHead));
     }
 

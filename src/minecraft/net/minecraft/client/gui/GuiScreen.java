@@ -472,7 +472,6 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY))
                 {
                     this.selectedButton = guibutton;
-                    guibutton.playPressSound(this.mc.getSoundHandler());
                     this.actionPerformed(guibutton);
                 }
             }

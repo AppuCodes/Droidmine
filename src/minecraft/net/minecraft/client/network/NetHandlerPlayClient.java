@@ -378,7 +378,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         double d2 = (double)packetIn.getZ() / 32.0D;
         float f = (float)(packetIn.getYaw() * 360) / 256.0F;
         float f1 = (float)(packetIn.getPitch() * 360) / 256.0F;
-        EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(this.gameController.world, this.getPlayerInfo(packetIn.getPlayer()).getGameProfile());
+        EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(this.gameController.world, this.getPlayerInfo(packetIn.getPlayer()).getGameProfile(), gameController);
         entityotherplayermp.prevPosX = entityotherplayermp.lastTickPosX = (double)(entityotherplayermp.serverPosX = packetIn.getX());
         entityotherplayermp.prevPosY = entityotherplayermp.lastTickPosY = (double)(entityotherplayermp.serverPosY = packetIn.getY());
         entityotherplayermp.prevPosZ = entityotherplayermp.lastTickPosZ = (double)(entityotherplayermp.serverPosZ = packetIn.getZ());
@@ -871,11 +871,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
         if (entity != null)
         {
-            if (packetIn.getOpCode() == 21)
-            {
-                this.gameController.getSoundHandler().playSound(new GuardianSound((EntityGuardian)entity));
-            }
-            else
+            if (packetIn.getOpCode() != 21)
             {
                 entity.handleStatusUpdate(packetIn.getOpCode());
             }
@@ -1587,8 +1583,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
                         {
                             public void confirmClicked(boolean result, int id)
                             {
-                                NetHandlerPlayClient.this.gameController = ClientEngine.get();
-
                                 if (result)
                                 {
                                     if (NetHandlerPlayClient.this.gameController.getCurrentServerData() != null)

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
@@ -13,15 +14,15 @@ public class RenderBiped<T extends EntityLiving> extends RenderLiving<T>
     protected ModelBiped modelBipedMain;
     protected float field_77070_b;
 
-    public RenderBiped(RenderManager renderManagerIn, ModelBiped modelBipedIn, float shadowSize)
+    public RenderBiped(RenderManager renderManagerIn, ModelBiped modelBipedIn, float shadowSize, ClientEngine mc)
     {
-        this(renderManagerIn, modelBipedIn, shadowSize, 1.0F);
+        this(renderManagerIn, modelBipedIn, shadowSize, 1.0F, mc);
         this.addLayer(new LayerHeldItem(this));
     }
 
-    public RenderBiped(RenderManager renderManagerIn, ModelBiped modelBipedIn, float shadowSize, float p_i46169_4_)
+    public RenderBiped(RenderManager renderManagerIn, ModelBiped modelBipedIn, float shadowSize, float p_i46169_4_, ClientEngine mc)
     {
-        super(renderManagerIn, modelBipedIn, shadowSize);
+        super(renderManagerIn, modelBipedIn, shadowSize, mc);
         this.modelBipedMain = modelBipedIn;
         this.field_77070_b = p_i46169_4_;
         this.addLayer(new LayerCustomHead(modelBipedIn.bipedHead));

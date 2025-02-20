@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
@@ -10,9 +11,9 @@ public class RenderPigZombie extends RenderBiped<EntityPigZombie>
 {
     private static final ResourceLocation ZOMBIE_PIGMAN_TEXTURE = new ResourceLocation("textures/entity/zombie_pigman.png");
 
-    public RenderPigZombie(RenderManager renderManagerIn)
+    public RenderPigZombie(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelZombie(), 0.5F, 1.0F);
+        super(renderManagerIn, new ModelZombie(), 0.5F, 1.0F, mc);
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerBipedArmor(this)
         {

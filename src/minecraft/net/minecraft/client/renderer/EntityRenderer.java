@@ -60,6 +60,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.optifine.*;
+import net.minecraft.optifine.shadersmod.client.Shaders;
+import net.minecraft.optifine.shadersmod.client.ShadersRender;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.AxisAlignedBB;
@@ -79,15 +82,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.biome.BiomeGenBase;
-import optifine.Config;
-import optifine.CustomColors;
-import optifine.Lagometer;
-import optifine.RandomMobs;
-import optifine.Reflector;
-import optifine.ReflectorForge;
-import optifine.TextureUtils;
-import shadersmod.client.Shaders;
-import shadersmod.client.ShadersRender;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -1208,7 +1202,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 if (!this.mc.options.hideGUI || this.mc.currentScreen != null)
                 {
                     GlStateManager.alphaFunc(516, 0.0F);
-                    this.mc.ingameGUI.renderGameOverlay(partialTicks);
+                    if (!mc.isHeadless()) this.mc.ingameGUI.renderGameOverlay(partialTicks);
 
                     if (this.mc.options.ofShowFps && !this.mc.options.showDebugInfo)
                     {
@@ -1245,7 +1239,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     }
                     else
                     {
-                        this.mc.currentScreen.drawScreen(j1, k1, partialTicks);
+                        if (!mc.isHeadless()) this.mc.currentScreen.drawScreen(j1, k1, partialTicks);
                     }
                 }
                 catch (Throwable throwable)

@@ -51,6 +51,6 @@
     <fullyQualifiedTypeName name="java.time.Duration"/>
     <fullyQualifiedTypeName name="java.util.concurrent.CompletableFuture"/>
     <fullyQualifiedTypeName name="net.minecraft.network.Packet"/>
-    <fullyQualifiedTypeName name="net.minecraft.client.ClientEngine"/>
     <fullyQualifiedTypeName name="java.util.function.Function"/>
+    <fullyQualifiedTypeName name="net.minecraft.client.ClientEngine"/>
 </qualifiedTypeNameHistroy>

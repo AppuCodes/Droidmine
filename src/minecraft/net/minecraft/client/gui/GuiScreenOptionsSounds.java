@@ -155,7 +155,6 @@ public class GuiScreenOptionsSounds extends GuiScreen
                 }
                 
                 GuiScreenOptionsSounds.this.mc.options.saveOptions();
-                GuiScreenOptionsSounds.this.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
             }
 
             this.field_146155_p = false;

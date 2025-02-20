@@ -2,6 +2,7 @@ package net.minecraft.client.renderer.entity;
 
 import java.util.Random;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.renderer.entity.layers.LayerEndermanEyes;
 import net.minecraft.client.renderer.entity.layers.LayerHeldBlock;
@@ -17,9 +18,9 @@ public class RenderEnderman extends RenderLiving<EntityEnderman>
     private ModelEnderman endermanModel;
     private Random rnd = new Random();
 
-    public RenderEnderman(RenderManager renderManagerIn)
+    public RenderEnderman(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelEnderman(0.0F), 0.5F);
+        super(renderManagerIn, new ModelEnderman(0.0F), 0.5F, mc);
         this.endermanModel = (ModelEnderman)super.mainModel;
         this.addLayer(new LayerEndermanEyes(this));
         this.addLayer(new LayerHeldBlock(this));

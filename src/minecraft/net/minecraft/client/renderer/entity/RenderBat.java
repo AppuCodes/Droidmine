@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBat;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.passive.EntityBat;
@@ -10,9 +11,9 @@ public class RenderBat extends RenderLiving<EntityBat>
 {
     private static final ResourceLocation batTextures = new ResourceLocation("textures/entity/bat.png");
 
-    public RenderBat(RenderManager renderManagerIn)
+    public RenderBat(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelBat(), 0.25F);
+        super(renderManagerIn, new ModelBat(), 0.25F, mc);
     }
 
     /**

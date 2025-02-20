@@ -2,38 +2,36 @@ package net.minecraft.client.renderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.client.resources.model.SimpleBakedModel;
-import net.minecraft.client.resources.model.WeightedBakedModel;
+import net.minecraft.client.resources.model.*;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ReportedException;
+import net.minecraft.optifine.Config;
+import net.minecraft.optifine.Reflector;
+import net.minecraft.optifine.shadersmod.client.SVertexBuilder;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
-import optifine.Config;
-import optifine.Reflector;
-import shadersmod.client.SVertexBuilder;
 
 public class BlockRendererDispatcher implements IResourceManagerReloadListener
 {
     private BlockModelShapes blockModelShapes;
     private final GameOptions options;
-    private final BlockModelRenderer blockModelRenderer = new BlockModelRenderer();
+    private final BlockModelRenderer blockModelRenderer;
     private final ChestRenderer chestRenderer = new ChestRenderer();
-    private final BlockFluidRenderer fluidRenderer = new BlockFluidRenderer();
+    private final BlockFluidRenderer fluidRenderer;
     private static final String __OBFID = "CL_00002520";
 
-    public BlockRendererDispatcher(BlockModelShapes blockModelShapesIn, GameOptions optionsIn)
+    public BlockRendererDispatcher(BlockModelShapes blockModelShapesIn, GameOptions optionsIn, ClientEngine mc)
     {
+        this.fluidRenderer = new BlockFluidRenderer(mc);
         this.blockModelShapes = blockModelShapesIn;
         this.options = optionsIn;
+        blockModelRenderer = new BlockModelRenderer(mc);
     }
 
     public BlockModelShapes getBlockModelShapes()

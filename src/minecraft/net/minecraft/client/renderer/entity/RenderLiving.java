@@ -1,26 +1,21 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityHanging;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import optifine.Config;
-import shadersmod.client.Shaders;
+import net.minecraft.entity.*;
+import net.minecraft.optifine.Config;
+import net.minecraft.optifine.shadersmod.client.Shaders;
 
 public abstract class RenderLiving<T extends EntityLiving> extends RendererLivingEntity<T>
 {
     private static final String __OBFID = "CL_00001015";
 
-    public RenderLiving(RenderManager rendermanagerIn, ModelBase modelbaseIn, float shadowsizeIn)
+    public RenderLiving(RenderManager rendermanagerIn, ModelBase modelbaseIn, float shadowsizeIn, ClientEngine mc)
     {
-        super(rendermanagerIn, modelbaseIn, shadowsizeIn);
+        super(rendermanagerIn, modelbaseIn, shadowsizeIn, mc);
     }
 
     protected boolean canRenderName(T entity)

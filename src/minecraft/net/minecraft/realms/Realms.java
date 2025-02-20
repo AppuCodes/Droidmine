@@ -14,24 +14,22 @@ public class Realms
 {
     public static boolean isTouchScreen()
     {
-        return ClientEngine.get().options.touchscreen;
+        return false;
     }
 
     public static Proxy getProxy()
     {
-        return ClientEngine.get().getProxy();
+        return null;
     }
 
     public static String sessionId()
     {
-        Session session = ClientEngine.get().getSession();
-        return session == null ? null : "";
+        return null;
     }
 
     public static String userName()
     {
-        Session session = ClientEngine.get().getSession();
-        return session == null ? null : session.name;
+        return null;
     }
 
     public static long currentTimeMillis()
@@ -46,27 +44,26 @@ public class Realms
 
     public static String getUUID()
     {
-        return ClientEngine.get().getSession().playerID;
+        return "";
     }
 
     public static String getName()
     {
-        return ClientEngine.get().getSession().name;
+        return "";
     }
 
     public static String uuidToName(String p_uuidToName_0_)
     {
-        return ClientEngine.get().getSessionService().fillProfileProperties(new GameProfile(UUIDTypeAdapter.fromString(p_uuidToName_0_), (String)null), false).getName();
+        return "";
     }
 
     public static void setScreen(RealmsScreen p_setScreen_0_)
     {
-        ClientEngine.get().displayGuiScreen(p_setScreen_0_.getProxy());
     }
 
     public static String getGameDirectoryPath()
     {
-        return ClientEngine.get().mcDataDir.getAbsolutePath();
+        return "";
     }
 
     public static int survivalId()
@@ -91,17 +88,14 @@ public class Realms
 
     public static void setConnectedToRealms(boolean p_setConnectedToRealms_0_)
     {
-        ClientEngine.get().func_181537_a(p_setConnectedToRealms_0_);
     }
 
     public static ListenableFuture<Object> downloadResourcePack(String p_downloadResourcePack_0_, String p_downloadResourcePack_1_)
     {
-        ListenableFuture<Object> listenablefuture = ClientEngine.get().getResourcePackRepository().downloadResourcePack(p_downloadResourcePack_0_, p_downloadResourcePack_1_);
-        return listenablefuture;
+        return null;
     }
 
     public static void clearResourcePack()
     {
-        ClientEngine.get().getResourcePackRepository().func_148529_f();
     }
 }

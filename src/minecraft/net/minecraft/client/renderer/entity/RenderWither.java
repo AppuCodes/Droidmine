@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelWither;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerWitherAura;
@@ -13,9 +14,9 @@ public class RenderWither extends RenderLiving<EntityWither>
     private static final ResourceLocation invulnerableWitherTextures = new ResourceLocation("textures/entity/wither/wither_invulnerable.png");
     private static final ResourceLocation witherTextures = new ResourceLocation("textures/entity/wither/wither.png");
 
-    public RenderWither(RenderManager renderManagerIn)
+    public RenderWither(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelWither(0.0F), 1.0F);
+        super(renderManagerIn, new ModelWither(0.0F), 1.0F, mc);
         this.addLayer(new LayerWitherAura(this));
     }
 

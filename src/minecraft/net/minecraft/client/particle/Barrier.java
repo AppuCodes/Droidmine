@@ -9,10 +9,10 @@ import net.minecraft.world.World;
 
 public class Barrier extends EntityFX
 {
-    protected Barrier(World worldIn, double p_i46286_2_, double p_i46286_4_, double p_i46286_6_, Item p_i46286_8_)
+    protected Barrier(World worldIn, double p_i46286_2_, double p_i46286_4_, double p_i46286_6_, Item p_i46286_8_, ClientEngine mc)
     {
         super(worldIn, p_i46286_2_, p_i46286_4_, p_i46286_6_, 0.0D, 0.0D, 0.0D);
-        this.setParticleIcon(ClientEngine.get().getRenderItem().getItemModelMesher().getParticleIcon(p_i46286_8_));
+        this.setParticleIcon(mc.getRenderItem().getItemModelMesher().getParticleIcon(p_i46286_8_));
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
         this.motionX = this.motionY = this.motionZ = 0.0D;
         this.particleGravity = 0.0F;
@@ -48,9 +48,9 @@ public class Barrier extends EntityFX
 
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new Barrier(worldIn, xCoordIn, yCoordIn, zCoordIn, Item.getItemFromBlock(Blocks.barrier));
+            return new Barrier(worldIn, xCoordIn, yCoordIn, zCoordIn, Item.getItemFromBlock(Blocks.barrier), mc);
         }
     }
 }

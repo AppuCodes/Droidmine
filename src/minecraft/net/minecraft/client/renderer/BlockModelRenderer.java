@@ -12,33 +12,26 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.optifine.*;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.Vec3i;
 import net.minecraft.world.IBlockAccess;
-import optifine.BetterGrass;
-import optifine.BetterSnow;
-import optifine.Config;
-import optifine.ConnectedTextures;
-import optifine.CustomColors;
-import optifine.NaturalTextures;
-import optifine.Reflector;
-import optifine.RenderEnv;
-import optifine.SmartLeaves;
 
 public class BlockModelRenderer
 {
     private static final String __OBFID = "CL_00002518";
     private static float aoLightValueOpaque = 0.0F;
+    private ClientEngine engine;
 
     public static void updateAoLightValue()
     {
         aoLightValueOpaque = 1.0F - Config.getAmbientOcclusionLevel();
     }
 
-    public BlockModelRenderer()
+    public BlockModelRenderer(ClientEngine engine)
     {
         if (Reflector.ForgeModContainer_forgeLightPipelineEnabled.exists())
         {
@@ -55,10 +48,9 @@ public class BlockModelRenderer
 
     public boolean renderModel(IBlockAccess blockAccessIn, IBakedModel modelIn, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides)
     {
-        boolean flag = ClientEngine.isAmbientOcclusionEnabled() && blockStateIn.getBlock().getLightValue() == 0 && modelIn.isAmbientOcclusion();
-
         try
         {
+            boolean flag = engine.isAmbientOcclusionEnabled() && blockStateIn.getBlock().getLightValue() == 0 && modelIn.isAmbientOcclusion();
             Block block = blockStateIn.getBlock();
 
             if (Config.isTreesSmart() && blockStateIn.getBlock() instanceof BlockLeavesBase)
@@ -70,11 +62,7 @@ public class BlockModelRenderer
         }
         catch (Throwable throwable)
         {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Tesselating block model");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Block model being tesselated");
-            CrashReportCategory.addBlockInfo(crashreportcategory, blockPosIn, blockStateIn);
-            crashreportcategory.addCrashSection("Using AO", Boolean.valueOf(flag));
-            throw new ReportedException(crashreport);
+            return false;
         }
     }
 

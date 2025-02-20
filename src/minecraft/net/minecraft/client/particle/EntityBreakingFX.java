@@ -10,14 +10,14 @@ import net.minecraft.world.World;
 
 public class EntityBreakingFX extends EntityFX
 {
-    protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, Item p_i1195_8_)
+    protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, Item p_i1195_8_, ClientEngine mc)
     {
-        this(worldIn, posXIn, posYIn, posZIn, p_i1195_8_, 0);
+        this(worldIn, posXIn, posYIn, posZIn, p_i1195_8_, 0, mc);
     }
 
-    protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, Item p_i1197_14_, int p_i1197_15_)
+    protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, Item p_i1197_14_, int p_i1197_15_, ClientEngine mc)
     {
-        this(worldIn, posXIn, posYIn, posZIn, p_i1197_14_, p_i1197_15_);
+        this(worldIn, posXIn, posYIn, posZIn, p_i1197_14_, p_i1197_15_, mc);
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
@@ -26,10 +26,10 @@ public class EntityBreakingFX extends EntityFX
         this.motionZ += zSpeedIn;
     }
 
-    protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, Item p_i1196_8_, int p_i1196_9_)
+    protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, Item p_i1196_8_, int p_i1196_9_, ClientEngine mc)
     {
         super(worldIn, posXIn, posYIn, posZIn, 0.0D, 0.0D, 0.0D);
-        this.setParticleIcon(ClientEngine.get().getRenderItem().getItemModelMesher().getParticleIcon(p_i1196_8_, p_i1196_9_));
+        this.setParticleIcon(mc.getRenderItem().getItemModelMesher().getParticleIcon(p_i1196_8_, p_i1196_9_));
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
         this.particleGravity = Blocks.snow.blockParticleGravity;
         this.particleScale /= 2.0F;
@@ -73,26 +73,26 @@ public class EntityBreakingFX extends EntityFX
 
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
             int i = p_178902_15_.length > 1 ? p_178902_15_[1] : 0;
-            return new EntityBreakingFX(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, Item.getItemById(p_178902_15_[0]), i);
+            return new EntityBreakingFX(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, Item.getItemById(p_178902_15_[0]), i, mc);
         }
     }
 
     public static class SlimeFactory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityBreakingFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Items.slime_ball);
+            return new EntityBreakingFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Items.slime_ball, mc);
         }
     }
 
     public static class SnowballFactory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityBreakingFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Items.snowball);
+            return new EntityBreakingFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Items.snowball, mc);
         }
     }
 }

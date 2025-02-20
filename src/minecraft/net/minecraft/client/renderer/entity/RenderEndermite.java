@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelEnderMite;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.util.ResourceLocation;
@@ -8,9 +9,9 @@ public class RenderEndermite extends RenderLiving<EntityEndermite>
 {
     private static final ResourceLocation ENDERMITE_TEXTURES = new ResourceLocation("textures/entity/endermite.png");
 
-    public RenderEndermite(RenderManager renderManagerIn)
+    public RenderEndermite(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelEnderMite(), 0.3F);
+        super(renderManagerIn, new ModelEnderMite(), 0.3F, mc);
     }
 
     protected float getDeathMaxRotation(EntityEndermite entityLivingBaseIn)

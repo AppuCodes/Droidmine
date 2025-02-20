@@ -1,35 +1,39 @@
 package net.minecraft.client.renderer.chunk;
 
-import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.*;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.RegionRenderCacheBuilder;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Bootstrap;
 import net.minecraft.util.EnumWorldBlockLayer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class ChunkRenderWorker implements Runnable
 {
     private static final Logger LOGGER = LogManager.getLogger();
     private final ChunkRenderDispatcher chunkRenderDispatcher;
     private final RegionRenderCacheBuilder regionRenderCacheBuilder;
+    private ClientEngine mc;
 
-    public ChunkRenderWorker(ChunkRenderDispatcher p_i46201_1_)
+    public ChunkRenderWorker(ChunkRenderDispatcher p_i46201_1_, ClientEngine mc)
     {
-        this(p_i46201_1_, (RegionRenderCacheBuilder)null);
+        this(p_i46201_1_, (RegionRenderCacheBuilder)null, mc);
     }
 
-    public ChunkRenderWorker(ChunkRenderDispatcher chunkRenderDispatcherIn, RegionRenderCacheBuilder regionRenderCacheBuilderIn)
+    public ChunkRenderWorker(ChunkRenderDispatcher chunkRenderDispatcherIn, RegionRenderCacheBuilder regionRenderCacheBuilderIn, ClientEngine mc)
     {
         this.chunkRenderDispatcher = chunkRenderDispatcherIn;
         this.regionRenderCacheBuilder = regionRenderCacheBuilderIn;
+        this.mc = mc;
     }
 
     public void run()
@@ -47,7 +51,9 @@ public class ChunkRenderWorker implements Runnable
             catch (Throwable throwable)
             {
                 CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Batching chunks");
-                ClientEngine.get().crashed(ClientEngine.get().addGraphicsAndWorldToCrashReport(crashreport));
+//                mc.crashed(mc.addGraphicsAndWorldToCrashReport(crashreport));
+                Bootstrap.printToSYSOUT(crashreport.getCompleteReport());
+                System.exit(-1);
                 return;
             }
         }
@@ -76,7 +82,7 @@ public class ChunkRenderWorker implements Runnable
             generator.getLock().unlock();
         }
 
-        Entity lvt_2_1_ = ClientEngine.get().getRenderViewEntity();
+        Entity lvt_2_1_ = mc.getRenderViewEntity();
 
         if (lvt_2_1_ == null)
         {
@@ -183,7 +189,7 @@ public class ChunkRenderWorker implements Runnable
 
                     if (!(p_onFailure_1_ instanceof CancellationException) && !(p_onFailure_1_ instanceof InterruptedException))
                     {
-                        ClientEngine.get().crashed(CrashReport.makeCrashReport(p_onFailure_1_, "Rendering chunk"));
+                        mc.crashed(CrashReport.makeCrashReport(p_onFailure_1_, "Rendering chunk"));
                     }
                 }
             });

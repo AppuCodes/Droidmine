@@ -79,6 +79,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemRecord;
+import net.minecraft.optifine.*;
+import net.minecraft.optifine.shadersmod.client.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntitySign;
@@ -99,19 +101,6 @@ import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.chunk.Chunk;
-import optifine.ChunkUtils;
-import optifine.CloudRenderer;
-import optifine.Config;
-import optifine.CustomColors;
-import optifine.CustomSky;
-import optifine.DynamicLights;
-import optifine.Lagometer;
-import optifine.RandomMobs;
-import optifine.Reflector;
-import optifine.RenderInfoLazy;
-import shadersmod.client.Shaders;
-import shadersmod.client.ShadersRender;
-import shadersmod.client.ShadowUtils;
 
 public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListener
 {
@@ -178,7 +167,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     private double lastViewEntityZ = Double.MIN_VALUE;
     private double lastViewEntityPitch = Double.MIN_VALUE;
     private double lastViewEntityYaw = Double.MIN_VALUE;
-    private final ChunkRenderDispatcher renderDispatcher = new ChunkRenderDispatcher();
+    private final ChunkRenderDispatcher renderDispatcher;
     private ChunkRenderContainer renderContainer;
     private int renderDistanceChunks = -1;
 
@@ -224,6 +213,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
     public RenderGlobal(ClientEngine mcIn)
     {
+        renderDispatcher = new ChunkRenderDispatcher(mcIn);
         this.cloudRenderer = new CloudRenderer(mcIn);
         this.mc = mcIn;
         this.renderManager = mcIn.getRenderManager();
@@ -1374,7 +1364,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         float f = (float)((double)entityIn.prevRotationPitch + (double)(entityIn.rotationPitch - entityIn.prevRotationPitch) * partialTicks);
         float f1 = (float)((double)entityIn.prevRotationYaw + (double)(entityIn.rotationYaw - entityIn.prevRotationYaw) * partialTicks);
 
-        if (ClientEngine.get().options.thirdPersonView == 2)
+        if (mc.options.thirdPersonView == 2)
         {
             f += 180.0F;
         }
@@ -2637,7 +2627,6 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
         if (isound != null)
         {
-            this.mc.getSoundHandler().stopSound(isound);
             this.mapSoundPositions.remove(blockPosIn);
         }
 
@@ -2664,7 +2653,6 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             PositionedSoundRecord positionedsoundrecord = PositionedSoundRecord.create(resourcelocation, (float)blockPosIn.getX(), (float)blockPosIn.getY(), (float)blockPosIn.getZ());
             this.mapSoundPositions.put(blockPosIn, positionedsoundrecord);
-            this.mc.getSoundHandler().playSound(positionedsoundrecord);
         }
     }
 
@@ -2805,7 +2793,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
             else if (ignoreRange)
             {
-                return this.mc.effectRenderer.spawnEffectParticle(p_174974_1_, p_174974_3_, p_174974_5_, p_174974_7_, p_174974_9_, p_174974_11_, p_174974_13_, p_174974_15_);
+                return this.mc.effectRenderer.spawnEffectParticle(p_174974_1_, p_174974_3_, p_174974_5_, p_174974_7_, p_174974_9_, p_174974_11_, p_174974_13_, mc, p_174974_15_);
             }
             else
             {
@@ -2827,7 +2815,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 }
                 else
                 {
-                    EntityFX entityfx = this.mc.effectRenderer.spawnEffectParticle(p_174974_1_, p_174974_3_, p_174974_5_, p_174974_7_, p_174974_9_, p_174974_11_, p_174974_13_, p_174974_15_);
+                    EntityFX entityfx = this.mc.effectRenderer.spawnEffectParticle(p_174974_1_, p_174974_3_, p_174974_5_, p_174974_7_, p_174974_9_, p_174974_11_, p_174974_13_, mc, p_174974_15_);
 
                     if (p_174974_1_ == EnumParticleTypes.WATER_BUBBLE.getParticleID())
                     {
@@ -3056,13 +3044,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             case 2001:
                 Block block = Block.getBlockById(p_180439_4_ & 4095);
-
-                if (block.getMaterial() != Material.air)
-                {
-                    this.mc.getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation(block.stepSound.getBreakSound()), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getFrequency() * 0.8F, (float)blockPosIn.getX() + 0.5F, (float)blockPosIn.getY() + 0.5F, (float)blockPosIn.getZ() + 0.5F));
-                }
-
-                this.mc.effectRenderer.addBlockDestroyEffects(blockPosIn, block.getStateFromMeta(p_180439_4_ >> 12 & 255));
+                this.mc.effectRenderer.addBlockDestroyEffects(blockPosIn, block.getStateFromMeta(p_180439_4_ >> 12 & 255), mc);
                 break;
 
             case 2002:
