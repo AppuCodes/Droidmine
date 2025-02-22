@@ -1228,32 +1228,6 @@ public class ConnectedTextures
         blockProperties = (ConnectedProperties[][])null;
         tileProperties = (ConnectedProperties[][])null;
         spriteQuadMaps = null;
-
-        if (Config.isConnectedTextures())
-        {
-            IResourcePack[] airesourcepack = Config.getResourcePacks();
-
-            for (int i = airesourcepack.length - 1; i >= 0; --i)
-            {
-                IResourcePack iresourcepack = airesourcepack[i];
-                updateIcons(p_updateIcons_0_, iresourcepack);
-            }
-
-            updateIcons(p_updateIcons_0_, Config.getDefaultResourcePack());
-            ResourceLocation resourcelocation = new ResourceLocation("mcpatcher/ctm/default/empty");
-            emptySprite = p_updateIcons_0_.registerSprite(resourcelocation);
-            spriteQuadMaps = new Map[p_updateIcons_0_.getCountRegisteredSprites() + 1];
-
-            if (blockProperties.length <= 0)
-            {
-                blockProperties = (ConnectedProperties[][])null;
-            }
-
-            if (tileProperties.length <= 0)
-            {
-                tileProperties = (ConnectedProperties[][])null;
-            }
-        }
     }
 
     private static void updateIconEmpty(TextureMap p_updateIconEmpty_0_)

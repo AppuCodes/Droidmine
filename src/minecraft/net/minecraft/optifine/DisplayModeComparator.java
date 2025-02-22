@@ -1,7 +1,8 @@
 package net.minecraft.optifine;
 
 import java.util.Comparator;
-import org.lwjgl.opengl.DisplayMode;
+
+import org.lwjgl.display.DisplayMode;
 
 public class DisplayModeComparator implements Comparator
 {

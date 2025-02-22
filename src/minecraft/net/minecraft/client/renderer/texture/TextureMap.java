@@ -138,7 +138,6 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
             }
         }
 
-        ConnectedTextures.updateIcons(this);
         int l1 = ClientEngine.getGLMaximumTextureSize();
         Stitcher stitcher = new Stitcher(l1, l1, true, 0, this.mipmapLevels);
         this.mapUploadedSprites.clear();

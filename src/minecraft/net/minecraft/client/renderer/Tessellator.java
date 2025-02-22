@@ -1,16 +1,27 @@
 package net.minecraft.client.renderer;
 
+import java.util.HashMap;
+
 public class Tessellator
 {
     private WorldRenderer worldRenderer;
     private WorldVertexBufferUploader vboUploader = new WorldVertexBufferUploader();
 
     /** The static instance of the Tessellator. */
-    private static final Tessellator instance = new Tessellator(2097152);
+    private static final HashMap<String, Tessellator> instances = new HashMap<>();
 
     public static Tessellator getInstance()
     {
-        return instance;
+        String thread = Thread.currentThread().getName();
+        
+        if (instances.containsKey(thread))
+        {
+            return instances.get(thread);
+        }
+        
+        Tessellator tessellator = new Tessellator(2097152);
+        instances.put(thread, tessellator);
+        return tessellator;
     }
 
     public Tessellator(int bufferSize)

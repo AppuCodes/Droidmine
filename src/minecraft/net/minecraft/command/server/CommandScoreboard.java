@@ -852,11 +852,11 @@ public class CommandScoreboard extends CommandBase
 
             if (scoreobjective != null)
             {
-                notifyOperators(p_147198_1_, this, "commands.scoreboard.objectives.setdisplay.successSet", new Object[] {Scoreboard.getObjectiveDisplaySlot(i), scoreobjective.getName()});
+                notifyOperators(p_147198_1_, this, "commands.scoreboard.objectives.setDisplay.get().successSet", new Object[] {Scoreboard.getObjectiveDisplaySlot(i), scoreobjective.getName()});
             }
             else
             {
-                notifyOperators(p_147198_1_, this, "commands.scoreboard.objectives.setdisplay.successCleared", new Object[] {Scoreboard.getObjectiveDisplaySlot(i)});
+                notifyOperators(p_147198_1_, this, "commands.scoreboard.objectives.setDisplay.get().successCleared", new Object[] {Scoreboard.getObjectiveDisplaySlot(i)});
             }
         }
     }

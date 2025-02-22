@@ -1,7 +1,7 @@
 package net.minecraft.util;
 
+import org.lwjgl.display.Display;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 
 public class MouseHelper
 {
@@ -26,7 +26,7 @@ public class MouseHelper
      */
     public void ungrabMouseCursor()
     {
-        Mouse.setCursorPosition(Display.getWidth() / 2, Display.getHeight() / 2);
+        Mouse.setCursorPosition(Display.get().getWidth() / 2, Display.get().getHeight() / 2);
         Mouse.setGrabbed(false);
     }
 

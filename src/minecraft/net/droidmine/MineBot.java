@@ -30,8 +30,8 @@ public class MineBot
     {
         this.serverHost = serverHost;
         this.session = session;
-        this.window = window != null;
-        engine = new ClientEngine(getConfig());
+        this.window = window.length != 0 && window[0];
+        engine = new ClientEngine(getConfig(), !this.window);
     }
     
     public void run()

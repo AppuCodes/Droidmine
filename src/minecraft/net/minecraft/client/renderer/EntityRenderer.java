@@ -3,16 +3,13 @@ package net.minecraft.client.renderer;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.FloatBuffer;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.display.Display;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
@@ -27,10 +24,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.MapItemRenderer;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.particle.EffectRenderer;
@@ -40,9 +34,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
+import net.minecraft.client.resources.*;
 import net.minecraft.client.shader.ShaderGroup;
 import net.minecraft.client.shader.ShaderLinkHelper;
 import net.minecraft.crash.CrashReport;
@@ -52,9 +44,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -65,22 +55,8 @@ import net.minecraft.optifine.shadersmod.client.Shaders;
 import net.minecraft.optifine.shadersmod.client.ShadersRender;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MouseFilter;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldSettings;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -1112,7 +1088,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public void updateCameraAndRender(float partialTicks, long p_181560_2_)
     {
         this.frameInit();
-        boolean flag = Display.isActive();
+        boolean flag = Display.get().isActive();
 
         if (!flag && this.mc.options.pauseOnLostFocus && (!this.mc.options.touchscreen || !Mouse.isButtonDown(1)))
         {
@@ -1129,7 +1105,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         if (flag && ClientEngine.isRunningOnMac && this.mc.inGameHasFocus && !Mouse.isInsideWindow())
         {
             Mouse.setGrabbed(false);
-            Mouse.setCursorPosition(Display.getWidth() / 2, Display.getHeight() / 2);
+            Mouse.setCursorPosition(Display.get().getWidth() / 2, Display.get().getHeight() / 2);
             Mouse.setGrabbed(true);
         }
 
@@ -1176,7 +1152,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (this.mc.world != null)
             {
-                int i = Math.max(ClientEngine.getDebugFPS(), 60);
+                int i = Math.max(mc.getDebugFPS(), 60);
                 long j = System.nanoTime() - p_181560_2_;
                 long k = Math.max((long)(1000000000 / i / 4) - j, 0L);
                 this.renderWorld(partialTicks, System.nanoTime() + k);
@@ -1517,7 +1493,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         Lagometer.timerTerrain.start();
 
-        if ((this.mc.options.ofSmoothFps || !Display.isActive()) && pass > 0)
+        if ((this.mc.options.ofSmoothFps || !Display.get().isActive()) && pass > 0)
         {
             GL11.glFinish();
         }
@@ -2254,7 +2230,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             flag = ((EntityPlayer)entity).capabilities.isCreativeMode;
         }
 
-        GL11.glFog(GL11.GL_FOG_COLOR, (FloatBuffer)this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0F));
+        GL11.glFogfv(GL11.GL_FOG_COLOR, (FloatBuffer)this.setFogColorBuffer(this.fogColorRed, this.fogColorGreen, this.fogColorBlue, 1.0F));
         GL11.glNormal3f(0.0F, -1.0F, 0.0F);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         Block block = ActiveRenderInfo.getBlockAtEntityViewpoint(this.mc.world, entity, partialTicks);
@@ -2522,39 +2498,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
     private void frameInit()
     {
-        if (!this.initialized)
-        {
-            TextureUtils.registerResourceListener(mc);
-
-            if (Config.getBitsOs() == 64 && Config.getBitsJre() == 32)
-            {
-                Config.setNotify64BitJava(true);
-            }
-
-            this.initialized = true;
-        }
-
-        Config.checkDisplayMode();
         World world = this.mc.world;
-
-        if (world != null)
-        {
-            if (Config.getNewRelease() != null)
-            {
-                String s = "HD_U".replace("HD_U", "HD Ultra").replace("L", "Light");
-                String s1 = s + " " + Config.getNewRelease();
-                ChatComponentText chatcomponenttext = new ChatComponentText(I18n.format("of.message.newVersion", new Object[] {s1}));
-                this.mc.ingameGUI.getChatGUI().printChatMessage(chatcomponenttext);
-                Config.setNewRelease((String)null);
-            }
-
-            if (Config.isNotify64BitJava())
-            {
-                Config.setNotify64BitJava(false);
-                ChatComponentText chatcomponenttext1 = new ChatComponentText(I18n.format("of.message.java64Bit", new Object[0]));
-                this.mc.ingameGUI.getChatGUI().printChatMessage(chatcomponenttext1);
-            }
-        }
 
         if (this.mc.currentScreen instanceof GuiMainMenu)
         {

@@ -54,4 +54,7 @@
     <fullyQualifiedTypeName name="net.minecraft.client.ClientEngine"/>
     <fullyQualifiedTypeName name="java.net.Proxy"/>
     <fullyQualifiedTypeName name="net.minecraft.optifine.Config"/>
+    <fullyQualifiedTypeName name="org.lwjgl.display.PixelFormat"/>
+    <fullyQualifiedTypeName name="org.lwjgl.display.DisplayMode"/>
+    <fullyQualifiedTypeName name="org.lwjgl.display.Display"/>
 </qualifiedTypeNameHistroy>

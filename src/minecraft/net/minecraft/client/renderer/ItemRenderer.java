@@ -440,7 +440,7 @@ public class ItemRenderer
             {
                 Object object = Reflector.getFieldValue(Reflector.RenderBlockOverlayEvent_OverlayType_BLOCK);
 
-                if (!Reflector.callBoolean(Reflector.ForgeEventFactory_renderBlockOverlay, new Object[] {this.mc.player, Float.valueOf(partialTicks), object, iblockstate, blockpos}))
+                if (!Reflector.callBoolean(Reflector.ForgeEventFactory_renderBlockOverlay, new Object[] {this.mc.player, Float.valueOf(partialTicks), object, iblockstate, blockpos}) && !mc.isHeadless())
                 {
                     this.renderInsideOfBlock(partialTicks, this.mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(iblockstate));
                 }

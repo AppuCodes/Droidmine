@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.display.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
@@ -102,7 +103,7 @@ public class Config
         if (options == null)
         {
             options = p_initoptions_0_;
-            desktopDisplayMode = Display.getDesktopDisplayMode();
+            desktopDisplayMode = Display.get().getDesktopDisplayMode();
             updateAvailableProcessors();
             ReflectorForge.putLaunchBlackboard("optifine.ForgeSplashCompatible", Boolean.TRUE);
         }
@@ -123,7 +124,7 @@ public class Config
     {
         if (!initialized)
         {
-            if (Display.isCreated())
+            if (Display.get().isCreated())
             {
                 initialized = true;
                 checkOpenGlCaps();
@@ -1142,7 +1143,7 @@ public class Config
         {
             try
             {
-                DisplayMode[] adisplaymode = Display.getAvailableDisplayModes();
+                DisplayMode[] adisplaymode = Display.get().getAvailableDisplayModes();
                 Set<Dimension> set = getDisplayModeDimensions(adisplaymode);
                 List list = new ArrayList();
 
@@ -1695,15 +1696,15 @@ public class Config
 
         if (i > 0)
         {
-            DisplayMode displaymode = Display.getDisplayMode();
+            DisplayMode displaymode = Display.get().getDisplayMode();
 
             try
             {
-                Display.destroy();
-                Display.setDisplayMode(displaymode);
-                Display.create((new PixelFormat()).withDepthBits(24).withSamples(i));
-                Display.setResizable(false);
-                Display.setResizable(true);
+                Display.get().destroy();
+                Display.get().setDisplayMode(displaymode);
+                Display.get().create((new PixelFormat()).withDepthBits(24).withSamples(i), minecraft.isHeadless());
+                Display.get().setResizable(false);
+                Display.get().setResizable(true);
             }
             catch (LWJGLException lwjglexception2)
             {
@@ -1712,10 +1713,10 @@ public class Config
 
                 try
                 {
-                    Display.setDisplayMode(displaymode);
-                    Display.create((new PixelFormat()).withDepthBits(24));
-                    Display.setResizable(false);
-                    Display.setResizable(true);
+                    Display.get().setDisplayMode(displaymode);
+                    Display.get().create((new PixelFormat()).withDepthBits(24), minecraft.isHeadless());
+                    Display.get().setResizable(false);
+                    Display.get().setResizable(true);
                 }
                 catch (LWJGLException lwjglexception1)
                 {
@@ -1723,41 +1724,15 @@ public class Config
 
                     try
                     {
-                        Display.setDisplayMode(displaymode);
-                        Display.create();
-                        Display.setResizable(false);
-                        Display.setResizable(true);
+                        Display.get().setDisplayMode(displaymode);
+                        Display.get().create(minecraft.isHeadless());
+                        Display.get().setResizable(false);
+                        Display.get().setResizable(true);
                     }
                     catch (LWJGLException lwjglexception)
                     {
                         lwjglexception.printStackTrace();
                     }
-                }
-            }
-
-            if (!ClientEngine.isRunningOnMac && getDefaultResourcePack() != null)
-            {
-                InputStream inputstream = null;
-                InputStream inputstream1 = null;
-
-                try
-                {
-                    inputstream = getDefaultResourcePack().getInputStreamAssets(new ResourceLocation("icons/icon_16x16.png"));
-                    inputstream1 = getDefaultResourcePack().getInputStreamAssets(new ResourceLocation("icons/icon_32x32.png"));
-
-                    if (inputstream != null && inputstream1 != null)
-                    {
-                        Display.setIcon(new ByteBuffer[] {readIconImage(inputstream), readIconImage(inputstream1)});
-                    }
-                }
-                catch (IOException ioexception)
-                {
-                    warn("Error setting window icon: " + ioexception.getClass().getName() + ": " + ioexception.getMessage());
-                }
-                finally
-                {
-                    IOUtils.closeQuietly(inputstream);
-                    IOUtils.closeQuietly(inputstream1);
                 }
             }
         }
@@ -1791,7 +1766,7 @@ public class Config
 
                 fullscreenModeChecked = true;
                 desktopModeChecked = false;
-                DisplayMode displaymode = Display.getDisplayMode();
+                DisplayMode displaymode = Display.get().getDisplayMode();
                 Dimension dimension = getFullscreenDimension();
 
                 if (dimension == null)
@@ -1811,9 +1786,9 @@ public class Config
                     return;
                 }
 
-                Display.setDisplayMode(displaymode1);
-                minecraft.displayWidth = Display.getDisplayMode().getWidth();
-                minecraft.displayHeight = Display.getDisplayMode().getHeight();
+                Display.get().setDisplayMode(displaymode1);
+                minecraft.displayWidth = Display.get().getDisplayMode().getWidth();
+                minecraft.displayHeight = Display.get().getDisplayMode().getHeight();
 
                 if (minecraft.displayWidth <= 0)
                 {
@@ -1836,8 +1811,8 @@ public class Config
                 minecraft.loadingScreen = new LoadingScreenRenderer(minecraft);
                 updateFramebufferSize();
                 System.out.println(true);
-                Display.setFullscreen(true);
-                Display.setVSyncEnabled(true);
+                Display.get().setFullscreen(true);
+                Display.get().setVSyncEnabled(true);
                 GlStateManager.enableTexture2D();
             }
             else
@@ -1849,11 +1824,11 @@ public class Config
 
                 desktopModeChecked = true;
                 fullscreenModeChecked = false;
-                Display.setVSyncEnabled(true);
-                Display.update();
+                Display.get().setVSyncEnabled(true);
+                Display.get().update();
                 GlStateManager.enableTexture2D();
-                Display.setResizable(false);
-                Display.setResizable(true);
+                Display.get().setResizable(false);
+                Display.get().setResizable(true);
             }
         }
         catch (Exception exception)
@@ -1927,13 +1902,6 @@ public class Config
 
     public static void drawFps()
     {
-        int i = ClientEngine.getDebugFPS();
-        String s = getUpdates(minecraft.debug);
-        int j = minecraft.renderGlobal.getCountActiveRenderers();
-        int k = minecraft.renderGlobal.getCountEntitiesRendered();
-        int l = minecraft.renderGlobal.getCountTileEntitiesRendered();
-        String s1 = "" + i + " fps, C: " + j + ", E: " + k + "+" + l + ", U: " + s;
-        minecraft.fontRendererObj.drawString(s1, 2, 2, -2039584);
     }
 
     private static String getUpdates(String p_getUpdates_0_)

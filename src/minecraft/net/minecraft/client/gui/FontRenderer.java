@@ -70,7 +70,6 @@ public class FontRenderer implements IResourceManagerReloadListener
         this.renderEngine = textureManagerIn;
         this.unicodeFlag = unicode;
         this.mc = mc;
-        this.locationFontTexture = FontUtils.getHdFontLocation(this.locationFontTextureBase);
         this.bindTexture(this.locationFontTexture);
 
         for (int i = 0; i < 32; ++i)
@@ -110,8 +109,6 @@ public class FontRenderer implements IResourceManagerReloadListener
 
     public void onResourceManagerReload(IResourceManager resourceManager)
     {
-        this.locationFontTexture = FontUtils.getHdFontLocation(this.locationFontTextureBase);
-
         for (int i = 0; i < unicodePageLocations.length; ++i)
         {
             unicodePageLocations[i] = null;
@@ -134,7 +131,7 @@ public class FontRenderer implements IResourceManagerReloadListener
             throw new RuntimeException(ioexception);
         }
 
-        Properties properties = FontUtils.readFontProperties(this.locationFontTexture);
+        Properties properties = FontUtils.readFontProperties(this.locationFontTexture, mc);
         int i = bufferedimage.getWidth();
         int j = bufferedimage.getHeight();
         int k = i / 16;

@@ -2674,6 +2674,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     {
         try
         {
+            if (mc.isHeadless()) return;
             this.spawnEntityFX(particleID, ignoreRange, xCoord, yCoord, zCoord, xOffset, yOffset, zOffset, p_180442_15_);
         }
         catch (Throwable throwable)

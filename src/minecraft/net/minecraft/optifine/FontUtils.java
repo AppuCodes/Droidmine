@@ -1,14 +1,14 @@
 package net.minecraft.optifine;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.util.ResourceLocation;
 
 public class FontUtils
 {
-    public static Properties readFontProperties(ResourceLocation p_readFontProperties_0_)
+    public static Properties readFontProperties(ResourceLocation p_readFontProperties_0_, ClientEngine mc)
     {
         String s = p_readFontProperties_0_.getResourcePath();
         Properties properties = new Properties();
@@ -25,7 +25,7 @@ public class FontUtils
             try
             {
                 ResourceLocation resourcelocation = new ResourceLocation(p_readFontProperties_0_.getResourceDomain(), s2);
-                InputStream inputstream = Config.getResourceStream(Config.getResourceManager(), resourcelocation);
+                InputStream inputstream = Config.getResourceStream(mc.getResourceManager(), resourcelocation);
 
                 if (inputstream == null)
                 {

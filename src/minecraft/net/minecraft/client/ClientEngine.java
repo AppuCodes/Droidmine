@@ -18,9 +18,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.display.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.*;
@@ -74,7 +75,6 @@ import net.minecraft.stats.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.Timer;
-import net.minecraft.util.Util;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.chunk.storage.AnvilSaveConverter;
@@ -82,7 +82,7 @@ import net.minecraft.world.storage.*;
 
 public class ClientEngine implements IThreadListener
 {
-    private static final Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
     private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/mojang.png");
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
     private static final List<DisplayMode> macDisplayModes = Lists.newArrayList(new DisplayMode[] {new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
@@ -165,7 +165,7 @@ public class ClientEngine implements IThreadListener
      * This is set to fpsCounter every debug screen update, and is shown on the debug screen. It's also sent as part of
      * the usage snooping.
      */
-    private static int debugFPS;
+    private int debugFPS;
 
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
@@ -231,9 +231,11 @@ public class ClientEngine implements IThreadListener
 
     /** Profiler currently displayed in the debug screen pie chart */
     private String debugProfilerName = "root";
+    private boolean headless;
 
-    public ClientEngine(GameConfiguration gameConfig)
+    public ClientEngine(GameConfiguration gameConfig, boolean headless)
     {
+        this.headless = headless;
         this.mcDataDir = gameConfig.folderInfo.mcDataDir;
         this.fileAssets = gameConfig.folderInfo.assetsDir;
         this.fileResourcepacks = gameConfig.folderInfo.resourcePacksDir;
@@ -274,6 +276,7 @@ public class ClientEngine implements IThreadListener
         }
         catch (Throwable throwable)
         {
+            throwable.printStackTrace();
             CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Initializing game");
             crashreport.makeCategory("Initialization");
             this.displayCrashReport(this.addGraphicsAndWorldToCrashReport(crashreport));
@@ -446,7 +449,7 @@ public class ClientEngine implements IThreadListener
             this.toggleFullscreen();
         }
 
-        Display.setVSyncEnabled(true);
+        Display.get().setVSyncEnabled(true);
         this.renderGlobal.makeEntityOutlineShader();
     }
 
@@ -461,12 +464,12 @@ public class ClientEngine implements IThreadListener
 
     private void createDisplay() throws LWJGLException
     {
-        Display.setResizable(true);
-        Display.setTitle("Minecraft View");
+        Display.get().setResizable(true);
+        Display.get().setTitle("Minecraft View");
 
         try
         {
-            Display.create((new PixelFormat()).withDepthBits(24));
+            Display.get().create(new PixelFormat().withDepthBits(24), isHeadless());
         }
         catch (LWJGLException lwjglexception)
         {
@@ -486,7 +489,7 @@ public class ClientEngine implements IThreadListener
                 this.updateDisplayMode();
             }
 
-            Display.create();
+            Display.get().create(isHeadless());
         }
     }
 
@@ -494,46 +497,19 @@ public class ClientEngine implements IThreadListener
     {
         if (this.fullscreen)
         {
-            Display.setFullscreen(true);
-            DisplayMode displaymode = Display.getDisplayMode();
+            Display.get().setFullscreen(true);
+            DisplayMode displaymode = Display.get().getDisplayMode();
             this.displayWidth = Math.max(1, displaymode.getWidth());
             this.displayHeight = Math.max(1, displaymode.getHeight());
         }
         else
         {
-            Display.setDisplayMode(new DisplayMode(this.displayWidth, this.displayHeight));
+            Display.get().setDisplayMode(new DisplayMode(this.displayWidth, this.displayHeight));
         }
     }
 
     private void setWindowIcon()
     {
-        Util.EnumOS util$enumos = Util.getOSType();
-
-        if (util$enumos != Util.EnumOS.OSX)
-        {
-            InputStream inputstream = null;
-            InputStream inputstream1 = null;
-
-            try
-            {
-                inputstream = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_16x16.png"));
-                inputstream1 = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_32x32.png"));
-
-                if (inputstream != null && inputstream1 != null)
-                {
-                    Display.setIcon(new ByteBuffer[] {this.readImageToBuffer(inputstream), this.readImageToBuffer(inputstream1)});
-                }
-            }
-            catch (IOException ioexception)
-            {
-                logger.error((String)"Couldn\'t set icon", (Throwable)ioexception);
-            }
-            finally
-            {
-                IOUtils.closeQuietly(inputstream);
-                IOUtils.closeQuietly(inputstream1);
-            }
-        }
     }
 
     private static boolean isJvm64bit()
@@ -652,8 +628,8 @@ public class ClientEngine implements IThreadListener
     private void updateDisplayMode() throws LWJGLException
     {
         Set<DisplayMode> set = Sets.<DisplayMode>newHashSet();
-        Collections.addAll(set, Display.getAvailableDisplayModes());
-        DisplayMode displaymode = Display.getDesktopDisplayMode();
+        Collections.addAll(set, Display.get().getAvailableDisplayModes());
+        DisplayMode displaymode = Display.get().getDesktopDisplayMode();
 
         if (!set.contains(displaymode) && Util.getOSType() == Util.EnumOS.OSX)
         {
@@ -697,7 +673,7 @@ public class ClientEngine implements IThreadListener
             }
         }
 
-        Display.setDisplayMode(displaymode);
+        Display.get().setDisplayMode(displaymode);
         this.displayWidth = displaymode.getWidth();
         this.displayHeight = displaymode.getHeight();
     }
@@ -843,7 +819,7 @@ public class ClientEngine implements IThreadListener
         }
         finally
         {
-            Display.destroy();
+            Display.get().destroy();
 
             if (!this.hasCrashed)
             {
@@ -864,7 +840,7 @@ public class ClientEngine implements IThreadListener
         
         long i = System.nanoTime();
 
-        if (Display.isCreated() && Display.isCloseRequested())
+        if (Display.get().isCreated() && Display.get().isCloseRequested())
         {
             this.shutdown();
         }
@@ -935,7 +911,7 @@ public class ClientEngine implements IThreadListener
             this.fpsCounter = 0;
         }
 
-        if (this.world == null && !Display.isActive())
+        if (this.world == null && !Display.get().isActive())
         {
             GL11.glFinish();
         }
@@ -943,18 +919,18 @@ public class ClientEngine implements IThreadListener
 
     public void updateDisplay()
     {
-        Display.update();
+        Display.get().update();
         this.checkWindowResize();
     }
 
     protected void checkWindowResize()
     {
-        if (!this.fullscreen && Display.wasResized())
+        if (!this.fullscreen && Display.get().wasResized())
         {
             int i = this.displayWidth;
             int j = this.displayHeight;
-            this.displayWidth = Display.getWidth();
-            this.displayHeight = Display.getHeight();
+            this.displayWidth = Display.get().getWidth();
+            this.displayHeight = Display.get().getHeight();
 
             if (this.displayWidth != i || this.displayHeight != j)
             {
@@ -1008,7 +984,7 @@ public class ClientEngine implements IThreadListener
      */
     public void setIngameFocus()
     {
-        if (Display.isActive())
+        if (Display.get().isActive())
         {
             if (!this.inGameHasFocus)
             {
@@ -1199,8 +1175,8 @@ public class ClientEngine implements IThreadListener
             if (this.fullscreen)
             {
                 this.updateDisplayMode();
-                this.displayWidth = Display.getDisplayMode().getWidth();
-                this.displayHeight = Display.getDisplayMode().getHeight();
+                this.displayWidth = Display.get().getDisplayMode().getWidth();
+                this.displayHeight = Display.get().getDisplayMode().getHeight();
 
                 if (this.displayWidth <= 0)
                 {
@@ -1214,7 +1190,7 @@ public class ClientEngine implements IThreadListener
             }
             else
             {
-                Display.setDisplayMode(new DisplayMode(this.tempDisplayWidth, this.tempDisplayHeight));
+                Display.get().setDisplayMode(new DisplayMode(this.tempDisplayWidth, this.tempDisplayHeight));
                 this.displayWidth = this.tempDisplayWidth;
                 this.displayHeight = this.tempDisplayHeight;
 
@@ -1238,8 +1214,8 @@ public class ClientEngine implements IThreadListener
                 this.updateFramebufferSize();
             }
 
-            Display.setFullscreen(this.fullscreen);
-            Display.setVSyncEnabled(true);
+            Display.get().setFullscreen(this.fullscreen);
+            Display.get().setVSyncEnabled(true);
             this.updateDisplay();
         }
         catch (Exception exception)
@@ -2337,7 +2313,15 @@ public class ClientEngine implements IThreadListener
      */
     public static long getSystemTime()
     {
-        return Sys.getTime() * 1000L / Sys.getTimerResolution();
+        try
+        {
+            return Sys.getTime() * 1000L / Sys.getTimerResolution();
+        }
+        
+        catch (Exception e)
+        {
+            return System.currentTimeMillis();
+        }
     }
 
     /**
@@ -2511,7 +2495,7 @@ public class ClientEngine implements IThreadListener
         return this.itemRenderer;
     }
 
-    public static int getDebugFPS()
+    public int getDebugFPS()
     {
         return debugFPS;
     }
@@ -2543,7 +2527,7 @@ public class ClientEngine implements IThreadListener
     /* true if Droidmine is not specified with a window */
     public boolean isHeadless()
     {
-        return false;
+        return headless;
     }
 
     private void updateKeyBindState()

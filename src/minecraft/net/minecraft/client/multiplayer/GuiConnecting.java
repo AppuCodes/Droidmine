@@ -70,6 +70,7 @@ public class GuiConnecting extends GuiScreen
                 }
                 catch (UnknownHostException unknownhostexception)
                 {
+                    unknownhostexception.printStackTrace();
                     if (GuiConnecting.this.cancel)
                     {
                         return;
@@ -80,6 +81,7 @@ public class GuiConnecting extends GuiScreen
                 }
                 catch (Exception exception)
                 {
+                    exception.printStackTrace();
                     if (GuiConnecting.this.cancel)
                     {
                         return;
