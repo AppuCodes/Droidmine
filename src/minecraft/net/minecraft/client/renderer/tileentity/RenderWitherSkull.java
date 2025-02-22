@@ -45,18 +45,18 @@ public class RenderWitherSkull extends Render<EntityWitherSkull>
      */
     public void doRender(EntityWitherSkull entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().disableCull();
         float f = this.func_82400_a(entity.prevRotationYaw, entity.rotationYaw, partialTicks);
         float f1 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-        GlStateManager.translate((float)x, (float)y, (float)z);
+        GlStateManager.get().translate((float)x, (float)y, (float)z);
         float f2 = 0.0625F;
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-        GlStateManager.enableAlpha();
+        GlStateManager.get().enableRescaleNormal();
+        GlStateManager.get().scale(-1.0F, -1.0F, 1.0F);
+        GlStateManager.get().enableAlpha();
         this.bindEntityTexture(entity);
         this.skeletonHeadModel.render(entity, 0.0F, 0.0F, 0.0F, f, f1, f2);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

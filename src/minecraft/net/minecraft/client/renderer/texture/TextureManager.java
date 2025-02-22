@@ -37,11 +37,6 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
     
     public void bindTexture(ResourceLocation resource)
     {
-        if (Config.isRandomMobs())
-        {
-            resource = RandomMobs.getTextureLocation(resource);
-        }
-
         Object object = (ITextureObject)this.mapTextureObjects.get(resource);
 
         if (object == null)
@@ -50,13 +45,13 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
             this.loadTexture(resource, (ITextureObject)object);
         }
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             ShadersTex.bindTexture((ITextureObject)object);
         }
         else
         {
-            TextureUtil.bindTexture(((ITextureObject)object).getGlTextureId());
+            TextureUtil.get().bindTexture(((ITextureObject)object).getGlTextureId());
         }
     }
 
@@ -85,7 +80,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
         catch (IOException ioexception)
         {
             // logger.warn((String)("Failed to load texture: " + textureLocation) + (Throwable)ioexception);
-            itextureobject = TextureUtil.missingTexture;
+            itextureobject = TextureUtil.get().missingTexture;
             this.mapTextureObjects.put(textureLocation, itextureobject);
             flag = false;
         }
@@ -118,7 +113,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
     {
         if (name.equals("logo"))
         {
-            texture = Config.getMojangLogoTexture(texture);
+            texture = Config.get().getMojangLogoTexture(texture);
         }
 
         Integer integer = (Integer)this.mapTextureCounters.get(name);
@@ -153,7 +148,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
         if (itextureobject != null)
         {
             this.mapTextureObjects.remove(textureLocation);
-            TextureUtil.deleteTexture(itextureobject.getGlTextureId());
+            TextureUtil.get().deleteTexture(itextureobject.getGlTextureId());
         }
     }
 

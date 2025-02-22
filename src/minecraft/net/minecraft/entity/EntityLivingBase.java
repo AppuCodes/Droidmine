@@ -1342,15 +1342,6 @@ public abstract class EntityLivingBase extends Entity
         }
     }
     
-    public void swingItemClientSide()
-    {
-        if (!this.isSwingInProgress || this.swingProgressInt >= this.getArmSwingAnimationEnd() / 2 || this.swingProgressInt < 0)
-        {
-            this.swingProgressInt = -1;
-            this.isSwingInProgress = true;
-        }
-    }
-
     public void handleStatusUpdate(byte id)
     {
         if (id == 2)

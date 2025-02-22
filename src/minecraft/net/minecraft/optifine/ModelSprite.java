@@ -45,7 +45,7 @@ public class ModelSprite
 
     public void render(Tessellator p_render_1_, float p_render_2_)
     {
-        GlStateManager.translate(this.posX * p_render_2_, this.posY * p_render_2_, this.posZ * p_render_2_);
+        GlStateManager.get().translate(this.posX * p_render_2_, this.posY * p_render_2_, this.posZ * p_render_2_);
         float f = this.minU;
         float f1 = this.maxU;
         float f2 = this.minV;
@@ -64,7 +64,7 @@ public class ModelSprite
         }
 
         renderItemIn2D(p_render_1_, f, f2, f1, f3, this.sizeX, this.sizeY, p_render_2_ * (float)this.sizeZ, this.modelRenderer.textureWidth, this.modelRenderer.textureHeight);
-        GlStateManager.translate(-this.posX * p_render_2_, -this.posY * p_render_2_, -this.posZ * p_render_2_);
+        GlStateManager.get().translate(-this.posX * p_render_2_, -this.posY * p_render_2_, -this.posZ * p_render_2_);
     }
 
     public static void renderItemIn2D(Tessellator p_renderItemIn2D_0_, float p_renderItemIn2D_1_, float p_renderItemIn2D_2_, float p_renderItemIn2D_3_, float p_renderItemIn2D_4_, int p_renderItemIn2D_5_, int p_renderItemIn2D_6_, float p_renderItemIn2D_7_, float p_renderItemIn2D_8_, float p_renderItemIn2D_9_)

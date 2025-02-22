@@ -156,7 +156,7 @@ public class EffectRenderer {
 
    public void func_78873_a(EntityFX p_78873_1_) {
       if(p_78873_1_ != null) {
-         if(!(p_78873_1_ instanceof EntityFirework.SparkFX) || Config.isFireworkParticles()) {
+         if(!(p_78873_1_ instanceof EntityFirework.SparkFX) || Config.get().isFireworkParticles()) {
             int i = p_78873_1_.func_70537_b();
             int j = p_78873_1_.func_174838_j() != 1.0F?0:1;
             if(this.field_78876_b[i][j].size() >= 4000) {
@@ -242,9 +242,9 @@ public class EffectRenderer {
       EntityFX.field_70556_an = p_78874_1_.field_70142_S + (p_78874_1_.field_70165_t - p_78874_1_.field_70142_S) * (double)p_78874_2_;
       EntityFX.field_70554_ao = p_78874_1_.field_70137_T + (p_78874_1_.field_70163_u - p_78874_1_.field_70137_T) * (double)p_78874_2_;
       EntityFX.field_70555_ap = p_78874_1_.field_70136_U + (p_78874_1_.field_70161_v - p_78874_1_.field_70136_U) * (double)p_78874_2_;
-      GlStateManager.func_179147_l();
-      GlStateManager.func_179112_b(770, 771);
-      GlStateManager.func_179092_a(516, 0.003921569F);
+      GlStateManager.get().func_179147_l();
+      GlStateManager.get().func_179112_b(770, 771);
+      GlStateManager.get().func_179092_a(516, 0.003921569F);
 
       for(int i = 0; i < 3; ++i) {
          final int j = i;
@@ -253,10 +253,10 @@ public class EffectRenderer {
             if(!this.field_78876_b[j][k].isEmpty()) {
                switch(k) {
                case 0:
-                  GlStateManager.func_179132_a(false);
+                  GlStateManager.get().func_179132_a(false);
                   break;
                case 1:
-                  GlStateManager.func_179132_a(true);
+                  GlStateManager.get().func_179132_a(true);
                }
 
                switch(j) {
@@ -268,7 +268,7 @@ public class EffectRenderer {
                   this.field_78877_c.func_110577_a(TextureMap.field_110575_b);
                }
 
-               GlStateManager.func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
+               GlStateManager.get().func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
                Tessellator tessellator = Tessellator.func_178181_a();
                WorldRenderer worldrenderer = tessellator.func_178180_c();
                worldrenderer.func_181668_a(7, DefaultVertexFormats.field_181704_d);
@@ -304,9 +304,9 @@ public class EffectRenderer {
          }
       }
 
-      GlStateManager.func_179132_a(true);
-      GlStateManager.func_179084_k();
-      GlStateManager.func_179092_a(516, 0.1F);
+      GlStateManager.get().func_179132_a(true);
+      GlStateManager.get().func_179084_k();
+      GlStateManager.get().func_179092_a(516, 0.1F);
    }
 
    public void func_78872_b(Entity p_78872_1_, float p_78872_2_) {

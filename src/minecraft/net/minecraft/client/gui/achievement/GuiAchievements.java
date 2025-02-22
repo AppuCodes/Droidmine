@@ -111,7 +111,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         }
         else
         {
-            if (Mouse.isButtonDown(0))
+            if (Mouse.get().isButtonDown(0))
             {
                 int i = (this.width - this.field_146555_f) / 2;
                 int j = (this.height - this.field_146557_g) / 2;
@@ -141,7 +141,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 this.field_146554_D = 0;
             }
 
-            int i1 = Mouse.getDWheel();
+            int i1 = Mouse.get().getDWheel();
             float f3 = this.field_146570_r;
 
             if (i1 < 0)
@@ -190,11 +190,11 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
             this.drawDefaultBackground();
             this.drawAchievementScreen(mouseX, mouseY, partialTicks);
-            GlStateManager.disableLighting();
-            GlStateManager.disableDepth();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().disableDepth();
             this.drawTitle();
-            GlStateManager.enableLighting();
-            GlStateManager.enableDepth();
+            GlStateManager.get().enableLighting();
+            GlStateManager.get().enableDepth();
         }
     }
 
@@ -268,14 +268,14 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         int i1 = k + 16;
         int j1 = l + 17;
         this.zLevel = 0.0F;
-        GlStateManager.depthFunc(518);
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)i1, (float)j1, -200.0F);
-        GlStateManager.scale(1.0F / this.field_146570_r, 1.0F / this.field_146570_r, 0.0F);
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableLighting();
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.enableColorMaterial();
+        GlStateManager.get().depthFunc(518);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)i1, (float)j1, -200.0F);
+        GlStateManager.get().scale(1.0F / this.field_146570_r, 1.0F / this.field_146570_r, 0.0F);
+        GlStateManager.get().enableTexture2D();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().enableRescaleNormal();
+        GlStateManager.get().enableColorMaterial();
         int k1 = i + 288 >> 4;
         int l1 = j + 288 >> 4;
         int i2 = (i + 288) % 16;
@@ -292,7 +292,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         for (int l3 = 0; (float)l3 * f - (float)j2 < 155.0F; ++l3)
         {
             float f2 = 0.6F - (float)(l1 + l3) / 25.0F * 0.3F;
-            GlStateManager.color(f2, f2, f2, 1.0F);
+            GlStateManager.get().color(f2, f2, f2, 1.0F);
 
             for (int i4 = 0; (float)i4 * f1 - (float)i2 < 224.0F; ++i4)
             {
@@ -341,8 +341,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             }
         }
 
-        GlStateManager.enableDepth();
-        GlStateManager.depthFunc(515);
+        GlStateManager.get().enableDepth();
+        GlStateManager.get().depthFunc(515);
         this.mc.getTextureManager().bindTexture(ACHIEVEMENT_BACKGROUND);
 
         for (int j5 = 0; j5 < AchievementList.achievementList.size(); ++j5)
@@ -398,10 +398,10 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         Achievement achievement = null;
         float f3 = (float)(p_146552_1_ - i1) * this.field_146570_r;
         float f4 = (float)(p_146552_2_ - j1) * this.field_146570_r;
-        RenderHelper.enableGUIStandardItemLighting();
-        GlStateManager.disableLighting();
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.enableColorMaterial();
+        RenderHelper.get().enableGUIStandardItemLighting();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().enableRescaleNormal();
+        GlStateManager.get().enableColorMaterial();
 
         for (int i6 = 0; i6 < AchievementList.achievementList.size(); ++i6)
         {
@@ -416,22 +416,22 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 if (this.statFileWriter.hasAchievementUnlocked(achievement2))
                 {
                     float f5 = 0.75F;
-                    GlStateManager.color(f5, f5, f5, 1.0F);
+                    GlStateManager.get().color(f5, f5, f5, 1.0F);
                 }
                 else if (this.statFileWriter.canUnlockAchievement(achievement2))
                 {
                     float f6 = 1.0F;
-                    GlStateManager.color(f6, f6, f6, 1.0F);
+                    GlStateManager.get().color(f6, f6, f6, 1.0F);
                 }
                 else if (l7 < 3)
                 {
                     float f7 = 0.3F;
-                    GlStateManager.color(f7, f7, f7, 1.0F);
+                    GlStateManager.get().color(f7, f7, f7, 1.0F);
                 }
                 else if (l7 == 3)
                 {
                     float f8 = 0.2F;
-                    GlStateManager.color(f8, f8, f8, 1.0F);
+                    GlStateManager.get().color(f8, f8, f8, 1.0F);
                 }
                 else
                 {
@@ -441,7 +441,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                     }
 
                     float f9 = 0.1F;
-                    GlStateManager.color(f9, f9, f9, 1.0F);
+                    GlStateManager.get().color(f9, f9, f9, 1.0F);
                 }
 
                 this.mc.getTextureManager().bindTexture(ACHIEVEMENT_BACKGROUND);
@@ -458,22 +458,22 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 if (!this.statFileWriter.canUnlockAchievement(achievement2))
                 {
                     float f10 = 0.1F;
-                    GlStateManager.color(f10, f10, f10, 1.0F);
+                    GlStateManager.get().color(f10, f10, f10, 1.0F);
                     this.itemRender.func_175039_a(false);
                 }
 
-                GlStateManager.enableLighting();
-                GlStateManager.enableCull();
+                GlStateManager.get().enableLighting();
+                GlStateManager.get().enableCull();
                 this.itemRender.renderItemAndEffectIntoGUI(achievement2.theItemStack, l6 + 3, j7 + 3);
-                GlStateManager.blendFunc(770, 771);
-                GlStateManager.disableLighting();
+                GlStateManager.get().blendFunc(770, 771);
+                GlStateManager.get().disableLighting();
 
                 if (!this.statFileWriter.canUnlockAchievement(achievement2))
                 {
                     this.itemRender.func_175039_a(true);
                 }
 
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
 
                 if (f3 >= (float)l6 && f3 <= (float)(l6 + 22) && f4 >= (float)j7 && f4 <= (float)(j7 + 22))
                 {
@@ -482,16 +482,16 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             }
         }
 
-        GlStateManager.disableDepth();
-        GlStateManager.enableBlend();
-        GlStateManager.popMatrix();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().disableDepth();
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().popMatrix();
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(ACHIEVEMENT_BACKGROUND);
         this.drawTexturedModalRect(k, l, 0, 0, this.field_146555_f, this.field_146557_g);
         this.zLevel = 0.0F;
-        GlStateManager.depthFunc(515);
-        GlStateManager.disableDepth();
-        GlStateManager.enableTexture2D();
+        GlStateManager.get().depthFunc(515);
+        GlStateManager.get().disableDepth();
+        GlStateManager.get().enableTexture2D();
         super.drawScreen(p_146552_1_, p_146552_2_, p_146552_3_);
 
         if (achievement != null)
@@ -548,9 +548,9 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
             }
         }
 
-        GlStateManager.enableDepth();
-        GlStateManager.enableLighting();
-        RenderHelper.disableStandardItemLighting();
+        GlStateManager.get().enableDepth();
+        GlStateManager.get().enableLighting();
+        RenderHelper.get().disableStandardItemLighting();
     }
 
     private TextureAtlasSprite func_175371_a(Block p_175371_1_)

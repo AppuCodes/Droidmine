@@ -31,7 +31,7 @@ public class RandomMobsRule
 
         if (resourcelocation == null)
         {
-            Config.warn("Invalid path: " + this.baseResLoc.getResourcePath());
+            Config.get().warn("Invalid path: " + this.baseResLoc.getResourcePath());
             return false;
         }
         else
@@ -50,13 +50,13 @@ public class RandomMobsRule
 
                     if (resourcelocation1 == null)
                     {
-                        Config.warn("Invalid path: " + this.baseResLoc.getResourcePath());
+                        Config.get().warn("Invalid path: " + this.baseResLoc.getResourcePath());
                         return false;
                     }
 
-                    if (!Config.hasResource(resourcelocation1))
+                    if (!Config.get().hasResource(resourcelocation1))
                     {
-                        Config.warn("Texture not found: " + resourcelocation1.getResourcePath());
+                        Config.get().warn("Texture not found: " + resourcelocation1.getResourcePath());
                         return false;
                     }
 
@@ -68,7 +68,7 @@ public class RandomMobsRule
             {
                 if (this.weights.length > this.resourceLocations.length)
                 {
-                    Config.warn("More weights defined than skins, trimming weights: " + p_isValid_1_);
+                    Config.get().warn("More weights defined than skins, trimming weights: " + p_isValid_1_);
                     int[] aint = new int[this.resourceLocations.length];
                     System.arraycopy(this.weights, 0, aint, 0, aint.length);
                     this.weights = aint;
@@ -76,7 +76,7 @@ public class RandomMobsRule
 
                 if (this.weights.length < this.resourceLocations.length)
                 {
-                    Config.warn("Less weights defined than skins, expanding weights: " + p_isValid_1_);
+                    Config.get().warn("Less weights defined than skins, expanding weights: " + p_isValid_1_);
                     int[] aint1 = new int[this.resourceLocations.length];
                     System.arraycopy(this.weights, 0, aint1, 0, this.weights.length);
                     int l = MathUtils.getAverage(this.weights);
@@ -96,7 +96,7 @@ public class RandomMobsRule
                 {
                     if (this.weights[i1] < 0)
                     {
-                        Config.warn("Invalid weight: " + this.weights[i1]);
+                        Config.get().warn("Invalid weight: " + this.weights[i1]);
                         return false;
                     }
 
@@ -108,7 +108,7 @@ public class RandomMobsRule
 
                 if (this.sumAllWeights <= 0)
                 {
-                    Config.warn("Invalid sum of all weights: " + k);
+                    Config.get().warn("Invalid sum of all weights: " + k);
                     this.sumAllWeights = 1;
                 }
             }

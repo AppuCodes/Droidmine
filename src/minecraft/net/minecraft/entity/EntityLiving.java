@@ -286,7 +286,7 @@ public abstract class EntityLiving extends EntityLivingBase
      */
     public void onUpdate()
     {
-        if (Config.isSmoothWorld() && this.canSkipUpdate())
+        if (Config.get().isSmoothWorld() && this.canSkipUpdate())
         {
             this.onUpdateMinimal();
         }

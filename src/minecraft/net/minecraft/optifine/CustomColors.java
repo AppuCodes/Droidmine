@@ -195,7 +195,7 @@ public class CustomColors
         waterColors = getCustomColors(s, astring, 256, 256);
         updateUseDefaultGrassFoliageColors();
 
-        if (Config.isCustomColors())
+        if (Config.get().isCustomColors())
         {
             String[] astring1 = new String[] {"pine.png", "pinecolor.png"};
             foliagePineColors = getCustomColors(s, astring1, 256, 256);
@@ -235,7 +235,7 @@ public class CustomColors
         try
         {
             ResourceLocation resourcelocation = new ResourceLocation(p_getValidProperty_0_);
-            InputStream inputstream = Config.getResourceStream(resourcelocation);
+            InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
             if (inputstream == null)
             {
@@ -259,7 +259,7 @@ public class CustomColors
                     if (!list.contains(s))
                     {
                         warn("Invalid value: " + p_getValidProperty_1_ + "=" + s);
-                        warn("Expected values: " + Config.arrayToString((Object[])p_getValidProperty_2_));
+                        warn("Expected values: " + Config.get().arrayToString((Object[])p_getValidProperty_2_));
                         return p_getValidProperty_3_;
                     }
                     else
@@ -291,7 +291,7 @@ public class CustomColors
         {
             String s2 = astring[i];
             String s3 = StrUtils.removePrefixSuffix(s2, s, s1);
-            int j = Config.parseInt(s3, Integer.MIN_VALUE);
+            int j = Config.get().parseInt(s3, Integer.MIN_VALUE);
 
             if (j == Integer.MIN_VALUE)
             {
@@ -346,7 +346,7 @@ public class CustomColors
     {
         try
         {
-            InputStream inputstream = Config.getResourceStream(new ResourceLocation(p_getTextureHeight_0_));
+            InputStream inputstream = Config.get().getResourceStream(new ResourceLocation(p_getTextureHeight_0_));
 
             if (inputstream == null)
             {
@@ -370,7 +370,7 @@ public class CustomColors
         try
         {
             ResourceLocation resourcelocation = new ResourceLocation(p_readColorProperties_0_);
-            InputStream inputstream = Config.getResourceStream(resourcelocation);
+            InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
             if (inputstream == null)
             {
@@ -408,7 +408,7 @@ public class CustomColors
             }
 
             potionColors = readPotionColors(properties, p_readColorProperties_0_, "potion.", "Potion");
-            xpOrbTime = Config.parseInt(properties.getProperty("xporb.time"), -1);
+            xpOrbTime = Config.get().parseInt(properties.getProperty("xporb.time"), -1);
         }
         catch (FileNotFoundException var5)
         {
@@ -497,7 +497,7 @@ public class CustomColors
             try
             {
                 ResourceLocation resourcelocation = new ResourceLocation("minecraft", s);
-                InputStream inputstream = Config.getResourceStream(resourcelocation);
+                InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
                 if (inputstream == null)
                 {
@@ -567,7 +567,7 @@ public class CustomColors
         }
         else
         {
-            warn("No match blocks: " + Config.arrayToString(aint));
+            warn("No match blocks: " + Config.get().arrayToString(aint));
         }
     }
 
@@ -713,7 +713,7 @@ public class CustomColors
         {
             ResourceLocation resourcelocation = new ResourceLocation(p_getCustomColors_0_);
 
-            if (!Config.hasResource(resourcelocation))
+            if (!Config.get().hasResource(resourcelocation))
             {
                 return null;
             }
@@ -723,9 +723,9 @@ public class CustomColors
                 String s = StrUtils.replaceSuffix(p_getCustomColors_0_, ".png", ".properties");
                 ResourceLocation resourcelocation1 = new ResourceLocation(s);
 
-                if (Config.hasResource(resourcelocation1))
+                if (Config.get().hasResource(resourcelocation1))
                 {
-                    InputStream inputstream = Config.getResourceStream(resourcelocation1);
+                    InputStream inputstream = Config.get().getResourceStream(resourcelocation1);
                     properties.load(inputstream);
                     inputstream.close();
                 }
@@ -749,7 +749,7 @@ public class CustomColors
 
     public static void updateUseDefaultGrassFoliageColors()
     {
-        useDefaultGrassFoliageColors = foliageBirchColors == null && foliagePineColors == null && swampGrassColors == null && swampFoliageColors == null && Config.isSwampColors() && Config.isSmoothBiomes();
+        useDefaultGrassFoliageColors = foliageBirchColors == null && foliagePineColors == null && swampGrassColors == null && swampFoliageColors == null && Config.get().isSwampColors() && Config.get().isSmoothBiomes();
     }
 
     public static int getColorMultiplier(BakedQuad p_getColorMultiplier_0_, Block p_getColorMultiplier_1_, IBlockAccess p_getColorMultiplier_2_, BlockPos p_getColorMultiplier_3_, RenderEnv p_getColorMultiplier_4_)
@@ -781,7 +781,7 @@ public class CustomColors
 
             if (customcolormap != null)
             {
-                if (Config.isSmoothBiomes() && !customcolormap.isColorConstant())
+                if (Config.get().isSmoothBiomes() && !customcolormap.isColorConstant())
                 {
                     return getSmoothColorMultiplier(p_getColorMultiplier_2_, p_getColorMultiplier_3_, customcolormap, p_getColorMultiplier_4_.getColorizerBlockPosM());
                 }
@@ -865,7 +865,7 @@ public class CustomColors
                 customcolors$icolorizer = COLORIZER_GRASS;
             }
 
-            return Config.isSmoothBiomes() && !customcolors$icolorizer.isColorConstant() ? getSmoothColorMultiplier(p_getColorMultiplier_2_, p_getColorMultiplier_3_, customcolors$icolorizer, p_getColorMultiplier_4_.getColorizerBlockPosM()) : customcolors$icolorizer.getColor(p_getColorMultiplier_2_, p_getColorMultiplier_3_);
+            return Config.get().isSmoothBiomes() && !customcolors$icolorizer.isColorConstant() ? getSmoothColorMultiplier(p_getColorMultiplier_2_, p_getColorMultiplier_3_, customcolors$icolorizer, p_getColorMultiplier_4_.getColorizerBlockPosM()) : customcolors$icolorizer.getColor(p_getColorMultiplier_2_, p_getColorMultiplier_3_);
         }
     }
 
@@ -873,7 +873,7 @@ public class CustomColors
     {
         BiomeGenBase biomegenbase = p_getColorBiome_0_.getBiomeGenForCoords(p_getColorBiome_1_);
 
-        if (biomegenbase == BiomeGenBase.swampland && !Config.isSwampColors())
+        if (biomegenbase == BiomeGenBase.swampland && !Config.get().isSwampColors())
         {
             biomegenbase = BiomeGenBase.plains;
         }
@@ -964,7 +964,7 @@ public class CustomColors
             customcolors$icolorizer = COLORIZER_WATER;
         }
 
-        return customcolors$icolorizer == null ? block.colorMultiplier(p_getFluidColor_0_, p_getFluidColor_2_) : (Config.isSmoothBiomes() && !customcolors$icolorizer.isColorConstant() ? getSmoothColorMultiplier(p_getFluidColor_0_, p_getFluidColor_2_, customcolors$icolorizer, p_getFluidColor_3_.getColorizerBlockPosM()) : customcolors$icolorizer.getColor(p_getFluidColor_0_, p_getFluidColor_2_));
+        return customcolors$icolorizer == null ? block.colorMultiplier(p_getFluidColor_0_, p_getFluidColor_2_) : (Config.get().isSmoothBiomes() && !customcolors$icolorizer.isColorConstant() ? getSmoothColorMultiplier(p_getFluidColor_0_, p_getFluidColor_2_, customcolors$icolorizer, p_getFluidColor_3_.getColorizerBlockPosM()) : customcolors$icolorizer.getColor(p_getFluidColor_0_, p_getFluidColor_2_));
     }
 
     public static void updatePortalFX(EntityFX p_updatePortalFX_0_)
@@ -1295,10 +1295,10 @@ public class CustomColors
                                 f = 1.0F;
                             }
 
-                            f = Config.limitTo1(f);
+                            f = Config.get().limitTo1(f);
                             float f1 = f * (float)(l - 1);
-                            float f2 = Config.limitTo1(p_updateLightmap_1_ + 0.5F) * (float)(l - 1);
-                            float f3 = Config.limitTo1(Config.getoptions().gammaSetting);
+                            float f2 = Config.get().limitTo1(p_updateLightmap_1_ + 0.5F) * (float)(l - 1);
+                            float f3 = Config.get().limitTo1(Config.get().getoptions().gammaSetting);
                             boolean flag = f3 > 1.0E-4F;
                             float[][] afloat = customcolormap.getColorsRgb();
                             getLightMapColumn(afloat, f1, i1, l, sunRgbs);
@@ -1311,7 +1311,7 @@ public class CustomColors
                                 {
                                     for (int l1 = 0; l1 < 3; ++l1)
                                     {
-                                        float f4 = Config.limitTo1(sunRgbs[j1][l1] + torchRgbs[k1][l1]);
+                                        float f4 = Config.get().limitTo1(sunRgbs[j1][l1] + torchRgbs[k1][l1]);
 
                                         if (flag)
                                         {
@@ -1593,7 +1593,7 @@ public class CustomColors
             if (((String) s).startsWith(p_readTextColors_2_))
             {
                 String s2 = StrUtils.removePrefix((String) s, p_readTextColors_2_);
-                int j = Config.parseInt(s2, -1);
+                int j = Config.get().parseInt(s2, -1);
                 int k = parseColor(s1);
 
                 if (j >= 0 && j < aint.length && k >= 0)
@@ -1822,14 +1822,14 @@ public class CustomColors
             else
             {
                 String s = EntityList.getStringFromID(i);
-                return !Config.equals(p_getEntityId_0_, s) ? -1 : i;
+                return !Config.get().equals(p_getEntityId_0_, s) ? -1 : i;
             }
         }
     }
 
     private static void warn(String p_warn_0_)
     {
-        Config.warn("CustomColors: " + p_warn_0_);
+        Config.get().warn("CustomColors: " + p_warn_0_);
     }
 
     public static int getExpBarTextColor(int p_getExpBarTextColor_0_)

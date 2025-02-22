@@ -285,7 +285,7 @@ public class HttpPipelineConnection
 
         if (s1 != null)
         {
-            String[] astring = Config.tokenize(s1, ",;");
+            String[] astring = Config.get().tokenize(s1, ",;");
 
             for (int i = 0; i < astring.length; ++i)
             {
@@ -296,7 +296,7 @@ public class HttpPipelineConnection
                 {
                     if (astring1[0].equals("timeout"))
                     {
-                        int j = Config.parseInt(astring1[1], -1);
+                        int j = Config.get().parseInt(astring1[1], -1);
 
                         if (j > 0)
                         {
@@ -306,7 +306,7 @@ public class HttpPipelineConnection
 
                     if (astring1[0].equals("max"))
                     {
-                        int k = Config.parseInt(astring1[1], -1);
+                        int k = Config.get().parseInt(astring1[1], -1);
 
                         if (k > 0)
                         {

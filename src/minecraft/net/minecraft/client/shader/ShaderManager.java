@@ -182,8 +182,8 @@ public class ShaderManager
         {
             if (this.shaderSamplers.get(this.samplerNames.get(i)) != null)
             {
-                GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit + i);
-                GlStateManager.bindTexture(0);
+                GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit + i);
+                GlStateManager.get().bindTexture(0);
             }
         }
     }
@@ -202,19 +202,19 @@ public class ShaderManager
 
         if (this.useFaceCulling)
         {
-            GlStateManager.enableCull();
+            GlStateManager.get().enableCull();
         }
         else
         {
-            GlStateManager.disableCull();
+            GlStateManager.get().disableCull();
         }
 
         for (int i = 0; i < this.shaderSamplerLocations.size(); ++i)
         {
             if (this.shaderSamplers.get(this.samplerNames.get(i)) != null)
             {
-                GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit + i);
-                GlStateManager.enableTexture2D();
+                GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit + i);
+                GlStateManager.get().enableTexture2D();
                 Object object = this.shaderSamplers.get(this.samplerNames.get(i));
                 int j = -1;
 
@@ -233,7 +233,7 @@ public class ShaderManager
 
                 if (j != -1)
                 {
-                    GlStateManager.bindTexture(j);
+                    GlStateManager.get().bindTexture(j);
                     OpenGlHelper.glUniform1i(OpenGlHelper.glGetUniformLocation(this.program, (CharSequence)this.samplerNames.get(i)), i);
                 }
             }

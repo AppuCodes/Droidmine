@@ -32,8 +32,8 @@ public class RenderXPOrb extends Render
      */
     public void doRender(EntityXPOrb entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y, (float)z);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)x, (float)y, (float)z);
         this.bindEntityTexture(entity);
         int i = entity.getTextureByXP();
         float f = (float)(i % 4 * 16 + 0) / 64.0F;
@@ -47,16 +47,16 @@ public class RenderXPOrb extends Render
         int k = j % 65536;
         int l = j / 65536;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)k / 1.0F, (float)l / 1.0F);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         float f7 = 255.0F;
         float f8 = ((float)entity.xpColor + partialTicks) / 2.0F;
         l = (int)((MathHelper.sin(f8 + 0.0F) + 1.0F) * 0.5F * 255.0F);
         boolean flag = true;
         int i1 = (int)((MathHelper.sin(f8 + 4.1887903F) + 1.0F) * 0.1F * 255.0F);
-        GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.get().rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         float f9 = 0.3F;
-        GlStateManager.scale(0.3F, 0.3F, 0.3F);
+        GlStateManager.get().scale(0.3F, 0.3F, 0.3F);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
@@ -64,7 +64,7 @@ public class RenderXPOrb extends Render
         int k1 = 255;
         int l1 = i1;
 
-        if (Config.isCustomColors())
+        if (Config.get().isCustomColors())
         {
             int i2 = CustomColors.getXpOrbColor(f8);
 
@@ -81,9 +81,9 @@ public class RenderXPOrb extends Render
         worldrenderer.pos((double)(f4 - f5), (double)(1.0F - f6), 0.0D).tex((double)f1, (double)f2).color(j1, k1, l1, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
         worldrenderer.pos((double)(0.0F - f5), (double)(1.0F - f6), 0.0D).tex((double)f, (double)f2).color(j1, k1, l1, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
         tessellator.draw();
-        GlStateManager.disableBlend();
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.popMatrix();
+        GlStateManager.get().disableBlend();
+        GlStateManager.get().disableRescaleNormal();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

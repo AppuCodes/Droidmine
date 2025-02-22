@@ -43,7 +43,7 @@ public class RenderChunk
     private BlockPos[] positionOffsets16 = new BlockPos[EnumFacing.VALUES.length];
     private static EnumWorldBlockLayer[] ENUM_WORLD_BLOCK_LAYERS = EnumWorldBlockLayer.values();
     private EnumWorldBlockLayer[] blockLayersSingle = new EnumWorldBlockLayer[1];
-    private boolean isMipmaps = Config.isMipmaps();
+    private boolean isMipmaps = Config.get().isMipmaps();
     private boolean fixBlockLayer = !Reflector.BetterFoliageClient.exists();
     private boolean playerUpdate = false;
     private ClientEngine mc;
@@ -175,7 +175,7 @@ public class RenderChunk
                 if (ReflectorForge.blockHasTileEntity(iblockstate))
                 {
                     TileEntity tileentity = regionrendercache.getTileEntity(new BlockPos(blockposm));
-                    TileEntitySpecialRenderer tileentityspecialrenderer = TileEntityRendererDispatcher.instance.getSpecialRenderer(tileentity);
+                    TileEntitySpecialRenderer tileentityspecialrenderer = TileEntityRendererDispatcher.instance == null ? null : TileEntityRendererDispatcher.instance.getSpecialRenderer(tileentity);
 
                     if (tileentity != null && tileentityspecialrenderer != null)
                     {
@@ -251,7 +251,7 @@ public class RenderChunk
 
                 if (compiledchunk.isLayerStarted(enumworldblocklayer1))
                 {
-                    if (Config.isShaders())
+                    if (Config.get().isShaders())
                     {
                         SVertexBuilder.calcNormalChunkLayer(generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(enumworldblocklayer1));
                     }
@@ -373,19 +373,19 @@ public class RenderChunk
 
     private void initModelviewMatrix()
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.loadIdentity();
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().loadIdentity();
         float f = 1.000001F;
-        GlStateManager.translate(-8.0F, -8.0F, -8.0F);
-        GlStateManager.scale(f, f, f);
-        GlStateManager.translate(8.0F, 8.0F, 8.0F);
-        GlStateManager.getFloat(2982, this.modelviewMatrix);
-        GlStateManager.popMatrix();
+        GlStateManager.get().translate(-8.0F, -8.0F, -8.0F);
+        GlStateManager.get().scale(f, f, f);
+        GlStateManager.get().translate(8.0F, 8.0F, 8.0F);
+        GlStateManager.get().getFloat(2982, this.modelviewMatrix);
+        GlStateManager.get().popMatrix();
     }
 
     public void multModelviewMatrix()
     {
-        GlStateManager.multMatrix(this.modelviewMatrix);
+        GlStateManager.get().multMatrix(this.modelviewMatrix);
     }
 
     public CompiledChunk getCompiledChunk()

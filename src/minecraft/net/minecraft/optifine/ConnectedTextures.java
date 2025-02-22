@@ -504,7 +504,7 @@ public class ConnectedTextures
         else
         {
             int i = p_getConnectedTextureRandom_2_ / p_getConnectedTextureRandom_0_.symmetry * p_getConnectedTextureRandom_0_.symmetry;
-            int j = Config.getRandom(p_getConnectedTextureRandom_1_, i) & Integer.MAX_VALUE;
+            int j = Config.get().getRandom(p_getConnectedTextureRandom_1_, i) & Integer.MAX_VALUE;
             int k = 0;
 
             if (p_getConnectedTextureRandom_0_.weights == null)
@@ -714,7 +714,7 @@ public class ConnectedTextures
         {
             return p_getConnectedTextureCtm_0_.tileIcons[i];
         }
-        else if (!Config.isConnectedTexturesFancy())
+        else if (!Config.get().isConnectedTexturesFancy())
         {
             return p_getConnectedTextureCtm_0_.tileIcons[i];
         }
@@ -1252,7 +1252,7 @@ public class ConnectedTextures
 
                 if (inputstream == null)
                 {
-                    Config.warn("ConnectedTextures file not found: " + s);
+                    Config.get().warn("ConnectedTextures file not found: " + s);
                 }
                 else
                 {
@@ -1270,7 +1270,7 @@ public class ConnectedTextures
             }
             catch (FileNotFoundException var11)
             {
-                Config.warn("ConnectedTextures file not found: " + s);
+                Config.get().warn("ConnectedTextures file not found: " + s);
             }
             catch (Exception exception)
             {
@@ -1381,7 +1381,7 @@ public class ConnectedTextures
 
                 if (!(textureatlassprite instanceof TextureAtlasSprite))
                 {
-                    Config.warn("TextureAtlasSprite is not TextureAtlasSprite: " + textureatlassprite + ", name: " + textureatlassprite.getIconName());
+                    Config.get().warn("TextureAtlasSprite is not TextureAtlasSprite: " + textureatlassprite + ", name: " + textureatlassprite.getIconName());
                 }
                 else
                 {
@@ -1389,7 +1389,7 @@ public class ConnectedTextures
 
                     if (j < 0)
                     {
-                        Config.warn("Invalid tile ID: " + j + ", icon: " + textureatlassprite.getIconName());
+                        Config.get().warn("Invalid tile ID: " + j + ", icon: " + textureatlassprite.getIconName());
                     }
                     else
                     {
@@ -1410,7 +1410,7 @@ public class ConnectedTextures
 
                 if (j < 0)
                 {
-                    Config.warn("Invalid block ID: " + j);
+                    Config.get().warn("Invalid block ID: " + j);
                 }
                 else
                 {
@@ -1443,18 +1443,18 @@ public class ConnectedTextures
         List list = new ArrayList();
         String s = "mcpatcher/ctm/default/";
 
-        if (Config.isFromDefaultResourcePack(new ResourceLocation("textures/blocks/glass.png")))
+        if (Config.get().isFromDefaultResourcePack(new ResourceLocation("textures/blocks/glass.png")))
         {
             list.add(s + "glass.properties");
             list.add(s + "glasspane.properties");
         }
 
-        if (Config.isFromDefaultResourcePack(new ResourceLocation("textures/blocks/bookshelf.png")))
+        if (Config.get().isFromDefaultResourcePack(new ResourceLocation("textures/blocks/bookshelf.png")))
         {
             list.add(s + "bookshelf.properties");
         }
 
-        if (Config.isFromDefaultResourcePack(new ResourceLocation("textures/blocks/sandstone_normal.png")))
+        if (Config.get().isFromDefaultResourcePack(new ResourceLocation("textures/blocks/sandstone_normal.png")))
         {
             list.add(s + "sandstone.properties");
         }
@@ -1465,7 +1465,7 @@ public class ConnectedTextures
         {
             String s1 = astring[i];
 
-            if (Config.isFromDefaultResourcePack(new ResourceLocation("textures/blocks/glass_" + s1 + ".png")))
+            if (Config.get().isFromDefaultResourcePack(new ResourceLocation("textures/blocks/glass_" + s1 + ".png")))
             {
                 list.add(s + i + "_glass_" + s1 + "/glass_" + s1 + ".properties");
                 list.add(s + i + "_glass_" + s1 + "/glass_pane_" + s1 + ".properties");

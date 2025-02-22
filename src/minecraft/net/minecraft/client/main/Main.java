@@ -1,5 +1,7 @@
 package net.minecraft.client.main;
 
+import java.time.Duration;
+
 import net.droidmine.MineBot;
 import net.droidmine.Session;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -8,17 +10,22 @@ public class Main
 {
     public static void main(String[] args)
     {
-        MineBot bot = new MineBot("blocksmc.com", Session.offline("Droidmine"), true);
+        MineBot bot = new MineBot("blocksmc.com", Session.offline("yesfdp____"), true);
         
         bot.onChatReceive(msg ->
         {
             if (msg.contains("/login <password>"))
             {
                 bot.player().sendChatMessage("/login pass");
-//                bot.options().keyBindForward.setPressed(true);
-//                bot.sleep(Duration.ofMillis(100));
-//                bot.options().keyBindForward.setPressed(false);
                 bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
+                bot.sleep(Duration.ofSeconds(5));
+                bot.quit();
+            }
+            
+            else if (msg.contains("/register <password> <password>"))
+            {
+                bot.sleep(Duration.ofSeconds(3));
+                bot.player().sendChatMessage("/register pass pass");
             }
         });
         

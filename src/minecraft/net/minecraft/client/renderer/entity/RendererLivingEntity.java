@@ -105,8 +105,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     {
         if (!Reflector.RenderLivingEvent_Pre_Constructor.exists() || !Reflector.postForgeBusEvent(Reflector.RenderLivingEvent_Pre_Constructor, new Object[] {entity, this, Double.valueOf(x), Double.valueOf(y), Double.valueOf(z)}))
         {
-            GlStateManager.pushMatrix();
-            GlStateManager.enableCull();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().enableCull();
             this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
             this.mainModel.isRiding = entity.isRiding();
 
@@ -154,11 +154,11 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                     this.renderLivingAt(entity, x, y, z);
                     float f7 = this.handleRotationFloat(entity, partialTicks);
                     this.rotateCorpse(entity, f7, f, partialTicks);
-                    GlStateManager.enableRescaleNormal();
-                    GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+                    GlStateManager.get().enableRescaleNormal();
+                    GlStateManager.get().scale(-1.0F, -1.0F, 1.0F);
                     this.preRenderCallback(entity, partialTicks);
                     float f4 = 0.0625F;
-                    GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
+                    GlStateManager.get().translate(0.0F, -1.5078125F, 0.0F);
                     float f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
                     float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
 
@@ -172,7 +172,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                         f5 = 1.0F;
                     }
 
-                    GlStateManager.enableAlpha();
+                    GlStateManager.get().enableAlpha();
                     this.mainModel.setLivingAnimations(entity, f6, f5, partialTicks);
                     this.mainModel.setRotationAngles(f6, f5, f7, f2, f8, 0.0625F, entity);
 
@@ -196,7 +196,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                             this.unsetBrightness();
                         }
 
-                        GlStateManager.depthMask(true);
+                        GlStateManager.get().depthMask(true);
 
                         if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).isSpectator())
                         {
@@ -204,7 +204,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                         }
                     }
 
-                    GlStateManager.disableRescaleNormal();
+                    GlStateManager.get().disableRescaleNormal();
                 }
                 catch (Exception exception)
                 {
@@ -212,10 +212,10 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 }
             }
             
-            GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-            GlStateManager.enableTexture2D();
-            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-            GlStateManager.popMatrix();
+            GlStateManager.get().setActiveTexture(OpenGlHelper.lightmapTexUnit);
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
+            GlStateManager.get().popMatrix();
 
             if (!this.renderOutlines)
             {
@@ -251,24 +251,24 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         float f1 = (float)(i >> 16 & 255) / 255.0F;
         float f2 = (float)(i >> 8 & 255) / 255.0F;
         float f = (float)(i & 255) / 255.0F;
-        GlStateManager.disableLighting();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-        GlStateManager.color(f1, f2, f, 1.0F);
-        GlStateManager.disableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-        GlStateManager.disableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.get().color(f1, f2, f, 1.0F);
+        GlStateManager.get().disableTexture2D();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.get().disableTexture2D();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
         return true;
     }
 
     protected void unsetScoreTeamColor()
     {
-        GlStateManager.enableLighting();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-        GlStateManager.enableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-        GlStateManager.enableTexture2D();
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.get().enableLighting();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.get().enableTexture2D();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.get().enableTexture2D();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
     /**
@@ -288,21 +288,21 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
             if (flag1)
             {
-                GlStateManager.pushMatrix();
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
-                GlStateManager.depthMask(false);
-                GlStateManager.enableBlend();
-                GlStateManager.blendFunc(770, 771);
-                GlStateManager.alphaFunc(516, 0.0F);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().color(1.0F, 1.0F, 1.0F, 0.15F);
+                GlStateManager.get().depthMask(false);
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().blendFunc(770, 771);
+                GlStateManager.get().alphaFunc(516, 0.0F);
             }
 
             this.mainModel.render(entitylivingbaseIn, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
             if (flag1)
             {
-                GlStateManager.disableBlend();
-                GlStateManager.popMatrix();
-                GlStateManager.depthMask(true);
+                GlStateManager.get().disableBlend();
+                GlStateManager.get().popMatrix();
+                GlStateManager.get().depthMask(true);
             }
         }
     }
@@ -329,8 +329,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         }
         else
         {
-            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-            GlStateManager.enableTexture2D();
+            GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
+            GlStateManager.get().enableTexture2D();
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, OpenGlHelper.GL_COMBINE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_RGB, GL11.GL_MODULATE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_RGB, OpenGlHelper.defaultTexUnit);
@@ -340,8 +340,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_ALPHA, GL11.GL_REPLACE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_ALPHA, OpenGlHelper.defaultTexUnit);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
-            GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-            GlStateManager.enableTexture2D();
+            GlStateManager.get().setActiveTexture(OpenGlHelper.lightmapTexUnit);
+            GlStateManager.get().enableTexture2D();
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, OpenGlHelper.GL_COMBINE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_RGB, OpenGlHelper.GL_INTERPOLATE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_RGB, OpenGlHelper.GL_CONSTANT);
@@ -362,7 +362,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 this.brightnessBuffer.put(0.0F);
                 this.brightnessBuffer.put(0.4F);
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     Shaders.setEntityColor(1.0F, 0.0F, 0.0F, 0.5F);
                 }
@@ -378,7 +378,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 this.brightnessBuffer.put(f4);
                 this.brightnessBuffer.put(1.0F - f1);
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     Shaders.setEntityColor(f2, f3, f4, 1.0F - f1);
                 }
@@ -386,9 +386,9 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
             this.brightnessBuffer.flip();
             GL11.glTexEnvfv(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_COLOR, (FloatBuffer)this.brightnessBuffer);
-            GlStateManager.setActiveTexture(OpenGlHelper.GL_TEXTURE2);
-            GlStateManager.enableTexture2D();
-            GlStateManager.bindTexture(field_177096_e.getGlTextureId());
+            GlStateManager.get().setActiveTexture(OpenGlHelper.GL_TEXTURE2);
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().bindTexture(field_177096_e.getGlTextureId());
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, OpenGlHelper.GL_COMBINE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_RGB, GL11.GL_MODULATE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_RGB, OpenGlHelper.GL_PREVIOUS);
@@ -398,15 +398,15 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_ALPHA, GL11.GL_REPLACE);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_ALPHA, OpenGlHelper.GL_PREVIOUS);
             GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
-            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+            GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
             return true;
         }
     }
 
     protected void unsetBrightness()
     {
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-        GlStateManager.enableTexture2D();
+        GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.get().enableTexture2D();
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, OpenGlHelper.GL_COMBINE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_RGB, GL11.GL_MODULATE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_RGB, OpenGlHelper.defaultTexUnit);
@@ -418,7 +418,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE1_ALPHA, OpenGlHelper.GL_PRIMARY_COLOR);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND1_ALPHA, GL11.GL_SRC_ALPHA);
-        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.get().setActiveTexture(OpenGlHelper.lightmapTexUnit);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, OpenGlHelper.GL_COMBINE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_RGB, GL11.GL_MODULATE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_RGB, GL11.GL_SRC_COLOR);
@@ -428,10 +428,10 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_ALPHA, GL11.GL_MODULATE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_ALPHA, GL11.GL_TEXTURE);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.setActiveTexture(OpenGlHelper.GL_TEXTURE2);
-        GlStateManager.disableTexture2D();
-        GlStateManager.bindTexture(0);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().setActiveTexture(OpenGlHelper.GL_TEXTURE2);
+        GlStateManager.get().disableTexture2D();
+        GlStateManager.get().bindTexture(0);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, OpenGlHelper.GL_COMBINE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_RGB, GL11.GL_MODULATE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_RGB, GL11.GL_SRC_COLOR);
@@ -441,9 +441,9 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_COMBINE_ALPHA, GL11.GL_MODULATE);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_OPERAND0_ALPHA, GL11.GL_SRC_ALPHA);
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, OpenGlHelper.GL_SOURCE0_ALPHA, GL11.GL_TEXTURE);
-        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        GlStateManager.get().setActiveTexture(OpenGlHelper.defaultTexUnit);
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             Shaders.setEntityColor(0.0F, 0.0F, 0.0F, 0.0F);
         }
@@ -454,12 +454,12 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
      */
     protected void renderLivingAt(T entityLivingBaseIn, double x, double y, double z)
     {
-        GlStateManager.translate((float)x, (float)y, (float)z);
+        GlStateManager.get().translate((float)x, (float)y, (float)z);
     }
 
     protected void rotateCorpse(T bat, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
-        GlStateManager.rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
 
         if (bat.deathTime > 0)
         {
@@ -471,7 +471,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 f = 1.0F;
             }
 
-            GlStateManager.rotate(f * this.getDeathMaxRotation(bat), 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(f * this.getDeathMaxRotation(bat), 0.0F, 0.0F, 1.0F);
         }
         else
         {
@@ -479,8 +479,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
 
             if (s != null && (s.equals("Dinnerbone") || s.equals("Grumm")) && (!(bat instanceof EntityPlayer) || ((EntityPlayer)bat).isWearing(EnumPlayerModelParts.CAPE)))
             {
-                GlStateManager.translate(0.0F, bat.height + 0.1F, 0.0F);
-                GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.get().translate(0.0F, bat.height + 0.1F, 0.0F);
+                GlStateManager.get().rotate(180.0F, 0.0F, 0.0F, 1.0F);
             }
         }
     }
@@ -549,23 +549,23 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 {
                     String s = entity.getDisplayName().getFormattedText();
                     float f1 = 0.02666667F;
-                    GlStateManager.alphaFunc(516, 0.0F);
+                    GlStateManager.get().alphaFunc(516, 0.0F);
 
                     if (entity.isSneaking())
                     {
                         FontRenderer fontrenderer = this.getFontRendererFromRenderManager();
-                        GlStateManager.pushMatrix();
-                        GlStateManager.translate((float)x, (float)y + entity.height + 0.5F - (entity.isChild() ? entity.height / 2.0F : 0.0F), (float)z);
+                        GlStateManager.get().pushMatrix();
+                        GlStateManager.get().translate((float)x, (float)y + entity.height + 0.5F - (entity.isChild() ? entity.height / 2.0F : 0.0F), (float)z);
                         GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-                        GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-                        GlStateManager.rotate(mc.options.thirdPersonView == 2 ? -this.renderManager.playerViewX : this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-                        GlStateManager.scale(-0.02666667F, -0.02666667F, 0.02666667F);
-                        GlStateManager.translate(0.0F, 9.374999F, 0.0F);
-                        GlStateManager.disableLighting();
-                        GlStateManager.depthMask(false);
-                        GlStateManager.enableBlend();
-                        GlStateManager.disableTexture2D();
-                        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                        GlStateManager.get().rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+                        GlStateManager.get().rotate(mc.options.thirdPersonView == 2 ? -this.renderManager.playerViewX : this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+                        GlStateManager.get().scale(-0.02666667F, -0.02666667F, 0.02666667F);
+                        GlStateManager.get().translate(0.0F, 9.374999F, 0.0F);
+                        GlStateManager.get().disableLighting();
+                        GlStateManager.get().depthMask(false);
+                        GlStateManager.get().enableBlend();
+                        GlStateManager.get().disableTexture2D();
+                        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
                         int i = fontrenderer.getStringWidth(s) / 2;
                         Tessellator tessellator = Tessellator.getInstance();
                         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -575,13 +575,13 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                         worldrenderer.pos((double)(i + 1), 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                         worldrenderer.pos((double)(i + 1), -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                         tessellator.draw();
-                        GlStateManager.enableTexture2D();
-                        GlStateManager.depthMask(true);
+                        GlStateManager.get().enableTexture2D();
+                        GlStateManager.get().depthMask(true);
                         fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, 0, 553648127);
-                        GlStateManager.enableLighting();
-                        GlStateManager.disableBlend();
-                        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                        GlStateManager.popMatrix();
+                        GlStateManager.get().enableLighting();
+                        GlStateManager.get().disableBlend();
+                        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+                        GlStateManager.get().popMatrix();
                     }
                     else
                     {

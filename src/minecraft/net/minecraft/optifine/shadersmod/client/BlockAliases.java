@@ -75,16 +75,16 @@ public class BlockAliases
 
                 if (!s1.startsWith(s3))
                 {
-                    Config.warn("[Shaders] Invalid block ID: " + s1);
+                    Config.get().warn("[Shaders] Invalid block ID: " + s1);
                 }
                 else
                 {
                     String s4 = StrUtils.removePrefix(s1, s3);
-                    int i = Config.parseInt(s4, -1);
+                    int i = Config.get().parseInt(s4, -1);
 
                     if (i < 0)
                     {
-                        Config.warn("[Shaders] Invalid block ID: " + s1);
+                        Config.get().warn("[Shaders] Invalid block ID: " + s1);
                     }
                     else
                     {
@@ -97,7 +97,7 @@ public class BlockAliases
                         }
                         else
                         {
-                            Config.warn("[Shaders] Invalid block ID mapping: " + s1 + "=" + s2);
+                            Config.get().warn("[Shaders] Invalid block ID mapping: " + s1 + "=" + s2);
                         }
                     }
                 }
@@ -112,7 +112,7 @@ public class BlockAliases
         }
         catch (IOException var15)
         {
-            Config.warn("[Shaders] Error reading: " + s);
+            Config.get().warn("[Shaders] Error reading: " + s);
         }
     }
 

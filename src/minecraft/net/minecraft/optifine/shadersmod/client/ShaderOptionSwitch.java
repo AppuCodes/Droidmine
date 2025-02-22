@@ -46,7 +46,7 @@ public class ShaderOptionSwitch extends ShaderOption
 
             if (s1 != null && s1.length() > 0)
             {
-                boolean flag = Config.equals(s, "//");
+                boolean flag = Config.get().equals(s, "//");
                 boolean flag1 = !flag;
                 path = StrUtils.removePrefix(path, "/shaders/");
                 ShaderOption shaderoption = new ShaderOptionSwitch(s1, s2, String.valueOf(flag1), path);

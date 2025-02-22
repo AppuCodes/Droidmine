@@ -136,6 +136,6 @@ public class Property
 
     public String toString()
     {
-        return "" + this.propertyName + "=" + this.getPropertyValue() + " [" + Config.arrayToString((Object[])this.propertyValues) + "], value: " + this.value;
+        return "" + this.propertyName + "=" + this.getPropertyValue() + " [" + Config.get().arrayToString((Object[])this.propertyValues) + "], value: " + this.value;
     }
 }

@@ -49,7 +49,7 @@ public class ShaderMacros
 
     public static String getVendor()
     {
-        String s = Config.openGlVendor;
+        String s = Config.get().openGlVendor;
 
         if (s == null)
         {
@@ -64,7 +64,7 @@ public class ShaderMacros
 
     public static String getRenderer()
     {
-        String s = Config.openGlRenderer;
+        String s = Config.get().openGlRenderer;
 
         if (s == null)
         {
@@ -86,7 +86,7 @@ public class ShaderMacros
     {
         if (extensionMacros == null)
         {
-            String[] astring = Config.getOpenGlExtensions();
+            String[] astring = Config.get().getOpenGlExtensions();
             String[] astring1 = new String[astring.length];
 
             for (int i = 0; i < astring.length; ++i)

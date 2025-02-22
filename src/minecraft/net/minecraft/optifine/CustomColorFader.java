@@ -34,7 +34,7 @@ public class CustomColorFader
                 else
                 {
                     double d0 = (double)j * 0.001D;
-                    d0 = Config.limit(d0, 0.0D, 1.0D);
+                    d0 = Config.get().limit(d0, 0.0D, 1.0D);
                     double d1 = p_getColor_1_ - this.color.xCoord;
                     double d2 = p_getColor_3_ - this.color.yCoord;
                     double d3 = p_getColor_5_ - this.color.zCoord;

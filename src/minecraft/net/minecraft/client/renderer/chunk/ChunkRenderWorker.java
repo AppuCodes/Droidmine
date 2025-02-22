@@ -53,7 +53,6 @@ public class ChunkRenderWorker implements Runnable
                 CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Batching chunks");
 //                mc.crashed(mc.addGraphicsAndWorldToCrashReport(crashreport));
                 Bootstrap.printToSYSOUT(crashreport.getCompleteReport());
-                System.exit(-1);
                 return;
             }
         }

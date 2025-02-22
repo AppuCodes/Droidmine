@@ -60,7 +60,7 @@ public class ConnectedParser
         else
         {
             List list = new ArrayList();
-            String[] astring = Config.tokenize(p_parseMatchBlocks_1_, " ");
+            String[] astring = Config.get().tokenize(p_parseMatchBlocks_1_, " ");
 
             for (int i = 0; i < astring.length; ++i)
             {
@@ -96,7 +96,7 @@ public class ConnectedParser
             }
             else
             {
-                String[] astring = Config.tokenize(p_parseMatchBlock_1_, ":");
+                String[] astring = Config.get().tokenize(p_parseMatchBlock_1_, ":");
                 String s = "minecraft";
                 int i = 0;
 
@@ -255,7 +255,7 @@ public class ConnectedParser
 
                     if (s1.length() > 0)
                     {
-                        String[] astring = Config.tokenize(s1, "=");
+                        String[] astring = Config.get().tokenize(s1, "=");
 
                         if (astring.length != 2)
                         {
@@ -282,7 +282,7 @@ public class ConnectedParser
                             map.put(iproperty, list);
                         }
 
-                        String[] astring1 = Config.tokenize(s3, ",");
+                        String[] astring1 = Config.get().tokenize(s3, ",");
 
                         for (int j = 0; j < astring1.length; ++j)
                         {
@@ -428,7 +428,7 @@ public class ConnectedParser
         }
         else
         {
-            String[] astring = Config.tokenize(p_parseBiomes_1_, " ");
+            String[] astring = Config.get().tokenize(p_parseBiomes_1_, " ");
             List list = new ArrayList();
 
             for (int i = 0; i < astring.length; ++i)
@@ -490,7 +490,7 @@ public class ConnectedParser
         }
         else
         {
-            int i = Config.parseInt(p_parseInt_1_, -1);
+            int i = Config.get().parseInt(p_parseInt_1_, -1);
 
             if (i < 0)
             {
@@ -509,7 +509,7 @@ public class ConnectedParser
         }
         else
         {
-            int i = Config.parseInt(p_parseInt_1_, -1);
+            int i = Config.get().parseInt(p_parseInt_1_, -1);
 
             if (i < 0)
             {
@@ -532,7 +532,7 @@ public class ConnectedParser
         else
         {
             List list = new ArrayList();
-            String[] astring = Config.tokenize(p_parseIntList_1_, " ,");
+            String[] astring = Config.get().tokenize(p_parseIntList_1_, " ,");
 
             for (int i = 0; i < astring.length; ++i)
             {
@@ -540,7 +540,7 @@ public class ConnectedParser
 
                 if (s.contains("-"))
                 {
-                    String[] astring1 = Config.tokenize(s, "-");
+                    String[] astring1 = Config.get().tokenize(s, "-");
 
                     if (astring1.length != 2)
                     {
@@ -548,8 +548,8 @@ public class ConnectedParser
                     }
                     else
                     {
-                        int k = Config.parseInt(astring1[0], -1);
-                        int l = Config.parseInt(astring1[1], -1);
+                        int k = Config.get().parseInt(astring1[0], -1);
+                        int l = Config.get().parseInt(astring1[1], -1);
 
                         if (k >= 0 && l >= 0 && k <= l)
                         {
@@ -566,7 +566,7 @@ public class ConnectedParser
                 }
                 else
                 {
-                    int j = Config.parseInt(s, -1);
+                    int j = Config.get().parseInt(s, -1);
 
                     if (j < 0)
                     {
@@ -599,7 +599,7 @@ public class ConnectedParser
         else
         {
             EnumSet enumset = EnumSet.allOf(EnumFacing.class);
-            String[] astring = Config.tokenize(p_parseFaces_1_, " ,");
+            String[] astring = Config.get().tokenize(p_parseFaces_1_, " ,");
 
             for (int i = 0; i < astring.length; ++i)
             {
@@ -664,7 +664,7 @@ public class ConnectedParser
                 }
                 else
                 {
-                    Config.warn("Unknown face: " + p_parseFace_1_);
+                    Config.get().warn("Unknown face: " + p_parseFace_1_);
                     return null;
                 }
             }
@@ -681,7 +681,7 @@ public class ConnectedParser
 
     public void warn(String p_warn_1_)
     {
-        Config.warn("" + this.context + ": " + p_warn_1_);
+        Config.get().warn("" + this.context + ": " + p_warn_1_);
     }
 
     public RangeListInt parseRangeListInt(String p_parseRangeListInt_1_)
@@ -693,7 +693,7 @@ public class ConnectedParser
         else
         {
             RangeListInt rangelistint = new RangeListInt();
-            String[] astring = Config.tokenize(p_parseRangeListInt_1_, " ,");
+            String[] astring = Config.get().tokenize(p_parseRangeListInt_1_, " ,");
 
             for (int i = 0; i < astring.length; ++i)
             {
@@ -720,7 +720,7 @@ public class ConnectedParser
         }
         else if (p_parseRangeInt_1_.indexOf(45) >= 0)
         {
-            String[] astring = Config.tokenize(p_parseRangeInt_1_, "-");
+            String[] astring = Config.get().tokenize(p_parseRangeInt_1_, "-");
 
             if (astring.length != 2)
             {
@@ -729,8 +729,8 @@ public class ConnectedParser
             }
             else
             {
-                int j = Config.parseInt(astring[0], -1);
-                int k = Config.parseInt(astring[1], -1);
+                int j = Config.get().parseInt(astring[0], -1);
+                int k = Config.get().parseInt(astring[1], -1);
 
                 if (j >= 0 && k >= 0)
                 {
@@ -745,7 +745,7 @@ public class ConnectedParser
         }
         else
         {
-            int i = Config.parseInt(p_parseRangeInt_1_, -1);
+            int i = Config.get().parseInt(p_parseRangeInt_1_, -1);
 
             if (i < 0)
             {

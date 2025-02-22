@@ -25,10 +25,10 @@ public class RenderLightningBolt extends Render<EntityLightningBolt>
     {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        GlStateManager.disableTexture2D();
-        GlStateManager.disableLighting();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(770, 1);
+        GlStateManager.get().disableTexture2D();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().blendFunc(770, 1);
         double[] adouble = new double[8];
         double[] adouble1 = new double[8];
         double d0 = 0.0D;
@@ -137,9 +137,9 @@ public class RenderLightningBolt extends Render<EntityLightningBolt>
             }
         }
 
-        GlStateManager.disableBlend();
-        GlStateManager.enableLighting();
-        GlStateManager.enableTexture2D();
+        GlStateManager.get().disableBlend();
+        GlStateManager.get().enableLighting();
+        GlStateManager.get().enableTexture2D();
     }
 
     /**

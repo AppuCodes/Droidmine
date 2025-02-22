@@ -69,12 +69,12 @@ public class ReflectorMethod
 
                         if (amethod.length > 1)
                         {
-                            Config.warn("(Reflector) More than one method found: " + oclass.getName() + "." + this.targetMethodName);
+                            Config.get().warn("(Reflector) More than one method found: " + oclass.getName() + "." + this.targetMethodName);
 
                             for (int i = 0; i < amethod.length; ++i)
                             {
                                 Method method = amethod[i];
-                                Config.warn("(Reflector)  - " + method);
+                                Config.get().warn("(Reflector)  - " + method);
                             }
 
                             return null;

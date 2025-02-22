@@ -2,12 +2,15 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.IChatComponent;
 
 public class GuiDisconnected extends GuiScreen
 {
-    private String reason;
+    private String reason = "";
     private IChatComponent message;
     private List<String> multilineMessage;
     private final GuiScreen parentScreen;
@@ -18,6 +21,7 @@ public class GuiDisconnected extends GuiScreen
         this.parentScreen = screen;
         this.reason = I18n.format(reasonLocalizationKey, new Object[0]);
         this.message = chatComp;
+        LogManager.getLogger().info("Disconnected for reason \"" + chatComp.getUnformattedText() + "\".");
     }
 
     /**

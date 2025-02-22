@@ -29,10 +29,10 @@ public class TextureAnimations
     public static void update()
     {
         textureAnimations = null;
-        IResourcePack[] airesourcepack = Config.getResourcePacks();
+        IResourcePack[] airesourcepack = Config.get().getResourcePacks();
         textureAnimations = getTextureAnimations(airesourcepack);
 
-        if (Config.isAnimatedTextures())
+        if (Config.get().isAnimatedTextures())
         {
             updateAnimations();
         }
@@ -42,7 +42,7 @@ public class TextureAnimations
     {
         if (textureAnimations != null)
         {
-            if (Config.isAnimatedTextures())
+            if (Config.get().isAnimatedTextures())
             {
                 updateAnimations();
             }
@@ -112,7 +112,7 @@ public class TextureAnimations
                 }
                 catch (FileNotFoundException filenotfoundexception)
                 {
-                    Config.warn("File not found: " + filenotfoundexception.getMessage());
+                    Config.get().warn("File not found: " + filenotfoundexception.getMessage());
                 }
                 catch (IOException ioexception)
                 {
@@ -129,10 +129,10 @@ public class TextureAnimations
     {
         String s = p_makeTextureAnimation_0_.getProperty("from");
         String s1 = p_makeTextureAnimation_0_.getProperty("to");
-        int i = Config.parseInt(p_makeTextureAnimation_0_.getProperty("x"), -1);
-        int j = Config.parseInt(p_makeTextureAnimation_0_.getProperty("y"), -1);
-        int k = Config.parseInt(p_makeTextureAnimation_0_.getProperty("w"), -1);
-        int l = Config.parseInt(p_makeTextureAnimation_0_.getProperty("h"), -1);
+        int i = Config.get().parseInt(p_makeTextureAnimation_0_.getProperty("x"), -1);
+        int j = Config.get().parseInt(p_makeTextureAnimation_0_.getProperty("y"), -1);
+        int k = Config.get().parseInt(p_makeTextureAnimation_0_.getProperty("w"), -1);
+        int l = Config.get().parseInt(p_makeTextureAnimation_0_.getProperty("h"), -1);
 
         if (s != null && s1 != null)
         {
@@ -147,16 +147,16 @@ public class TextureAnimations
 
                 if (abyte == null)
                 {
-                    Config.warn("TextureAnimation: Source texture not found: " + s1);
+                    Config.get().warn("TextureAnimation: Source texture not found: " + s1);
                     return null;
                 }
                 else
                 {
                     ResourceLocation resourcelocation = new ResourceLocation(s1);
 
-                    if (!Config.hasResource(resourcelocation))
+                    if (!Config.get().hasResource(resourcelocation))
                     {
-                        Config.warn("TextureAnimation: Target texture not found: " + s1);
+                        Config.get().warn("TextureAnimation: Target texture not found: " + s1);
                         return null;
                     }
                     else
@@ -168,13 +168,13 @@ public class TextureAnimations
             }
             else
             {
-                Config.warn("TextureAnimation: Invalid coordinates");
+                Config.get().warn("TextureAnimation: Invalid coordinates");
                 return null;
             }
         }
         else
         {
-            Config.warn("TextureAnimation: Source or target texture not specified");
+            Config.get().warn("TextureAnimation: Source or target texture not specified");
             return null;
         }
     }
@@ -193,12 +193,12 @@ public class TextureAnimations
 
     private static byte[] loadImage(String p_loadImage_0_, int p_loadImage_1_)
     {
-        GameOptions options = Config.getoptions();
+        GameOptions options = Config.get().getoptions();
 
         try
         {
             ResourceLocation resourcelocation = new ResourceLocation(p_loadImage_0_);
-            InputStream inputstream = Config.getResourceStream(resourcelocation);
+            InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
             if (inputstream == null)
             {

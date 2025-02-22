@@ -39,7 +39,7 @@ public class RandomMobs
                 EntityLiving entityliving = (EntityLiving)p_entityLoaded_0_;
                 entityliving.spawnPosition = entityliving.getPosition();
                 entityliving.spawnBiome = p_entityLoaded_1_.getBiomeGenForCoords(entityliving.spawnPosition);
-                WorldServer worldserver = Config.getWorldServer();
+                WorldServer worldserver = Config.get().getWorldServer();
 
                 if (worldserver != null)
                 {
@@ -171,11 +171,11 @@ public class RandomMobs
         try
         {
             String s = p_parseProperties_0_.getResourcePath();
-            InputStream inputstream = Config.getResourceStream(p_parseProperties_0_);
+            InputStream inputstream = Config.get().getResourceStream(p_parseProperties_0_);
 
             if (inputstream == null)
             {
-                Config.warn("RandomMobs properties not found: " + s);
+                Config.get().warn("RandomMobs properties not found: " + s);
                 return null;
             }
             else
@@ -189,7 +189,7 @@ public class RandomMobs
         }
         catch (FileNotFoundException var6)
         {
-            Config.warn("RandomMobs file not found: " + p_parseProperties_1_.getResourcePath());
+            Config.get().warn("RandomMobs file not found: " + p_parseProperties_1_.getResourcePath());
             return null;
         }
         catch (IOException ioexception)
@@ -221,7 +221,7 @@ public class RandomMobs
             String s3 = s2 + ".properties";
             ResourceLocation resourcelocation1 = new ResourceLocation(s, s3);
 
-            if (Config.hasResource(resourcelocation1))
+            if (Config.get().hasResource(resourcelocation1))
             {
                 return resourcelocation1;
             }
@@ -236,7 +236,7 @@ public class RandomMobs
                 else
                 {
                     ResourceLocation resourcelocation2 = new ResourceLocation(s, s4 + ".properties");
-                    return Config.hasResource(resourcelocation2) ? resourcelocation2 : null;
+                    return Config.get().hasResource(resourcelocation2) ? resourcelocation2 : null;
                 }
             }
         }
@@ -316,7 +316,7 @@ public class RandomMobs
                 int j = i + 1;
                 ResourceLocation resourcelocation1 = getLocationIndexed(resourcelocation, j);
 
-                if (Config.hasResource(resourcelocation1))
+                if (Config.get().hasResource(resourcelocation1))
                 {
                     list.add(resourcelocation1);
                 }
@@ -338,7 +338,7 @@ public class RandomMobs
     {
         locationProperties.clear();
 
-        if (Config.isRandomMobs())
+        if (Config.get().isRandomMobs())
         {
             initialize();
         }
@@ -346,7 +346,7 @@ public class RandomMobs
 
     private static void initialize()
     {
-        renderGlobal = Config.getRenderGlobal();
+        renderGlobal = Config.get().getRenderGlobal();
 
         if (renderGlobal != null)
         {
@@ -403,9 +403,9 @@ public class RandomMobs
                 String s1 = "textures/entity/" + s + ".png";
                 ResourceLocation resourcelocation = new ResourceLocation(s1);
 
-                if (!Config.hasResource(resourcelocation))
+                if (!Config.get().hasResource(resourcelocation))
                 {
-                    Config.warn("Not found: " + resourcelocation);
+                    Config.get().warn("Not found: " + resourcelocation);
                 }
 
                 getProperties(resourcelocation);

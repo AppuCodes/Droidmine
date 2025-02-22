@@ -45,10 +45,10 @@ public class GuiOverlayDebug extends Gui {
 
    public void func_175237_a(ScaledResolution p_175237_1_) {
       this.field_175242_a.field_71424_I.func_76320_a("debug");
-      GlStateManager.func_179094_E();
+      GlStateManager.get().func_179094_E();
       this.func_180798_a();
       this.func_175239_b(p_175237_1_);
-      GlStateManager.func_179121_F();
+      GlStateManager.get().func_179121_F();
       this.field_175242_a.field_71424_I.func_76319_b();
    }
 
@@ -184,7 +184,7 @@ public class GuiOverlayDebug extends Gui {
    }
 
    private void func_181554_e() {
-      GlStateManager.func_179097_i();
+      GlStateManager.get().func_179097_i();
       FrameTimer frametimer = this.field_175242_a.func_181539_aj();
       int i = frametimer.func_181749_a();
       int j = frametimer.func_181750_b();
@@ -215,7 +215,7 @@ public class GuiOverlayDebug extends Gui {
          this.func_73730_a(0, 239, scaledresolution.func_78328_b() - 60 + this.field_175242_a.field_71474_y.field_74350_i / 2, -16711681);
       }
 
-      GlStateManager.func_179126_j();
+      GlStateManager.get().func_179126_j();
    }
 
    private int func_181552_c(int p_181552_1_, int p_181552_2_, int p_181552_3_, int p_181552_4_) {

@@ -78,7 +78,7 @@ public class GuiClickableScrolledSelectionListProxy extends GuiSlot
     {
         super.handleMouseInput();
 
-        if (this.scrollMultiplier > 0.0F && Mouse.getEventButtonState())
+        if (this.scrollMultiplier > 0.0F && Mouse.get().getEventButtonState())
         {
             this.field_178046_u.customMouseEvent(this.top, this.bottom, this.headerPadding, this.amountScrolled, this.slotHeight);
         }

@@ -38,10 +38,10 @@ public class GuiOverlayDebug extends Gui
 
     public void renderDebugInfo(ScaledResolution scaledResolutionIn)
     {
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
         this.renderDebugInfoLeft();
         this.renderDebugInfoRight(scaledResolutionIn);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
     }
 
     private boolean isReducedDebug()
@@ -251,7 +251,7 @@ public class GuiOverlayDebug extends Gui
 
     private void func_181554_e()
     {
-        GlStateManager.disableDepth();
+        GlStateManager.get().disableDepth();
         FrameTimer frametimer = this.mc.func_181539_aj();
         int i = frametimer.func_181749_a();
         int j = frametimer.func_181750_b();
@@ -279,7 +279,7 @@ public class GuiOverlayDebug extends Gui
         this.drawHorizontalLine(0, 239, scaledresolution.getScaledHeight() - 1, -1);
         this.drawVerticalLine(0, scaledresolution.getScaledHeight() - 60, scaledresolution.getScaledHeight(), -1);
         this.drawVerticalLine(239, scaledresolution.getScaledHeight() - 60, scaledresolution.getScaledHeight(), -1);
-        GlStateManager.enableDepth();
+        GlStateManager.get().enableDepth();
     }
 
     private int func_181552_c(int p_181552_1_, int p_181552_2_, int p_181552_3_, int p_181552_4_)

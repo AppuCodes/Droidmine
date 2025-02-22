@@ -53,7 +53,7 @@ public class GuiChat extends GuiScreen
      */
     public void initGui()
     {
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
         this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
         this.inputField = new GuiTextField(0, this.fontRendererObj, 2, this.height - 10, this.width - 2, 12);
         this.inputField.setMaxStringLength(100);
@@ -68,7 +68,7 @@ public class GuiChat extends GuiScreen
      */
     public void onGuiClosed()
     {
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
         this.mc.ingameGUI.getChatGUI().resetScroll();
     }
 
@@ -143,7 +143,7 @@ public class GuiChat extends GuiScreen
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
-        int i = Mouse.getEventDWheel();
+        int i = Mouse.get().getEventDWheel();
 
         if (i != 0)
         {
@@ -173,7 +173,7 @@ public class GuiChat extends GuiScreen
     {
         if (mouseButton == 0)
         {
-            IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+            IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.get().getX(), Mouse.get().getY());
 
             if (this.handleComponentClick(ichatcomponent))
             {
@@ -302,7 +302,7 @@ public class GuiChat extends GuiScreen
     {
         drawRect(0, this.height - 12, this.width, this.height, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
-        IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+        IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.get().getX(), Mouse.get().getY());
 
         if (ichatcomponent != null && ichatcomponent.getChatStyle().getChatHoverEvent() != null)
         {

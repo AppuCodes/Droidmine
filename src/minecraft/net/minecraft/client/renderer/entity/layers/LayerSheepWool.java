@@ -39,24 +39,24 @@ public class LayerSheepWool implements LayerRenderer
                 float[] afloat1 = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(k));
                 float[] afloat2 = EntitySheep.func_175513_a(EnumDyeColor.byMetadata(l));
 
-                if (Config.isCustomColors())
+                if (Config.get().isCustomColors())
                 {
                     afloat1 = CustomColors.getSheepColors(EnumDyeColor.byMetadata(k), afloat1);
                     afloat2 = CustomColors.getSheepColors(EnumDyeColor.byMetadata(l), afloat2);
                 }
 
-                GlStateManager.color(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f);
+                GlStateManager.get().color(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f);
             }
             else
             {
                 float[] afloat = EntitySheep.func_175513_a(entitylivingbaseIn.getFleeceColor());
 
-                if (Config.isCustomColors())
+                if (Config.get().isCustomColors())
                 {
                     afloat = CustomColors.getSheepColors(entitylivingbaseIn.getFleeceColor(), afloat);
                 }
 
-                GlStateManager.color(afloat[0], afloat[1], afloat[2]);
+                GlStateManager.get().color(afloat[0], afloat[1], afloat[2]);
             }
 
             this.sheepModel.setModelAttributes(this.sheepRenderer.getMainModel());

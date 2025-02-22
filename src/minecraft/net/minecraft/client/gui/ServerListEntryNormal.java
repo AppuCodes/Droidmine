@@ -151,7 +151,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
             s1 = "Pinging...";
         }
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(Gui.icons);
         Gui.drawModalRectWithCustomSizedTexture(x + listWidth - 15, y, (float)(k * 10), (float)(176 + l * 8), 10, 8, 256.0F, 256.0F);
 
@@ -187,7 +187,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         {
             this.mc.getTextureManager().bindTexture(SERVER_SELECTION_BUTTONS);
             Gui.drawRect(x, y, x + 32, y + 32, -1601138544);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             int k1 = mouseX - x;
             int l1 = mouseY - y;
 
@@ -232,9 +232,9 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
     protected void func_178012_a(int p_178012_1_, int p_178012_2_, ResourceLocation p_178012_3_)
     {
         this.mc.getTextureManager().bindTexture(p_178012_3_);
-        GlStateManager.enableBlend();
+        GlStateManager.get().enableBlend();
         Gui.drawModalRectWithCustomSizedTexture(p_178012_1_, p_178012_2_, 0.0F, 0.0F, 32, 32, 32.0F, 32.0F);
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableBlend();
     }
 
     private boolean func_178013_b()
@@ -258,7 +258,7 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
             {
                 try
                 {
-                    bufferedimage = TextureUtil.readBufferedImage(new ByteBufInputStream(bytebuf1));
+                    bufferedimage = TextureUtil.get().readBufferedImage(new ByteBufInputStream(bytebuf1));
                     Validate.validState(bufferedimage.getWidth() == 64, "Must be 64 pixels wide", new Object[0]);
                     Validate.validState(bufferedimage.getHeight() == 64, "Must be 64 pixels high", new Object[0]);
                     break label101;

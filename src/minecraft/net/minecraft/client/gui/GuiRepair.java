@@ -40,7 +40,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     public void initGui()
     {
         super.initGui();
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
         this.nameField = new GuiTextField(0, this.fontRendererObj, i + 62, j + 24, 103, 12);
@@ -58,7 +58,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
     public void onGuiClosed()
     {
         super.onGuiClosed();
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
         this.inventorySlots.removeCraftingFromCrafters(this);
     }
 
@@ -67,8 +67,8 @@ public class GuiRepair extends GuiContainer implements ICrafting
      */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        GlStateManager.disableLighting();
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().disableBlend();
         this.fontRendererObj.drawString(I18n.format("container.repair", new Object[0]), 60, 6, 4210752);
 
         if (this.anvil.maximumCost > 0)
@@ -113,7 +113,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
             }
         }
 
-        GlStateManager.enableLighting();
+        GlStateManager.get().enableLighting();
     }
 
     /**
@@ -161,8 +161,8 @@ public class GuiRepair extends GuiContainer implements ICrafting
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
-        GlStateManager.disableLighting();
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().disableBlend();
         this.nameField.drawTextBox();
     }
 
@@ -171,7 +171,7 @@ public class GuiRepair extends GuiContainer implements ICrafting
      */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(anvilResource);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;

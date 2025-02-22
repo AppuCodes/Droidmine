@@ -144,7 +144,7 @@ public class CustomItemProperties
         }
         else
         {
-            Config.warn("Unknown method: " + p_parseType_1_);
+            Config.get().warn("Unknown method: " + p_parseType_1_);
             return 0;
         }
     }
@@ -164,13 +164,13 @@ public class CustomItemProperties
         {
             p_parseItems_1_ = p_parseItems_1_.trim();
             Set set = new TreeSet();
-            String[] astring = Config.tokenize(p_parseItems_1_, " ");
+            String[] astring = Config.get().tokenize(p_parseItems_1_, " ");
             label45:
 
             for (int i = 0; i < astring.length; ++i)
             {
                 String s = astring[i];
-                int j = Config.parseInt(s, -1);
+                int j = Config.get().parseInt(s, -1);
 
                 if (j >= 0)
                 {
@@ -180,12 +180,12 @@ public class CustomItemProperties
                 {
                     if (s.contains("-"))
                     {
-                        String[] astring1 = Config.tokenize(s, "-");
+                        String[] astring1 = Config.get().tokenize(s, "-");
 
                         if (astring1.length == 2)
                         {
-                            int k = Config.parseInt(astring1[0], -1);
-                            int l = Config.parseInt(astring1[1], -1);
+                            int k = Config.get().parseInt(astring1[0], -1);
+                            int l = Config.get().parseInt(astring1[1], -1);
 
                             if (k >= 0 && l >= 0)
                             {
@@ -211,7 +211,7 @@ public class CustomItemProperties
 
                     if (item == null)
                     {
-                        Config.warn("Item not found: " + s);
+                        Config.get().warn("Item not found: " + s);
                     }
                     else
                     {
@@ -219,7 +219,7 @@ public class CustomItemProperties
 
                         if (i2 < 0)
                         {
-                            Config.warn("Item not found: " + s);
+                            Config.get().warn("Item not found: " + s);
                         }
                         else
                         {
@@ -364,11 +364,11 @@ public class CustomItemProperties
         else
         {
             p_parseInt_1_ = p_parseInt_1_.trim();
-            int i = Config.parseInt(p_parseInt_1_, Integer.MIN_VALUE);
+            int i = Config.get().parseInt(p_parseInt_1_, Integer.MIN_VALUE);
 
             if (i == Integer.MIN_VALUE)
             {
-                Config.warn("Invalid integer: " + p_parseInt_1_);
+                Config.get().warn("Invalid integer: " + p_parseInt_1_);
                 return p_parseInt_2_;
             }
             else
@@ -387,11 +387,11 @@ public class CustomItemProperties
         else
         {
             p_parseFloat_1_ = p_parseFloat_1_.trim();
-            float f = Config.parseFloat(p_parseFloat_1_, Float.MIN_VALUE);
+            float f = Config.get().parseFloat(p_parseFloat_1_, Float.MIN_VALUE);
 
             if (f == Float.MIN_VALUE)
             {
-                Config.warn("Invalid float: " + p_parseFloat_1_);
+                Config.get().warn("Invalid float: " + p_parseFloat_1_);
                 return p_parseFloat_2_;
             }
             else
@@ -409,7 +409,7 @@ public class CustomItemProperties
         }
         else
         {
-            String[] astring = Config.tokenize(p_parseRangeListInt_1_, " ");
+            String[] astring = Config.get().tokenize(p_parseRangeListInt_1_, " ");
             RangeListInt rangelistint = new RangeListInt();
 
             for (int i = 0; i < astring.length; ++i)
@@ -419,7 +419,7 @@ public class CustomItemProperties
 
                 if (rangeint == null)
                 {
-                    Config.warn("Invalid range list: " + p_parseRangeListInt_1_);
+                    Config.get().warn("Invalid range list: " + p_parseRangeListInt_1_);
                     return null;
                 }
 
@@ -443,22 +443,22 @@ public class CustomItemProperties
 
             if (i > 1)
             {
-                Config.warn("Invalid range: " + p_parseRangeInt_1_);
+                Config.get().warn("Invalid range: " + p_parseRangeInt_1_);
                 return null;
             }
             else
             {
-                String[] astring = Config.tokenize(p_parseRangeInt_1_, "- ");
+                String[] astring = Config.get().tokenize(p_parseRangeInt_1_, "- ");
                 int[] aint = new int[astring.length];
 
                 for (int j = 0; j < astring.length; ++j)
                 {
                     String s = astring[j];
-                    int k = Config.parseInt(s, -1);
+                    int k = Config.get().parseInt(s, -1);
 
                     if (k < 0)
                     {
-                        Config.warn("Invalid range: " + p_parseRangeInt_1_);
+                        Config.get().warn("Invalid range: " + p_parseRangeInt_1_);
                         return null;
                     }
 
@@ -490,7 +490,7 @@ public class CustomItemProperties
                 }
                 else
                 {
-                    Config.warn("Invalid range: " + p_parseRangeInt_1_);
+                    Config.get().warn("Invalid range: " + p_parseRangeInt_1_);
                     return null;
                 }
             }
@@ -546,27 +546,27 @@ public class CustomItemProperties
         {
             if (this.basePath == null)
             {
-                Config.warn("No base path found: " + p_isValid_1_);
+                Config.get().warn("No base path found: " + p_isValid_1_);
                 return false;
             }
             else if (this.type == 0)
             {
-                Config.warn("No type defined: " + p_isValid_1_);
+                Config.get().warn("No type defined: " + p_isValid_1_);
                 return false;
             }
             else if ((this.type == 1 || this.type == 3) && this.items == null)
             {
-                Config.warn("No items defined: " + p_isValid_1_);
+                Config.get().warn("No items defined: " + p_isValid_1_);
                 return false;
             }
             else if (this.texture == null && this.mapTextures == null)
             {
-                Config.warn("No texture specified: " + p_isValid_1_);
+                Config.get().warn("No texture specified: " + p_isValid_1_);
                 return false;
             }
             else if (this.type == 2 && this.enchantmentIds == null)
             {
-                Config.warn("No enchantmentIDs specified: " + p_isValid_1_);
+                Config.get().warn("No enchantmentIDs specified: " + p_isValid_1_);
                 return false;
             }
             else
@@ -576,7 +576,7 @@ public class CustomItemProperties
         }
         else
         {
-            Config.warn("No name found: " + p_isValid_1_);
+            Config.get().warn("No name found: " + p_isValid_1_);
             return false;
         }
     }
@@ -634,11 +634,11 @@ public class CustomItemProperties
 
             String s2 = s1 + ".png";
             ResourceLocation resourcelocation1 = new ResourceLocation(s, s2);
-            boolean flag = Config.hasResource(resourcelocation1);
+            boolean flag = Config.get().hasResource(resourcelocation1);
 
             if (!flag)
             {
-                Config.warn("File not found: " + s2);
+                Config.get().warn("File not found: " + s2);
             }
 
             return resourcelocation1;
@@ -841,7 +841,7 @@ public class CustomItemProperties
 
     public String toString()
     {
-        return "" + this.basePath + "/" + this.name + ", type: " + this.type + ", items: [" + Config.arrayToString(this.items) + "], textture: " + this.texture;
+        return "" + this.basePath + "/" + this.name + ", type: " + this.type + ", items: [" + Config.get().arrayToString(this.items) + "], textture: " + this.texture;
     }
 
     public float getTextureWidth(TextureManager p_getTextureWidth_1_)
@@ -852,10 +852,10 @@ public class CustomItemProperties
             {
                 ITextureObject itextureobject = p_getTextureWidth_1_.getTexture(this.textureLocation);
                 int i = itextureobject.getGlTextureId();
-                int j = GlStateManager.getBoundTexture();
-                GlStateManager.bindTexture(i);
+                int j = GlStateManager.get().getBoundTexture();
+                GlStateManager.get().bindTexture(i);
                 this.textureWidth = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
-                GlStateManager.bindTexture(j);
+                GlStateManager.get().bindTexture(j);
             }
 
             if (this.textureWidth <= 0)
@@ -875,10 +875,10 @@ public class CustomItemProperties
             {
                 ITextureObject itextureobject = p_getTextureHeight_1_.getTexture(this.textureLocation);
                 int i = itextureobject.getGlTextureId();
-                int j = GlStateManager.getBoundTexture();
-                GlStateManager.bindTexture(i);
+                int j = GlStateManager.get().getBoundTexture();
+                GlStateManager.get().bindTexture(i);
                 this.textureHeight = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
-                GlStateManager.bindTexture(j);
+                GlStateManager.get().bindTexture(j);
             }
 
             if (this.textureHeight <= 0)

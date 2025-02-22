@@ -16,7 +16,7 @@ public class MouseHelper
      */
     public void grabMouseCursor()
     {
-        Mouse.setGrabbed(true);
+        Mouse.get().setGrabbed(true);
         this.deltaX = 0;
         this.deltaY = 0;
     }
@@ -26,13 +26,13 @@ public class MouseHelper
      */
     public void ungrabMouseCursor()
     {
-        Mouse.setCursorPosition(Display.get().getWidth() / 2, Display.get().getHeight() / 2);
-        Mouse.setGrabbed(false);
+        Mouse.get().setCursorPosition(Display.get().getWidth() / 2, Display.get().getHeight() / 2);
+        Mouse.get().setGrabbed(false);
     }
 
     public void mouseXYChange()
     {
-        this.deltaX = Mouse.getDX();
-        this.deltaY = Mouse.getDY();
+        this.deltaX = Mouse.get().getDX();
+        this.deltaY = Mouse.get().getDY();
     }
 }

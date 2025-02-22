@@ -43,9 +43,9 @@ public class RenderFallingBlock extends Render<EntityFallingBlock>
             {
                 if (block.getRenderType() == 3)
                 {
-                    GlStateManager.pushMatrix();
-                    GlStateManager.translate((float)x, (float)y, (float)z);
-                    GlStateManager.disableLighting();
+                    GlStateManager.get().pushMatrix();
+                    GlStateManager.get().translate((float)x, (float)y, (float)z);
+                    GlStateManager.get().disableLighting();
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
                     worldrenderer.begin(7, DefaultVertexFormats.BLOCK);
@@ -58,8 +58,8 @@ public class RenderFallingBlock extends Render<EntityFallingBlock>
                     blockrendererdispatcher.getBlockModelRenderer().renderModel(world, ibakedmodel, iblockstate, blockpos, worldrenderer, false);
                     worldrenderer.setTranslation(0.0D, 0.0D, 0.0D);
                     tessellator.draw();
-                    GlStateManager.enableLighting();
-                    GlStateManager.popMatrix();
+                    GlStateManager.get().enableLighting();
+                    GlStateManager.get().popMatrix();
                     super.doRender(entity, x, y, z, entityYaw, partialTicks);
                 }
             }

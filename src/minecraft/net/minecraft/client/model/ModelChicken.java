@@ -54,21 +54,21 @@ public class ModelChicken extends ModelBase
         if (this.isChild)
         {
             float f = 2.0F;
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.0F, 5.0F * scale, 2.0F * scale);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.0F, 5.0F * scale, 2.0F * scale);
             this.head.render(scale);
             this.bill.render(scale);
             this.chin.render(scale);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F / f, 1.0F / f, 1.0F / f);
-            GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(1.0F / f, 1.0F / f, 1.0F / f);
+            GlStateManager.get().translate(0.0F, 24.0F * scale, 0.0F);
             this.body.render(scale);
             this.rightLeg.render(scale);
             this.leftLeg.render(scale);
             this.rightWing.render(scale);
             this.leftWing.render(scale);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
         else
         {

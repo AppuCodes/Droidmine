@@ -48,9 +48,9 @@ public class GuiNewChat extends Gui
 
                 float f1 = this.getChatScale();
                 int l = MathHelper.ceiling_float_int((float)this.getChatWidth() / f1);
-                GlStateManager.pushMatrix();
-                GlStateManager.scale(f1, f1, 1.0F);
-                GlStateManager.translate(2.0F, 8.0F, 0.0F);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().scale(f1, f1, 1.0F);
+                GlStateManager.get().translate(2.0F, 8.0F, 0.0F);
 
                 for (int i1 = 0; i1 + this.scrollPos < this.field_146253_i.size() && i1 < i; ++i1)
                 {
@@ -83,10 +83,10 @@ public class GuiNewChat extends Gui
                                 int j2 = -i1 * 12;
                                 drawRect(i2 - 2, j2 - 12, i2 + l + 4, j2, l1 / 2 << 24);
                                 String s = chatline.getChatComponent().getFormattedText();
-                                GlStateManager.enableBlend();
+                                GlStateManager.get().enableBlend();
                                 this.mc.fontRendererObj.drawStringWithShadow(s, i2, j2 - 10, 16777215 + (l1 << 24));
-                                GlStateManager.disableAlpha();
-                                GlStateManager.disableBlend();
+                                GlStateManager.get().disableAlpha();
+                                GlStateManager.get().disableBlend();
                             }
                         }
                     }
@@ -95,7 +95,7 @@ public class GuiNewChat extends Gui
                 if (flag)
                 {
                     int k2 = 11;
-                    GlStateManager.translate(-3.0F, 0.0F, 0.0F);
+                    GlStateManager.get().translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;
                     int j3 = this.scrollPos * i3 / k;
@@ -110,7 +110,7 @@ public class GuiNewChat extends Gui
                     }
                 }
 
-                GlStateManager.popMatrix();
+                GlStateManager.get().popMatrix();
             }
         }
     }

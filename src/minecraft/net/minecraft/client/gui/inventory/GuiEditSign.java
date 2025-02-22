@@ -41,7 +41,7 @@ public class GuiEditSign extends GuiScreen
     public void initGui()
     {
         this.buttonList.clear();
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
         this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done", new Object[0])));
         this.tileSign.setEditable(false);
     }
@@ -51,7 +51,7 @@ public class GuiEditSign extends GuiScreen
      */
     public void onGuiClosed()
     {
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
         NetHandlerPlayClient nethandlerplayclient = this.mc.getNetHandler();
 
         if (nethandlerplayclient != null)
@@ -128,19 +128,19 @@ public class GuiEditSign extends GuiScreen
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, I18n.format("sign.edit", new Object[0]), this.width / 2, 40, 16777215);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)(this.width / 2), 0.0F, 50.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)(this.width / 2), 0.0F, 50.0F);
         float f = 93.75F;
-        GlStateManager.scale(-f, -f, -f);
-        GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().scale(-f, -f, -f);
+        GlStateManager.get().rotate(180.0F, 0.0F, 1.0F, 0.0F);
         Block block = this.tileSign.getBlockType();
 
         if (block == Blocks.standing_sign)
         {
             float f1 = (float)(this.tileSign.getBlockMetadata() * 360) / 16.0F;
-            GlStateManager.rotate(f1, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(0.0F, -1.0625F, 0.0F);
+            GlStateManager.get().rotate(f1, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().translate(0.0F, -1.0625F, 0.0F);
         }
         else
         {
@@ -162,8 +162,8 @@ public class GuiEditSign extends GuiScreen
                 f2 = -90.0F;
             }
 
-            GlStateManager.rotate(f2, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(0.0F, -1.0625F, 0.0F);
+            GlStateManager.get().rotate(f2, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().translate(0.0F, -1.0625F, 0.0F);
         }
 
         if (this.updateCounter / 6 % 2 == 0)
@@ -173,7 +173,7 @@ public class GuiEditSign extends GuiScreen
 
         TileEntityRendererDispatcher.instance.renderTileEntityAt(this.tileSign, -0.5D, -0.75D, -0.5D, 0.0F);
         this.tileSign.lineBeingEdited = -1;
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

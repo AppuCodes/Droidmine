@@ -113,7 +113,7 @@ public class GuiScreenBook extends GuiScreen
     public void initGui()
     {
         this.buttonList.clear();
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
 
         if (this.bookIsUnsigned)
         {
@@ -139,7 +139,7 @@ public class GuiScreenBook extends GuiScreen
      */
     public void onGuiClosed()
     {
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
     }
 
     private void updateButtons()
@@ -409,7 +409,7 @@ public class GuiScreenBook extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(bookGuiTextures);
         int i = (this.width - this.bookImageWidth) / 2;
         int j = 2;
@@ -650,7 +650,7 @@ public class GuiScreenBook extends GuiScreen
             if (this.visible)
             {
                 boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
                 mc.getTextureManager().bindTexture(GuiScreenBook.bookGuiTextures);
                 int i = 0;
                 int j = 192;

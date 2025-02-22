@@ -60,13 +60,13 @@ public class TextureClock extends TextureAtlasSprite
             {
                 this.frameCounter = i;
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     ShadersTex.uploadTexSub((int[][])((int[][])this.framesTextureData.get(this.frameCounter)), this.width, this.height, this.originX, this.originY, false, false);
                 }
                 else
                 {
-                    TextureUtil.uploadTextureMipmap((int[][])((int[][])this.framesTextureData.get(this.frameCounter)), this.width, this.height, this.originX, this.originY, false, false);
+                    TextureUtil.get().uploadTextureMipmap((int[][])((int[][])this.framesTextureData.get(this.frameCounter)), this.width, this.height, this.originX, this.originY, false, false);
                 }
             }
         }

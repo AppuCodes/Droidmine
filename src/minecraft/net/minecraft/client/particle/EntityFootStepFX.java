@@ -39,23 +39,23 @@ public class EntityFootStepFX extends EntityFX
         }
 
         f1 = f1 * 0.2F;
-        GlStateManager.disableLighting();
+        GlStateManager.get().disableLighting();
         float f2 = 0.125F;
         float f3 = (float)(this.posX - interpPosX);
         float f4 = (float)(this.posY - interpPosY);
         float f5 = (float)(this.posZ - interpPosZ);
         float f6 = this.worldObj.getLightBrightness(new BlockPos(this));
         this.currentFootSteps.bindTexture(FOOTPRINT_TEXTURE);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(770, 771);
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().blendFunc(770, 771);
         worldRendererIn.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         worldRendererIn.pos((double)(f3 - 0.125F), (double)f4, (double)(f5 + 0.125F)).tex(0.0D, 1.0D).color(f6, f6, f6, f1).endVertex();
         worldRendererIn.pos((double)(f3 + 0.125F), (double)f4, (double)(f5 + 0.125F)).tex(1.0D, 1.0D).color(f6, f6, f6, f1).endVertex();
         worldRendererIn.pos((double)(f3 + 0.125F), (double)f4, (double)(f5 - 0.125F)).tex(1.0D, 0.0D).color(f6, f6, f6, f1).endVertex();
         worldRendererIn.pos((double)(f3 - 0.125F), (double)f4, (double)(f5 - 0.125F)).tex(0.0D, 0.0D).color(f6, f6, f6, f1).endVertex();
         Tessellator.getInstance().draw();
-        GlStateManager.disableBlend();
-        GlStateManager.enableLighting();
+        GlStateManager.get().disableBlend();
+        GlStateManager.get().enableLighting();
     }
 
     /**

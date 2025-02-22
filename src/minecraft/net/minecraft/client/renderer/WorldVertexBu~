@@ -57,7 +57,7 @@ public class WorldVertexBufferUploader {
 
          if(p_181679_1_.isMultiTexture()) {
             p_181679_1_.drawMultiTexture();
-         } else if(Config.isShaders()) {
+         } else if(Config.get().isShaders()) {
             SVertexBuilder.drawArrays(p_181679_1_.func_178979_i(), 0, p_181679_1_.func_178989_h(), p_181679_1_);
          } else {
             GL11.glDrawArrays(p_181679_1_.func_178979_i(), 0, p_181679_1_.func_178989_h());
@@ -83,7 +83,7 @@ public class WorldVertexBufferUploader {
                   break;
                case 3:
                   GL11.glDisableClientState('\u8076');
-                  GlStateManager.func_179117_G();
+                  GlStateManager.get().func_179117_G();
                   break;
                case 4:
                   GL11.glDisableClientState('\u8075');

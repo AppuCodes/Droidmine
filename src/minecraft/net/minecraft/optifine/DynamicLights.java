@@ -163,9 +163,9 @@ public class DynamicLights
                     double d6 = (double)p_getLightLevel_0_.getZ() - d3;
                     double d7 = d4 * d4 + d5 * d5 + d6 * d6;
 
-                    if (dynamiclight.isUnderwater() && !Config.isClearWater())
+                    if (dynamiclight.isUnderwater() && !Config.get().isClearWater())
                     {
-                        i = Config.limit(i - 2, 0, 15);
+                        i = Config.get().limit(i - 2, 0, 15);
                         d7 *= 2.0D;
                     }
 
@@ -184,7 +184,7 @@ public class DynamicLights
             }
         }
 
-        double d11 = Config.limit(d0, 0.0D, 15.0D);
+        double d11 = Config.get().limit(d0, 0.0D, 15.0D);
         return d11;
     }
 
@@ -215,7 +215,7 @@ public class DynamicLights
 
     public static int getLightLevel(Entity p_getLightLevel_0_)
     {
-        if (p_getLightLevel_0_ == Config.getMinecraft().getRenderViewEntity() && !Config.isDynamicHandLight())
+        if (p_getLightLevel_0_ == Config.get().getMinecraft().getRenderViewEntity() && !Config.get().isDynamicHandLight())
         {
             return 0;
         }

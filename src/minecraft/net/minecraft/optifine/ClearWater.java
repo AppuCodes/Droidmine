@@ -35,7 +35,7 @@ public class ClearWater
 
             if (ichunkprovider != null)
             {
-                Entity entity = Config.getMinecraft().getRenderViewEntity();
+                Entity entity = Config.get().getMinecraft().getRenderViewEntity();
 
                 if (entity != null)
                 {

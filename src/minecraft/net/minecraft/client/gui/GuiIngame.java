@@ -102,9 +102,9 @@ public class GuiIngame extends Gui
         int i = scaledresolution.getScaledWidth();
         int j = scaledresolution.getScaledHeight();
         this.mc.entityRenderer.setupOverlayRendering();
-        GlStateManager.enableBlend();
-        GlStateManager.enableDepth();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().enableDepth();
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
         ItemStack itemstack = this.mc.player.inventory.armorItemInSlot(3);
 
         if (this.mc.options.thirdPersonView == 0 && itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.pumpkin))
@@ -131,18 +131,18 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);
-        GlStateManager.enableBlend();
+        GlStateManager.get().enableBlend();
         
         if (this.showCrosshair() && this.mc.options.thirdPersonView < 1)
         {
-            GlStateManager.tryBlendFuncSeparate(775, 769, 1, 0);
-            GlStateManager.enableAlpha();
+            GlStateManager.get().tryBlendFuncSeparate(775, 769, 1, 0);
+            GlStateManager.get().enableAlpha();
             this.drawTexturedModalRect(i / 2 - 7, j / 2 - 7, 0, 0, 16, 16);
         }
 
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
         this.renderBossHealth();
 
         if (this.mc.playerController.shouldDrawHUD())
@@ -150,12 +150,12 @@ public class GuiIngame extends Gui
             this.renderPlayerStats(scaledresolution);
         }
 
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableBlend();
 
         if (this.mc.player.getSleepTimer() > 0)
         {
-            GlStateManager.disableDepth();
-            GlStateManager.disableAlpha();
+            GlStateManager.get().disableDepth();
+            GlStateManager.get().disableAlpha();
             int l = this.mc.player.getSleepTimer();
             float f2 = (float)l / 100.0F;
 
@@ -166,11 +166,11 @@ public class GuiIngame extends Gui
 
             int k = (int)(220.0F * f2) << 24 | 1052704;
             drawRect(0, 0, i, j, k);
-            GlStateManager.enableAlpha();
-            GlStateManager.enableDepth();
+            GlStateManager.get().enableAlpha();
+            GlStateManager.get().enableDepth();
         }
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         int i2 = i / 2 - 91;
 
         if (this.mc.player.isRidingHorse())
@@ -213,10 +213,10 @@ public class GuiIngame extends Gui
 
             if (k1 > 8)
             {
-                GlStateManager.pushMatrix();
-                GlStateManager.translate((float)(i / 2), (float)(j - 68), 0.0F);
-                GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().translate((float)(i / 2), (float)(j - 68), 0.0F);
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
                 int i1 = 16777215;
 
                 if (this.recordIsPlaying)
@@ -225,8 +225,8 @@ public class GuiIngame extends Gui
                 }
 
                 this.getFontRenderer().drawStringWithShadow(this.recordPlaying, -this.getFontRenderer().getStringWidth(this.recordPlaying) / 2, -4, i1 + (k1 << 24 & -16777216));
-                GlStateManager.disableBlend();
-                GlStateManager.popMatrix();
+                GlStateManager.get().disableBlend();
+                GlStateManager.get().popMatrix();
             }
         }
 
@@ -250,21 +250,21 @@ public class GuiIngame extends Gui
 
             if (l1 > 8)
             {
-                GlStateManager.pushMatrix();
-                GlStateManager.translate((float)(i / 2), (float)(j / 2), 0.0F);
-                GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                GlStateManager.pushMatrix();
-                GlStateManager.scale(4.0F, 4.0F, 4.0F);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().translate((float)(i / 2), (float)(j / 2), 0.0F);
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().scale(4.0F, 4.0F, 4.0F);
                 int j2 = l1 << 24 & -16777216;
                 this.getFontRenderer().drawString(this.field_175201_x, (float)(-this.getFontRenderer().getStringWidth(this.field_175201_x) / 2), -10.0F, 16777215 | j2, true, 4);
-                GlStateManager.popMatrix();
-                GlStateManager.pushMatrix();
-                GlStateManager.scale(2.0F, 2.0F, 2.0F);
+                GlStateManager.get().popMatrix();
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().scale(2.0F, 2.0F, 2.0F);
                 this.getFontRenderer().drawString(this.field_175200_y, (float)(-this.getFontRenderer().getStringWidth(this.field_175200_y) / 2), 5.0F, 16777215 | j2, true, 2);
-                GlStateManager.popMatrix();
-                GlStateManager.disableBlend();
-                GlStateManager.popMatrix();
+                GlStateManager.get().popMatrix();
+                GlStateManager.get().disableBlend();
+                GlStateManager.get().popMatrix();
             }
         }
 
@@ -289,13 +289,13 @@ public class GuiIngame extends Gui
             this.renderScoreboard(scoreobjective1, scaledresolution);
         }
         
-        GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.disableAlpha();
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(0.0F, (float)(j - 48), 0.0F);
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().disableAlpha();
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate(0.0F, (float)(j - 48), 0.0F);
         this.persistantChatGUI.drawChat(this.updateCounter);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
 
         if (!this.mc.options.keyBindPlayerList.isKeyDown() || this.mc.isIntegratedServerRunning() && this.mc.player.sendQueue.getPlayerInfoMap().size() <= 1 && scoreobjective1 == null)
@@ -308,16 +308,16 @@ public class GuiIngame extends Gui
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
         }
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableLighting();
-        GlStateManager.enableAlpha();
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().enableAlpha();
     }
 
     protected void renderTooltip(ScaledResolution sr, float partialTicks)
     {
         if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(widgetsTexPath);
             EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
             int i = sr.getScaledWidth() / 2;
@@ -326,10 +326,10 @@ public class GuiIngame extends Gui
             this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
             this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 23);
             this.zLevel = f;
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            RenderHelper.enableGUIStandardItemLighting();
+            GlStateManager.get().enableRescaleNormal();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+            RenderHelper.get().enableGUIStandardItemLighting();
 
             for (int j = 0; j < 9; ++j)
             {
@@ -338,9 +338,9 @@ public class GuiIngame extends Gui
                 this.renderHotbarItem(j, k, l, partialTicks, entityplayer);
             }
 
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.disableRescaleNormal();
-            GlStateManager.disableBlend();
+            RenderHelper.get().disableStandardItemLighting();
+            GlStateManager.get().disableRescaleNormal();
+            GlStateManager.get().disableBlend();
         }
     }
 
@@ -381,7 +381,7 @@ public class GuiIngame extends Gui
         {
             int j1 = 8453920;
 
-            if (Config.isCustomColors())
+            if (Config.get().isCustomColors())
             {
                 j1 = CustomColors.getExpBarTextColor(j1);
             }
@@ -426,12 +426,12 @@ public class GuiIngame extends Gui
 
             if (k > 0)
             {
-                GlStateManager.pushMatrix();
-                GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
                 this.getFontRenderer().drawStringWithShadow(s, (float)i, (float)j, 16777215 + (k << 24));
-                GlStateManager.disableBlend();
-                GlStateManager.popMatrix();
+                GlStateManager.get().disableBlend();
+                GlStateManager.get().popMatrix();
             }
         }
     }
@@ -834,24 +834,24 @@ public class GuiIngame extends Gui
             String s = BossStatus.bossName;
             int l = 16777215;
 
-            if (Config.isCustomColors())
+            if (Config.get().isCustomColors())
             {
                 l = CustomColors.getBossTextColor(l);
             }
 
             this.getFontRenderer().drawStringWithShadow(s, (float)(i / 2 - this.getFontRenderer().getStringWidth(s) / 2), (float)(b0 - 10), l);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(icons);
         }
     }
 
     private void renderPumpkinOverlay(ScaledResolution p_180476_1_)
     {
-        GlStateManager.disableDepth();
-        GlStateManager.depthMask(false);
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableAlpha();
+        GlStateManager.get().disableDepth();
+        GlStateManager.get().depthMask(false);
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().disableAlpha();
         this.mc.getTextureManager().bindTexture(pumpkinBlurTexPath);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -861,10 +861,10 @@ public class GuiIngame extends Gui
         worldrenderer.pos((double)p_180476_1_.getScaledWidth(), 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
         worldrenderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
         tessellator.draw();
-        GlStateManager.depthMask(true);
-        GlStateManager.enableDepth();
-        GlStateManager.enableAlpha();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().depthMask(true);
+        GlStateManager.get().enableDepth();
+        GlStateManager.get().enableAlpha();
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     /**
@@ -872,10 +872,10 @@ public class GuiIngame extends Gui
      */
     private void renderVignette(float p_180480_1_, ScaledResolution p_180480_2_)
     {
-        if (!Config.isVignetteEnabled())
+        if (!Config.get().isVignetteEnabled())
         {
-            GlStateManager.enableDepth();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.get().enableDepth();
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
         }
         else
         {
@@ -896,17 +896,17 @@ public class GuiIngame extends Gui
             }
 
             this.prevVignetteBrightness = (float)((double)this.prevVignetteBrightness + (double)(p_180480_1_ - this.prevVignetteBrightness) * 0.01D);
-            GlStateManager.disableDepth();
-            GlStateManager.depthMask(false);
-            GlStateManager.tryBlendFuncSeparate(0, 769, 1, 0);
+            GlStateManager.get().disableDepth();
+            GlStateManager.get().depthMask(false);
+            GlStateManager.get().tryBlendFuncSeparate(0, 769, 1, 0);
 
             if (f > 0.0F)
             {
-                GlStateManager.color(0.0F, f, f, 1.0F);
+                GlStateManager.get().color(0.0F, f, f, 1.0F);
             }
             else
             {
-                GlStateManager.color(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0F);
+                GlStateManager.get().color(this.prevVignetteBrightness, this.prevVignetteBrightness, this.prevVignetteBrightness, 1.0F);
             }
 
             this.mc.getTextureManager().bindTexture(vignetteTexPath);
@@ -918,10 +918,10 @@ public class GuiIngame extends Gui
             worldrenderer.pos((double)p_180480_2_.getScaledWidth(), 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
             worldrenderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
             tessellator.draw();
-            GlStateManager.depthMask(true);
-            GlStateManager.enableDepth();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.get().depthMask(true);
+            GlStateManager.get().enableDepth();
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
         }
     }
 
@@ -934,11 +934,11 @@ public class GuiIngame extends Gui
             p_180474_1_ = p_180474_1_ * 0.8F + 0.2F;
         }
 
-        GlStateManager.disableAlpha();
-        GlStateManager.disableDepth();
-        GlStateManager.depthMask(false);
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, p_180474_1_);
+        GlStateManager.get().disableAlpha();
+        GlStateManager.get().disableDepth();
+        GlStateManager.get().depthMask(false);
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, p_180474_1_);
         this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
         TextureAtlasSprite textureatlassprite = this.mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.portal.getDefaultState());
         float f = textureatlassprite.getMinU();
@@ -953,10 +953,10 @@ public class GuiIngame extends Gui
         worldrenderer.pos((double)p_180474_2_.getScaledWidth(), 0.0D, -90.0D).tex((double)f2, (double)f1).endVertex();
         worldrenderer.pos(0.0D, 0.0D, -90.0D).tex((double)f, (double)f1).endVertex();
         tessellator.draw();
-        GlStateManager.depthMask(true);
-        GlStateManager.enableDepth();
-        GlStateManager.enableAlpha();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().depthMask(true);
+        GlStateManager.get().enableDepth();
+        GlStateManager.get().enableAlpha();
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     private void renderHotbarItem(int index, int xPos, int yPos, float partialTicks, EntityPlayer p_175184_5_)
@@ -969,18 +969,18 @@ public class GuiIngame extends Gui
 
             if (f > 0.0F)
             {
-                GlStateManager.pushMatrix();
+                GlStateManager.get().pushMatrix();
                 float f1 = 1.0F + f / 5.0F;
-                GlStateManager.translate((float)(xPos + 8), (float)(yPos + 12), 0.0F);
-                GlStateManager.scale(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
-                GlStateManager.translate((float)(-(xPos + 8)), (float)(-(yPos + 12)), 0.0F);
+                GlStateManager.get().translate((float)(xPos + 8), (float)(yPos + 12), 0.0F);
+                GlStateManager.get().scale(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
+                GlStateManager.get().translate((float)(-(xPos + 8)), (float)(-(yPos + 12)), 0.0F);
             }
 
             this.itemRenderer.renderItemAndEffectIntoGUI(itemstack, xPos, yPos);
 
             if (f > 0.0F)
             {
-                GlStateManager.popMatrix();
+                GlStateManager.get().popMatrix();
             }
 
             this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);

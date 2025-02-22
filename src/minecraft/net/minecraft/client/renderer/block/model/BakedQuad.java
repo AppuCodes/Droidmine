@@ -139,7 +139,7 @@ public class BakedQuad implements IVertexProducer
 
     private void fixVertexData()
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             if (this.vertexData.length == 28)
             {

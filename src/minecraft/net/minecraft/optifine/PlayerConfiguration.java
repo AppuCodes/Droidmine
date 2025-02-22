@@ -37,6 +37,6 @@ public class PlayerConfiguration
 
     public void addPlayerItemModel(PlayerItemModel p_addPlayerItemModel_1_)
     {
-        this.playerItemModels = (PlayerItemModel[])((PlayerItemModel[])Config.addObjectToArray(this.playerItemModels, p_addPlayerItemModel_1_));
+        this.playerItemModels = (PlayerItemModel[])((PlayerItemModel[])Config.get().addObjectToArray(this.playerItemModels, p_addPlayerItemModel_1_));
     }
 }

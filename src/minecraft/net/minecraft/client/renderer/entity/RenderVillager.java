@@ -72,6 +72,6 @@ public class RenderVillager extends RenderLiving<EntityVillager>
             this.shadowSize = 0.5F;
         }
 
-        GlStateManager.scale(f, f, f);
+        GlStateManager.get().scale(f, f, f);
     }
 }

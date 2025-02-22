@@ -66,7 +66,7 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
             this.func_177179_a((T) modelbase, armorSlot);
             boolean flag = this.isSlotForLeggings(armorSlot);
 
-            if (!Config.isCustomItems() || !CustomItems.bindCustomArmorTexture(itemstack, flag ? 2 : 1, (String)null))
+            if (!Config.get().isCustomItems() || !CustomItems.bindCustomArmorTexture(itemstack, flag ? 2 : 1, (String)null))
             {
                 if (Reflector.ForgeHooksClient_getArmorTexture.exists())
                 {
@@ -87,19 +87,19 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
                     float f3 = (float)(j >> 16 & 255) / 255.0F;
                     float f4 = (float)(j >> 8 & 255) / 255.0F;
                     float f5 = (float)(j & 255) / 255.0F;
-                    GlStateManager.color(this.colorR * f3, this.colorG * f4, this.colorB * f5, this.alpha);
+                    GlStateManager.get().color(this.colorR * f3, this.colorG * f4, this.colorB * f5, this.alpha);
                     modelbase.render(entitylivingbaseIn, p_177182_2_, p_177182_3_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
 
-                    if (!Config.isCustomItems() || !CustomItems.bindCustomArmorTexture(itemstack, flag ? 2 : 1, "overlay"))
+                    if (!Config.get().isCustomItems() || !CustomItems.bindCustomArmorTexture(itemstack, flag ? 2 : 1, "overlay"))
                     {
                         this.renderer.bindTexture(this.getArmorResource(entitylivingbaseIn, itemstack, flag ? 2 : 1, "overlay"));
                     }
                 }
 
-                GlStateManager.color(this.colorR, this.colorG, this.colorB, this.alpha);
+                GlStateManager.get().color(this.colorR, this.colorG, this.colorB, this.alpha);
                 modelbase.render(entitylivingbaseIn, p_177182_2_, p_177182_3_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
 
-                if (!this.field_177193_i && itemstack.isItemEnchanted() && (!Config.isCustomItems() || !CustomItems.renderCustomArmorEffect(entitylivingbaseIn, itemstack, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_)))
+                if (!this.field_177193_i && itemstack.isItemEnchanted() && (!Config.get().isCustomItems() || !CustomItems.renderCustomArmorEffect(entitylivingbaseIn, itemstack, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_)))
                 {
                     this.func_177183_a(entitylivingbaseIn, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
                 }
@@ -114,10 +114,10 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
                     float f = (float)(i >> 16 & 255) / 255.0F;
                     float f1 = (float)(i >> 8 & 255) / 255.0F;
                     float f2 = (float)(i & 255) / 255.0F;
-                    GlStateManager.color(this.colorR * f, this.colorG * f1, this.colorB * f2, this.alpha);
+                    GlStateManager.get().color(this.colorR * f, this.colorG * f1, this.colorB * f2, this.alpha);
                     modelbase.render(entitylivingbaseIn, p_177182_2_, p_177182_3_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
 
-                    if (!Config.isCustomItems() || !CustomItems.bindCustomArmorTexture(itemstack, flag ? 2 : 1, "overlay"))
+                    if (!Config.get().isCustomItems() || !CustomItems.bindCustomArmorTexture(itemstack, flag ? 2 : 1, "overlay"))
                     {
                         this.renderer.bindTexture(this.getArmorResource(itemarmor, flag, "overlay"));
                     }
@@ -126,11 +126,11 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
                 case 3:
                 case 4:
                 case 5:
-                    GlStateManager.color(this.colorR, this.colorG, this.colorB, this.alpha);
+                    GlStateManager.get().color(this.colorR, this.colorG, this.colorB, this.alpha);
                     modelbase.render(entitylivingbaseIn, p_177182_2_, p_177182_3_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
             }
 
-            if (!this.field_177193_i && itemstack.isItemEnchanted() && (!Config.isCustomItems() || !CustomItems.renderCustomArmorEffect(entitylivingbaseIn, itemstack, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_)))
+            if (!this.field_177193_i && itemstack.isItemEnchanted() && (!Config.get().isCustomItems() || !CustomItems.renderCustomArmorEffect(entitylivingbaseIn, itemstack, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_)))
             {
                 this.func_177183_a(entitylivingbaseIn, modelbase, p_177182_2_, p_177182_3_, p_177182_4_, p_177182_5_, p_177182_6_, p_177182_7_, p_177182_8_);
             }
@@ -154,49 +154,49 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
 
     private void func_177183_a(EntityLivingBase entitylivingbaseIn, ModelBase modelbaseIn, float p_177183_3_, float p_177183_4_, float p_177183_5_, float p_177183_6_, float p_177183_7_, float p_177183_8_, float p_177183_9_)
     {
-        if (!Config.isCustomItems() || CustomItems.isUseGlint())
+        if (!Config.get().isCustomItems() || CustomItems.isUseGlint())
         {
-            if (!Config.isShaders() || !Shaders.isShadowPass)
+            if (!Config.get().isShaders() || !Shaders.isShadowPass)
             {
                 float f = (float)entitylivingbaseIn.ticksExisted + p_177183_5_;
                 this.renderer.bindTexture(ENCHANTED_ITEM_GLINT_RES);
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     ShadersRender.renderEnchantedGlintBegin();
                 }
 
-                GlStateManager.enableBlend();
-                GlStateManager.depthFunc(514);
-                GlStateManager.depthMask(false);
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().depthFunc(514);
+                GlStateManager.get().depthMask(false);
                 float f1 = 0.5F;
-                GlStateManager.color(f1, f1, f1, 1.0F);
+                GlStateManager.get().color(f1, f1, f1, 1.0F);
 
                 for (int i = 0; i < 2; ++i)
                 {
-                    GlStateManager.disableLighting();
-                    GlStateManager.blendFunc(768, 1);
+                    GlStateManager.get().disableLighting();
+                    GlStateManager.get().blendFunc(768, 1);
                     float f2 = 0.76F;
-                    GlStateManager.color(0.5F * f2, 0.25F * f2, 0.8F * f2, 1.0F);
-                    GlStateManager.matrixMode(5890);
-                    GlStateManager.loadIdentity();
+                    GlStateManager.get().color(0.5F * f2, 0.25F * f2, 0.8F * f2, 1.0F);
+                    GlStateManager.get().matrixMode(5890);
+                    GlStateManager.get().loadIdentity();
                     float f3 = 0.33333334F;
-                    GlStateManager.scale(f3, f3, f3);
-                    GlStateManager.rotate(30.0F - (float)i * 60.0F, 0.0F, 0.0F, 1.0F);
-                    GlStateManager.translate(0.0F, f * (0.001F + (float)i * 0.003F) * 20.0F, 0.0F);
-                    GlStateManager.matrixMode(5888);
+                    GlStateManager.get().scale(f3, f3, f3);
+                    GlStateManager.get().rotate(30.0F - (float)i * 60.0F, 0.0F, 0.0F, 1.0F);
+                    GlStateManager.get().translate(0.0F, f * (0.001F + (float)i * 0.003F) * 20.0F, 0.0F);
+                    GlStateManager.get().matrixMode(5888);
                     modelbaseIn.render(entitylivingbaseIn, p_177183_3_, p_177183_4_, p_177183_6_, p_177183_7_, p_177183_8_, p_177183_9_);
                 }
 
-                GlStateManager.matrixMode(5890);
-                GlStateManager.loadIdentity();
-                GlStateManager.matrixMode(5888);
-                GlStateManager.enableLighting();
-                GlStateManager.depthMask(true);
-                GlStateManager.depthFunc(515);
-                GlStateManager.disableBlend();
+                GlStateManager.get().matrixMode(5890);
+                GlStateManager.get().loadIdentity();
+                GlStateManager.get().matrixMode(5888);
+                GlStateManager.get().enableLighting();
+                GlStateManager.get().depthMask(true);
+                GlStateManager.get().depthFunc(515);
+                GlStateManager.get().disableBlend();
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     ShadersRender.renderEnchantedGlintEnd();
                 }

@@ -51,19 +51,19 @@ public class CustomSkyLayer
         }
         else
         {
-            String[] astring = Config.tokenize(p_parseTime_1_, ":");
+            String[] astring = Config.get().tokenize(p_parseTime_1_, ":");
 
             if (astring.length != 2)
             {
-                Config.warn("Invalid time: " + p_parseTime_1_);
+                Config.get().warn("Invalid time: " + p_parseTime_1_);
                 return -1;
             }
             else
             {
                 String s = astring[0];
                 String s1 = astring[1];
-                int i = Config.parseInt(s, -1);
-                int j = Config.parseInt(s1, -1);
+                int i = Config.get().parseInt(s, -1);
+                int j = Config.get().parseInt(s1, -1);
 
                 if (i >= 0 && i <= 23 && j >= 0 && j <= 59)
                 {
@@ -79,7 +79,7 @@ public class CustomSkyLayer
                 }
                 else
                 {
-                    Config.warn("Invalid time: " + p_parseTime_1_);
+                    Config.get().warn("Invalid time: " + p_parseTime_1_);
                     return -1;
                 }
             }
@@ -102,7 +102,7 @@ public class CustomSkyLayer
         }
         else
         {
-            Config.warn("Unknown boolean: " + p_parseBoolean_1_);
+            Config.get().warn("Unknown boolean: " + p_parseBoolean_1_);
             return p_parseBoolean_2_;
         }
     }
@@ -115,11 +115,11 @@ public class CustomSkyLayer
         }
         else
         {
-            float f = Config.parseFloat(p_parseFloat_1_, Float.MIN_VALUE);
+            float f = Config.get().parseFloat(p_parseFloat_1_, Float.MIN_VALUE);
 
             if (f == Float.MIN_VALUE)
             {
-                Config.warn("Invalid value: " + p_parseFloat_1_);
+                Config.get().warn("Invalid value: " + p_parseFloat_1_);
                 return p_parseFloat_2_;
             }
             else
@@ -137,11 +137,11 @@ public class CustomSkyLayer
         }
         else
         {
-            String[] astring = Config.tokenize(p_parseAxis_1_, " ");
+            String[] astring = Config.get().tokenize(p_parseAxis_1_, " ");
 
             if (astring.length != 3)
             {
-                Config.warn("Invalid axis: " + p_parseAxis_1_);
+                Config.get().warn("Invalid axis: " + p_parseAxis_1_);
                 return p_parseAxis_2_;
             }
             else
@@ -150,17 +150,17 @@ public class CustomSkyLayer
 
                 for (int i = 0; i < astring.length; ++i)
                 {
-                    afloat[i] = Config.parseFloat(astring[i], Float.MIN_VALUE);
+                    afloat[i] = Config.get().parseFloat(astring[i], Float.MIN_VALUE);
 
                     if (afloat[i] == Float.MIN_VALUE)
                     {
-                        Config.warn("Invalid axis: " + p_parseAxis_1_);
+                        Config.get().warn("Invalid axis: " + p_parseAxis_1_);
                         return p_parseAxis_2_;
                     }
 
                     if (afloat[i] < -1.0F || afloat[i] > 1.0F)
                     {
-                        Config.warn("Invalid axis values: " + p_parseAxis_1_);
+                        Config.get().warn("Invalid axis values: " + p_parseAxis_1_);
                         return p_parseAxis_2_;
                     }
                 }
@@ -171,7 +171,7 @@ public class CustomSkyLayer
 
                 if (f2 * f2 + f * f + f1 * f1 < 1.0E-5F)
                 {
-                    Config.warn("Invalid axis values: " + p_parseAxis_1_);
+                    Config.get().warn("Invalid axis values: " + p_parseAxis_1_);
                     return p_parseAxis_2_;
                 }
                 else
@@ -187,7 +187,7 @@ public class CustomSkyLayer
     {
         if (this.source == null)
         {
-            Config.warn("No source texture: " + p_isValid_1_);
+            Config.get().warn("No source texture: " + p_isValid_1_);
             return false;
         }
         else
@@ -215,17 +215,17 @@ public class CustomSkyLayer
 
                 if (i1 != 24000)
                 {
-                    Config.warn("Invalid fadeIn/fadeOut times, sum is not 24h: " + i1);
+                    Config.get().warn("Invalid fadeIn/fadeOut times, sum is not 24h: " + i1);
                     return false;
                 }
                 else if (this.speed < 0.0F)
                 {
-                    Config.warn("Invalid speed: " + this.speed);
+                    Config.get().warn("Invalid speed: " + this.speed);
                     return false;
                 }
                 else if (this.daysLoop <= 0)
                 {
-                    Config.warn("Invalid daysLoop: " + this.daysLoop);
+                    Config.get().warn("Invalid daysLoop: " + this.daysLoop);
                     return false;
                 }
                 else
@@ -235,7 +235,7 @@ public class CustomSkyLayer
             }
             else
             {
-                Config.warn("Invalid times, required are: startFadeIn, endFadeIn and endFadeOut.");
+                Config.get().warn("Invalid times, required are: startFadeIn, endFadeIn and endFadeOut.");
                 return false;
             }
         }
@@ -259,38 +259,38 @@ public class CustomSkyLayer
     public void render(int p_render_1_, float p_render_2_, float p_render_3_)
     {
         float f = p_render_3_ * this.getFadeBrightness(p_render_1_);
-        f = Config.limit(f, 0.0F, 1.0F);
+        f = Config.get().limit(f, 0.0F, 1.0F);
 
         if (f >= 1.0E-4F)
         {
-            GlStateManager.bindTexture(this.textureId);
+            GlStateManager.get().bindTexture(this.textureId);
             Blender.setupBlend(this.blend, f);
-            GlStateManager.pushMatrix();
+            GlStateManager.get().pushMatrix();
 
             if (this.rotate)
             {
-                GlStateManager.rotate(p_render_2_ * 360.0F * this.speed, this.axis[0], this.axis[1], this.axis[2]);
+                GlStateManager.get().rotate(p_render_2_ * 360.0F * this.speed, this.axis[0], this.axis[1], this.axis[2]);
             }
 
             Tessellator tessellator = Tessellator.getInstance();
-            GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(-90.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().rotate(-90.0F, 0.0F, 0.0F, 1.0F);
             this.renderSide(tessellator, 4);
-            GlStateManager.pushMatrix();
-            GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().rotate(90.0F, 1.0F, 0.0F, 0.0F);
             this.renderSide(tessellator, 1);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().rotate(-90.0F, 1.0F, 0.0F, 0.0F);
             this.renderSide(tessellator, 0);
-            GlStateManager.popMatrix();
-            GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().rotate(90.0F, 0.0F, 0.0F, 1.0F);
             this.renderSide(tessellator, 5);
-            GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(90.0F, 0.0F, 0.0F, 1.0F);
             this.renderSide(tessellator, 2);
-            GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(90.0F, 0.0F, 0.0F, 1.0F);
             this.renderSide(tessellator, 3);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 

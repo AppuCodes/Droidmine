@@ -27,68 +27,68 @@ public class LayerHeldItemWitch implements LayerRenderer<EntityWitch>
 
         if (itemstack != null)
         {
-            GlStateManager.color(1.0F, 1.0F, 1.0F);
-            GlStateManager.pushMatrix();
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F);
+            GlStateManager.get().pushMatrix();
 
             if (this.witchRenderer.getMainModel().isChild)
             {
-                GlStateManager.translate(0.0F, 0.625F, 0.0F);
-                GlStateManager.rotate(-20.0F, -1.0F, 0.0F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.625F, 0.0F);
+                GlStateManager.get().rotate(-20.0F, -1.0F, 0.0F, 0.0F);
                 float f = 0.5F;
-                GlStateManager.scale(f, f, f);
+                GlStateManager.get().scale(f, f, f);
             }
 
             ((ModelWitch)this.witchRenderer.getMainModel()).villagerNose.postRender(0.0625F);
-            GlStateManager.translate(-0.0625F, 0.53125F, 0.21875F);
+            GlStateManager.get().translate(-0.0625F, 0.53125F, 0.21875F);
             Item item = itemstack.getItem();
             ClientEngine minecraft = mc;
 
             if (item instanceof ItemBlock && minecraft.getBlockRendererDispatcher().isRenderTypeChest(Block.getBlockFromItem(item), itemstack.getMetadata()))
             {
-                GlStateManager.translate(0.0F, 0.0625F, -0.25F);
-                GlStateManager.rotate(30.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(-5.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.0625F, -0.25F);
+                GlStateManager.get().rotate(30.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(-5.0F, 0.0F, 1.0F, 0.0F);
                 float f4 = 0.375F;
-                GlStateManager.scale(f4, -f4, f4);
+                GlStateManager.get().scale(f4, -f4, f4);
             }
             else if (item == Items.bow)
             {
-                GlStateManager.translate(0.0F, 0.125F, -0.125F);
-                GlStateManager.rotate(-45.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.125F, -0.125F);
+                GlStateManager.get().rotate(-45.0F, 0.0F, 1.0F, 0.0F);
                 float f1 = 0.625F;
-                GlStateManager.scale(f1, -f1, f1);
-                GlStateManager.rotate(-100.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(-20.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().scale(f1, -f1, f1);
+                GlStateManager.get().rotate(-100.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(-20.0F, 0.0F, 1.0F, 0.0F);
             }
             else if (item.isFull3D())
             {
                 if (item.shouldRotateAroundWhenRendering())
                 {
-                    GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-                    GlStateManager.translate(0.0F, -0.0625F, 0.0F);
+                    GlStateManager.get().rotate(180.0F, 0.0F, 0.0F, 1.0F);
+                    GlStateManager.get().translate(0.0F, -0.0625F, 0.0F);
                 }
 
                 this.witchRenderer.transformHeldFull3DItemLayer();
-                GlStateManager.translate(0.0625F, -0.125F, 0.0F);
+                GlStateManager.get().translate(0.0625F, -0.125F, 0.0F);
                 float f2 = 0.625F;
-                GlStateManager.scale(f2, -f2, f2);
-                GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(0.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().scale(f2, -f2, f2);
+                GlStateManager.get().rotate(0.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(0.0F, 0.0F, 1.0F, 0.0F);
             }
             else
             {
-                GlStateManager.translate(0.1875F, 0.1875F, 0.0F);
+                GlStateManager.get().translate(0.1875F, 0.1875F, 0.0F);
                 float f3 = 0.875F;
-                GlStateManager.scale(f3, f3, f3);
-                GlStateManager.rotate(-20.0F, 0.0F, 0.0F, 1.0F);
-                GlStateManager.rotate(-60.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(-30.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.get().scale(f3, f3, f3);
+                GlStateManager.get().rotate(-20.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.get().rotate(-60.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(-30.0F, 0.0F, 0.0F, 1.0F);
             }
 
-            GlStateManager.rotate(-15.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(40.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(-15.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().rotate(40.0F, 0.0F, 0.0F, 1.0F);
             minecraft.getItemRenderer().renderItem(entitylivingbaseIn, itemstack, ItemCameraTransforms.TransformType.THIRD_PERSON);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 

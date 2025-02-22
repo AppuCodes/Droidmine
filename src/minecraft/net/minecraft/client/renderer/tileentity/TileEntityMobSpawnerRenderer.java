@@ -15,10 +15,10 @@ public class TileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer<Tile
 
     public void renderTileEntityAt(TileEntityMobSpawner te, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x + 0.5F, (float)y, (float)z + 0.5F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)x + 0.5F, (float)y, (float)z + 0.5F);
         renderMob(te.getSpawnerBaseLogic(), x, y, z, partialTicks, null);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
     }
 
     /**
@@ -31,11 +31,11 @@ public class TileEntityMobSpawnerRenderer extends TileEntitySpecialRenderer<Tile
         if (entity != null)
         {
             float f = 0.4375F;
-            GlStateManager.translate(0.0F, 0.4F, 0.0F);
-            GlStateManager.rotate((float)(mobSpawnerLogic.getPrevMobRotation() + (mobSpawnerLogic.getMobRotation() - mobSpawnerLogic.getPrevMobRotation()) * (double)partialTicks) * 10.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(-30.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.translate(0.0F, -0.4F, 0.0F);
-            GlStateManager.scale(f, f, f);
+            GlStateManager.get().translate(0.0F, 0.4F, 0.0F);
+            GlStateManager.get().rotate((float)(mobSpawnerLogic.getPrevMobRotation() + (mobSpawnerLogic.getMobRotation() - mobSpawnerLogic.getPrevMobRotation()) * (double)partialTicks) * 10.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().rotate(-30.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().translate(0.0F, -0.4F, 0.0F);
+            GlStateManager.get().scale(f, f, f);
             entity.setLocationAndAngles(posX, posY, posZ, 0.0F, 0.0F);
             mc.getRenderManager().renderEntityWithPosYaw(entity, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks);
         }

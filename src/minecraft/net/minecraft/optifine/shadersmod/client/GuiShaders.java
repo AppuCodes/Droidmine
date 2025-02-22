@@ -73,7 +73,7 @@ public class GuiShaders extends GuiScreen
 
     public void updateButtons()
     {
-        boolean flag = Config.isShaders();
+        boolean flag = Config.get().isShaders();
 
         for (GuiButton guibutton : this.buttonList)
         {
@@ -316,8 +316,8 @@ public class GuiShaders extends GuiScreen
                         break;
 
                     case 203:
-                        GuiShaderOptions guishaderoptions = new GuiShaderOptions(this, Config.getoptions());
-                        Config.getMinecraft().displayGuiScreen(guishaderoptions);
+                        GuiShaderOptions guishaderoptions = new GuiShaderOptions(this, Config.get().getoptions());
+                        Config.get().getMinecraft().displayGuiScreen(guishaderoptions);
                         break;
 
                     default:

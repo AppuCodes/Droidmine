@@ -76,13 +76,13 @@ public class ModelWolf extends ModelBase
         if (this.isChild)
         {
             float f = 2.0F;
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.0F, 5.0F * scale, 2.0F * scale);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.0F, 5.0F * scale, 2.0F * scale);
             this.wolfHeadMain.renderWithRotation(scale);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F / f, 1.0F / f, 1.0F / f);
-            GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(1.0F / f, 1.0F / f, 1.0F / f);
+            GlStateManager.get().translate(0.0F, 24.0F * scale, 0.0F);
             this.wolfBody.render(scale);
             this.wolfLeg1.render(scale);
             this.wolfLeg2.render(scale);
@@ -90,7 +90,7 @@ public class ModelWolf extends ModelBase
             this.wolfLeg4.render(scale);
             this.wolfTail.renderWithRotation(scale);
             this.wolfMane.render(scale);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
         else
         {

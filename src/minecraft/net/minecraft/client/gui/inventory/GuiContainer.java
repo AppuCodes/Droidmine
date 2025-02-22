@@ -104,21 +104,21 @@ public abstract class GuiContainer extends GuiScreen
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-        GlStateManager.disableRescaleNormal();
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.disableLighting();
-        GlStateManager.disableDepth();
+        GlStateManager.get().disableRescaleNormal();
+        RenderHelper.get().disableStandardItemLighting();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().disableDepth();
         super.drawScreen(mouseX, mouseY, partialTicks);
-        RenderHelper.enableGUIStandardItemLighting();
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)i, (float)j, 0.0F);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.enableRescaleNormal();
+        RenderHelper.get().enableGUIStandardItemLighting();
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)i, (float)j, 0.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().enableRescaleNormal();
         this.theSlot = null;
         int k = 240;
         int l = 240;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)k / 1.0F, (float)l / 1.0F);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
 
         for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1)
         {
@@ -127,23 +127,23 @@ public abstract class GuiContainer extends GuiScreen
             if (this.isMouseOverSlot(slot, mouseX, mouseY) && slot.canBeHovered())
             {
                 this.theSlot = slot;
-                GlStateManager.disableLighting();
-                GlStateManager.disableDepth();
+                GlStateManager.get().disableLighting();
+                GlStateManager.get().disableDepth();
                 int j1 = slot.xDisplayPosition;
                 int k1 = slot.yDisplayPosition;
-                GlStateManager.colorMask(true, true, true, false);
+                GlStateManager.get().colorMask(true, true, true, false);
                 this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
-                GlStateManager.colorMask(true, true, true, true);
-                GlStateManager.enableLighting();
-                GlStateManager.enableDepth();
+                GlStateManager.get().colorMask(true, true, true, true);
+                GlStateManager.get().enableLighting();
+                GlStateManager.get().enableDepth();
             }
             
             this.drawSlot(slot);
         }
 
-        RenderHelper.disableStandardItemLighting();
+        RenderHelper.get().disableStandardItemLighting();
         this.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        RenderHelper.enableGUIStandardItemLighting();
+        RenderHelper.get().enableGUIStandardItemLighting();
         InventoryPlayer inventoryplayer = this.mc.player.inventory;
         ItemStack itemstack = this.draggedStack == null ? inventoryplayer.getItemStack() : this.draggedStack;
 
@@ -189,7 +189,7 @@ public abstract class GuiContainer extends GuiScreen
             this.drawItemStack(this.returningStack, l1, i2, (String)null);
         }
 
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
 
         if (inventoryplayer.getItemStack() == null && this.theSlot != null && this.theSlot.getHasStack())
         {
@@ -197,9 +197,9 @@ public abstract class GuiContainer extends GuiScreen
             this.renderToolTip(itemstack1, mouseX, mouseY);
         }
 
-        GlStateManager.enableLighting();
-        GlStateManager.enableDepth();
-        RenderHelper.disableStandardItemLighting();
+        GlStateManager.get().enableLighting();
+        GlStateManager.get().enableDepth();
+        RenderHelper.get().disableStandardItemLighting();
     }
 
     /**
@@ -207,7 +207,7 @@ public abstract class GuiContainer extends GuiScreen
      */
     private void drawItemStack(ItemStack stack, int x, int y, String altText)
     {
-        GlStateManager.translate(0.0F, 0.0F, 32.0F);
+        GlStateManager.get().translate(0.0F, 0.0F, 32.0F);
         this.zLevel = 200.0F;
         this.itemRender.zLevel = 200.0F;
         this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
@@ -285,10 +285,10 @@ public abstract class GuiContainer extends GuiScreen
             if (s1 != null)
             {
                 TextureAtlasSprite textureatlassprite = this.mc.getTextureMapBlocks().getAtlasSprite(s1);
-                GlStateManager.disableLighting();
+                GlStateManager.get().disableLighting();
                 this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
                 this.drawTexturedModalRect(i, j, textureatlassprite, 16, 16);
-                GlStateManager.enableLighting();
+                GlStateManager.get().enableLighting();
                 flag1 = true;
             }
         }
@@ -300,7 +300,7 @@ public abstract class GuiContainer extends GuiScreen
                 drawRect(i, j, i + 16, j + 16, -2130706433);
             }
 
-            GlStateManager.enableDepth();
+            GlStateManager.get().enableDepth();
             this.itemRender.renderItemAndEffectIntoGUI(itemstack, i, j);
             this.itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, itemstack, i, j, s);
         }
@@ -416,7 +416,7 @@ public abstract class GuiContainer extends GuiScreen
                         }
                         else
                         {
-                            boolean flag2 = l != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
+                            boolean flag2 = l != -999 && (Keyboard.get().isKeyDown(42) || Keyboard.get().isKeyDown(54));
                             int i1 = 0;
 
                             if (flag2)
@@ -635,7 +635,7 @@ public abstract class GuiContainer extends GuiScreen
                 }
                 else
                 {
-                    boolean flag1 = k != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
+                    boolean flag1 = k != -999 && (Keyboard.get().isKeyDown(42) || Keyboard.get().isKeyDown(54));
 
                     if (flag1)
                     {

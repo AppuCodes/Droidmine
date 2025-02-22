@@ -144,13 +144,13 @@ public class ModelRenderer
                 this.compileDisplayList(p_78785_1_);
             }
 
-            GlStateManager.translate(this.offsetX, this.offsetY, this.offsetZ);
+            GlStateManager.get().translate(this.offsetX, this.offsetY, this.offsetZ);
 
             if (this.rotateAngleX == 0.0F && this.rotateAngleY == 0.0F && this.rotateAngleZ == 0.0F)
             {
                 if (this.rotationPointX == 0.0F && this.rotationPointY == 0.0F && this.rotationPointZ == 0.0F)
                 {
-                    GlStateManager.callList(this.displayList);
+                    GlStateManager.get().callList(this.displayList);
 
                     if (this.childModels != null)
                     {
@@ -162,8 +162,8 @@ public class ModelRenderer
                 }
                 else
                 {
-                    GlStateManager.translate(this.rotationPointX * p_78785_1_, this.rotationPointY * p_78785_1_, this.rotationPointZ * p_78785_1_);
-                    GlStateManager.callList(this.displayList);
+                    GlStateManager.get().translate(this.rotationPointX * p_78785_1_, this.rotationPointY * p_78785_1_, this.rotationPointZ * p_78785_1_);
+                    GlStateManager.get().callList(this.displayList);
 
                     if (this.childModels != null)
                     {
@@ -173,30 +173,30 @@ public class ModelRenderer
                         }
                     }
 
-                    GlStateManager.translate(-this.rotationPointX * p_78785_1_, -this.rotationPointY * p_78785_1_, -this.rotationPointZ * p_78785_1_);
+                    GlStateManager.get().translate(-this.rotationPointX * p_78785_1_, -this.rotationPointY * p_78785_1_, -this.rotationPointZ * p_78785_1_);
                 }
             }
             else
             {
-                GlStateManager.pushMatrix();
-                GlStateManager.translate(this.rotationPointX * p_78785_1_, this.rotationPointY * p_78785_1_, this.rotationPointZ * p_78785_1_);
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().translate(this.rotationPointX * p_78785_1_, this.rotationPointY * p_78785_1_, this.rotationPointZ * p_78785_1_);
 
                 if (this.rotateAngleZ != 0.0F)
                 {
-                    GlStateManager.rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+                    GlStateManager.get().rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
                 }
 
                 if (this.rotateAngleY != 0.0F)
                 {
-                    GlStateManager.rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+                    GlStateManager.get().rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
                 }
 
                 if (this.rotateAngleX != 0.0F)
                 {
-                    GlStateManager.rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+                    GlStateManager.get().rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
                 }
 
-                GlStateManager.callList(this.displayList);
+                GlStateManager.get().callList(this.displayList);
 
                 if (this.childModels != null)
                 {
@@ -206,10 +206,10 @@ public class ModelRenderer
                     }
                 }
 
-                GlStateManager.popMatrix();
+                GlStateManager.get().popMatrix();
             }
 
-            GlStateManager.translate(-this.offsetX, -this.offsetY, -this.offsetZ);
+            GlStateManager.get().translate(-this.offsetX, -this.offsetY, -this.offsetZ);
         }
     }
 
@@ -222,26 +222,26 @@ public class ModelRenderer
                 this.compileDisplayList(p_78791_1_);
             }
 
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(this.rotationPointX * p_78791_1_, this.rotationPointY * p_78791_1_, this.rotationPointZ * p_78791_1_);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(this.rotationPointX * p_78791_1_, this.rotationPointY * p_78791_1_, this.rotationPointZ * p_78791_1_);
 
             if (this.rotateAngleY != 0.0F)
             {
-                GlStateManager.rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
             }
 
             if (this.rotateAngleX != 0.0F)
             {
-                GlStateManager.rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
             }
 
             if (this.rotateAngleZ != 0.0F)
             {
-                GlStateManager.rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+                GlStateManager.get().rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
             }
 
-            GlStateManager.callList(this.displayList);
-            GlStateManager.popMatrix();
+            GlStateManager.get().callList(this.displayList);
+            GlStateManager.get().popMatrix();
         }
     }
 
@@ -261,26 +261,26 @@ public class ModelRenderer
             {
                 if (this.rotationPointX != 0.0F || this.rotationPointY != 0.0F || this.rotationPointZ != 0.0F)
                 {
-                    GlStateManager.translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
+                    GlStateManager.get().translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
                 }
             }
             else
             {
-                GlStateManager.translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
+                GlStateManager.get().translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
 
                 if (this.rotateAngleZ != 0.0F)
                 {
-                    GlStateManager.rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+                    GlStateManager.get().rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
                 }
 
                 if (this.rotateAngleY != 0.0F)
                 {
-                    GlStateManager.rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+                    GlStateManager.get().rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
                 }
 
                 if (this.rotateAngleX != 0.0F)
                 {
-                    GlStateManager.rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+                    GlStateManager.get().rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
                 }
             }
         }
@@ -300,7 +300,7 @@ public class ModelRenderer
         GL11.glNewList(this.displayList, GL11.GL_COMPILE);
         WorldRenderer worldrenderer = Tessellator.getInstance().getWorldRenderer();
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             worldrenderer.begin(7, SVertexFormat.defVertexFormatTextured);
         }

@@ -39,7 +39,7 @@ public class RenderWolf extends RenderLiving<EntityWolf>
         if (entity.isWolfWet())
         {
             float f = entity.getBrightness(partialTicks) * entity.getShadingWhileWet(partialTicks);
-            GlStateManager.color(f, f, f);
+            GlStateManager.get().color(f, f, f);
         }
 
         super.doRender(entity, x, y, z, entityYaw, partialTicks);

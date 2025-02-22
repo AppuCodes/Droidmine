@@ -19,24 +19,24 @@ public class VboRenderList extends ChunkRenderContainer
             for (RenderChunk renderchunk : this.renderChunks)
             {
                 VertexBuffer vertexbuffer = renderchunk.getVertexBufferByLayer(layer.ordinal());
-                GlStateManager.pushMatrix();
+                GlStateManager.get().pushMatrix();
                 this.preRenderChunk(renderchunk);
                 renderchunk.multModelviewMatrix();
                 vertexbuffer.bindBuffer();
                 this.setupArrayPointers();
                 vertexbuffer.drawArrays(7);
-                GlStateManager.popMatrix();
+                GlStateManager.get().popMatrix();
             }
 
             OpenGlHelper.glBindBuffer(OpenGlHelper.GL_ARRAY_BUFFER, 0);
-            GlStateManager.resetColor();
+            GlStateManager.get().resetColor();
             this.renderChunks.clear();
         }
     }
 
     private void setupArrayPointers()
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             ShadersRender.setupArrayPointersVbo();
         }

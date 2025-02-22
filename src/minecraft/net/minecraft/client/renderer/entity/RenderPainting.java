@@ -28,17 +28,17 @@ public class RenderPainting extends Render<EntityPainting>
      */
     public void doRender(EntityPainting entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
-        GlStateManager.rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
-        GlStateManager.enableRescaleNormal();
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate(x, y, z);
+        GlStateManager.get().rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().enableRescaleNormal();
         this.bindEntityTexture(entity);
         EntityPainting.EnumArt entitypainting$enumart = entity.art;
         float f = 0.0625F;
-        GlStateManager.scale(f, f, f);
+        GlStateManager.get().scale(f, f, f);
         this.renderPainting(entity, entitypainting$enumart.sizeX, entitypainting$enumart.sizeY, entitypainting$enumart.offsetX, entitypainting$enumart.offsetY);
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.popMatrix();
+        GlStateManager.get().disableRescaleNormal();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
@@ -144,6 +144,6 @@ public class RenderPainting extends Render<EntityPainting>
         int i1 = l % 65536;
         int j1 = l / 65536;
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)i1, (float)j1);
-        GlStateManager.color(1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F);
     }
 }

@@ -50,7 +50,7 @@ public class RenderOcelot extends RenderLiving<EntityOcelot>
 
         if (entitylivingbaseIn.isTamed())
         {
-            GlStateManager.scale(0.8F, 0.8F, 0.8F);
+            GlStateManager.get().scale(0.8F, 0.8F, 0.8F);
         }
     }
 }

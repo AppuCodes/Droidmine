@@ -28,14 +28,14 @@ public class Lang
         String s2 = ".lang";
         list.add(s + s1 + s2);
 
-        if (!Config.getoptions().language.equals(s1))
+        if (!Config.get().getoptions().language.equals(s1))
         {
-            list.add(s + Config.getoptions().language + s2);
+            list.add(s + Config.get().getoptions().language + s2);
         }
 
         String[] astring = (String[])((String[])list.toArray(new String[list.size()]));
-        loadResources(Config.getDefaultResourcePack(), astring, map);
-        IResourcePack[] airesourcepack = Config.getResourcePacks();
+        loadResources(Config.get().getDefaultResourcePack(), astring, map);
+        IResourcePack[] airesourcepack = Config.get().getResourcePacks();
 
         for (int i = 0; i < airesourcepack.length; ++i)
         {

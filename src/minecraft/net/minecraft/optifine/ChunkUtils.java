@@ -34,8 +34,8 @@ public class ChunkUtils
         }
         catch (Exception exception)
         {
-            Config.warn("Error calling Chunk.hasEntities");
-            Config.warn(exception.getClass().getName() + " " + exception.getMessage());
+            Config.get().warn("Error calling Chunk.hasEntities");
+            Config.get().warn(exception.getClass().getName() + " " + exception.getMessage());
             fieldHasEntitiesMissing = true;
             return true;
         }
@@ -101,10 +101,10 @@ public class ChunkUtils
         }
         catch (Exception exception)
         {
-            Config.warn(exception.getClass().getName() + " " + exception.getMessage());
+            Config.get().warn(exception.getClass().getName() + " " + exception.getMessage());
         }
 
-        Config.warn("Error finding Chunk.hasEntities");
+        Config.get().warn("Error finding Chunk.hasEntities");
         return null;
     }
 }

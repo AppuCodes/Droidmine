@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import java.util.HashMap;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.util.MathHelper;
 
@@ -8,7 +10,7 @@ public class ScaledResolution
     /**
      * Cache ScaledResolution
      */
-    private static ScaledResolution INSTANCE;
+    private static HashMap<String, ScaledResolution> instances = new HashMap<>();
     private int scaledWidth, scaledHeight, scaleFactor;
     private double scaledWidthD, scaledHeightD;
 
@@ -19,6 +21,11 @@ public class ScaledResolution
 
     public void update(ClientEngine mc)
     {
+        if (mc == null)
+        {
+            return;
+        }
+
         this.scaledWidth = mc.displayWidth;
         this.scaledHeight = mc.displayHeight;
         this.scaleFactor = 1;
@@ -66,13 +73,16 @@ public class ScaledResolution
         return this.scaleFactor;
     }
 
-    public static void init(ClientEngine mc)
+    public static ScaledResolution init(ClientEngine mc)
     {
-        INSTANCE = new ScaledResolution(mc);
+        ScaledResolution scaled = new ScaledResolution(mc);
+        instances.put(Thread.currentThread().getName(), scaled);
+        return scaled;
     }
 
     public static ScaledResolution get()
     {
-        return INSTANCE;
+        ScaledResolution ins = instances.get(Thread.currentThread().getName());
+        return ins == null ? ScaledResolution.init(null) : ins;
     }
 }

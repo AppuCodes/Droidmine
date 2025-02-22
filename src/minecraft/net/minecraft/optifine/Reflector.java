@@ -851,15 +851,15 @@ public class Reflector
         {
             if (p_handleException_0_ instanceof IllegalArgumentException)
             {
-                Config.warn("*** IllegalArgumentException ***");
-                Config.warn("Method: " + p_handleException_2_.getTargetMethod());
-                Config.warn("Object: " + p_handleException_1_);
-                Config.warn("Parameter classes: " + Config.arrayToString(getClasses(p_handleException_3_)));
-                Config.warn("Parameters: " + Config.arrayToString(p_handleException_3_));
+                Config.get().warn("*** IllegalArgumentException ***");
+                Config.get().warn("Method: " + p_handleException_2_.getTargetMethod());
+                Config.get().warn("Object: " + p_handleException_1_);
+                Config.get().warn("Parameter classes: " + Config.get().arrayToString(getClasses(p_handleException_3_)));
+                Config.get().warn("Parameters: " + Config.get().arrayToString(p_handleException_3_));
             }
 
-            Config.warn("*** Exception outside of method ***");
-            Config.warn("Method deactivated: " + p_handleException_2_.getTargetMethod());
+            Config.get().warn("*** Exception outside of method ***");
+            Config.get().warn("Method deactivated: " + p_handleException_2_.getTargetMethod());
             p_handleException_2_.deactivate();
             p_handleException_0_.printStackTrace();
         }
@@ -875,14 +875,14 @@ public class Reflector
         {
             if (p_handleException_0_ instanceof IllegalArgumentException)
             {
-                Config.warn("*** IllegalArgumentException ***");
-                Config.warn("Constructor: " + p_handleException_1_.getTargetConstructor());
-                Config.warn("Parameter classes: " + Config.arrayToString(getClasses(p_handleException_2_)));
-                Config.warn("Parameters: " + Config.arrayToString(p_handleException_2_));
+                Config.get().warn("*** IllegalArgumentException ***");
+                Config.get().warn("Constructor: " + p_handleException_1_.getTargetConstructor());
+                Config.get().warn("Parameter classes: " + Config.get().arrayToString(getClasses(p_handleException_2_)));
+                Config.get().warn("Parameters: " + Config.get().arrayToString(p_handleException_2_));
             }
 
-            Config.warn("*** Exception outside of constructor ***");
-            Config.warn("Constructor deactivated: " + p_handleException_1_.getTargetConstructor());
+            Config.get().warn("*** Exception outside of constructor ***");
+            Config.get().warn("Constructor deactivated: " + p_handleException_1_.getTargetConstructor());
             p_handleException_1_.deactivate();
             p_handleException_0_.printStackTrace();
         }

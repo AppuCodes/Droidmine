@@ -62,13 +62,13 @@ public class MatchBlock
                     }
                 }
 
-                this.metadatas = Config.addIntToArray(this.metadatas, p_addMetadata_1_);
+                this.metadatas = Config.get().addIntToArray(this.metadatas, p_addMetadata_1_);
             }
         }
     }
 
     public String toString()
     {
-        return "" + this.blockId + ":" + Config.arrayToString(this.metadatas);
+        return "" + this.blockId + ":" + Config.get().arrayToString(this.metadatas);
     }
 }

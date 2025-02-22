@@ -29,17 +29,17 @@ public class PlayerItemsLayer implements LayerRenderer
 
     protected void renderEquippedItems(EntityLivingBase p_renderEquippedItems_1_, float p_renderEquippedItems_2_, float p_renderEquippedItems_3_)
     {
-        if (Config.isShowCapes())
+        if (Config.get().isShowCapes())
         {
             if (p_renderEquippedItems_1_ instanceof AbstractClientPlayer)
             {
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)p_renderEquippedItems_1_;
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                GlStateManager.disableRescaleNormal();
-                GlStateManager.enableCull();
+                GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.get().disableRescaleNormal();
+                GlStateManager.get().enableCull();
                 ModelBiped modelbiped = (ModelBiped)this.renderPlayer.getMainModel();
                 PlayerConfigurations.renderPlayerItems(modelbiped, abstractclientplayer, p_renderEquippedItems_2_, p_renderEquippedItems_3_, mc);
-                GlStateManager.disableCull();
+                GlStateManager.get().disableCull();
             }
         }
     }
@@ -68,7 +68,7 @@ public class PlayerItemsLayer implements LayerRenderer
 
         if (!flag)
         {
-            Config.warn("PlayerItemsLayer not registered");
+            Config.get().warn("PlayerItemsLayer not registered");
         }
     }
 }

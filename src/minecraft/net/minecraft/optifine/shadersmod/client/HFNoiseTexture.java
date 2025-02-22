@@ -16,13 +16,13 @@ public class HFNoiseTexture
         ByteBuffer bytebuffer = BufferUtils.createByteBuffer(abyte.length);
         bytebuffer.put(abyte);
         bytebuffer.flip();
-        GlStateManager.bindTexture(this.texID);
+        GlStateManager.get().bindTexture(this.texID);
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, width, height, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, (ByteBuffer)bytebuffer);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        GlStateManager.bindTexture(0);
+        GlStateManager.get().bindTexture(0);
     }
 
     public int getID()
@@ -32,7 +32,7 @@ public class HFNoiseTexture
 
     public void destroy()
     {
-        GlStateManager.deleteTexture(this.texID);
+        GlStateManager.get().deleteTexture(this.texID);
         this.texID = 0;
     }
 

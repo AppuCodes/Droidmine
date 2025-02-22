@@ -73,11 +73,11 @@ public class ShadersRender
         {
             if (Shaders.usedDepthBuffers >= 2)
             {
-                GlStateManager.setActiveTexture(33995);
+                GlStateManager.get().setActiveTexture(33995);
                 Shaders.checkGLError("pre copy depth");
                 GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, Shaders.renderWidth, Shaders.renderHeight);
                 Shaders.checkGLError("copy depth");
-                GlStateManager.setActiveTexture(33984);
+                GlStateManager.get().setActiveTexture(33984);
             }
 
             Shaders.useProgram(12);
@@ -115,7 +115,7 @@ public class ShadersRender
         if (!Shaders.isShadowPass && !Shaders.isHandRenderedMain())
         {
             Shaders.readCenterDepth();
-            GlStateManager.enableBlend();
+            GlStateManager.get().enableBlend();
             Shaders.beginHand();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             er.renderHand(par1, par2, true, false, true);
@@ -126,11 +126,11 @@ public class ShadersRender
 
     public static void renderItemFP(ItemRenderer itemRenderer, float par1, boolean renderTranslucent)
     {
-        GlStateManager.depthMask(true);
+        GlStateManager.get().depthMask(true);
 
         if (renderTranslucent)
         {
-            GlStateManager.depthFunc(519);
+            GlStateManager.get().depthFunc(519);
             GL11.glPushMatrix();
             IntBuffer intbuffer = Shaders.activeDrawBuffers;
             Shaders.setDrawBuffers(Shaders.drawBuffersNone);
@@ -141,7 +141,7 @@ public class ShadersRender
             GL11.glPopMatrix();
         }
 
-        GlStateManager.depthFunc(515);
+        GlStateManager.get().depthFunc(515);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         itemRenderer.renderItemInFirstPerson(par1);
     }
@@ -165,7 +165,7 @@ public class ShadersRender
             if (Shaders.programsID[11] == Shaders.programsID[7])
             {
                 Shaders.setDrawBuffers(Shaders.drawBuffersColorAtt0);
-                GlStateManager.depthMask(false);
+                GlStateManager.get().depthMask(false);
             }
         }
     }
@@ -174,7 +174,7 @@ public class ShadersRender
     {
         if (Shaders.isRenderingWorld)
         {
-            GlStateManager.depthMask(true);
+            GlStateManager.get().depthMask(true);
             Shaders.useProgram(3);
         }
     }
@@ -223,34 +223,34 @@ public class ShadersRender
 //            double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
 //            double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
 //            frustum.setPosition(d0, d1, d2);
-//            GlStateManager.shadeModel(7425);
-//            GlStateManager.enableDepth();
-//            GlStateManager.depthFunc(515);
-//            GlStateManager.depthMask(true);
-//            GlStateManager.colorMask(true, true, true, true);
-//            GlStateManager.disableCull();
+//            GlStateManager.get().shadeModel(7425);
+//            GlStateManager.get().enableDepth();
+//            GlStateManager.get().depthFunc(515);
+//            GlStateManager.get().depthMask(true);
+//            GlStateManager.get().colorMask(true, true, true, true);
+//            GlStateManager.get().disableCull();
 //            minecraft.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 //            int i = 0;
 //            i = entityRenderer.frameCount;
 //            entityRenderer.frameCount = i + 1;
 //            renderglobal.setupTerrain(entity, (double)partialTicks, frustum, i, minecraft.player.isSpectator());
-//            GlStateManager.matrixMode(5888);
-//            GlStateManager.pushMatrix();
-//            GlStateManager.disableAlpha();
+//            GlStateManager.get().matrixMode(5888);
+//            GlStateManager.get().pushMatrix();
+//            GlStateManager.get().disableAlpha();
 //            renderglobal.renderBlockLayer(EnumWorldBlockLayer.SOLID, (double)partialTicks, 2, entity);
 //            Shaders.checkGLError("shadow terrain solid");
-//            GlStateManager.enableAlpha();
+//            GlStateManager.get().enableAlpha();
 //            renderglobal.renderBlockLayer(EnumWorldBlockLayer.CUTOUT_MIPPED, (double)partialTicks, 2, entity);
 //            Shaders.checkGLError("shadow terrain cutoutmipped");
 //            minecraft.getTextureManager().getTexture(TextureMap.locationBlocksTexture).setBlurMipmap(false, false);
 //            renderglobal.renderBlockLayer(EnumWorldBlockLayer.CUTOUT, (double)partialTicks, 2, entity);
 //            Shaders.checkGLError("shadow terrain cutout");
 //            minecraft.getTextureManager().getTexture(TextureMap.locationBlocksTexture).restoreLastBlurMipmap();
-//            GlStateManager.shadeModel(7424);
-//            GlStateManager.alphaFunc(516, 0.0F);
-//            GlStateManager.matrixMode(5888);
-//            GlStateManager.popMatrix();
-//            GlStateManager.pushMatrix();
+//            GlStateManager.get().shadeModel(7424);
+//            GlStateManager.get().alphaFunc(516, 0.0F);
+//            GlStateManager.get().matrixMode(5888);
+//            GlStateManager.get().popMatrix();
+//            GlStateManager.get().pushMatrix();
 //
 //            if (Reflector.ForgeHooksClient_setRenderPass.exists())
 //            {
@@ -259,27 +259,27 @@ public class ShadersRender
 //
 //            renderglobal.renderEntities(entity, frustum, partialTicks);
 //            Shaders.checkGLError("shadow entities");
-//            GlStateManager.matrixMode(5888);
-//            GlStateManager.popMatrix();
-//            GlStateManager.depthMask(true);
-//            GlStateManager.disableBlend();
-//            GlStateManager.enableCull();
-//            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-//            GlStateManager.alphaFunc(516, 0.0F);
+//            GlStateManager.get().matrixMode(5888);
+//            GlStateManager.get().popMatrix();
+//            GlStateManager.get().depthMask(true);
+//            GlStateManager.get().disableBlend();
+//            GlStateManager.get().enableCull();
+//            GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+//            GlStateManager.get().alphaFunc(516, 0.0F);
 //
 //            if (Shaders.usedShadowDepthBuffers >= 2)
 //            {
-//                GlStateManager.setActiveTexture(33989);
+//                GlStateManager.get().setActiveTexture(33989);
 //                Shaders.checkGLError("pre copy shadow depth");
 //                GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, Shaders.shadowMapWidth, Shaders.shadowMapHeight);
 //                Shaders.checkGLError("copy shadow depth");
-//                GlStateManager.setActiveTexture(33984);
+//                GlStateManager.get().setActiveTexture(33984);
 //            }
 //
-//            GlStateManager.disableBlend();
-//            GlStateManager.depthMask(true);
+//            GlStateManager.get().disableBlend();
+//            GlStateManager.get().depthMask(true);
 //            minecraft.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-//            GlStateManager.shadeModel(7425);
+//            GlStateManager.get().shadeModel(7425);
 //            Shaders.checkGLError("shadow pre-translucent");
 //            GL20.glDrawBuffers(Shaders.sfbDrawBuffers);
 //            Shaders.checkGLError("shadow drawbuffers pre-translucent");
@@ -293,18 +293,18 @@ public class ShadersRender
 //
 //            if (Reflector.ForgeHooksClient_setRenderPass.exists())
 //            {
-//                RenderHelper.enableStandardItemLighting();
+//                RenderHelper.get().enableStandardItemLighting();
 //                Reflector.call(Reflector.ForgeHooksClient_setRenderPass, new Object[] {Integer.valueOf(1)});
 //                renderglobal.renderEntities(entity, frustum, partialTicks);
 //                Reflector.call(Reflector.ForgeHooksClient_setRenderPass, new Object[] {Integer.valueOf(-1)});
-//                RenderHelper.disableStandardItemLighting();
+//                RenderHelper.get().disableStandardItemLighting();
 //                Shaders.checkGLError("shadow entities 1");
 //            }
 //
-//            GlStateManager.shadeModel(7424);
-//            GlStateManager.depthMask(true);
-//            GlStateManager.enableCull();
-//            GlStateManager.disableBlend();
+//            GlStateManager.get().shadeModel(7424);
+//            GlStateManager.get().depthMask(true);
+//            GlStateManager.get().enableCull();
+//            GlStateManager.get().disableBlend();
 //            GL11.glFlush();
 //            Shaders.checkGLError("shadow flush");
 //            Shaders.isShadowPass = false;
@@ -316,42 +316,42 @@ public class ShadersRender
 //                {
 //                    if (Shaders.shadowMipmapEnabled[0])
 //                    {
-//                        GlStateManager.setActiveTexture(33988);
-//                        GlStateManager.bindTexture(Shaders.sfbDepthTextures.get(0));
+//                        GlStateManager.get().setActiveTexture(33988);
+//                        GlStateManager.get().bindTexture(Shaders.sfbDepthTextures.get(0));
 //                        GL30.glGenerateMipmap(3553);
 //                        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.shadowFilterNearest[0] ? GL11.GL_NEAREST_MIPMAP_NEAREST : GL11.GL_LINEAR_MIPMAP_LINEAR);
 //                    }
 //
 //                    if (Shaders.usedShadowDepthBuffers >= 2 && Shaders.shadowMipmapEnabled[1])
 //                    {
-//                        GlStateManager.setActiveTexture(33989);
-//                        GlStateManager.bindTexture(Shaders.sfbDepthTextures.get(1));
+//                        GlStateManager.get().setActiveTexture(33989);
+//                        GlStateManager.get().bindTexture(Shaders.sfbDepthTextures.get(1));
 //                        GL30.glGenerateMipmap(3553);
 //                        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.shadowFilterNearest[1] ? GL11.GL_NEAREST_MIPMAP_NEAREST : GL11.GL_LINEAR_MIPMAP_LINEAR);
 //                    }
 //
-//                    GlStateManager.setActiveTexture(33984);
+//                    GlStateManager.get().setActiveTexture(33984);
 //                }
 //
 //                if (Shaders.usedShadowColorBuffers >= 1)
 //                {
 //                    if (Shaders.shadowColorMipmapEnabled[0])
 //                    {
-//                        GlStateManager.setActiveTexture(33997);
-//                        GlStateManager.bindTexture(Shaders.sfbColorTextures.get(0));
+//                        GlStateManager.get().setActiveTexture(33997);
+//                        GlStateManager.get().bindTexture(Shaders.sfbColorTextures.get(0));
 //                        GL30.glGenerateMipmap(3553);
 //                        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.shadowColorFilterNearest[0] ? GL11.GL_NEAREST_MIPMAP_NEAREST : GL11.GL_LINEAR_MIPMAP_LINEAR);
 //                    }
 //
 //                    if (Shaders.usedShadowColorBuffers >= 2 && Shaders.shadowColorMipmapEnabled[1])
 //                    {
-//                        GlStateManager.setActiveTexture(33998);
-//                        GlStateManager.bindTexture(Shaders.sfbColorTextures.get(1));
+//                        GlStateManager.get().setActiveTexture(33998);
+//                        GlStateManager.get().bindTexture(Shaders.sfbColorTextures.get(1));
 //                        GL30.glGenerateMipmap(3553);
 //                        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.shadowColorFilterNearest[1] ? GL11.GL_NEAREST_MIPMAP_NEAREST : GL11.GL_LINEAR_MIPMAP_LINEAR);
 //                    }
 //
-//                    GlStateManager.setActiveTexture(33984);
+//                    GlStateManager.get().setActiveTexture(33984);
 //                }
 //            }
 //
@@ -374,7 +374,7 @@ public class ShadersRender
     {
         if (Shaders.isRenderBackFace(blockLayerIn))
         {
-            GlStateManager.disableCull();
+            GlStateManager.get().disableCull();
         }
 
         if (OpenGlHelper.useVbo())
@@ -398,7 +398,7 @@ public class ShadersRender
 
         if (Shaders.isRenderBackFace(blockLayerIn))
         {
-            GlStateManager.enableCull();
+            GlStateManager.get().enableCull();
         }
     }
 
@@ -436,7 +436,7 @@ public class ShadersRender
 
     public static void beaconBeamDraw2()
     {
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableBlend();
     }
 
     public static void renderEnchantedGlintBegin()

@@ -6,6 +6,8 @@ import java.time.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.lwjgl.display.Display;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.authlib.properties.PropertyMap;
@@ -13,11 +15,14 @@ import com.mojang.authlib.properties.PropertyMap.Serializer;
 
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.main.GameConfiguration;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.multiplayer.*;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.network.Packet;
+import net.minecraft.realms.RealmsBridge;
 
 public class MineBot
 {
@@ -37,6 +42,28 @@ public class MineBot
     public void run()
     {
         engine.run();
+    }
+    
+    public void quit()
+    {
+        disconnectFromServer();
+        engine.shutdown();
+    }
+    
+    public void changeServers(String serverHost)
+    {
+        disconnectFromServer();
+        engine.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), engine, new ServerData(serverHost, serverHost, false)));
+    }
+    
+    public void disconnectFromServer()
+    {
+        if (engine.getCurrentServerData() != null)
+        {
+            engine.world.sendQuittingDisconnectingPacket();
+            engine.loadWorld(null);
+            engine.stopIntegratedServer();
+        }
     }
     
     /** sleeps the current thread */

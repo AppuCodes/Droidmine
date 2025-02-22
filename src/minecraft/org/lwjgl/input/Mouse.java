@@ -12,39 +12,40 @@ import org.lwjgl.glfw.*;
 
 public class Mouse {
 
-    private static boolean created;
+    protected boolean created;
 
-    private static String[]	buttonName;
-    private static final Map<String, Integer> buttonMap	= new HashMap<>(8);
-    private static ByteBuffer readBuffer;
-    private static ByteBuffer	buttons;
-    private static final int BUFFER_SIZE = 50;
+    protected String[] buttonName;
+    protected final Map<String, Integer> buttonMap = new HashMap<>(8);
+    protected ByteBuffer readBuffer;
+    protected ByteBuffer buttons;
+    protected final int BUFFER_SIZE = 50;
     //Max Nummber of buttons glfw supports https://www.glfw.org/docs/3.3/group__buttons.html
-    private static final int BUTTON_COUNT = 8;
+    protected final int BUTTON_COUNT = 8;
     //int = 4 boolean = 1, long = 8
     // 4 + 1 + 4 + 4 + 4 + 4 + 4
-    public static final int EVENT_SIZE = 4 + 1 + 4 + 4 + 4 + 4 + 4;
-    private static MouseEvent current_Event;
-    private static boolean isGrabbed;
+    public final int EVENT_SIZE = 4 + 1 + 4 + 4 + 4 + 4 + 4;
+    protected MouseEvent current_Event;
+    protected boolean isGrabbed;
 
-    private static int last_event_raw_x;
-    private static int last_event_raw_y;
-    private static  boolean clipMouseCoordinatesToWindow;
+    protected int last_event_raw_x;
+    protected int last_event_raw_y;
+    protected boolean clipMouseCoordinatesToWindow;
 
-    private static int poll_button = 0;
-    private static int poll_action = 0;
-    public static int poll_xPos = 0;
-    public static int poll_yPos = 0;
-    public static int poll_scrollY = 0;
-    private static int current_dx = 0;
-    private static int current_dy = 0;
-    public static int last_x = 0;
-    public static int last_y = 0;
-    private static boolean poll_outside;
-    private static boolean pollNeed;
+    protected int poll_button = 0;
+    protected int poll_action = 0;
+    public int poll_xPos = 0;
+    public int poll_yPos = 0;
+    public int poll_scrollY = 0;
+    protected int current_dx = 0;
+    protected int current_dy = 0;
+    public int last_x = 0;
+    public int last_y = 0;
+    protected boolean poll_outside;
+    protected boolean pollNeed;
+    
+    protected static HashMap<String, Mouse> mouses = new HashMap<>();
 
-
-    public static void pollGLFW(){
+    public void pollGLFW(){
         if(!created) return;
         glfwSetMouseButtonCallback(Display.get().getWindow(), new GLFWMouseButtonCallback() {
             @Override
@@ -83,7 +84,8 @@ public class Mouse {
             }
         });
     }
-    public static void createEvent(){
+    
+    public void createEvent(){
         if(!created || !pollNeed) return;
         readBuffer.compact();
         pollNeed = false;
@@ -103,24 +105,22 @@ public class Mouse {
         poll_action = 0;
     }
 
-
-
-    public static void create(){
+    public void create(){
         if(created) return;
         buttons = BufferUtils.createByteBuffer(BUTTON_COUNT);
         readBuffer = ByteBuffer.allocate(EVENT_SIZE * BUFFER_SIZE);
         readBuffer.limit(0);
         clipMouseCoordinatesToWindow = true;
         created = true;
-
         buttonName = new String[8];
+
         for (int i = 0; i < 8; i++) {
             buttonName[i] = "BUTTON" + i;
             buttonMap.put(buttonName[i], i);
         }
-
     }
-    public static boolean next(){
+    
+    public boolean next(){
         if(!created) throw new IllegalStateException("Mouse must be created before you can read events");
         if(readBuffer.hasRemaining()){
             MouseEvent event = new MouseEvent();
@@ -152,11 +152,11 @@ public class Mouse {
             current_Event = event;
             return true;
         }
+        
         return false;
     }
 
-
-    public static int getButtonIndex(String buttonName) {
+    public int getButtonIndex(String buttonName) {
         Integer ret = buttonMap.get(buttonName);
         if (ret == null)
             return -1;
@@ -164,58 +164,70 @@ public class Mouse {
             return ret;
     }
 
-    public static String getButtonName(int button) {
+    public String getButtonName(int button) {
         if (button >= buttonName.length || button < 0)
             return null;
         else
             return buttonName[button];
     }
 
-    public static boolean isInsideWindow() {
+    public boolean isInsideWindow() {
         return poll_outside;
     }
-    public static int getEventButton(){
+    
+    public int getEventButton(){
         return current_Event.eventButton;
     }
-    public static boolean getEventButtonState(){
+    
+    public boolean getEventButtonState(){
         return current_Event.eventState;
     }
-    public static int getEventDWheel(){
+    
+    public int getEventDWheel(){
         return current_Event.event_dwheel;
     }
-    public static int getEventX(){
+    
+    public int getEventX(){
         return current_Event.x;
     }
-    public static int getEventY(){
+    
+    public int getEventY(){
         return current_Event.y;
     }
-    public static boolean isCreated(){
+    
+    public boolean isCreated(){
         return created;
     }
-    public static int getX(){
+    
+    public int getX(){
         return Math.min(Math.max(poll_xPos, 0), Display.get().getWidth() - 1);
     }
-    public static int getY(){
+    
+    public int getY(){
         return Math.min(Math.max(poll_yPos, 0), Display.get().getHeight() - 1);
     }
-    public static void setClipMouseCoordinatesToWindow(boolean clip) {
+    
+    public void setClipMouseCoordinatesToWindow(boolean clip) {
         clipMouseCoordinatesToWindow = clip;
     }
-    public static boolean isButtonDown(int button){
+    
+    public boolean isButtonDown(int button){
         if (!created) throw new IllegalStateException("Mouse must be created before you can poll the button state");
         if (button >= BUTTON_COUNT || button < 0)
             return false;
         else
             return buttons.get(button) == 1;
     }
-    public static void setGrabbed(boolean grab){
+    
+    public void setGrabbed(boolean grab){
         if (!created) throw new IllegalStateException("Mouse must be created before you can poll the button state");
         isGrabbed = grab;
-        if(!grab) glfwSetInputMode(Display.get().getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        if (!grab) glfwSetInputMode(Display.get().getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         else glfwSetInputMode(Display.get().getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         glfwSetCursorPos(Display.get().getWindow(), poll_xPos, poll_yPos);
     }
-    public static void setCursorPosition(int x, int y){
+    
+    public void setCursorPosition(int x, int y){
         if (!isCreated()) throw new IllegalStateException("Mouse is not created");
         
         if (current_Event != null)
@@ -225,27 +237,29 @@ public class Mouse {
             glfwSetCursorPos(Display.get().getWindow(), x, y);
         }
     }
-    public static int getDX(){
+    
+    public int getDX(){
         int result = current_dx;
         current_dx = 0;
         return result;
     }
-    public static int getDY(){
+    
+    public int getDY(){
         int result = current_dy;
         current_dy = 0;
         return result;
     }
-    private static int normalize(int input){
+    
+    private int normalize(int input){
         if(input < 0) return input /-1;
         return input;
     }
 
-    public static int getDWheel() {
+    public int getDWheel() {
         return poll_scrollY;
     }
 
-
-    private static final class MouseEvent {
+    private final class MouseEvent {
 
         private int eventButton;
         private boolean eventState;
@@ -256,5 +270,24 @@ public class Mouse {
         private int y;
         private int event_dwheel;
 
+    }
+    
+    public static Mouse get()
+    {
+        return get(false);
+    }
+    
+    public static Mouse get(boolean headless)
+    {
+        String thread = Thread.currentThread().getName();
+
+        if (mouses.containsKey(thread))
+        {
+            return mouses.get(thread);
+        }
+        
+        Mouse mouse = headless ? new HeadlessMouse() : new Mouse();
+        mouses.put(thread, mouse);
+        return mouse;
     }
 }

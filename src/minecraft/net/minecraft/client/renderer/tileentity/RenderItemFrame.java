@@ -60,13 +60,13 @@ public class RenderItemFrame extends Render
      */
     public void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
         BlockPos blockpos = entity.getHangingPosition();
         double d0 = (double)blockpos.getX() - entity.posX + x;
         double d1 = (double)blockpos.getY() - entity.posY + y;
         double d2 = (double)blockpos.getZ() - entity.posZ + z;
-        GlStateManager.translate(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D);
-        GlStateManager.rotate(180.0F - entity.rotationYaw, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().translate(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D);
+        GlStateManager.get().rotate(180.0F - entity.rotationYaw, 0.0F, 1.0F, 0.0F);
         this.renderManager.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         BlockRendererDispatcher blockrendererdispatcher = this.mc.getBlockRendererDispatcher();
         ModelManager modelmanager = blockrendererdispatcher.getBlockModelShapes().getModelManager();
@@ -81,13 +81,13 @@ public class RenderItemFrame extends Render
             ibakedmodel = modelmanager.getModel(this.itemFrameModel);
         }
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(-0.5F, -0.5F, -0.5F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate(-0.5F, -0.5F, -0.5F);
         blockrendererdispatcher.getBlockModelRenderer().renderModelBrightnessColor(ibakedmodel, 1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.popMatrix();
-        GlStateManager.translate(0.0F, 0.0F, 0.4375F);
+        GlStateManager.get().popMatrix();
+        GlStateManager.get().translate(0.0F, 0.0F, 0.4375F);
         this.renderItem(entity);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         this.renderName(entity, x + (double)((float)entity.facingDirection.getFrontOffsetX() * 0.3F), y - 0.25D, z + (double)((float)entity.facingDirection.getFrontOffsetZ() * 0.3F));
     }
 
@@ -109,8 +109,8 @@ public class RenderItemFrame extends Render
             Item item = entityitem.getEntityItem().getItem();
             entityitem.getEntityItem().stackSize = 1;
             entityitem.hoverStart = 0.0F;
-            GlStateManager.pushMatrix();
-            GlStateManager.disableLighting();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().disableLighting();
             int i = itemFrame.getRotation();
 
             if (item instanceof ItemMap)
@@ -118,19 +118,19 @@ public class RenderItemFrame extends Render
                 i = i % 4 * 2;
             }
 
-            GlStateManager.rotate((float)i * 360.0F / 8.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate((float)i * 360.0F / 8.0F, 0.0F, 0.0F, 1.0F);
 
             if (!Reflector.postForgeBusEvent(Reflector.RenderItemInFrameEvent_Constructor, new Object[] {itemFrame, this}))
             {
                 if (item instanceof ItemMap)
                 {
                     this.renderManager.renderEngine.bindTexture(mapBackgroundTextures);
-                    GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+                    GlStateManager.get().rotate(180.0F, 0.0F, 0.0F, 1.0F);
                     float f = 0.0078125F;
-                    GlStateManager.scale(f, f, f);
-                    GlStateManager.translate(-64.0F, -64.0F, 0.0F);
+                    GlStateManager.get().scale(f, f, f);
+                    GlStateManager.get().translate(-64.0F, -64.0F, 0.0F);
                     MapData mapdata = Items.filled_map.getMapData(entityitem.getEntityItem(), itemFrame.worldObj);
-                    GlStateManager.translate(0.0F, 0.0F, -1.0F);
+                    GlStateManager.get().translate(0.0F, 0.0F, -1.0F);
 
                     if (mapdata != null)
                     {
@@ -145,7 +145,7 @@ public class RenderItemFrame extends Render
                     {
                         textureatlassprite = this.mc.getTextureMapBlocks().getAtlasSprite(TextureCompass.field_176608_l);
 
-                        if (Config.isShaders())
+                        if (Config.get().isShaders())
                         {
                             ShadersTex.bindTextureMapForUpdateAndRender(this.mc.getTextureManager(), TextureMap.locationBlocksTexture);
                         }
@@ -171,18 +171,18 @@ public class RenderItemFrame extends Render
                         }
                     }
 
-                    GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                    GlStateManager.get().scale(0.5F, 0.5F, 0.5F);
 
                     if (!this.itemRenderer.shouldRenderItemIn3D(entityitem.getEntityItem()) || item instanceof ItemSkull)
                     {
-                        GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+                        GlStateManager.get().rotate(180.0F, 0.0F, 1.0F, 0.0F);
                     }
 
-                    GlStateManager.pushAttrib();
-                    RenderHelper.enableStandardItemLighting();
+                    GlStateManager.get().pushAttrib();
+                    RenderHelper.get().enableStandardItemLighting();
                     this.itemRenderer.func_181564_a(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
-                    RenderHelper.disableStandardItemLighting();
-                    GlStateManager.popAttrib();
+                    RenderHelper.get().disableStandardItemLighting();
+                    GlStateManager.get().popAttrib();
 
                     if (textureatlassprite != null && textureatlassprite.getFrameCount() > 0)
                     {
@@ -190,8 +190,8 @@ public class RenderItemFrame extends Render
                     }
                 }
             }
-            GlStateManager.enableLighting();
-            GlStateManager.popMatrix();
+            GlStateManager.get().enableLighting();
+            GlStateManager.get().popMatrix();
         }
     }
 
@@ -211,34 +211,34 @@ public class RenderItemFrame extends Render
                 if (entity.isSneaking())
                 {
                     FontRenderer fontrenderer = this.getFontRendererFromRenderManager();
-                    GlStateManager.pushMatrix();
-                    GlStateManager.translate((float)x + 0.0F, (float)y + entity.height + 0.5F, (float)z);
+                    GlStateManager.get().pushMatrix();
+                    GlStateManager.get().translate((float)x + 0.0F, (float)y + entity.height + 0.5F, (float)z);
                     GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-                    GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-                    GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-                    GlStateManager.scale(-f1, -f1, f1);
-                    GlStateManager.disableLighting();
-                    GlStateManager.translate(0.0F, 0.25F / f1, 0.0F);
-                    GlStateManager.depthMask(false);
-                    GlStateManager.enableBlend();
-                    GlStateManager.blendFunc(770, 771);
+                    GlStateManager.get().rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+                    GlStateManager.get().rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+                    GlStateManager.get().scale(-f1, -f1, f1);
+                    GlStateManager.get().disableLighting();
+                    GlStateManager.get().translate(0.0F, 0.25F / f1, 0.0F);
+                    GlStateManager.get().depthMask(false);
+                    GlStateManager.get().enableBlend();
+                    GlStateManager.get().blendFunc(770, 771);
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
                     int i = fontrenderer.getStringWidth(s) / 2;
-                    GlStateManager.disableTexture2D();
+                    GlStateManager.get().disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
                     worldrenderer.pos((double)(-i - 1), -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                     worldrenderer.pos((double)(-i - 1), 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                     worldrenderer.pos((double)(i + 1), 8.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                     worldrenderer.pos((double)(i + 1), -1.0D, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                     tessellator.draw();
-                    GlStateManager.enableTexture2D();
-                    GlStateManager.depthMask(true);
+                    GlStateManager.get().enableTexture2D();
+                    GlStateManager.get().depthMask(true);
                     fontrenderer.drawString(s, -fontrenderer.getStringWidth(s) / 2, 0, 553648127);
-                    GlStateManager.enableLighting();
-                    GlStateManager.disableBlend();
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.popMatrix();
+                    GlStateManager.get().enableLighting();
+                    GlStateManager.get().disableBlend();
+                    GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+                    GlStateManager.get().popMatrix();
                 }
                 else
                 {

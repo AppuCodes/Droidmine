@@ -46,7 +46,7 @@ public class GuiFlatPresets extends GuiScreen
     public void initGui()
     {
         this.buttonList.clear();
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
         this.presetsTitle = I18n.format("createWorld.customize.presets.title", new Object[0]);
         this.presetsShare = I18n.format("createWorld.customize.presets.share", new Object[0]);
         this.field_146436_r = I18n.format("createWorld.customize.presets.list", new Object[0]);
@@ -73,7 +73,7 @@ public class GuiFlatPresets extends GuiScreen
      */
     public void onGuiClosed()
     {
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
     }
 
     /**
@@ -220,11 +220,11 @@ public class GuiFlatPresets extends GuiScreen
         private void func_178054_a(int p_178054_1_, int p_178054_2_, Item p_178054_3_, int p_178054_4_)
         {
             this.func_148173_e(p_178054_1_ + 1, p_178054_2_ + 1);
-            GlStateManager.enableRescaleNormal();
-            RenderHelper.enableGUIStandardItemLighting();
+            GlStateManager.get().enableRescaleNormal();
+            RenderHelper.get().enableGUIStandardItemLighting();
             GuiFlatPresets.this.itemRender.renderItemIntoGUI(new ItemStack(p_178054_3_, 1, p_178054_4_), p_178054_1_ + 2, p_178054_2_ + 2);
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.disableRescaleNormal();
+            RenderHelper.get().disableStandardItemLighting();
+            GlStateManager.get().disableRescaleNormal();
         }
 
         private void func_148173_e(int p_148173_1_, int p_148173_2_)
@@ -234,7 +234,7 @@ public class GuiFlatPresets extends GuiScreen
 
         private void func_148171_c(int p_148171_1_, int p_148171_2_, int p_148171_3_, int p_148171_4_)
         {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(Gui.statIcons);
             float f = 0.0078125F;
             float f1 = 0.0078125F;

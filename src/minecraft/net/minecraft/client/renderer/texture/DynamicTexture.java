@@ -2,6 +2,11 @@ package net.minecraft.client.renderer.texture;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.IntBuffer;
+
+import org.lwjgl.opengl.*;
+
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.optifine.Config;
 import net.minecraft.optifine.shadersmod.client.ShadersTex;
@@ -32,14 +37,25 @@ public class DynamicTexture extends AbstractTexture
         this.height = textureHeight;
         this.dynamicTextureData = new int[textureWidth * textureHeight * 3];
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             ShadersTex.initDynamicTexture(this.getGlTextureId(), textureWidth, textureHeight, this);
             this.shadersInitialized = true;
         }
         else
         {
-            TextureUtil.allocateTexture(this.getGlTextureId(), textureWidth, textureHeight);
+            synchronized (this)
+            {
+                GlStateManager.get().deleteTexture(this.getGlTextureId());
+                GlStateManager.get().bindTexture(this.getGlTextureId());
+                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, 0);
+                GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MIN_LOD, 0.0F);
+                GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LOD, 0);
+                GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, 0.0F);
+
+                GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, textureWidth, textureHeight, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, (IntBuffer)((IntBuffer)null));
+            }
+
         }
     }
 
@@ -49,7 +65,7 @@ public class DynamicTexture extends AbstractTexture
 
     public void updateDynamicTexture()
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             if (!this.shadersInitialized)
             {
@@ -61,7 +77,7 @@ public class DynamicTexture extends AbstractTexture
         }
         else
         {
-            TextureUtil.uploadTexture(this.getGlTextureId(), this.dynamicTextureData, this.width, this.height);
+            TextureUtil.get().uploadTexture(this.getGlTextureId(), this.dynamicTextureData, this.width, this.height);
         }
     }
 

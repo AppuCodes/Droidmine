@@ -42,7 +42,7 @@ public class NaturalProperties
         }
         else
         {
-            Config.warn("NaturalTextures: Unknown type: " + p_i68_1_);
+            Config.get().warn("NaturalTextures: Unknown type: " + p_i68_1_);
         }
         
         this.mc = mc;

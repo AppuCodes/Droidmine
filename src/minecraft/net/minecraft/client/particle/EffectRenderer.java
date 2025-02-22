@@ -135,7 +135,7 @@ public class EffectRenderer
     {
         if (effect != null)
         {
-            if (!(effect instanceof EntityFirework.SparkFX) || Config.isFireworkParticles())
+            if (!(effect instanceof EntityFirework.SparkFX) || Config.get().isFireworkParticles())
             {
                 int i = effect.getFXLayer();
                 int j = effect.getAlpha() != 1.0F ? 0 : 1;
@@ -246,9 +246,9 @@ public class EffectRenderer
         EntityFX.interpPosX = entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double)partialTicks;
         EntityFX.interpPosY = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double)partialTicks;
         EntityFX.interpPosZ = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double)partialTicks;
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(770, 771);
-        GlStateManager.alphaFunc(516, 0.003921569F);
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().blendFunc(770, 771);
+        GlStateManager.get().alphaFunc(516, 0.003921569F);
 
         for (int i = 0; i < 3; ++i)
         {
@@ -261,11 +261,11 @@ public class EffectRenderer
                     switch (k)
                     {
                         case 0:
-                            GlStateManager.depthMask(false);
+                            GlStateManager.get().depthMask(false);
                             break;
 
                         case 1:
-                            GlStateManager.depthMask(true);
+                            GlStateManager.get().depthMask(true);
                     }
 
                     switch (j)
@@ -279,7 +279,7 @@ public class EffectRenderer
                             this.renderer.bindTexture(TextureMap.locationBlocksTexture);
                     }
 
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                    GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
                     worldrenderer.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -321,9 +321,9 @@ public class EffectRenderer
             }
         }
 
-        GlStateManager.depthMask(true);
-        GlStateManager.disableBlend();
-        GlStateManager.alphaFunc(516, 0.0F);
+        GlStateManager.get().depthMask(true);
+        GlStateManager.get().disableBlend();
+        GlStateManager.get().alphaFunc(516, 0.0F);
     }
 
     public void renderLitParticles(Entity entityIn, float p_78872_2_)

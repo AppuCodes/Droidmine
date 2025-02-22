@@ -43,11 +43,11 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             this.bindTexture(TextureMap.locationBlocksTexture);
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.blendFunc(770, 771);
-            GlStateManager.enableBlend();
-            GlStateManager.disableCull();
-            GlStateManager.shadeModel(7424);
+            RenderHelper.get().disableStandardItemLighting();
+            GlStateManager.get().blendFunc(770, 771);
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().disableCull();
+            GlStateManager.get().shadeModel(7424);
             worldrenderer.begin(7, DefaultVertexFormats.BLOCK);
             worldrenderer.setTranslation((double)((float)x - (float)blockpos.getX() + te.getOffsetX(partialTicks)), (double)((float)y - (float)blockpos.getY() + te.getOffsetY(partialTicks)), (double)((float)z - (float)blockpos.getZ() + te.getOffsetZ(partialTicks)));
             World world = this.getWorld();
@@ -74,7 +74,7 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
 
             worldrenderer.setTranslation(0.0D, 0.0D, 0.0D);
             tessellator.draw();
-            RenderHelper.enableStandardItemLighting();
+            RenderHelper.get().enableStandardItemLighting();
         }
     }
 }

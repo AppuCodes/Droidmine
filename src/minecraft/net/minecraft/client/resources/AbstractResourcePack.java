@@ -87,7 +87,7 @@ public abstract class AbstractResourcePack implements IResourcePack
 
     public BufferedImage getPackImage() throws IOException
     {
-        return TextureUtil.scalePackImage(TextureUtil.readBufferedImage(this.getInputStreamByName("pack.png")));
+        return TextureUtil.get().scalePackImage(TextureUtil.get().readBufferedImage(this.getInputStreamByName("pack.png")));
     }
 
     public String getPackName()

@@ -469,7 +469,7 @@ public class WorldClient extends World
     {
         int i = super.getCombinedLight(pos, lightValue);
 
-        if (Config.isDynamicLights())
+        if (Config.get().isDynamicLights())
         {
             i = DynamicLights.getCombinedLight(pos, i);
         }

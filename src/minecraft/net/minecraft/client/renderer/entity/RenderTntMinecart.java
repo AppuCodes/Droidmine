@@ -26,7 +26,7 @@ public class RenderTntMinecart extends RenderMinecart<EntityMinecartTNT>
             f = f * f;
             f = f * f;
             float f1 = 1.0F + f * 0.3F;
-            GlStateManager.scale(f1, f1, f1);
+            GlStateManager.get().scale(f1, f1, f1);
         }
 
         super.func_180560_a(minecart, partialTicks, state);
@@ -34,18 +34,18 @@ public class RenderTntMinecart extends RenderMinecart<EntityMinecartTNT>
         if (i > -1 && i / 5 % 2 == 0)
         {
             BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
-            GlStateManager.disableTexture2D();
-            GlStateManager.disableLighting();
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(770, 772);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, (1.0F - ((float)i - partialTicks + 1.0F) / 100.0F) * 0.8F);
-            GlStateManager.pushMatrix();
+            GlStateManager.get().disableTexture2D();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().blendFunc(770, 772);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, (1.0F - ((float)i - partialTicks + 1.0F) / 100.0F) * 0.8F);
+            GlStateManager.get().pushMatrix();
             blockrendererdispatcher.renderBlockBrightness(Blocks.tnt.getDefaultState(), 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.disableBlend();
-            GlStateManager.enableLighting();
-            GlStateManager.enableTexture2D();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().disableBlend();
+            GlStateManager.get().enableLighting();
+            GlStateManager.get().enableTexture2D();
         }
     }
 }

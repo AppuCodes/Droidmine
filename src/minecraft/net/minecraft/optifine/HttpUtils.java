@@ -28,7 +28,7 @@ public class HttpUtils
             {
                 if (httpurlconnection.getErrorStream() != null)
                 {
-                    Config.readAll(httpurlconnection.getErrorStream());
+                    Config.get().readAll(httpurlconnection.getErrorStream());
                 }
 
                 throw new IOException("HTTP response: " + httpurlconnection.getResponseCode());

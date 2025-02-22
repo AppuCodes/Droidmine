@@ -38,7 +38,7 @@ public class LayeredColorMaskTexture extends AbstractTexture
 
         try
         {
-            BufferedImage bufferedimage1 = TextureUtil.readBufferedImage(resourceManager.getResource(this.textureLocation).getInputStream());
+            BufferedImage bufferedimage1 = TextureUtil.get().readBufferedImage(resourceManager.getResource(this.textureLocation).getInputStream());
             int i = bufferedimage1.getType();
 
             if (i == 0)
@@ -58,7 +58,7 @@ public class LayeredColorMaskTexture extends AbstractTexture
                 if (s != null)
                 {
                     InputStream inputstream = resourceManager.getResource(new ResourceLocation(s)).getInputStream();
-                    BufferedImage bufferedimage2 = TextureUtil.readBufferedImage(inputstream);
+                    BufferedImage bufferedimage2 = TextureUtil.get().readBufferedImage(inputstream);
 
                     if (bufferedimage2.getWidth() == bufferedimage.getWidth() && bufferedimage2.getHeight() == bufferedimage.getHeight() && bufferedimage2.getType() == 6)
                     {
@@ -89,6 +89,6 @@ public class LayeredColorMaskTexture extends AbstractTexture
             return;
         }
 
-        TextureUtil.uploadTextureImage(this.getGlTextureId(), bufferedimage);
+        TextureUtil.get().uploadTextureImage(this.getGlTextureId(), bufferedimage);
     }
 }

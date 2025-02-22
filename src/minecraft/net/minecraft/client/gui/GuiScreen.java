@@ -54,7 +54,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     public boolean allowUserInput;
 
     /** The FontRenderer used by GuiScreen */
-    protected FontRenderer fontRendererObj;
+    public FontRenderer fontRendererObj;
 
     /** The button that was just pressed. */
     private GuiButton selectedButton;
@@ -177,10 +177,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     {
         if (!textLines.isEmpty())
         {
-            GlStateManager.disableRescaleNormal();
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.disableLighting();
-            GlStateManager.disableDepth();
+            GlStateManager.get().disableRescaleNormal();
+            RenderHelper.get().disableStandardItemLighting();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().disableDepth();
             int i = 0;
 
             for (String s : textLines)
@@ -242,10 +242,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
 
             this.zLevel = 0.0F;
             this.itemRender.zLevel = 0.0F;
-            GlStateManager.enableLighting();
-            GlStateManager.enableDepth();
-            RenderHelper.enableStandardItemLighting();
-            GlStateManager.enableRescaleNormal();
+            GlStateManager.get().enableLighting();
+            GlStateManager.get().enableDepth();
+            RenderHelper.get().enableStandardItemLighting();
+            GlStateManager.get().enableRescaleNormal();
         }
     }
 
@@ -348,7 +348,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                 }
             }
 
-            GlStateManager.disableLighting();
+            GlStateManager.get().disableLighting();
         }
     }
 
@@ -533,17 +533,17 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void handleInput() throws IOException
     {
-        if (Mouse.isCreated())
+        if (Mouse.get().isCreated())
         {
-            while (Mouse.next())
+            while (Mouse.get().next())
             {
                 this.handleMouseInput();
             }
         }
 
-        if (Keyboard.isCreated())
+        if (Keyboard.get().isCreated())
         {
-            while (Keyboard.next())
+            while (Keyboard.get().next())
             {
                 this.handleKeyboardInput();
             }
@@ -555,11 +555,11 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void handleMouseInput() throws IOException
     {
-        int i = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        int j = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-        int k = Mouse.getEventButton();
+        int i = Mouse.get().getEventX() * this.width / this.mc.displayWidth;
+        int j = this.height - Mouse.get().getEventY() * this.height / this.mc.displayHeight - 1;
+        int k = Mouse.get().getEventButton();
 
-        if (Mouse.getEventButtonState())
+        if (Mouse.get().getEventButtonState())
         {
             if (this.mc.options.touchscreen && this.touchValue++ > 0)
             {
@@ -592,9 +592,9 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void handleKeyboardInput() throws IOException
     {
-        if (Keyboard.getEventKeyState())
+        if (Keyboard.get().getEventKeyState())
         {
-            this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+            this.keyTyped(Keyboard.get().getEventCharacter(), Keyboard.get().getEventKey());
         }
 
         this.mc.dispatchKeypresses();
@@ -639,12 +639,12 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void drawBackground(int tint)
     {
-        GlStateManager.disableLighting();
-        GlStateManager.disableFog();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().disableFog();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         this.mc.getTextureManager().bindTexture(optionsBackground);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         worldrenderer.pos(0.0D, (double)this.height, 0.0D).tex(0.0D, (double)((float)this.height / 32.0F + (float)tint)).color(64, 64, 64, 255).endVertex();
@@ -695,7 +695,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public static boolean isCtrlKeyDown()
     {
-        return ClientEngine.isRunningOnMac ? Keyboard.isKeyDown(219) || Keyboard.isKeyDown(220) : Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157);
+        return ClientEngine.isRunningOnMac ? Keyboard.get().isKeyDown(219) || Keyboard.get().isKeyDown(220) : Keyboard.get().isKeyDown(29) || Keyboard.get().isKeyDown(157);
     }
 
     /**
@@ -703,7 +703,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public static boolean isShiftKeyDown()
     {
-        return Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54);
+        return Keyboard.get().isKeyDown(42) || Keyboard.get().isKeyDown(54);
     }
 
     /**
@@ -711,7 +711,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public static boolean isAltKeyDown()
     {
-        return Keyboard.isKeyDown(56) || Keyboard.isKeyDown(184);
+        return Keyboard.get().isKeyDown(56) || Keyboard.get().isKeyDown(184);
     }
 
     public static boolean isKeyComboCtrlX(int p_175277_0_)

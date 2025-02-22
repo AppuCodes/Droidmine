@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 
 public class Shaders
 {
-    static ClientEngine mc = Config.getMinecraft();
+    static ClientEngine mc = Config.get().getMinecraft();
     static EntityRenderer entityRenderer;
     public static boolean isInitializedOnce = false;
     public static boolean isShaderPackInitialized = false;
@@ -447,31 +447,31 @@ public class Shaders
         switch (eso)
         {
             case ANTIALIASING:
-                configAntialiasingLevel = Config.parseInt(str, 0);
+                configAntialiasingLevel = Config.get().parseInt(str, 0);
                 break;
 
             case NORMAL_MAP:
-                configNormalMap = Config.parseBoolean(str, true);
+                configNormalMap = Config.get().parseBoolean(str, true);
                 break;
 
             case SPECULAR_MAP:
-                configSpecularMap = Config.parseBoolean(str, true);
+                configSpecularMap = Config.get().parseBoolean(str, true);
                 break;
 
             case RENDER_RES_MUL:
-                configRenderResMul = Config.parseFloat(str, 1.0F);
+                configRenderResMul = Config.get().parseFloat(str, 1.0F);
                 break;
 
             case SHADOW_RES_MUL:
-                configShadowResMul = Config.parseFloat(str, 1.0F);
+                configShadowResMul = Config.get().parseFloat(str, 1.0F);
                 break;
 
             case HAND_DEPTH_MUL:
-                configHandDepthMul = Config.parseFloat(str, 0.125F);
+                configHandDepthMul = Config.get().parseFloat(str, 0.125F);
                 break;
 
             case CLOUD_SHADOW:
-                configCloudShadow = Config.parseBoolean(str, true);
+                configCloudShadow = Config.get().parseBoolean(str, true);
                 break;
 
             case OLD_HAND_LIGHT:
@@ -487,35 +487,35 @@ public class Shaders
                 break;
 
             case TWEAK_BLOCK_DAMAGE:
-                configTweakBlockDamage = Config.parseBoolean(str, true);
+                configTweakBlockDamage = Config.get().parseBoolean(str, true);
                 break;
 
             case SHADOW_CLIP_FRUSTRUM:
-                configShadowClipFrustrum = Config.parseBoolean(str, true);
+                configShadowClipFrustrum = Config.get().parseBoolean(str, true);
                 break;
 
             case TEX_MIN_FIL_B:
-                configTexMinFilB = Config.parseInt(str, 0);
+                configTexMinFilB = Config.get().parseInt(str, 0);
                 break;
 
             case TEX_MIN_FIL_N:
-                configTexMinFilN = Config.parseInt(str, 0);
+                configTexMinFilN = Config.get().parseInt(str, 0);
                 break;
 
             case TEX_MIN_FIL_S:
-                configTexMinFilS = Config.parseInt(str, 0);
+                configTexMinFilS = Config.get().parseInt(str, 0);
                 break;
 
             case TEX_MAG_FIL_B:
-                configTexMagFilB = Config.parseInt(str, 0);
+                configTexMagFilB = Config.get().parseInt(str, 0);
                 break;
 
             case TEX_MAG_FIL_N:
-                configTexMagFilB = Config.parseInt(str, 0);
+                configTexMagFilB = Config.get().parseInt(str, 0);
                 break;
 
             case TEX_MAG_FIL_S:
-                configTexMagFilB = Config.parseInt(str, 0);
+                configTexMagFilB = Config.get().parseInt(str, 0);
                 break;
 
             default:
@@ -779,7 +779,7 @@ public class Shaders
             }
             catch (IOException var3)
             {
-                Config.warn("[Shaders] Error reading: " + s);
+                Config.get().warn("[Shaders] Error reading: " + s);
             }
         }
     }
@@ -1026,9 +1026,9 @@ public class Shaders
             for (int i = 0; i < cts.length; ++i)
             {
                 CustomTexture customtexture = cts[i];
-                GlStateManager.setActiveTexture(33984 + customtexture.getTextureUnit());
+                GlStateManager.get().setActiveTexture(33984 + customtexture.getTextureUnit());
                 ITextureObject itextureobject = customtexture.getTexture();
-                GlStateManager.bindTexture(itextureobject.getGlTextureId());
+                GlStateManager.get().bindTexture(itextureobject.getGlTextureId());
             }
         }
     }
@@ -1049,7 +1049,7 @@ public class Shaders
             {
                 CustomTexture customtexture = cts[i];
                 ITextureObject itextureobject = customtexture.getTexture();
-                TextureUtil.deleteTexture(itextureobject.getGlTextureId());
+                TextureUtil.get().deleteTexture(itextureobject.getGlTextureId());
             }
         }
     }
@@ -1063,7 +1063,7 @@ public class Shaders
             if (shaderPackProfiles != null)
             {
                 ShaderOptionProfile shaderoptionprofile = new ShaderOptionProfile(shaderPackProfiles, ashaderoption);
-                ashaderoption = (ShaderOption[])((ShaderOption[])Config.addObjectToArray(ashaderoption, shaderoptionprofile, 0));
+                ashaderoption = (ShaderOption[])((ShaderOption[])Config.get().addObjectToArray(ashaderoption, shaderoptionprofile, 0));
             }
 
             ashaderoption = getVisibleOptions(ashaderoption);
@@ -1203,7 +1203,7 @@ public class Shaders
         }
         catch (IOException ioexception)
         {
-            Config.warn("[Shaders] Error saving configuration for " + shaderPack.getName());
+            Config.get().warn("[Shaders] Error saving configuration for " + shaderPack.getName());
             ioexception.printStackTrace();
         }
     }
@@ -1244,7 +1244,7 @@ public class Shaders
 
                     if (!shaderoption.setValue(s))
                     {
-                        Config.warn("[Shaders] Invalid value, option: " + shaderoption.getName() + ", value: " + s);
+                        Config.get().warn("[Shaders] Invalid value, option: " + shaderoption.getName() + ", value: " + s);
                     }
                 }
             }
@@ -1253,7 +1253,7 @@ public class Shaders
         }
         catch (IOException ioexception)
         {
-            Config.warn("[Shaders] Error reading configuration for " + shaderPack.getName());
+            Config.get().warn("[Shaders] Error reading configuration for " + shaderPack.getName());
             ioexception.printStackTrace();
             return null;
         }
@@ -1819,11 +1819,11 @@ public class Shaders
                 defaultTexture = ShadersTex.createDefaultTexture();
             }
 
-            GlStateManager.pushMatrix();
-            GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().rotate(-90.0F, 0.0F, 1.0F, 0.0F);
             preCelestialRotate();
             postCelestialRotate();
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
             isShaderPackInitialized = true;
             loadEntityDataMap();
             resetDisplayList();
@@ -2382,7 +2382,7 @@ public class Shaders
                             else if (s.matches("[ \t]*const[ \t]*float[ \t]*ambientOcclusionLevel[ \t]*=[ \t]*-?[0-9.]+f?;.*"))
                             {
                                 String[] astring3 = s.split("(=[ \t]*|;)");
-                                aoLevel = Config.limit(Float.parseFloat(astring3[1]), 0.0F, 1.0F);
+                                aoLevel = Config.get().limit(Float.parseFloat(astring3[1]), 0.0F, 1.0F);
                             }
                             else if (s.matches("[ \t]*const[ \t]*int[ \t]*superSamplingLevel[ \t]*=[ \t]*-?[0-9.]+f?;.*"))
                             {
@@ -2501,11 +2501,11 @@ public class Shaders
         {
             File file1 = new File(shaderpacksdir, "debug/" + filename);
             file1.getParentFile().mkdirs();
-            Config.writeFile(file1, code);
+            Config.get().writeFile(file1, code);
         }
         catch (IOException ioexception)
         {
-            Config.warn("Error saving: " + filename);
+            Config.get().warn("Error saving: " + filename);
             ioexception.printStackTrace();
         }
     }
@@ -3047,28 +3047,28 @@ public class Shaders
 
             if (dfbDepthTextures != null)
             {
-                GlStateManager.deleteTextures(dfbDepthTextures);
+                GlStateManager.get().deleteTextures(dfbDepthTextures);
                 fillIntBufferZero(dfbDepthTextures);
                 checkGLError("del dfbDepthTextures");
             }
 
             if (dfbColorTextures != null)
             {
-                GlStateManager.deleteTextures(dfbColorTextures);
+                GlStateManager.get().deleteTextures(dfbColorTextures);
                 fillIntBufferZero(dfbColorTextures);
                 checkGLError("del dfbTextures");
             }
 
             if (sfbDepthTextures != null)
             {
-                GlStateManager.deleteTextures(sfbDepthTextures);
+                GlStateManager.get().deleteTextures(sfbDepthTextures);
                 fillIntBufferZero(sfbDepthTextures);
                 checkGLError("del shadow depth");
             }
 
             if (sfbColorTextures != null)
             {
-                GlStateManager.deleteTextures(sfbColorTextures);
+                GlStateManager.get().deleteTextures(sfbColorTextures);
                 fillIntBufferZero(sfbColorTextures);
                 checkGLError("del shadow color");
             }
@@ -3123,8 +3123,8 @@ public class Shaders
         if (dfb != 0)
         {
             EXTFramebufferObject.glDeleteFramebuffersEXT(dfb);
-            GlStateManager.deleteTextures(dfbDepthTextures);
-            GlStateManager.deleteTextures(dfbColorTextures);
+            GlStateManager.get().deleteTextures(dfbDepthTextures);
+            GlStateManager.get().deleteTextures(dfbColorTextures);
         }
 
         dfb = EXTFramebufferObject.glGenFramebuffersEXT();
@@ -3139,7 +3139,7 @@ public class Shaders
 
         for (int i = 0; i < usedDepthBuffers; ++i)
         {
-            GlStateManager.bindTexture(dfbDepthTextures.get(i));
+            GlStateManager.get().bindTexture(dfbDepthTextures.get(i));
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
@@ -3155,7 +3155,7 @@ public class Shaders
 
         for (int k = 0; k < usedColorBuffers; ++k)
         {
-            GlStateManager.bindTexture(dfbColorTexturesA[k]);
+            GlStateManager.get().bindTexture(dfbColorTexturesA[k]);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
@@ -3167,7 +3167,7 @@ public class Shaders
 
         for (int l = 0; l < usedColorBuffers; ++l)
         {
-            GlStateManager.bindTexture(dfbColorTexturesA[8 + l]);
+            GlStateManager.get().bindTexture(dfbColorTexturesA[8 + l]);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
@@ -3184,7 +3184,7 @@ public class Shaders
 
             for (int j = 0; j < usedColorBuffers; ++j)
             {
-                GlStateManager.bindTexture(dfbColorTextures.get(j));
+                GlStateManager.get().bindTexture(dfbColorTextures.get(j));
                 GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, renderWidth, renderHeight, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, (ByteBuffer)((ByteBuffer)null));
                 EXTFramebufferObject.glFramebufferTexture2DEXT(36160, 36064 + j, 3553, dfbColorTextures.get(j), 0);
                 checkGLError("FT c");
@@ -3193,7 +3193,7 @@ public class Shaders
             i1 = EXTFramebufferObject.glCheckFramebufferStatusEXT(36160);
         }
 
-        GlStateManager.bindTexture(0);
+        GlStateManager.get().bindTexture(0);
     }
 
     private static void setupShadowFrameBuffer()
@@ -3203,8 +3203,8 @@ public class Shaders
             if (sfb != 0)
             {
                 EXTFramebufferObject.glDeleteFramebuffersEXT(sfb);
-                GlStateManager.deleteTextures(sfbDepthTextures);
-                GlStateManager.deleteTextures(sfbColorTextures);
+                GlStateManager.get().deleteTextures(sfbDepthTextures);
+                GlStateManager.get().deleteTextures(sfbColorTextures);
             }
 
             sfb = EXTFramebufferObject.glGenFramebuffersEXT();
@@ -3218,7 +3218,7 @@ public class Shaders
 
             for (int i = 0; i < usedShadowDepthBuffers; ++i)
             {
-                GlStateManager.bindTexture(sfbDepthTextures.get(i));
+                GlStateManager.get().bindTexture(sfbDepthTextures.get(i));
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10496.0F);
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10496.0F);
                 int j = shadowFilterNearest[i] ? 9728 : 9729;
@@ -3238,7 +3238,7 @@ public class Shaders
 
             for (int k = 0; k < usedShadowColorBuffers; ++k)
             {
-                GlStateManager.bindTexture(sfbColorTextures.get(k));
+                GlStateManager.get().bindTexture(sfbColorTextures.get(k));
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10496.0F);
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10496.0F);
                 int i1 = shadowColorFilterNearest[k] ? 9728 : 9729;
@@ -3249,7 +3249,7 @@ public class Shaders
                 checkGLError("FT sc");
             }
 
-            GlStateManager.bindTexture(0);
+            GlStateManager.get().bindTexture(0);
 
             if (usedShadowColorBuffers > 0)
             {
@@ -3275,7 +3275,7 @@ public class Shaders
             }
             catch (IllegalStateException illegalstateexception)
             {
-                if (Config.normalize(illegalstateexception.getMessage()).equals("Function is not supported"))
+                if (Config.get().normalize(illegalstateexception.getMessage()).equals("Function is not supported"))
                 {
                     printChatAndLogError("[Shaders] Error: " + illegalstateexception.getMessage());
                     illegalstateexception.printStackTrace();
@@ -3347,7 +3347,7 @@ public class Shaders
 
                 if (mc.player.isPotionActive(Potion.nightVision))
                 {
-                    nightVision = Config.getMinecraft().entityRenderer.getNightVisionBrightness(mc.player, partialTicks);
+                    nightVision = Config.get().getMinecraft().entityRenderer.getNightVisionBrightness(mc.player, partialTicks);
                 }
 
                 blindness = 0.0F;
@@ -3355,7 +3355,7 @@ public class Shaders
                 if (mc.player.isPotionActive(Potion.blindness))
                 {
                     int i = mc.player.getActivePotionEffect(Potion.blindness).getDuration();
-                    blindness = Config.limit((float)i / 20.0F, 0.0F, 1.0F);
+                    blindness = Config.get().limit((float)i / 20.0F, 0.0F, 1.0F);
                 }
             }
 
@@ -3372,61 +3372,61 @@ public class Shaders
 
         if (usedShadowDepthBuffers >= 1)
         {
-            GlStateManager.setActiveTexture(33988);
-            GlStateManager.bindTexture(sfbDepthTextures.get(0));
+            GlStateManager.get().setActiveTexture(33988);
+            GlStateManager.get().bindTexture(sfbDepthTextures.get(0));
 
             if (usedShadowDepthBuffers >= 2)
             {
-                GlStateManager.setActiveTexture(33989);
-                GlStateManager.bindTexture(sfbDepthTextures.get(1));
+                GlStateManager.get().setActiveTexture(33989);
+                GlStateManager.get().bindTexture(sfbDepthTextures.get(1));
             }
         }
 
-        GlStateManager.setActiveTexture(33984);
+        GlStateManager.get().setActiveTexture(33984);
 
         for (int j = 0; j < usedColorBuffers; ++j)
         {
-            GlStateManager.bindTexture(dfbColorTexturesA[j]);
+            GlStateManager.get().bindTexture(dfbColorTexturesA[j]);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-            GlStateManager.bindTexture(dfbColorTexturesA[8 + j]);
+            GlStateManager.get().bindTexture(dfbColorTexturesA[8 + j]);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
         }
 
-        GlStateManager.bindTexture(0);
+        GlStateManager.get().bindTexture(0);
 
         for (int k = 0; k < 4 && 4 + k < usedColorBuffers; ++k)
         {
-            GlStateManager.setActiveTexture(33991 + k);
-            GlStateManager.bindTexture(dfbColorTextures.get(4 + k));
+            GlStateManager.get().setActiveTexture(33991 + k);
+            GlStateManager.get().bindTexture(dfbColorTextures.get(4 + k));
         }
 
-        GlStateManager.setActiveTexture(33990);
-        GlStateManager.bindTexture(dfbDepthTextures.get(0));
+        GlStateManager.get().setActiveTexture(33990);
+        GlStateManager.get().bindTexture(dfbDepthTextures.get(0));
 
         if (usedDepthBuffers >= 2)
         {
-            GlStateManager.setActiveTexture(33995);
-            GlStateManager.bindTexture(dfbDepthTextures.get(1));
+            GlStateManager.get().setActiveTexture(33995);
+            GlStateManager.get().bindTexture(dfbDepthTextures.get(1));
 
             if (usedDepthBuffers >= 3)
             {
-                GlStateManager.setActiveTexture(33996);
-                GlStateManager.bindTexture(dfbDepthTextures.get(2));
+                GlStateManager.get().setActiveTexture(33996);
+                GlStateManager.get().bindTexture(dfbDepthTextures.get(2));
             }
         }
 
         for (int l = 0; l < usedShadowColorBuffers; ++l)
         {
-            GlStateManager.setActiveTexture(33997 + l);
-            GlStateManager.bindTexture(sfbColorTextures.get(l));
+            GlStateManager.get().setActiveTexture(33997 + l);
+            GlStateManager.get().bindTexture(sfbColorTextures.get(l));
         }
 
         if (noiseTextureEnabled)
         {
-            GlStateManager.setActiveTexture(33984 + noiseTexture.textureUnit);
-            GlStateManager.bindTexture(noiseTexture.getID());
+            GlStateManager.get().setActiveTexture(33984 + noiseTexture.textureUnit);
+            GlStateManager.get().bindTexture(noiseTexture.getID());
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
@@ -3434,7 +3434,7 @@ public class Shaders
         }
 
         bindCustomTextures(customTexturesGbuffers);
-        GlStateManager.setActiveTexture(33984);
+        GlStateManager.get().setActiveTexture(33984);
         previousCameraPositionX = cameraPositionX;
         previousCameraPositionY = cameraPositionY;
         previousCameraPositionZ = cameraPositionZ;
@@ -3498,7 +3498,7 @@ public class Shaders
 
     public static void setViewport(int vx, int vy, int vw, int vh)
     {
-        GlStateManager.colorMask(true, true, true, true);
+        GlStateManager.get().colorMask(true, true, true, true);
 
         if (isShadowPass)
         {
@@ -3509,8 +3509,8 @@ public class Shaders
             GL11.glViewport(0, 0, renderWidth, renderHeight);
             EXTFramebufferObject.glBindFramebufferEXT(36160, dfb);
             isRenderingDfb = true;
-            GlStateManager.enableCull();
-            GlStateManager.enableDepth();
+            GlStateManager.get().enableCull();
+            GlStateManager.get().enableDepth();
             setDrawBuffers(drawBuffersNone);
             useProgram(2);
             checkGLError("beginRenderPass");
@@ -3532,7 +3532,7 @@ public class Shaders
 
     public static void setClearColor(float red, float green, float blue, float alpha)
     {
-        GlStateManager.clearColor(red, green, blue, alpha);
+        GlStateManager.get().clearColor(red, green, blue, alpha);
         clearColorR = red;
         clearColorG = green;
         clearColorB = blue;
@@ -3742,13 +3742,13 @@ public class Shaders
             {
                 if ((activeCompositeMipmapSetting & 1 << i) != 0)
                 {
-                    GlStateManager.setActiveTexture(33984 + colorTextureTextureImageUnit[i]);
+                    GlStateManager.get().setActiveTexture(33984 + colorTextureTextureImageUnit[i]);
                     GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
                     GL30.glGenerateMipmap(3553);
                 }
             }
 
-            GlStateManager.setActiveTexture(33984);
+            GlStateManager.get().setActiveTexture(33984);
         }
     }
 
@@ -3779,57 +3779,57 @@ public class Shaders
             GL11.glLoadIdentity();
             GL11.glOrtho(0.0D, 1.0D, 0.0D, 1.0D, 0.0D, 1.0D);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableTexture2D();
-            GlStateManager.disableAlpha();
-            GlStateManager.disableBlend();
-            GlStateManager.enableDepth();
-            GlStateManager.depthFunc(519);
-            GlStateManager.depthMask(false);
-            GlStateManager.disableLighting();
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().disableAlpha();
+            GlStateManager.get().disableBlend();
+            GlStateManager.get().enableDepth();
+            GlStateManager.get().depthFunc(519);
+            GlStateManager.get().depthMask(false);
+            GlStateManager.get().disableLighting();
 
             if (usedShadowDepthBuffers >= 1)
             {
-                GlStateManager.setActiveTexture(33988);
-                GlStateManager.bindTexture(sfbDepthTextures.get(0));
+                GlStateManager.get().setActiveTexture(33988);
+                GlStateManager.get().bindTexture(sfbDepthTextures.get(0));
 
                 if (usedShadowDepthBuffers >= 2)
                 {
-                    GlStateManager.setActiveTexture(33989);
-                    GlStateManager.bindTexture(sfbDepthTextures.get(1));
+                    GlStateManager.get().setActiveTexture(33989);
+                    GlStateManager.get().bindTexture(sfbDepthTextures.get(1));
                 }
             }
 
             for (int i = 0; i < usedColorBuffers; ++i)
             {
-                GlStateManager.setActiveTexture(33984 + colorTextureTextureImageUnit[i]);
-                GlStateManager.bindTexture(dfbColorTexturesA[i]);
+                GlStateManager.get().setActiveTexture(33984 + colorTextureTextureImageUnit[i]);
+                GlStateManager.get().bindTexture(dfbColorTexturesA[i]);
             }
 
-            GlStateManager.setActiveTexture(33990);
-            GlStateManager.bindTexture(dfbDepthTextures.get(0));
+            GlStateManager.get().setActiveTexture(33990);
+            GlStateManager.get().bindTexture(dfbDepthTextures.get(0));
 
             if (usedDepthBuffers >= 2)
             {
-                GlStateManager.setActiveTexture(33995);
-                GlStateManager.bindTexture(dfbDepthTextures.get(1));
+                GlStateManager.get().setActiveTexture(33995);
+                GlStateManager.get().bindTexture(dfbDepthTextures.get(1));
 
                 if (usedDepthBuffers >= 3)
                 {
-                    GlStateManager.setActiveTexture(33996);
-                    GlStateManager.bindTexture(dfbDepthTextures.get(2));
+                    GlStateManager.get().setActiveTexture(33996);
+                    GlStateManager.get().bindTexture(dfbDepthTextures.get(2));
                 }
             }
 
             for (int j1 = 0; j1 < usedShadowColorBuffers; ++j1)
             {
-                GlStateManager.setActiveTexture(33997 + j1);
-                GlStateManager.bindTexture(sfbColorTextures.get(j1));
+                GlStateManager.get().setActiveTexture(33997 + j1);
+                GlStateManager.get().bindTexture(sfbColorTextures.get(j1));
             }
 
             if (noiseTextureEnabled)
             {
-                GlStateManager.setActiveTexture(33984 + noiseTexture.textureUnit);
-                GlStateManager.bindTexture(noiseTexture.getID());
+                GlStateManager.get().setActiveTexture(33984 + noiseTexture.textureUnit);
+                GlStateManager.get().bindTexture(noiseTexture.getID());
                 GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
                 GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
                 GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
@@ -3837,7 +3837,7 @@ public class Shaders
             }
 
             bindCustomTextures(customTexturesComposite);
-            GlStateManager.setActiveTexture(33984);
+            GlStateManager.get().setActiveTexture(33984);
             boolean flag = true;
 
             for (int j = 0; j < usedColorBuffers; ++j)
@@ -3869,13 +3869,13 @@ public class Shaders
                         {
                             int l = colorTexturesToggle[k];
                             int i1 = colorTexturesToggle[k] = 8 - l;
-                            GlStateManager.setActiveTexture(33984 + colorTextureTextureImageUnit[k]);
-                            GlStateManager.bindTexture(dfbColorTexturesA[i1 + k]);
+                            GlStateManager.get().setActiveTexture(33984 + colorTextureTextureImageUnit[k]);
+                            GlStateManager.get().bindTexture(dfbColorTexturesA[i1 + k]);
                             EXTFramebufferObject.glFramebufferTexture2DEXT(36160, 36064 + k, 3553, dfbColorTexturesA[l + k], 0);
                         }
                     }
 
-                    GlStateManager.setActiveTexture(33984);
+                    GlStateManager.get().setActiveTexture(33984);
                 }
             }
 
@@ -3888,19 +3888,19 @@ public class Shaders
             if (EntityRenderer.anaglyphEnable)
             {
                 boolean flag1 = EntityRenderer.anaglyphField != 0;
-                GlStateManager.colorMask(flag1, !flag1, !flag1, true);
+                GlStateManager.get().colorMask(flag1, !flag1, !flag1, true);
             }
 
-            GlStateManager.depthMask(true);
+            GlStateManager.get().depthMask(true);
             GL11.glClearColor(clearColorR, clearColorG, clearColorB, 1.0F);
             GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableTexture2D();
-            GlStateManager.disableAlpha();
-            GlStateManager.disableBlend();
-            GlStateManager.enableDepth();
-            GlStateManager.depthFunc(519);
-            GlStateManager.depthMask(false);
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().disableAlpha();
+            GlStateManager.get().disableBlend();
+            GlStateManager.get().enableDepth();
+            GlStateManager.get().depthFunc(519);
+            GlStateManager.get().depthMask(false);
             checkGLError("pre-final");
             useProgram(29);
             checkGLError("final");
@@ -3913,12 +3913,12 @@ public class Shaders
             drawComposite();
             checkGLError("renderCompositeFinal");
             isCompositeRendered = true;
-            GlStateManager.enableLighting();
-            GlStateManager.enableTexture2D();
-            GlStateManager.enableAlpha();
-            GlStateManager.enableBlend();
-            GlStateManager.depthFunc(515);
-            GlStateManager.depthMask(true);
+            GlStateManager.get().enableLighting();
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().enableAlpha();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().depthFunc(515);
+            GlStateManager.get().depthMask(true);
             GL11.glPopMatrix();
             GL11.glMatrixMode(GL11.GL_MODELVIEW);
             GL11.glPopMatrix();
@@ -3940,9 +3940,9 @@ public class Shaders
             }
 
             isRenderingWorld = false;
-            GlStateManager.colorMask(true, true, true, true);
+            GlStateManager.get().colorMask(true, true, true, true);
             useProgram(0);
-            RenderHelper.disableStandardItemLighting();
+            RenderHelper.get().disableStandardItemLighting();
             checkGLError("endRender end");
         }
     }
@@ -4113,9 +4113,9 @@ public class Shaders
         if (isRenderingWorld && programsID[18] != programsID[0])
         {
             useProgram(18);
-            GlStateManager.enableAlpha();
-            GlStateManager.alphaFunc(516, 0.0F);
-            GlStateManager.blendFunc(770, 771);
+            GlStateManager.get().enableAlpha();
+            GlStateManager.get().alphaFunc(516, 0.0F);
+            GlStateManager.get().blendFunc(770, 771);
         }
     }
 
@@ -4229,22 +4229,22 @@ public class Shaders
         {
             if (usedDepthBuffers >= 3)
             {
-                GlStateManager.setActiveTexture(33996);
+                GlStateManager.get().setActiveTexture(33996);
                 GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, renderWidth, renderHeight);
-                GlStateManager.setActiveTexture(33984);
+                GlStateManager.get().setActiveTexture(33984);
             }
 
-            GlStateManager.enableDepth();
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(770, 771);
-            GlStateManager.enableAlpha();
+            GlStateManager.get().enableDepth();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().blendFunc(770, 771);
+            GlStateManager.get().enableAlpha();
             useProgram(20);
         }
     }
 
     public static void endWeather()
     {
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableBlend();
         useProgram(3);
     }
 
@@ -4252,11 +4252,11 @@ public class Shaders
     {
         if (usedDepthBuffers >= 2)
         {
-            GlStateManager.setActiveTexture(33995);
+            GlStateManager.get().setActiveTexture(33995);
             checkGLError("pre copy depth");
             GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, renderWidth, renderHeight);
             checkGLError("copy depth");
-            GlStateManager.setActiveTexture(33984);
+            GlStateManager.get().setActiveTexture(33984);
         }
 
         ShadersTex.bindNSTextures(defaultTexture.getMultiTexID());
@@ -4269,12 +4269,12 @@ public class Shaders
             if (!isShadowPass)
             {
                 useProgram(12);
-                GlStateManager.enableBlend();
-                GlStateManager.depthMask(true);
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().depthMask(true);
             }
             else
             {
-                GlStateManager.depthMask(true);
+                GlStateManager.get().depthMask(true);
             }
         }
     }
@@ -4336,14 +4336,14 @@ public class Shaders
         GL11.glPopMatrix();
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glPopMatrix();
-        GlStateManager.blendFunc(770, 771);
+        GlStateManager.get().blendFunc(770, 771);
         checkGLError("endHand");
     }
 
     public static void beginFPOverlay()
     {
-        GlStateManager.disableLighting();
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().disableBlend();
     }
 
     public static void endFPOverlay()
@@ -4450,7 +4450,7 @@ public class Shaders
 
     public static void setFog(int fogMode)
     {
-        GlStateManager.setFog(fogMode);
+        GlStateManager.get().setFog(fogMode);
         Shaders.fogMode = fogMode;
 
         if (fogEnabled)
@@ -4564,7 +4564,7 @@ public class Shaders
             configAntialiasingLevel = 0;
         }
 
-        configAntialiasingLevel = Config.limit(configAntialiasingLevel, 0, 4);
+        configAntialiasingLevel = Config.get().limit(configAntialiasingLevel, 0, 4);
     }
 
     public static void checkShadersModInstalled()
@@ -4598,9 +4598,9 @@ public class Shaders
             String s2 = ".lang";
             list.add(s + s1 + s2);
 
-            if (!Config.getoptions().language.equals(s1))
+            if (!Config.get().getoptions().language.equals(s1))
             {
-                list.add(s + Config.getoptions().language + s2);
+                list.add(s + Config.get().getoptions().language + s2);
             }
 
             try

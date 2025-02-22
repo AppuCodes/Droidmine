@@ -22,7 +22,7 @@ public class BlockModelRenderer
 
     public static void updateAoLightValue()
     {
-        aoLightValueOpaque = 1.0F - Config.getAmbientOcclusionLevel();
+        aoLightValueOpaque = 1.0F - Config.get().getAmbientOcclusionLevel();
     }
 
     public BlockModelRenderer(ClientEngine mc)
@@ -49,7 +49,7 @@ public class BlockModelRenderer
             boolean flag = mc.isAmbientOcclusionEnabled() && blockStateIn.getBlock().getLightValue() == 0 && modelIn.isAmbientOcclusion();
             Block block = blockStateIn.getBlock();
 
-            if (Config.isTreesSmart() && blockStateIn.getBlock() instanceof BlockLeavesBase)
+            if (Config.get().isTreesSmart() && blockStateIn.getBlock() instanceof BlockLeavesBase)
             {
                 modelIn = SmartLeaves.getLeavesModel(modelIn);
             }
@@ -87,7 +87,7 @@ public class BlockModelRenderer
                         renderenv = RenderEnv.getInstance(p_renderModelAmbientOcclusion_1_, p_renderModelAmbientOcclusion_4_, p_renderModelAmbientOcclusion_5_);
                     }
 
-                    if (!renderenv.isBreakingAnimation(list) && Config.isBetterGrass())
+                    if (!renderenv.isBreakingAnimation(list) && Config.get().isBetterGrass())
                     {
                         list = BetterGrass.getFaceQuads(p_renderModelAmbientOcclusion_1_, p_renderModelAmbientOcclusion_3_, p_renderModelAmbientOcclusion_5_, enumfacing, list);
                     }
@@ -111,7 +111,7 @@ public class BlockModelRenderer
             flag = true;
         }
 
-        if (renderenv != null && Config.isBetterSnow() && !renderenv.isBreakingAnimation() && BetterSnow.shouldRender(p_renderModelAmbientOcclusion_1_, p_renderModelAmbientOcclusion_3_, p_renderModelAmbientOcclusion_4_, p_renderModelAmbientOcclusion_5_))
+        if (renderenv != null && Config.get().isBetterSnow() && !renderenv.isBreakingAnimation() && BetterSnow.shouldRender(p_renderModelAmbientOcclusion_1_, p_renderModelAmbientOcclusion_3_, p_renderModelAmbientOcclusion_4_, p_renderModelAmbientOcclusion_5_))
         {
             IBakedModel ibakedmodel = BetterSnow.getModelSnowLayer();
             IBlockState iblockstate = BetterSnow.getStateSnowLayer();
@@ -146,7 +146,7 @@ public class BlockModelRenderer
                         renderenv = RenderEnv.getInstance(p_renderModelStandard_1_, p_renderModelStandard_4_, p_renderModelStandard_5_);
                     }
 
-                    if (!renderenv.isBreakingAnimation(list) && Config.isBetterGrass())
+                    if (!renderenv.isBreakingAnimation(list) && Config.get().isBetterGrass())
                     {
                         list = BetterGrass.getFaceQuads(p_renderModelStandard_1_, p_renderModelStandard_3_, p_renderModelStandard_5_, enumfacing, list);
                     }
@@ -171,7 +171,7 @@ public class BlockModelRenderer
             flag = true;
         }
 
-        if (renderenv != null && Config.isBetterSnow() && !renderenv.isBreakingAnimation() && BetterSnow.shouldRender(p_renderModelStandard_1_, p_renderModelStandard_3_, p_renderModelStandard_4_, p_renderModelStandard_5_) && BetterSnow.shouldRender(p_renderModelStandard_1_, p_renderModelStandard_3_, p_renderModelStandard_4_, p_renderModelStandard_5_))
+        if (renderenv != null && Config.get().isBetterSnow() && !renderenv.isBreakingAnimation() && BetterSnow.shouldRender(p_renderModelStandard_1_, p_renderModelStandard_3_, p_renderModelStandard_4_, p_renderModelStandard_5_) && BetterSnow.shouldRender(p_renderModelStandard_1_, p_renderModelStandard_3_, p_renderModelStandard_4_, p_renderModelStandard_5_))
         {
             IBakedModel ibakedmodel = BetterSnow.getModelSnowLayer();
             IBlockState iblockstate = BetterSnow.getStateSnowLayer();
@@ -212,12 +212,12 @@ public class BlockModelRenderer
             {
                 BakedQuad bakedquad1 = bakedquad;
 
-                if (Config.isConnectedTextures())
+                if (Config.get().isConnectedTextures())
                 {
                     bakedquad = ConnectedTextures.getConnectedTexture(p_renderModelAmbientOcclusionQuads_1_, iblockstate, p_renderModelAmbientOcclusionQuads_3_, bakedquad, p_renderModelAmbientOcclusionQuads_6_, mc);
                 }
 
-                if (bakedquad == bakedquad1 && Config.isNaturalTextures())
+                if (bakedquad == bakedquad1 && Config.get().isNaturalTextures())
                 {
                     bakedquad = NaturalTextures.getNaturalTexture(p_renderModelAmbientOcclusionQuads_3_, bakedquad);
                 }
@@ -379,12 +379,12 @@ public class BlockModelRenderer
             {
                 BakedQuad bakedquad1 = bakedquad;
 
-                if (Config.isConnectedTextures())
+                if (Config.get().isConnectedTextures())
                 {
                     bakedquad = ConnectedTextures.getConnectedTexture(p_renderModelStandardQuads_1_, iblockstate, p_renderModelStandardQuads_3_, bakedquad, p_renderModelStandardQuads_9_, mc);
                 }
 
-                if (bakedquad == bakedquad1 && Config.isNaturalTextures())
+                if (bakedquad == bakedquad1 && Config.get().isNaturalTextures())
                 {
                     bakedquad = NaturalTextures.getNaturalTexture(p_renderModelStandardQuads_3_, bakedquad);
                 }
@@ -449,7 +449,7 @@ public class BlockModelRenderer
     {
         Block block = p_178266_2_.getBlock();
         block.setBlockBoundsForItemRender();
-        GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().rotate(90.0F, 0.0F, 1.0F, 0.0F);
         int i = block.getRenderColor(block.getStateForEntityRender(p_178266_2_));
         float f = (float)(i >> 16 & 255) / 255.0F;
         float f1 = (float)(i >> 8 & 255) / 255.0F;
@@ -457,7 +457,7 @@ public class BlockModelRenderer
 
         if (!p_178266_4_)
         {
-            GlStateManager.color(p_178266_3_, p_178266_3_, p_178266_3_, 1.0F);
+            GlStateManager.get().color(p_178266_3_, p_178266_3_, p_178266_3_, 1.0F);
         }
 
         this.renderModelBrightnessColor(p_178266_1_, p_178266_3_, f, f1, f2);

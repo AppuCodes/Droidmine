@@ -69,24 +69,24 @@ public class LoadingScreenRenderer implements IProgressUpdate
         }
         else
         {
-            GlStateManager.clear(256);
-            GlStateManager.matrixMode(5889);
-            GlStateManager.loadIdentity();
+            GlStateManager.get().clear(256);
+            GlStateManager.get().matrixMode(5889);
+            GlStateManager.get().loadIdentity();
 
             if (OpenGlHelper.isFramebufferEnabled())
             {
                 int i = this.scaledResolution.getScaleFactor();
-                GlStateManager.ortho(0.0D, (double)(this.scaledResolution.getScaledWidth() * i), (double)(this.scaledResolution.getScaledHeight() * i), 0.0D, 100.0D, 300.0D);
+                GlStateManager.get().ortho(0.0D, (double)(this.scaledResolution.getScaledWidth() * i), (double)(this.scaledResolution.getScaledHeight() * i), 0.0D, 100.0D, 300.0D);
             }
             else
             {
                 ScaledResolution scaledresolution = ScaledResolution.get();
-                GlStateManager.ortho(0.0D, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
+                GlStateManager.get().ortho(0.0D, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
             }
 
-            GlStateManager.matrixMode(5888);
-            GlStateManager.loadIdentity();
-            GlStateManager.translate(0.0F, 0.0F, -200.0F);
+            GlStateManager.get().matrixMode(5888);
+            GlStateManager.get().loadIdentity();
+            GlStateManager.get().translate(0.0F, 0.0F, -200.0F);
         }
     }
 
@@ -141,20 +141,20 @@ public class LoadingScreenRenderer implements IProgressUpdate
                 }
                 else
                 {
-                    GlStateManager.clear(256);
+                    GlStateManager.get().clear(256);
                 }
 
                 this.framebuffer.bindFramebuffer(false);
-                GlStateManager.matrixMode(5889);
-                GlStateManager.loadIdentity();
-                GlStateManager.ortho(0.0D, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
-                GlStateManager.matrixMode(5888);
-                GlStateManager.loadIdentity();
-                GlStateManager.translate(0.0F, 0.0F, -200.0F);
+                GlStateManager.get().matrixMode(5889);
+                GlStateManager.get().loadIdentity();
+                GlStateManager.get().ortho(0.0D, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
+                GlStateManager.get().matrixMode(5888);
+                GlStateManager.get().loadIdentity();
+                GlStateManager.get().translate(0.0F, 0.0F, -200.0F);
 
                 if (!OpenGlHelper.isFramebufferEnabled())
                 {
-                    GlStateManager.clear(16640);
+                    GlStateManager.get().clear(16640);
                 }
 
                 Tessellator tessellator = Tessellator.getInstance();
@@ -174,7 +174,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
                     int j1 = 2;
                     int k1 = k / 2 - i1 / 2;
                     int l1 = l / 2 + 16;
-                    GlStateManager.disableTexture2D();
+                    GlStateManager.get().disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
                     worldrenderer.pos((double)k1, (double)l1, 0.0D).color(128, 128, 128, 255).endVertex();
                     worldrenderer.pos((double)k1, (double)(l1 + j1), 0.0D).color(128, 128, 128, 255).endVertex();
@@ -185,11 +185,11 @@ public class LoadingScreenRenderer implements IProgressUpdate
                     worldrenderer.pos((double)(k1 + progress), (double)(l1 + j1), 0.0D).color(128, 255, 128, 255).endVertex();
                     worldrenderer.pos((double)(k1 + progress), (double)l1, 0.0D).color(128, 255, 128, 255).endVertex();
                     tessellator.draw();
-                    GlStateManager.enableTexture2D();
+                    GlStateManager.get().enableTexture2D();
                 }
 
-                GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                GlStateManager.get().enableBlend();
+                GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
                 this.mc.fontRendererObj.drawStringWithShadow(this.currentlyDisplayedText, (float)((k - this.mc.fontRendererObj.getStringWidth(this.currentlyDisplayedText)) / 2), (float)(l / 2 - 4 - 16), 16777215);
                 this.mc.fontRendererObj.drawStringWithShadow(this.message, (float)((k - this.mc.fontRendererObj.getStringWidth(this.message)) / 2), (float)(l / 2 - 4 + 8), 16777215);
                 this.framebuffer.unbindFramebuffer();

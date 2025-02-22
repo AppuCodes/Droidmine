@@ -36,7 +36,7 @@ public class TextureAnimation
 
         if (p_i95_2_.length % i != 0)
         {
-            Config.warn("Invalid animated texture length: " + p_i95_2_.length + ", frameWidth: " + p_i95_7_ + ", frameHeight: " + p_i95_8_);
+            Config.get().warn("Invalid animated texture length: " + p_i95_2_.length + ", frameWidth: " + p_i95_7_ + ", frameHeight: " + p_i95_8_);
         }
 
         this.srcData = p_i95_2_;
@@ -51,15 +51,15 @@ public class TextureAnimation
         }
 
         String s2 = (String)p_i95_9_.get("duration");
-        int l = Config.parseInt(s2, p_i95_10_);
+        int l = Config.get().parseInt(s2, p_i95_10_);
         this.frames = new TextureAnimationFrame[j];
 
         for (int i1 = 0; i1 < this.frames.length; ++i1)
         {
             String s = (String)p_i95_9_.get("tile." + i1);
-            int j1 = Config.parseInt(s, i1);
+            int j1 = Config.get().parseInt(s, i1);
             String s1 = (String)p_i95_9_.get("duration." + i1);
-            int k1 = Config.parseInt(s1, l);
+            int k1 = Config.get().parseInt(s1, l);
             TextureAnimationFrame textureanimationframe = new TextureAnimationFrame(j1, k1);
             this.frames[i1] = textureanimationframe;
         }
@@ -161,7 +161,7 @@ public class TextureAnimation
             else
             {
                 this.imageData.position(j);
-                GlStateManager.bindTexture(this.dstTextId);
+                GlStateManager.get().bindTexture(this.dstTextId);
                 GL11.glTexSubImage2D(GL11.GL_TEXTURE_2D, 0, this.dstX, this.dstY, this.frameWidth, this.frameHeight, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, (ByteBuffer)this.imageData);
                 return true;
             }

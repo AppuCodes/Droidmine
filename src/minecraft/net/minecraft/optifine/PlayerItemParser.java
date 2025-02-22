@@ -47,7 +47,7 @@ public class PlayerItemParser
     {
         String s = Json.getString(p_parseItemModel_0_, "type");
 
-        if (!Config.equals(s, "PlayerItem"))
+        if (!Config.get().equals(s, "PlayerItem"))
         {
             throw new JsonParseException("Unknown model type: " + s);
         }
@@ -74,7 +74,7 @@ public class PlayerItemParser
 
                     if (jsonobject1 == null)
                     {
-                        Config.warn("BaseID not found: " + s1);
+                        Config.get().warn("BaseID not found: " + s1);
                         continue;
                     }
 
@@ -97,7 +97,7 @@ public class PlayerItemParser
                     }
                     else
                     {
-                        Config.warn("Duplicate model ID: " + s2);
+                        Config.get().warn("Duplicate model ID: " + s2);
                     }
                 }
 
@@ -174,7 +174,7 @@ public class PlayerItemParser
         }
         else
         {
-            Config.warn("Unknown attachModel: " + p_parseAttachModel_0_);
+            Config.get().warn("Unknown attachModel: " + p_parseAttachModel_0_);
             return 0;
         }
     }
@@ -183,9 +183,9 @@ public class PlayerItemParser
     {
         String s = Json.getString(p_parseItemRenderer_0_, "type");
 
-        if (!Config.equals(s, "ModelBox"))
+        if (!Config.get().equals(s, "ModelBox"))
         {
-            Config.warn("Unknown model type: " + s);
+            Config.get().warn("Unknown model type: " + s);
             return null;
         }
         else

@@ -24,33 +24,33 @@ public class LayerMooshroomMushroom implements LayerRenderer<EntityMooshroom>
         {
             BlockRendererDispatcher blockrendererdispatcher = mooshroomRenderer.getRenderManager().mc.getBlockRendererDispatcher();
             this.mooshroomRenderer.bindTexture(TextureMap.locationBlocksTexture);
-            GlStateManager.enableCull();
-            GlStateManager.cullFace(1028);
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F, -1.0F, 1.0F);
-            GlStateManager.translate(0.2F, 0.35F, 0.5F);
-            GlStateManager.rotate(42.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(-0.5F, -0.5F, 0.5F);
+            GlStateManager.get().enableCull();
+            GlStateManager.get().cullFace(1028);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(1.0F, -1.0F, 1.0F);
+            GlStateManager.get().translate(0.2F, 0.35F, 0.5F);
+            GlStateManager.get().rotate(42.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(-0.5F, -0.5F, 0.5F);
             blockrendererdispatcher.renderBlockBrightness(Blocks.red_mushroom.getDefaultState(), 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.1F, 0.0F, -0.6F);
-            GlStateManager.rotate(42.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(-0.5F, -0.5F, 0.5F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.1F, 0.0F, -0.6F);
+            GlStateManager.get().rotate(42.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().translate(-0.5F, -0.5F, 0.5F);
             blockrendererdispatcher.renderBlockBrightness(Blocks.red_mushroom.getDefaultState(), 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
             ((ModelQuadruped)this.mooshroomRenderer.getMainModel()).head.postRender(0.0625F);
-            GlStateManager.scale(1.0F, -1.0F, 1.0F);
-            GlStateManager.translate(0.0F, 0.7F, -0.2F);
-            GlStateManager.rotate(12.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(-0.5F, -0.5F, 0.5F);
+            GlStateManager.get().scale(1.0F, -1.0F, 1.0F);
+            GlStateManager.get().translate(0.0F, 0.7F, -0.2F);
+            GlStateManager.get().rotate(12.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().translate(-0.5F, -0.5F, 0.5F);
             blockrendererdispatcher.renderBlockBrightness(Blocks.red_mushroom.getDefaultState(), 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.cullFace(1029);
-            GlStateManager.disableCull();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().cullFace(1029);
+            GlStateManager.get().disableCull();
         }
     }
 

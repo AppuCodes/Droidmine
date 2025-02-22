@@ -23,16 +23,16 @@ public class RenderLeashKnot extends Render<EntityLeashKnot>
      */
     public void doRender(EntityLeashKnot entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
-        GlStateManager.translate((float)x, (float)y, (float)z);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().disableCull();
+        GlStateManager.get().translate((float)x, (float)y, (float)z);
         float f = 0.0625F;
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-        GlStateManager.enableAlpha();
+        GlStateManager.get().enableRescaleNormal();
+        GlStateManager.get().scale(-1.0F, -1.0F, 1.0F);
+        GlStateManager.get().enableAlpha();
         this.bindEntityTexture(entity);
         this.leashKnotModel.render(entity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, f);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

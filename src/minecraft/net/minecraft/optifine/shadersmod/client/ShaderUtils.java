@@ -72,7 +72,7 @@ public class ShaderUtils
                     String s1 = def ? shaderoption.getValueDefault() : shaderoption.getValue();
                     String s2 = prof.getValue(s);
 
-                    if (!Config.equals(s1, s2))
+                    if (!Config.get().equals(s1, s2))
                     {
                         return false;
                     }

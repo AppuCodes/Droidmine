@@ -28,16 +28,16 @@ public class RenderSnowball<T extends Entity> extends Render<T>
      */
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y, (float)z);
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(0.5F, 0.5F, 0.5F);
-        GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)x, (float)y, (float)z);
+        GlStateManager.get().enableRescaleNormal();
+        GlStateManager.get().scale(0.5F, 0.5F, 0.5F);
+        GlStateManager.get().rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.locationBlocksTexture);
         this.field_177083_e.func_181564_a(this.func_177082_d(entity), ItemCameraTransforms.TransformType.GROUND);
-        GlStateManager.disableRescaleNormal();
-        GlStateManager.popMatrix();
+        GlStateManager.get().disableRescaleNormal();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

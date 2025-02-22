@@ -28,6 +28,7 @@ public class Display {
     private boolean resized;
     private boolean focused;
     private boolean vsync;
+    private boolean closeRequested;
     
     static
     {
@@ -98,7 +99,7 @@ public class Display {
         vsync = vsyncIn;
     }
 
-    public void destroy(){
+    public void destroy() {
         glfwDestroyWindow(window);
         created = false;
     }
@@ -136,9 +137,9 @@ public class Display {
             if(glfwGetWindowAttrib(window, GLFW_VISIBLE) == 1) {
                 resized = false;
                 glfwSwapBuffers(window);
-                Mouse.poll_scrollY = 0;
+                Mouse.get().poll_scrollY = 0;
                 glfwPollEvents();
-                Mouse.createEvent();
+                Mouse.get().createEvent();
             }
     }
 
@@ -205,18 +206,17 @@ public class Display {
             @Override
             public void invoke(long l, boolean focused) {
                 Display.this.focused = focused;
-                Mouse.poll_xPos = Mouse.last_x;
-                Mouse.poll_yPos = Mouse.last_y;
+                Mouse.get().poll_xPos = Mouse.get().last_x;
+                Mouse.get().poll_yPos = Mouse.get().last_y;
             }
         });
 
-        Keyboard.create();
-        Keyboard.pollGLFW();
-        Mouse.create();
-        Mouse.pollGLFW();
+        Keyboard.get(headless).create();
+        Keyboard.get().pollGLFW();
+        Mouse.get(headless).create();
+        Mouse.get().pollGLFW();
 
-        //Use raw input, better for 3D camera
-        if (glfwRawMouseMotionSupported())
+        if (glfwRawMouseMotionSupported() && !headless)
             glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
         glfwSwapInterval(vsync ? GLFW_TRUE : GLFW_FALSE);

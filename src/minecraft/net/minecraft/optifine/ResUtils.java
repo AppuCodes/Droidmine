@@ -25,7 +25,7 @@ public class ResUtils
     public static String[] collectFiles(String[] p_collectFiles_0_, String[] p_collectFiles_1_)
     {
         Set<String> set = new LinkedHashSet();
-        IResourcePack[] airesourcepack = Config.getResourcePacks();
+        IResourcePack[] airesourcepack = Config.get().getResourcePacks();
 
         for (int i = 0; i < airesourcepack.length; ++i)
         {

@@ -229,12 +229,12 @@ public abstract class GuiSlot
             int i = this.getScrollBarX();
             int j = i + 6;
             this.bindAmountScrolled();
-            GlStateManager.disableLighting();
-            GlStateManager.disableFog();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().disableFog();
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             
             if (!(mc.currentScreen instanceof GuiMultiplayer))
             {
@@ -256,7 +256,7 @@ public abstract class GuiSlot
             }
 
             this.drawSelectionBox(k, l, mouseXIn, mouseYIn);
-            GlStateManager.disableDepth();
+            GlStateManager.get().disableDepth();
             int i1 = 4;
             
             if (!(mc.currentScreen instanceof GuiMultiplayer))
@@ -265,11 +265,11 @@ public abstract class GuiSlot
                 this.overlayBackground(this.bottom, this.height, 255, 255);
             }
             
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-            GlStateManager.disableAlpha();
-            GlStateManager.shadeModel(7425);
-            GlStateManager.disableTexture2D();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 0, 1);
+            GlStateManager.get().disableAlpha();
+            GlStateManager.get().shadeModel(7425);
+            GlStateManager.get().disableTexture2D();
             
             if (!(mc.currentScreen instanceof GuiMultiplayer))
             {
@@ -321,10 +321,10 @@ public abstract class GuiSlot
             }
 
             this.func_148142_b(mouseXIn, mouseYIn);
-            GlStateManager.enableTexture2D();
-            GlStateManager.shadeModel(7424);
-            GlStateManager.enableAlpha();
-            GlStateManager.disableBlend();
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().shadeModel(7424);
+            GlStateManager.get().enableAlpha();
+            GlStateManager.get().disableBlend();
         }
     }
 
@@ -332,7 +332,7 @@ public abstract class GuiSlot
     {
         if (this.isMouseYWithinSlotBounds(this.mouseY))
         {
-            if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState() && this.mouseY >= this.top && this.mouseY <= this.bottom)
+            if (Mouse.get().getEventButton() == 0 && Mouse.get().getEventButtonState() && this.mouseY >= this.top && this.mouseY <= this.bottom)
             {
                 int i = (this.width - this.getListWidth()) / 2;
                 int j = (this.width + this.getListWidth()) / 2;
@@ -350,7 +350,7 @@ public abstract class GuiSlot
                 }
             }
 
-            if (Mouse.isButtonDown(0) && this.getEnabled())
+            if (Mouse.get().isButtonDown(0) && this.getEnabled())
             {
                 if (this.initialClickY == -1)
                 {
@@ -423,7 +423,7 @@ public abstract class GuiSlot
                 this.initialClickY = -1;
             }
 
-            int i2 = Mouse.getEventDWheel();
+            int i2 = Mouse.get().getEventDWheel();
 
             if (i2 != 0)
             {
@@ -482,8 +482,8 @@ public abstract class GuiSlot
             {
                 int i1 = this.left + (this.width / 2 - this.getListWidth() / 2);
                 int j1 = this.left + this.width / 2 + this.getListWidth() / 2;
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                GlStateManager.disableTexture2D();
+                GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.get().disableTexture2D();
                 worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
                 worldrenderer.pos((double)i1, (double)(k + l + 2), 0.0D).tex(0.0D, 1.0D).color(128, 128, 128, 255).endVertex();
                 worldrenderer.pos((double)j1, (double)(k + l + 2), 0.0D).tex(1.0D, 1.0D).color(128, 128, 128, 255).endVertex();
@@ -494,7 +494,7 @@ public abstract class GuiSlot
                 worldrenderer.pos((double)(j1 - 1), (double)(k - 1), 0.0D).tex(1.0D, 0.0D).color(0, 0, 0, 255).endVertex();
                 worldrenderer.pos((double)(i1 + 1), (double)(k - 1), 0.0D).tex(0.0D, 0.0D).color(0, 0, 0, 255).endVertex();
                 tessellator.draw();
-                GlStateManager.enableTexture2D();
+                GlStateManager.get().enableTexture2D();
             }
 
             this.drawSlot(j, p_148120_1_, k, l, mouseXIn, mouseYIn);
@@ -514,7 +514,7 @@ public abstract class GuiSlot
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         float f = 32.0F;
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         worldrenderer.pos((double)this.left, (double)endY, 0.0D).tex(0.0D, (double)((float)endY / 32.0F)).color(64, 64, 64, endAlpha).endVertex();

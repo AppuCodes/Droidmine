@@ -137,14 +137,14 @@ public class ModelDragon extends ModelBase
      */
     public void render(Entity entityIn, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float scale)
     {
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
         EntityDragon entitydragon = (EntityDragon)entityIn;
         float f = entitydragon.prevAnimTime + (entitydragon.animTime - entitydragon.prevAnimTime) * this.partialTicks;
         this.jaw.rotateAngleX = (float)(Math.sin((double)(f * (float)Math.PI * 2.0F)) + 1.0D) * 0.2F;
         float f1 = (float)(Math.sin((double)(f * (float)Math.PI * 2.0F - 1.0F)) + 1.0D);
         f1 = (f1 * f1 * 1.0F + f1 * 2.0F) * 0.05F;
-        GlStateManager.translate(0.0F, f1 - 2.0F, -3.0F);
-        GlStateManager.rotate(f1 * 2.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.get().translate(0.0F, f1 - 2.0F, -3.0F);
+        GlStateManager.get().rotate(f1 * 2.0F, 1.0F, 0.0F, 0.0F);
         float f2 = -30.0F;
         float f4 = 0.0F;
         float f5 = 1.5F;
@@ -179,16 +179,16 @@ public class ModelDragon extends ModelBase
         this.head.rotateAngleY = this.updateRotations(adouble2[0] - adouble[0]) * (float)Math.PI / 180.0F * 1.0F;
         this.head.rotateAngleZ = -this.updateRotations(adouble2[0] - (double)f7) * (float)Math.PI / 180.0F * 1.0F;
         this.head.render(scale);
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-f6 * f5 * 1.0F, 0.0F, 0.0F, 1.0F);
-        GlStateManager.translate(0.0F, -1.0F, 0.0F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate(0.0F, 1.0F, 0.0F);
+        GlStateManager.get().rotate(-f6 * f5 * 1.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.get().translate(0.0F, -1.0F, 0.0F);
         this.body.rotateAngleZ = 0.0F;
         this.body.render(scale);
 
         for (int j = 0; j < 2; ++j)
         {
-            GlStateManager.enableCull();
+            GlStateManager.get().enableCull();
             float f11 = f * (float)Math.PI * 2.0F;
             this.wing.rotateAngleX = 0.125F - (float)Math.cos((double)f11) * 0.2F;
             this.wing.rotateAngleY = 0.25F;
@@ -203,17 +203,17 @@ public class ModelDragon extends ModelBase
             this.wing.render(scale);
             this.frontLeg.render(scale);
             this.rearLeg.render(scale);
-            GlStateManager.scale(-1.0F, 1.0F, 1.0F);
+            GlStateManager.get().scale(-1.0F, 1.0F, 1.0F);
 
             if (j == 0)
             {
-                GlStateManager.cullFace(1028);
+                GlStateManager.get().cullFace(1028);
             }
         }
 
-        GlStateManager.popMatrix();
-        GlStateManager.cullFace(1029);
-        GlStateManager.disableCull();
+        GlStateManager.get().popMatrix();
+        GlStateManager.get().cullFace(1029);
+        GlStateManager.get().disableCull();
         float f10 = -((float)Math.sin((double)(f * (float)Math.PI * 2.0F))) * 0.0F;
         f8 = f * (float)Math.PI * 2.0F;
         f2 = 10.0F;
@@ -237,7 +237,7 @@ public class ModelDragon extends ModelBase
             this.spine.render(scale);
         }
 
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
     }
 
     /**

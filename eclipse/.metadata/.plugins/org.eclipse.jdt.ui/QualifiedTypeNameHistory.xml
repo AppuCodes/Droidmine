@@ -29,7 +29,6 @@
     <fullyQualifiedTypeName name="org.lwjgl.util.Color"/>
     <fullyQualifiedTypeName name="net.minecraft.client.renderer.GlStateManager"/>
     <fullyQualifiedTypeName name="org.lwjgl.input.Mouse"/>
-    <fullyQualifiedTypeName name="net.minecraft.client.gui.ScaledResolution"/>
     <fullyQualifiedTypeName name="appleclient.utils.ScissorUtil"/>
     <fullyQualifiedTypeName name="org.lwjgl.opengl.GL11"/>
     <fullyQualifiedTypeName name="net.minecraft.client.settings.KeyBinding"/>
@@ -53,8 +52,10 @@
     <fullyQualifiedTypeName name="java.util.function.Function"/>
     <fullyQualifiedTypeName name="net.minecraft.client.ClientEngine"/>
     <fullyQualifiedTypeName name="java.net.Proxy"/>
-    <fullyQualifiedTypeName name="net.minecraft.optifine.Config"/>
     <fullyQualifiedTypeName name="org.lwjgl.display.PixelFormat"/>
     <fullyQualifiedTypeName name="org.lwjgl.display.DisplayMode"/>
+    <fullyQualifiedTypeName name="net.minecraft.optifine.Config"/>
+    <fullyQualifiedTypeName name="net.minecraft.client.gui.ScaledResolution"/>
+    <fullyQualifiedTypeName name="org.lwjgl.util.glu.Project"/>
     <fullyQualifiedTypeName name="org.lwjgl.display.Display"/>
 </qualifiedTypeNameHistroy>

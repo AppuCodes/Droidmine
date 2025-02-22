@@ -164,7 +164,7 @@ public class CustomColormap implements CustomColors.IColorizer
             if (matcher.matches())
             {
                 String s = matcher.group(1);
-                int i = Config.parseInt(s, -1);
+                int i = Config.get().parseInt(s, -1);
 
                 if (i >= 0)
                 {
@@ -191,14 +191,14 @@ public class CustomColormap implements CustomColors.IColorizer
 
             String s = this.source + ".png";
             ResourceLocation resourcelocation = new ResourceLocation(s);
-            InputStream inputstream = Config.getResourceStream(resourcelocation);
+            InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
             if (inputstream == null)
             {
                 return;
             }
 
-            BufferedImage bufferedimage = TextureUtil.readBufferedImage(inputstream);
+            BufferedImage bufferedimage = TextureUtil.get().readBufferedImage(inputstream);
 
             if (bufferedimage == null)
             {
@@ -229,7 +229,7 @@ public class CustomColormap implements CustomColors.IColorizer
 
     private static void warn(String p_warn_0_)
     {
-        Config.warn("CustomColors: " + p_warn_0_);
+        Config.get().warn("CustomColors: " + p_warn_0_);
     }
 
     private static String parseTexture(String p_parseTexture_0_, String p_parseTexture_1_, String p_parseTexture_2_)
@@ -317,14 +317,14 @@ public class CustomColormap implements CustomColors.IColorizer
 
     public int getColor(int p_getColor_1_)
     {
-        p_getColor_1_ = Config.limit(p_getColor_1_, 0, this.colors.length - 1);
+        p_getColor_1_ = Config.get().limit(p_getColor_1_, 0, this.colors.length - 1);
         return this.colors[p_getColor_1_] & 16777215;
     }
 
     public int getColor(int p_getColor_1_, int p_getColor_2_)
     {
-        p_getColor_1_ = Config.limit(p_getColor_1_, 0, this.width - 1);
-        p_getColor_2_ = Config.limit(p_getColor_2_, 0, this.height - 1);
+        p_getColor_1_ = Config.get().limit(p_getColor_1_, 0, this.width - 1);
+        p_getColor_2_ = Config.get().limit(p_getColor_2_, 0, this.height - 1);
         return this.colors[p_getColor_2_ * this.width + p_getColor_1_] & 16777215;
     }
 
@@ -409,7 +409,7 @@ public class CustomColormap implements CustomColors.IColorizer
         if (this.yVariance > 0)
         {
             int k = p_getColorGrid_2_.getX() << 16 + p_getColorGrid_2_.getZ();
-            int l = Config.intHash(k);
+            int l = Config.get().intHash(k);
             int i1 = this.yVariance * 2 + 1;
             int j1 = (l & 255) % i1 - this.yVariance;
             j += j1;
@@ -459,7 +459,7 @@ public class CustomColormap implements CustomColors.IColorizer
             this.matchBlocks = new MatchBlock[0];
         }
 
-        this.matchBlocks = (MatchBlock[])((MatchBlock[])Config.addObjectToArray(this.matchBlocks, p_addMatchBlock_1_));
+        this.matchBlocks = (MatchBlock[])((MatchBlock[])Config.get().addObjectToArray(this.matchBlocks, p_addMatchBlock_1_));
     }
 
     public void addMatchBlock(int p_addMatchBlock_1_, int p_addMatchBlock_2_)
@@ -535,6 +535,6 @@ public class CustomColormap implements CustomColors.IColorizer
 
     public String toString()
     {
-        return "" + this.basePath + "/" + this.name + ", blocks: " + Config.arrayToString((Object[])this.matchBlocks) + ", source: " + this.source;
+        return "" + this.basePath + "/" + this.name + ", blocks: " + Config.get().arrayToString((Object[])this.matchBlocks) + ", source: " + this.source;
     }
 }

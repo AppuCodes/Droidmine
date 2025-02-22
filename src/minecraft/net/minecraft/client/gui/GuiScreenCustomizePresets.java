@@ -35,7 +35,7 @@ public class GuiScreenCustomizePresets extends GuiScreen
     public void initGui()
     {
         this.buttonList.clear();
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
         this.field_175315_a = I18n.format("createWorld.customize.custom.presets.title", new Object[0]);
         this.field_175313_s = I18n.format("createWorld.customize.presets.share", new Object[0]);
         this.field_175312_t = I18n.format("createWorld.customize.presets.list", new Object[0]);
@@ -62,7 +62,7 @@ public class GuiScreenCustomizePresets extends GuiScreen
      */
     public void onGuiClosed()
     {
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
     }
 
     /**
@@ -212,7 +212,7 @@ public class GuiScreenCustomizePresets extends GuiScreen
             GuiScreenCustomizePresets.this.drawHorizontalLine(i - 1, i + 32, p_178051_2_ + 32, -6250336);
             GuiScreenCustomizePresets.this.drawVerticalLine(i - 1, p_178051_2_ - 1, p_178051_2_ + 32, -2039584);
             GuiScreenCustomizePresets.this.drawVerticalLine(i + 32, p_178051_2_ - 1, p_178051_2_ + 32, -6250336);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(p_178051_3_);
             int j = 32;
             int k = 32;

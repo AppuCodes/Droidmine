@@ -620,9 +620,6 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     {
     }
 
-    /**
-     * Directly calls System.exit(0), instantly killing the program.
-     */
     protected void systemExitNow()
     {
     }

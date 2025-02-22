@@ -52,22 +52,22 @@ public class JsonBlendingMode
 
                 if (this.field_148119_h)
                 {
-                    GlStateManager.disableBlend();
+                    GlStateManager.get().disableBlend();
                     return;
                 }
 
-                GlStateManager.enableBlend();
+                GlStateManager.get().enableBlend();
             }
 
             GL14.glBlendEquation(this.field_148112_f);
 
             if (this.field_148113_g)
             {
-                GlStateManager.tryBlendFuncSeparate(this.field_148116_b, this.field_148114_d, this.field_148117_c, this.field_148115_e);
+                GlStateManager.get().tryBlendFuncSeparate(this.field_148116_b, this.field_148114_d, this.field_148117_c, this.field_148115_e);
             }
             else
             {
-                GlStateManager.blendFunc(this.field_148116_b, this.field_148114_d);
+                GlStateManager.get().blendFunc(this.field_148116_b, this.field_148114_d);
             }
         }
     }

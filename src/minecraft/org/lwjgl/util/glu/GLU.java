@@ -252,7 +252,7 @@ public class GLU {
 			float upy,
 			float upz) {
 
-		Project.gluLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+		Project.get().gluLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class GLU {
 			float zNear,
 			float zFar) {
 
-		Project.gluPerspective(fovy, aspect, zNear, zFar);
+		Project.get().gluPerspective(fovy, aspect, zNear, zFar);
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class GLU {
 			IntBuffer viewport,
 			FloatBuffer win_pos)
 	{
-		return Project.gluProject(objx, objy, objz, modelMatrix, projMatrix, viewport, win_pos);
+		return Project.get().gluProject(objx, objy, objz, modelMatrix, projMatrix, viewport, win_pos);
 	}
 
 	/**
@@ -322,7 +322,7 @@ public class GLU {
 			IntBuffer viewport,
 			FloatBuffer obj_pos)
 	{
-		return Project.gluUnProject(winx, winy, winz, modelMatrix, projMatrix, viewport, obj_pos);
+		return Project.get().gluUnProject(winx, winy, winz, modelMatrix, projMatrix, viewport, obj_pos);
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class GLU {
 			float height,
 			IntBuffer viewport) {
 
-		Project.gluPickMatrix(x, y, width, height, viewport);
+		Project.get().gluPickMatrix(x, y, width, height, viewport);
 	}
 
 	/**

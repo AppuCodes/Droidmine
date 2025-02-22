@@ -1,10 +1,10 @@
 package net.minecraft.client.renderer.texture;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.optifine.shadersmod.client.MultiTexID;
 import net.minecraft.optifine.shadersmod.client.ShadersTex;
-
-import org.lwjgl.opengl.GL11;
 
 public abstract class AbstractTexture implements ITextureObject
 {
@@ -36,7 +36,7 @@ public abstract class AbstractTexture implements ITextureObject
             short1 = 9728;
         }
 
-        GlStateManager.bindTexture(this.getGlTextureId());
+        GlStateManager.get().bindTexture(this.getGlTextureId());
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, i);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, short1);
     }
@@ -57,7 +57,7 @@ public abstract class AbstractTexture implements ITextureObject
     {
         if (this.glTextureId == -1)
         {
-            this.glTextureId = TextureUtil.glGenTextures();
+            this.glTextureId = GL11.glGenTextures();
         }
 
         return this.glTextureId;
@@ -69,7 +69,7 @@ public abstract class AbstractTexture implements ITextureObject
 
         if (this.glTextureId != -1)
         {
-            TextureUtil.deleteTexture(this.glTextureId);
+            TextureUtil.get().deleteTexture(this.glTextureId);
             this.glTextureId = -1;
         }
     }

@@ -61,7 +61,7 @@ public class GameOptions
     public float chatOpacity = 1.0F;
     public boolean snooperEnabled = true;
     public boolean fullScreen;
-    public boolean useVbo = false;
+    public boolean useVbo = true;
     public boolean allowBlockAlternatives = true;
     public boolean reducedDebugInfo = false;
     public boolean hideServerAddress;
@@ -160,8 +160,8 @@ public class GameOptions
     public int ofMipmapType = 0;
     public boolean ofOcclusionFancy = false;
     public boolean ofSmoothFps = false;
-    public boolean ofSmoothWorld = Config.isSingleProcessor();
-    public boolean ofLazyChunkLoading = Config.isSingleProcessor();
+    public boolean ofSmoothWorld = Config.get().isSingleProcessor();
+    public boolean ofLazyChunkLoading = Config.get().isSingleProcessor();
     public float ofAoLevel = 1.0F;
     public int ofAaLevel = 0;
     public int ofAfLevel = 1;
@@ -248,7 +248,7 @@ public class GameOptions
         this.keyBindings = (KeyBinding[])((KeyBinding[])ArrayUtils.add(this.keyBindings, this.ofKeyBindZoom));
         GameOptions.Options.RENDER_DISTANCE.setValueMax(32.0F);
         this.renderDistanceChunks = 8;
-        Config.initoptions(this);
+        Config.get().initoptions(this);
     }
 
     public GameOptions()
@@ -266,7 +266,7 @@ public class GameOptions
      */
     public static String getKeyDisplayString(int p_74298_0_)
     {
-        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", new Object[] {Integer.valueOf(p_74298_0_ + 101)}): (p_74298_0_ < 256 ? Keyboard.getKeyName(p_74298_0_) : String.format("%c", new Object[] {Character.valueOf((char)(p_74298_0_ - 256))}).toUpperCase());
+        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", new Object[] {Integer.valueOf(p_74298_0_ + 101)}): (p_74298_0_ < 256 ? Keyboard.get().getKeyName(p_74298_0_) : String.format("%c", new Object[] {Character.valueOf((char)(p_74298_0_ - 256))}).toUpperCase());
     }
 
     /**
@@ -275,7 +275,7 @@ public class GameOptions
     public static boolean isKeyDown(KeyBinding p_100015_0_)
     {
         int i = p_100015_0_.getKeyCode();
-        return i >= -100 && i <= 255 ? (p_100015_0_.getKeyCode() == 0 ? false : (p_100015_0_.getKeyCode() < 0 ? Mouse.isButtonDown(p_100015_0_.getKeyCode() + 100) : Keyboard.isKeyDown(p_100015_0_.getKeyCode()))) : false;
+        return i >= -100 && i <= 255 ? (p_100015_0_.getKeyCode() == 0 ? false : (p_100015_0_.getKeyCode() < 0 ? Mouse.get().isButtonDown(p_100015_0_.getKeyCode() + 100) : Keyboard.get().isKeyDown(p_100015_0_.getKeyCode()))) : false;
     }
 
     /**
@@ -412,9 +412,9 @@ public class GameOptions
 
         if (p_74306_1_ == GameOptions.Options.ANAGLYPH)
         {
-            if (!this.anaglyph && Config.isShaders())
+            if (!this.anaglyph && Config.get().isShaders())
             {
-                Config.showGuiMessage(Lang.get("of.message.an.shaders1"), Lang.get("of.message.an.shaders2"));
+                Config.get().showGuiMessage(Lang.get("of.message.an.shaders1"), Lang.get("of.message.an.shaders2"));
                 return;
             }
 
@@ -782,9 +782,9 @@ public class GameOptions
         {
             int i = (int)p_setOptionFloatValueOF_2_;
 
-            if (i > 0 && Config.isShaders())
+            if (i > 0 && Config.get().isShaders())
             {
-                Config.showGuiMessage(Lang.get("of.message.aa.shaders1"), Lang.get("of.message.aa.shaders2"));
+                Config.get().showGuiMessage(Lang.get("of.message.aa.shaders1"), Lang.get("of.message.aa.shaders2"));
                 return;
             }
 
@@ -799,16 +799,16 @@ public class GameOptions
                 }
             }
 
-            this.ofAaLevel = Config.limit(this.ofAaLevel, 0, 16);
+            this.ofAaLevel = Config.get().limit(this.ofAaLevel, 0, 16);
         }
 
         if (p_setOptionFloatValueOF_1_ == GameOptions.Options.AF_LEVEL)
         {
             int k = (int)p_setOptionFloatValueOF_2_;
 
-            if (k > 1 && Config.isShaders())
+            if (k > 1 && Config.get().isShaders())
             {
-                Config.showGuiMessage(Lang.get("of.message.af.shaders1"), Lang.get("of.message.af.shaders2"));
+                Config.get().showGuiMessage(Lang.get("of.message.af.shaders1"), Lang.get("of.message.af.shaders2"));
                 return;
             }
 
@@ -817,14 +817,14 @@ public class GameOptions
                 ;
             }
 
-            this.ofAfLevel = Config.limit(this.ofAfLevel, 1, 16);
+            this.ofAfLevel = Config.get().limit(this.ofAfLevel, 1, 16);
             this.mc.refreshResources();
         }
 
         if (p_setOptionFloatValueOF_1_ == GameOptions.Options.MIPMAP_TYPE)
         {
             int l = (int)p_setOptionFloatValueOF_2_;
-            this.ofMipmapType = Config.limit(l, 0, 3);
+            this.ofMipmapType = Config.get().limit(l, 0, 3);
             this.mc.refreshResources();
         }
     }
@@ -838,7 +838,7 @@ public class GameOptions
                 case 1:
                     this.ofFogType = 2;
 
-                    if (!Config.isFancyFogAvailable())
+                    if (!Config.get().isFancyFogAvailable())
                     {
                         this.ofFogType = 3;
                     }
@@ -876,7 +876,7 @@ public class GameOptions
         if (p_setOptionValueOF_1_ == GameOptions.Options.SMOOTH_WORLD)
         {
             this.ofSmoothWorld = !this.ofSmoothWorld;
-            Config.updateThreadPriorities();
+            Config.get().updateThreadPriorities();
         }
 
         if (p_setOptionValueOF_1_ == GameOptions.Options.CLOUDS)
@@ -1165,8 +1165,8 @@ public class GameOptions
         if (p_setOptionValueOF_1_ == GameOptions.Options.CUSTOM_FONTS)
         {
             this.ofCustomFonts = !this.ofCustomFonts;
-            this.mc.fontRendererObj.onResourceManagerReload(Config.getResourceManager());
-            this.mc.standardGalacticFontRenderer.onResourceManagerReload(Config.getResourceManager());
+            this.mc.fontRendererObj.onResourceManagerReload(Config.get().getResourceManager());
+            this.mc.standardGalacticFontRenderer.onResourceManagerReload(Config.get().getResourceManager());
         }
 
         if (p_setOptionValueOF_1_ == GameOptions.Options.CUSTOM_COLORS)
@@ -1208,9 +1208,9 @@ public class GameOptions
 
         if (p_setOptionValueOF_1_ == GameOptions.Options.FAST_RENDER)
         {
-            if (!this.ofFastRender && Config.isShaders())
+            if (!this.ofFastRender && Config.get().isShaders())
             {
-                Config.showGuiMessage(Lang.get("of.message.fr.shaders1"), Lang.get("of.message.fr.shaders2"));
+                Config.get().showGuiMessage(Lang.get("of.message.fr.shaders1"), Lang.get("of.message.fr.shaders2"));
                 return;
             }
 
@@ -1221,7 +1221,7 @@ public class GameOptions
                 this.mc.entityRenderer.func_181022_b();
             }
 
-            Config.updateFramebufferSize();
+            Config.get().updateFramebufferSize();
         }
 
         if (p_setOptionValueOF_1_ == GameOptions.Options.TRANSLUCENT_BLOCKS)
@@ -1249,9 +1249,9 @@ public class GameOptions
         if (p_setOptionValueOF_1_ == GameOptions.Options.LAZY_CHUNK_LOADING)
         {
             this.ofLazyChunkLoading = !this.ofLazyChunkLoading;
-            Config.updateAvailableProcessors();
+            Config.get().updateAvailableProcessors();
 
-            if (!Config.isSingleProcessor())
+            if (!Config.get().isSingleProcessor())
             {
                 this.ofLazyChunkLoading = false;
             }
@@ -1261,7 +1261,7 @@ public class GameOptions
 
         if (p_setOptionValueOF_1_ == GameOptions.Options.FULLSCREEN_MODE)
         {
-            List list = Arrays.asList(Config.getDisplayModeNames());
+            List list = Arrays.asList(Config.get().getDisplayModeNames());
 
             if (this.ofFullscreenMode.equals("Default"))
             {
@@ -1645,7 +1645,7 @@ public class GameOptions
         {
             String s3 = "";
 
-            if (this.ofAaLevel != Config.getAntialiasingLevel())
+            if (this.ofAaLevel != Config.get().getAntialiasingLevel())
             {
                 s3 = " (" + Lang.get("of.general.restart") + ")";
             }
@@ -1818,7 +1818,7 @@ public class GameOptions
         }
         catch (Exception exception)
         {
-            Config.warn("Failed to save options");
+            Config.get().warn("Failed to save options");
             exception.printStackTrace();
         }
     }
@@ -1873,9 +1873,9 @@ public class GameOptions
         this.ofMipmapType = 0;
         this.ofOcclusionFancy = false;
         this.ofSmoothFps = false;
-        Config.updateAvailableProcessors();
-        this.ofSmoothWorld = Config.isSingleProcessor();
-        this.ofLazyChunkLoading = Config.isSingleProcessor();
+        Config.get().updateAvailableProcessors();
+        this.ofSmoothWorld = Config.get().isSingleProcessor();
+        this.ofLazyChunkLoading = Config.get().isSingleProcessor();
         this.ofFastMath = false;
         this.ofFastRender = false;
         this.ofTranslucentBlocks = 0;
@@ -1944,7 +1944,7 @@ public class GameOptions
     {
         if (this.mc.isIntegratedServerRunning() && this.mc.getIntegratedServer() != null)
         {
-            Config.waterOpacityChanged = true;
+            Config.get().waterOpacityChanged = true;
         }
 
         ClearWater.updateWaterOpacity(this, this.mc.world);

@@ -15,6 +15,7 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 
 public class Keyboard {
 
+    private static HashMap<String, Keyboard> keyboards = new HashMap<>();
     public static final int KEY_NONE = 0x00;
 
     public static final int KEY_ESCAPE = 0x01;
@@ -162,24 +163,23 @@ public class Keyboard {
 
     public static final int KEYBOARD_SIZE = 256;
 
-    public static final ByteBuffer keyDownBuffer = BufferUtils.createByteBuffer(KEYBOARD_SIZE);
+    public final ByteBuffer keyDownBuffer = BufferUtils.createByteBuffer(KEYBOARD_SIZE);
 
     private static final int BUFFER_SIZE = 50;
     public static final int EVENT_SIZE = 4 + 1 + 4 + 8 + 1;
-    private static ByteBuffer readBuffer;
-    private static boolean created;
-    private static boolean repeat_enabled;
+    protected ByteBuffer readBuffer;
+    protected boolean created;
+    protected boolean repeat_enabled;
 
     /**
      * Key names
      */
-    private static final String[] keyName = new String[KEYBOARD_SIZE];
-    private static final Map<String, Integer> keyMap = new HashMap<>(KEYBOARD_SIZE);
-    private static final Map<Integer, Integer> glfwKeys = new HashMap<>(348);
-    private static int counter;
+    protected static final String[] keyName = new String[KEYBOARD_SIZE];
+    protected static final Map<String, Integer> keyMap = new HashMap<>(KEYBOARD_SIZE);
+    protected final Map<Integer, Integer> glfwKeys = new HashMap<>(348);
+    protected static int counter;
 
-    private static final KeyEvent current_event = new KeyEvent();
-
+    protected final KeyEvent current_event = new KeyEvent();
 
     static {
         // Use reflection to find out key names
@@ -219,7 +219,7 @@ public class Keyboard {
             return ret;
     }
 
-    public static void create() {
+    public void create() {
         if(created)
             return;
 
@@ -227,17 +227,17 @@ public class Keyboard {
         created = true;
         repeat_enabled = false;
         readBuffer = ByteBuffer.allocate(EVENT_SIZE * BUFFER_SIZE);
-        reset();;
+        reset();
     }
 
-    public static void destroy() {
+    public void destroy() {
         if (!created)
             return;
         created = false;
         reset();
     }
 
-    public static boolean next() {
+    public boolean next() {
         if (!created)
             throw new IllegalStateException("Keyboard must be created before you can read events");
         boolean result;
@@ -247,7 +247,7 @@ public class Keyboard {
 
     }
 
-    private static boolean readNext(KeyEvent event) {
+    private boolean readNext(KeyEvent event) {
         if (readBuffer.hasRemaining()) {
             event.key = readBuffer.getInt() & 0xFF;
             event.state = readBuffer.get() != 0;
@@ -259,44 +259,44 @@ public class Keyboard {
             return false;
     }
 
-    public static void enableRepeatEvents(boolean enable) {
+    public void enableRepeatEvents(boolean enable) {
         repeat_enabled = enable;
     }
 
-    public static int getEventKey() {
+    public int getEventKey() {
         return current_event.key;
     }
 
-    public static boolean getEventKeyState() {
+    public boolean getEventKeyState() {
         return current_event.state;
     }
 
-    public static char getEventCharacter() {
+    public char getEventCharacter() {
         return (char) current_event.character;
     }
 
-    public static boolean isRepeatEvent() {
+    public boolean isRepeatEvent() {
         return repeat_enabled;
     }
 
-    public static boolean isCreated() {
+    public boolean isCreated() {
         return created;
     }
 
-    public static boolean isKeyDown(int key) {
+    public boolean isKeyDown(int key) {
         if (!created)
             throw new IllegalStateException("Keyboard must be created before you can query key state");
         return keyDownBuffer.get(key) != 0;
     }
 
-    public static void reset() {
+    public void reset() {
         readBuffer.limit(0);
         for (int i = 0; i < keyDownBuffer.remaining(); i++)
             keyDownBuffer.put(i, (byte) 0);
         current_event.reset();
     }
 
-    public static void pollGLFW(){
+    public void pollGLFW(){
         glfwSetCharCallback(Display.get().getWindow(), new GLFWCharCallback() {
             @Override
             public void invoke(long l, int i) {
@@ -317,8 +317,7 @@ public class Keyboard {
         });
     }
 
-
-    public static void parseGLFWCodes(int key, int action,int character) {
+    public void parseGLFWCodes(int key, int action,int character) {
         readBuffer.compact();
         readBuffer.putInt(key);
         readBuffer.put((byte) ((action == 2 || action == 1) ? 1 : 0));
@@ -327,7 +326,7 @@ public class Keyboard {
         readBuffer.flip();
     }
 
-    private static void createGLFWKeyMap() {
+    protected void createGLFWKeyMap() {
         glfwKeys.put(GLFW_KEY_UNKNOWN, KEY_NONE);
         glfwKeys.put(GLFW_KEY_SPACE, KEY_SPACE);
         glfwKeys.put(GLFW_KEY_APOSTROPHE, KEY_APOSTROPHE);
@@ -482,5 +481,23 @@ public class Keyboard {
             repeat = false;
         }
     }
-
+    
+    public static Keyboard get()
+    {
+        return get(false);
+    }
+    
+    public static Keyboard get(boolean headless)
+    {
+        String name = Thread.currentThread().getName();
+        
+        if (keyboards.containsKey(name))
+        {
+            return keyboards.get(name);
+        }
+        
+        Keyboard keyboard = headless ? new HeadlessKeyboard() : new Keyboard();
+        keyboards.put(name, keyboard);
+        return keyboard;
+    }
 }

@@ -359,7 +359,7 @@ public class RenderManager {
       int j = i % 65536;
       int k = i / 65536;
       OpenGlHelper.func_77475_a(OpenGlHelper.field_77476_b, (float)j / 1.0F, (float)k / 1.0F);
-      GlStateManager.func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.get().func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
       return this.func_147939_a(p_147936_1_, d0 - this.field_78725_b, d1 - this.field_78726_c, d2 - this.field_78723_d, f, p_147936_2_, p_147936_3_);
    }
 
@@ -373,7 +373,7 @@ public class RenderManager {
          int j = i % 65536;
          int k = i / 65536;
          OpenGlHelper.func_77475_a(OpenGlHelper.field_77476_b, (float)j / 1.0F, (float)k / 1.0F);
-         GlStateManager.func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
+         GlStateManager.get().func_179131_c(1.0F, 1.0F, 1.0F, 1.0F);
          render.func_177067_a(p_178630_1_, d0 - this.field_78725_b, d1 - this.field_78726_c, d2 - this.field_78723_d);
       }
 
@@ -433,11 +433,11 @@ public class RenderManager {
    }
 
    private void func_85094_b(Entity p_85094_1_, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_) {
-      GlStateManager.func_179132_a(false);
-      GlStateManager.func_179090_x();
-      GlStateManager.func_179140_f();
-      GlStateManager.func_179129_p();
-      GlStateManager.func_179084_k();
+      GlStateManager.get().func_179132_a(false);
+      GlStateManager.get().func_179090_x();
+      GlStateManager.get().func_179140_f();
+      GlStateManager.get().func_179129_p();
+      GlStateManager.get().func_179084_k();
       float f = p_85094_1_.field_70130_N / 2.0F;
       AxisAlignedBB axisalignedbb = p_85094_1_.func_174813_aQ();
       AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(axisalignedbb.field_72340_a - p_85094_1_.field_70165_t + p_85094_2_, axisalignedbb.field_72338_b - p_85094_1_.field_70163_u + p_85094_4_, axisalignedbb.field_72339_c - p_85094_1_.field_70161_v + p_85094_6_, axisalignedbb.field_72336_d - p_85094_1_.field_70165_t + p_85094_2_, axisalignedbb.field_72337_e - p_85094_1_.field_70163_u + p_85094_4_, axisalignedbb.field_72334_f - p_85094_1_.field_70161_v + p_85094_6_);
@@ -454,11 +454,11 @@ public class RenderManager {
       worldrenderer.func_181662_b(p_85094_2_, p_85094_4_ + (double)p_85094_1_.func_70047_e(), p_85094_6_).func_181669_b(0, 0, 255, 255).func_181675_d();
       worldrenderer.func_181662_b(p_85094_2_ + vec3.field_72450_a * 2.0D, p_85094_4_ + (double)p_85094_1_.func_70047_e() + vec3.field_72448_b * 2.0D, p_85094_6_ + vec3.field_72449_c * 2.0D).func_181669_b(0, 0, 255, 255).func_181675_d();
       tessellator.func_78381_a();
-      GlStateManager.func_179098_w();
-      GlStateManager.func_179145_e();
-      GlStateManager.func_179089_o();
-      GlStateManager.func_179084_k();
-      GlStateManager.func_179132_a(true);
+      GlStateManager.get().func_179098_w();
+      GlStateManager.get().func_179145_e();
+      GlStateManager.get().func_179089_o();
+      GlStateManager.get().func_179084_k();
+      GlStateManager.get().func_179132_a(true);
    }
 
    public void func_78717_a(World p_78717_1_) {

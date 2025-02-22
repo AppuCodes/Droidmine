@@ -1,0 +1,50 @@
+package net.minecraft.client.main;
+
+import net.droidmine.MineBot;
+import net.droidmine.Session;
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        new Thread(() ->
+        {
+            MineBot bot = new MineBot("blocksmc.com", Session.offline("Miners8172"), true);
+            
+            bot.onChatReceive(msg ->
+            {
+                if (msg.contains("/login <password>"))
+                {
+                    bot.player().sendChatMessage("/login pass");
+//                    bot.options().keyBindForward.setPressed(true);
+//                    bot.sleep(Duration.ofMillis(100));
+//                    bot.options().keyBindForward.setPressed(false);
+                    bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
+                }
+            });
+            
+            bot.run();
+        }).start();
+        
+        new Thread(() ->
+        {
+            MineBot bot = new MineBot("blocksmc.com", Session.offline("Droidmine"), true);
+            
+            bot.onChatReceive(msg ->
+            {
+                if (msg.contains("/login <password>"))
+                {
+                    bot.player().sendChatMessage("/login pass");
+//                    bot.options().keyBindForward.setPressed(true);
+//                    bot.sleep(Duration.ofMillis(100));
+//                    bot.options().keyBindForward.setPressed(false);
+                    bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
+                }
+            });
+            
+            bot.run();
+        }).start();
+        
+    }
+}

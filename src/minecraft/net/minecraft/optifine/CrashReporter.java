@@ -14,7 +14,7 @@ public class CrashReporter
     {
         try
         {
-            GameOptions options = Config.getoptions();
+            GameOptions options = Config.get().getoptions();
 
             if (options == null)
             {
@@ -54,7 +54,7 @@ public class CrashReporter
                 }
             };
             Map map = new HashMap();
-            map.put("OF-Version", Config.getVersion());
+            map.put("OF-Version", Config.get().getVersion());
             map.put("OF-Summary", makeSummary(p_onCrashReport_0_));
             FileUploadThread fileuploadthread = new FileUploadThread(s, map, abyte, ifileuploadlistener);
             fileuploadthread.setPriority(10);
@@ -63,14 +63,14 @@ public class CrashReporter
         }
         catch (Exception exception)
         {
-            Config.error(exception.getClass().getName() + ": " + exception.getMessage());
+            Config.get().error(exception.getClass().getName() + ": " + exception.getMessage());
         }
     }
 
     private static String makeReport(CrashReport p_makeReport_0_)
     {
         StringBuffer stringbuffer = new StringBuffer();
-        stringbuffer.append("OptiFineVersion: " + Config.getVersion() + "\n");
+        stringbuffer.append("OptiFineVersion: " + Config.get().getVersion() + "\n");
         stringbuffer.append("Summary: " + makeSummary(p_makeReport_0_) + "\n");
         stringbuffer.append("\n");
         stringbuffer.append(p_makeReport_0_.getCompleteReport());
@@ -103,21 +103,21 @@ public class CrashReporter
 
     public static void extendCrashReport(CrashReportCategory p_extendCrashReport_0_)
     {
-        p_extendCrashReport_0_.addCrashSection("OptiFine Version", Config.getVersion());
+        p_extendCrashReport_0_.addCrashSection("OptiFine Version", Config.get().getVersion());
 
-        if (Config.getoptions() != null)
+        if (Config.get().getoptions() != null)
         {
-            p_extendCrashReport_0_.addCrashSection("Render Distance Chunks", "" + Config.getChunkViewDistance());
-            p_extendCrashReport_0_.addCrashSection("Mipmaps", "" + Config.getMipmapLevels());
-            p_extendCrashReport_0_.addCrashSection("Anisotropic Filtering", "" + Config.getAnisotropicFilterLevel());
-            p_extendCrashReport_0_.addCrashSection("Antialiasing", "" + Config.getAntialiasingLevel());
-            p_extendCrashReport_0_.addCrashSection("Multitexture", "" + Config.isMultiTexture());
+            p_extendCrashReport_0_.addCrashSection("Render Distance Chunks", "" + Config.get().getChunkViewDistance());
+            p_extendCrashReport_0_.addCrashSection("Mipmaps", "" + Config.get().getMipmapLevels());
+            p_extendCrashReport_0_.addCrashSection("Anisotropic Filtering", "" + Config.get().getAnisotropicFilterLevel());
+            p_extendCrashReport_0_.addCrashSection("Antialiasing", "" + Config.get().getAntialiasingLevel());
+            p_extendCrashReport_0_.addCrashSection("Multitexture", "" + Config.get().isMultiTexture());
         }
 
         p_extendCrashReport_0_.addCrashSection("Shaders", "" + Shaders.getShaderPackName());
-        p_extendCrashReport_0_.addCrashSection("OpenGlVersion", "" + Config.openGlVersion);
-        p_extendCrashReport_0_.addCrashSection("OpenGlRenderer", "" + Config.openGlRenderer);
-        p_extendCrashReport_0_.addCrashSection("OpenGlVendor", "" + Config.openGlVendor);
-        p_extendCrashReport_0_.addCrashSection("CpuCount", "" + Config.getAvailableProcessors());
+        p_extendCrashReport_0_.addCrashSection("OpenGlVersion", "" + Config.get().openGlVersion);
+        p_extendCrashReport_0_.addCrashSection("OpenGlRenderer", "" + Config.get().openGlRenderer);
+        p_extendCrashReport_0_.addCrashSection("OpenGlVendor", "" + Config.get().openGlVendor);
+        p_extendCrashReport_0_.addCrashSection("CpuCount", "" + Config.get().getAvailableProcessors());
     }
 }

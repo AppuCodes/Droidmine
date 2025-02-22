@@ -124,7 +124,7 @@ public class FontRenderer implements IResourceManagerReloadListener
 
         try
         {
-            bufferedimage = TextureUtil.readBufferedImage(this.getResourceInputStream(this.locationFontTexture));
+            bufferedimage = TextureUtil.get().readBufferedImage(this.getResourceInputStream(this.locationFontTexture));
         }
         catch (IOException ioexception)
         {
@@ -137,7 +137,7 @@ public class FontRenderer implements IResourceManagerReloadListener
         int k = i / 16;
         int l = j / 16;
         float f = (float)i / 128.0F;
-        float f1 = Config.limit(f, 1.0F, 2.0F);
+        float f1 = Config.get().limit(f, 1.0F, 2.0F);
         this.offsetBold = 1.0F / f1;
         float f2 = FontUtils.readFloat(properties, "offsetBold", -1.0F);
 
@@ -248,7 +248,7 @@ public class FontRenderer implements IResourceManagerReloadListener
 //        GL11.glTexCoord2f(((float)i + f1 - 1.0F) / 128.0F, ((float)j + 7.99F) / 128.0F);
 //        GL11.glVertex3f(this.posX + f1 - 1.0F - (float)k, this.posY + 7.99F, 0.0F);
 //        GL11.glEnd();
-        Gui.drawModalRectWithBatch(renderer, this.posX, this.posY, i, j, f1, f1, 128, 128, GlStateManager.colorState.red, GlStateManager.colorState.green, GlStateManager.colorState.blue, GlStateManager.colorState.alpha);
+        Gui.drawModalRectWithBatch(renderer, this.posX, this.posY, i, j, f1, f1, 128, 128, GlStateManager.get().colorState.red, GlStateManager.get().colorState.green, GlStateManager.get().colorState.blue, GlStateManager.get().colorState.alpha);
         return f;
     }
 
@@ -419,7 +419,7 @@ public class FontRenderer implements IResourceManagerReloadListener
     private void renderStringAtPos(WorldRenderer renderer, String p_78255_1_, int color, boolean p_78255_2_)
     {
         this.textColor = color;
-        float prevColorStateAlpha = GlStateManager.colorState.alpha;
+        float prevColorStateAlpha = GlStateManager.get().colorState.alpha;
         
         for (int i = 0; i < p_78255_1_.length(); ++i)
         {
@@ -449,13 +449,13 @@ public class FontRenderer implements IResourceManagerReloadListener
 
                     int j1 = this.colorCode[i1];
 
-                    if (Config.isCustomColors())
+                    if (Config.get().isCustomColors())
                     {
                         j1 = CustomColors.getTextColor(i1, j1);
                     }
 
                     this.textColor = j1;
-                    GlStateManager.color((float)(j1 >> 16) / 255.0F, (float)(j1 >> 8 & 255) / 255.0F, (float)(j1 & 255) / 255.0F, GlStateManager.colorState.alpha);
+                    GlStateManager.get().color((float)(j1 >> 16) / 255.0F, (float)(j1 >> 8 & 255) / 255.0F, (float)(j1 & 255) / 255.0F, GlStateManager.get().colorState.alpha);
                 }
                 else if (i1 == 16)
                 {
@@ -484,7 +484,7 @@ public class FontRenderer implements IResourceManagerReloadListener
                     this.strikethroughStyle = false;
                     this.underlineStyle = false;
                     this.italicStyle = false;
-                    GlStateManager.color((float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F, GlStateManager.colorState.alpha);
+                    GlStateManager.get().color((float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F, GlStateManager.get().colorState.alpha);
                 }
 
                 ++i;
@@ -557,16 +557,16 @@ public class FontRenderer implements IResourceManagerReloadListener
                     Tessellator.getInstance().draw();
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-                    GlStateManager.disableTexture2D();
+                    GlStateManager.get().disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION);
                     worldrenderer.pos((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), 0.0D).endVertex();
                     worldrenderer.pos((double)(this.posX + f), (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), 0.0D).endVertex();
                     worldrenderer.pos((double)(this.posX + f), (double)(this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F), 0.0D).endVertex();
                     worldrenderer.pos((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2) - 1.0F), 0.0D).endVertex();
                     tessellator.draw();
-                    GlStateManager.enableTexture2D();
+                    GlStateManager.get().enableTexture2D();
                     float alpha = (float)(textColor >> 24 & 255) / 255.0F;
-                    GlStateManager.color((float)(textColor >> 16 & 255) / 255.0F, (float)(textColor >> 8 & 255) / 255.0F, (float)(textColor & 255) / 255.0F, alpha == 0 ? prevColorStateAlpha : alpha);
+                    GlStateManager.get().color((float)(textColor >> 16 & 255) / 255.0F, (float)(textColor >> 8 & 255) / 255.0F, (float)(textColor & 255) / 255.0F, alpha == 0 ? prevColorStateAlpha : alpha);
                     renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
                 }
 
@@ -576,7 +576,7 @@ public class FontRenderer implements IResourceManagerReloadListener
                     Tessellator.getInstance().draw();
                     Tessellator tessellator1 = Tessellator.getInstance();
                     WorldRenderer worldrenderer1 = tessellator1.getWorldRenderer();
-                    GlStateManager.disableTexture2D();
+                    GlStateManager.get().disableTexture2D();
                     worldrenderer1.begin(7, DefaultVertexFormats.POSITION);
                     int l = this.underlineStyle ? -1 : 0;
                     worldrenderer1.pos((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT), 0.0D).endVertex();
@@ -584,9 +584,9 @@ public class FontRenderer implements IResourceManagerReloadListener
                     worldrenderer1.pos((double)(this.posX + f), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), 0.0D).endVertex();
                     worldrenderer1.pos((double)(this.posX + (float)l), (double)(this.posY + (float)this.FONT_HEIGHT - 1.0F), 0.0D).endVertex();
                     tessellator1.draw();
-                    GlStateManager.enableTexture2D();
+                    GlStateManager.get().enableTexture2D();
                     float alpha = (float)(textColor >> 24 & 255) / 255.0F;
-                    GlStateManager.color((float)(textColor >> 16 & 255) / 255.0F, (float)(textColor >> 8 & 255) / 255.0F, (float)(textColor & 255) / 255.0F, alpha == 0 ? prevColorStateAlpha : alpha);
+                    GlStateManager.get().color((float)(textColor >> 16 & 255) / 255.0F, (float)(textColor >> 8 & 255) / 255.0F, (float)(textColor & 255) / 255.0F, alpha == 0 ? prevColorStateAlpha : alpha);
                     renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
                 }
 
@@ -643,7 +643,7 @@ public class FontRenderer implements IResourceManagerReloadListener
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
             
-            GlStateManager.color((float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F, (float)(color >> 24 & 255) / 255.0F);
+            GlStateManager.get().color((float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F, (float)(color >> 24 & 255) / 255.0F);
             this.posX = x;
             this.posY = y;
             
@@ -910,20 +910,7 @@ public class FontRenderer implements IResourceManagerReloadListener
      */
     String wrapFormattedStringToWidth(String str, int wrapWidth)
     {
-        int i = this.sizeStringToWidth(str, wrapWidth);
-
-        if (str.length() <= i)
-        {
-            return str;
-        }
-        else
-        {
-            String s = str.substring(0, i);
-            char c0 = str.charAt(i);
-            boolean flag = c0 == 32 || c0 == 10;
-            String s1 = getFormatFromString(s) + str.substring(i + (flag ? 1 : 0));
-            return s + "\n" + this.wrapFormattedStringToWidth(s1, wrapWidth);
-        }
+        return str;
     }
 
     /**
@@ -1056,7 +1043,7 @@ public class FontRenderer implements IResourceManagerReloadListener
         {
             int j = this.colorCode[i];
 
-            if (Config.isCustomColors())
+            if (Config.get().isCustomColors())
             {
                 j = CustomColors.getTextColor(i, j);
             }
@@ -1071,7 +1058,7 @@ public class FontRenderer implements IResourceManagerReloadListener
 
     protected void enableAlpha()
     {
-        GlStateManager.enableAlpha();
+        GlStateManager.get().enableAlpha();
     }
 
     protected void bindTexture(ResourceLocation p_bindTexture_1_)

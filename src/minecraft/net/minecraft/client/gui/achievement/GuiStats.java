@@ -186,11 +186,11 @@ public class GuiStats extends GuiScreen implements IProgressMeter
     private void drawStatsScreen(int p_146521_1_, int p_146521_2_, Item p_146521_3_)
     {
         this.drawButtonBackground(p_146521_1_ + 1, p_146521_2_ + 1);
-        GlStateManager.enableRescaleNormal();
-        RenderHelper.enableGUIStandardItemLighting();
+        GlStateManager.get().enableRescaleNormal();
+        RenderHelper.get().enableGUIStandardItemLighting();
         this.itemRender.renderItemIntoGUI(new ItemStack(p_146521_3_, 1, 0), p_146521_1_ + 2, p_146521_2_ + 2);
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.disableRescaleNormal();
+        RenderHelper.get().disableStandardItemLighting();
+        GlStateManager.get().disableRescaleNormal();
     }
 
     /**
@@ -206,7 +206,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
      */
     private void drawSprite(int p_146527_1_, int p_146527_2_, int p_146527_3_, int p_146527_4_)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(statIcons);
         float f = 0.0078125F;
         float f1 = 0.0078125F;
@@ -253,7 +253,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
 
         protected void drawListHeader(int p_148129_1_, int p_148129_2_, Tessellator p_148129_3_)
         {
-            if (!Mouse.isButtonDown(0))
+            if (!Mouse.get().isButtonDown(0))
             {
                 this.field_148218_l = -1;
             }

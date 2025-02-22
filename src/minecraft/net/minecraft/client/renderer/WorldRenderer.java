@@ -43,7 +43,7 @@ public class WorldRenderer
 
     public WorldRenderer(int bufferSizeIn)
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             bufferSizeIn *= 2;
         }
@@ -57,7 +57,7 @@ public class WorldRenderer
 
     private void func_181670_b(int p_181670_1_)
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             p_181670_1_ *= 2;
         }
@@ -265,12 +265,12 @@ public class WorldRenderer
             this.needsUpdate = false;
             this.byteBuffer.limit(this.byteBuffer.capacity());
 
-            if (Config.isShaders())
+            if (Config.get().isShaders())
             {
                 SVertexBuilder.endSetVertexFormat(this);
             }
 
-            if (Config.isMultiTexture())
+            if (Config.get().isMultiTexture())
             {
                 if (this.blockLayer != null)
                 {
@@ -538,7 +538,7 @@ public class WorldRenderer
 
     public void addVertexData(int[] vertexData)
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             SVertexBuilder.beginAddVertexData(this, vertexData);
         }
@@ -548,7 +548,7 @@ public class WorldRenderer
         this.rawIntBuffer.put(vertexData);
         this.vertexCount += vertexData.length / this.vertexFormat.func_181719_f();
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             SVertexBuilder.endAddVertexData(this);
         }
@@ -561,7 +561,7 @@ public class WorldRenderer
         this.field_181678_g = 0;
         this.field_181677_f = this.vertexFormat.getElement(this.field_181678_g);
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             SVertexBuilder.endAddVertex(this);
         }
@@ -569,7 +569,7 @@ public class WorldRenderer
 
     public WorldRenderer pos(double p_181662_1_, double p_181662_3_, double p_181662_5_)
     {
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             SVertexBuilder.beginAddVertex(this);
         }
@@ -755,7 +755,7 @@ public class WorldRenderer
     {
         if (this.quadSprites != null)
         {
-            int i = Config.getMinecraft().getTextureMapBlocks().getCountRegisteredSprites();
+            int i = Config.get().getMinecraft().getTextureMapBlocks().getCountRegisteredSprites();
 
             if (this.drawnIcons.length <= i)
             {

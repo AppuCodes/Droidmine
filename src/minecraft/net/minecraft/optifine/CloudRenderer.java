@@ -69,7 +69,7 @@ public class CloudRenderer
         this.cloudPlayerY = this.mc.getRenderViewEntity().prevPosY;
         this.cloudPlayerZ = this.mc.getRenderViewEntity().prevPosZ;
         this.updated = true;
-        GlStateManager.resetColor();
+        GlStateManager.get().resetColor();
     }
 
     public void renderGlList()
@@ -82,20 +82,20 @@ public class CloudRenderer
         float f = (float)(d0 - this.cloudPlayerX + d3 * 0.03D);
         float f1 = (float)(d1 - this.cloudPlayerY);
         float f2 = (float)(d2 - this.cloudPlayerZ);
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
 
         if (this.renderFancy)
         {
-            GlStateManager.translate(-f / 12.0F, -f1, -f2 / 12.0F);
+            GlStateManager.get().translate(-f / 12.0F, -f1, -f2 / 12.0F);
         }
         else
         {
-            GlStateManager.translate(-f, -f1, -f2);
+            GlStateManager.get().translate(-f, -f1, -f2);
         }
 
-        GlStateManager.callList(this.glListClouds);
-        GlStateManager.popMatrix();
-        GlStateManager.resetColor();
+        GlStateManager.get().callList(this.glListClouds);
+        GlStateManager.get().popMatrix();
+        GlStateManager.get().resetColor();
     }
 
     public void reset()

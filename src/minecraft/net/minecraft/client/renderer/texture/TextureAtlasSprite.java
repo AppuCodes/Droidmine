@@ -66,7 +66,7 @@ public class TextureAtlasSprite
         this.iconName = spriteName;
         this.mc = mc;
 
-        if (Config.isMultiTexture())
+        if (Config.get().isMultiTexture())
         {
             this.spriteSingle = new TextureAtlasSprite(this, mc);
         }
@@ -241,7 +241,7 @@ public class TextureAtlasSprite
 
                 if (i != k && k >= 0 && k < this.framesTextureData.size())
                 {
-                    TextureUtil.uploadTextureMipmap((int[][])((int[][])this.framesTextureData.get(k)), this.width, this.height, this.originX, this.originY, flag, flag1);
+                    TextureUtil.get().uploadTextureMipmap((int[][])((int[][])this.framesTextureData.get(k)), this.width, this.height, this.originX, this.originY, flag, flag1);
                 }
             }
             else if (this.animationMetadata.isInterpolate())
@@ -289,7 +289,7 @@ public class TextureAtlasSprite
                 }
             }
 
-            TextureUtil.uploadTextureMipmap(this.interpolatedFrameData, this.width, this.height, this.originX, this.originY, false, false);
+            TextureUtil.get().uploadTextureMipmap(this.interpolatedFrameData, this.width, this.height, this.originX, this.originY, false, false);
         }
     }
 
@@ -399,7 +399,7 @@ public class TextureAtlasSprite
 
         if (!this.isShadersSprite)
         {
-            if (Config.isShaders())
+            if (Config.get().isShaders())
             {
                 this.loadShadersSprites();
             }
@@ -437,7 +437,7 @@ public class TextureAtlasSprite
             {
                 try
                 {
-                    arraylist.add(TextureUtil.generateMipmapData(level, this.width, aint));
+                    arraylist.add(TextureUtil.get().generateMipmapData(level, this.width, aint));
                 }
                 catch (Throwable throwable)
                 {
@@ -637,8 +637,8 @@ public class TextureAtlasSprite
     {
         if (this.glSpriteTextureId < 0)
         {
-            this.glSpriteTextureId = TextureUtil.glGenTextures();
-            TextureUtil.allocateTextureImpl(this.glSpriteTextureId, this.mipmapLevels, this.width, this.height);
+            this.glSpriteTextureId = TextureUtil.get().glGenTextures();
+            TextureUtil.get().allocateTextureImpl(this.glSpriteTextureId, this.mipmapLevels, this.width, this.height);
             TextureUtils.applyAnisotropicLevel();
         }
 
@@ -649,7 +649,7 @@ public class TextureAtlasSprite
     {
         if (this.glSpriteTextureId >= 0)
         {
-            TextureUtil.deleteTexture(this.glSpriteTextureId);
+            TextureUtil.get().deleteTexture(this.glSpriteTextureId);
             this.glSpriteTextureId = -1;
         }
     }
@@ -689,15 +689,15 @@ public class TextureAtlasSprite
 
     private void loadShadersSprites()
     {
-        this.mipmapLevels = Config.getTextureMap().getMipmapLevels();
+        this.mipmapLevels = Config.get().getTextureMap().getMipmapLevels();
 
         if (Shaders.configNormalMap)
         {
             String s = this.iconName + "_n";
             ResourceLocation resourcelocation = new ResourceLocation(s);
-            resourcelocation = Config.getTextureMap().completeResourceLocation(resourcelocation, 0);
+            resourcelocation = Config.get().getTextureMap().completeResourceLocation(resourcelocation, 0);
 
-            if (Config.hasResource(resourcelocation))
+            if (Config.get().hasResource(resourcelocation))
             {
                 try
                 {
@@ -710,8 +710,8 @@ public class TextureAtlasSprite
                 }
                 catch (IOException ioexception1)
                 {
-                    Config.warn("Error loading normal texture: " + s);
-                    Config.warn(ioexception1.getClass().getName() + ": " + ioexception1.getMessage());
+                    Config.get().warn("Error loading normal texture: " + s);
+                    Config.get().warn(ioexception1.getClass().getName() + ": " + ioexception1.getMessage());
                 }
             }
         }
@@ -720,9 +720,9 @@ public class TextureAtlasSprite
         {
             String s1 = this.iconName + "_s";
             ResourceLocation resourcelocation1 = new ResourceLocation(s1);
-            resourcelocation1 = Config.getTextureMap().completeResourceLocation(resourcelocation1, 0);
+            resourcelocation1 = Config.get().getTextureMap().completeResourceLocation(resourcelocation1, 0);
 
-            if (Config.hasResource(resourcelocation1))
+            if (Config.get().hasResource(resourcelocation1))
             {
                 try
                 {
@@ -735,8 +735,8 @@ public class TextureAtlasSprite
                 }
                 catch (IOException ioexception)
                 {
-                    Config.warn("Error loading specular texture: " + s1);
-                    Config.warn(ioexception.getClass().getName() + ": " + ioexception.getMessage());
+                    Config.get().warn("Error loading specular texture: " + s1);
+                    Config.get().warn(ioexception.getClass().getName() + ": " + ioexception.getMessage());
                 }
             }
         }
@@ -744,8 +744,8 @@ public class TextureAtlasSprite
 
     public void loadShaderSpriteFrames(ResourceLocation p_loadShaderSpriteFrames_1_, int p_loadShaderSpriteFrames_2_) throws IOException
     {
-        IResource iresource = Config.getResource(p_loadShaderSpriteFrames_1_);
-        BufferedImage bufferedimage = TextureUtil.readBufferedImage(iresource.getInputStream());
+        IResource iresource = Config.get().getResource(p_loadShaderSpriteFrames_1_);
+        BufferedImage bufferedimage = TextureUtil.get().readBufferedImage(iresource.getInputStream());
 
         if (this.width != bufferedimage.getWidth())
         {

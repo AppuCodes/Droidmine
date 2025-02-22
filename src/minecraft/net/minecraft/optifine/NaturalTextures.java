@@ -19,7 +19,7 @@ public class NaturalTextures
     {
         propertiesByIndex = new NaturalProperties[0];
 
-        if (Config.isNaturalTextures())
+        if (Config.get().isNaturalTextures())
         {
             String s = "optifine/natural.properties";
 
@@ -27,17 +27,17 @@ public class NaturalTextures
             {
                 ResourceLocation resourcelocation = new ResourceLocation(s);
 
-                if (!Config.hasResource(resourcelocation))
+                if (!Config.get().hasResource(resourcelocation))
                 {
                     return;
                 }
 
-                boolean flag = Config.isFromDefaultResourcePack(resourcelocation);
-                InputStream inputstream = Config.getResourceStream(resourcelocation);
+                boolean flag = Config.get().isFromDefaultResourcePack(resourcelocation);
+                InputStream inputstream = Config.get().getResourceStream(resourcelocation);
                 ArrayList arraylist = new ArrayList(256);
-                String s1 = Config.readInputStream(inputstream);
+                String s1 = Config.get().readInputStream(inputstream);
                 inputstream.close();
-                String[] astring = Config.tokenize(s1, "\n\r");
+                String[] astring = Config.get().tokenize(s1, "\n\r");
                 TextureMap texturemap = TextureUtils.getTextureMapBlocks(mc);
 
                 for (int i = 0; i < astring.length; ++i)
@@ -46,11 +46,11 @@ public class NaturalTextures
 
                     if (!s2.startsWith("#"))
                     {
-                        String[] astring1 = Config.tokenize(s2, "=");
+                        String[] astring1 = Config.get().tokenize(s2, "=");
 
                         if (astring1.length != 2)
                         {
-                            Config.warn("Natural Textures: Invalid \"" + s + "\" line: " + s2);
+                            Config.get().warn("Natural Textures: Invalid \"" + s + "\" line: " + s2);
                         }
                         else
                         {
@@ -60,7 +60,7 @@ public class NaturalTextures
 
                             if (textureatlassprite == null)
                             {
-                                Config.warn("Natural Textures: Texture not found: \"" + s + "\" line: " + s2);
+                                Config.get().warn("Natural Textures: Texture not found: \"" + s + "\" line: " + s2);
                             }
                             else
                             {
@@ -68,11 +68,11 @@ public class NaturalTextures
 
                                 if (j < 0)
                                 {
-                                    Config.warn("Natural Textures: Invalid \"" + s + "\" line: " + s2);
+                                    Config.get().warn("Natural Textures: Invalid \"" + s + "\" line: " + s2);
                                 }
                                 else
                                 {
-                                    if (flag && !Config.isFromDefaultResourcePack(new ResourceLocation("textures/blocks/" + s3 + ".png")))
+                                    if (flag && !Config.get().isFromDefaultResourcePack(new ResourceLocation("textures/blocks/" + s3 + ".png")))
                                     {
                                         return;
                                     }
@@ -98,7 +98,7 @@ public class NaturalTextures
             }
             catch (FileNotFoundException var17)
             {
-                Config.warn("NaturalTextures: configuration \"" + s + "\" not found");
+                Config.get().warn("NaturalTextures: configuration \"" + s + "\" not found");
                 return;
             }
             catch (Exception exception)
@@ -127,7 +127,7 @@ public class NaturalTextures
             else
             {
                 int i = ConnectedTextures.getSide(p_getNaturalTexture_1_.getFace());
-                int j = Config.getRandom(p_getNaturalTexture_0_, i);
+                int j = Config.get().getRandom(p_getNaturalTexture_0_, i);
                 int k = 0;
                 boolean flag = false;
 

@@ -78,13 +78,14 @@ public class OpenGlHelper
     private static final String __OBFID = "CL_00001179";
     public static float lastBrightnessX = 0.0F;
     public static float lastBrightnessY = 0.0F;
+    public static void init() {}
 
     /**
      * Initializes the texture constants to be used when rendering lightmap values
      */
-    public static void initializeTextures()
+    static
     {
-        Config.initDisplay();
+        Config.get().initDisplay();
         GLCapabilities GLCapabilities = GLContext.getCapabilities();
         arbMultitexture = GLCapabilities.GL_ARB_multitexture && !GLCapabilities.OpenGL13;
         arbTextureEnvCombine = GLCapabilities.GL_ARB_texture_env_combine && !GLCapabilities.OpenGL13;
@@ -617,7 +618,7 @@ public class OpenGlHelper
 
     public static boolean useVbo()
     {
-        return Config.isMultiTexture() ? false : vboSupported;
+        return Config.get().isMultiTexture() ? false : vboSupported;
     }
 
     public static void glBindFramebuffer(int target, int framebufferIn)
@@ -910,7 +911,7 @@ public class OpenGlHelper
 
     public static boolean isFramebufferEnabled()
     {
-        return Config.isFastRender() ? false : (Config.isAntialiasing() ? false : framebufferSupported);
+        return Config.get().isFastRender() ? false : (Config.get().isAntialiasing() ? false : framebufferSupported);
     }
 
     public static String func_183029_j()

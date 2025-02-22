@@ -266,7 +266,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         {
             super.initGui();
             this.buttonList.clear();
-            Keyboard.enableRepeatEvents(true);
+            Keyboard.get().enableRepeatEvents(true);
             this.searchField = new GuiTextField(0, this.fontRendererObj, this.guiLeft + 82, this.guiTop + 6, 89, this.fontRendererObj.FONT_HEIGHT);
             this.searchField.setMaxStringLength(15);
             this.searchField.setEnableBackgroundDrawing(false);
@@ -296,7 +296,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             this.mc.player.inventoryContainer.removeCraftingFromCrafters(this.field_147059_E);
         }
 
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
     }
 
     /**
@@ -395,7 +395,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (creativetabs.drawInForegroundOfTab())
         {
-            GlStateManager.disableBlend();
+            GlStateManager.get().disableBlend();
             this.fontRendererObj.drawString(I18n.format(creativetabs.getTranslatedTabLabel(), new Object[0]), 8, 6, 4210752);
         }
     }
@@ -546,7 +546,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
-        int i = Mouse.getEventDWheel();
+        int i = Mouse.get().getEventDWheel();
 
         if (i != 0 && this.needsScrollBars())
         {
@@ -573,7 +573,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        boolean flag = Mouse.isButtonDown(0);
+        boolean flag = Mouse.get().isButtonDown(0);
         int i = this.guiLeft;
         int j = this.guiTop;
         int k = i + 175;
@@ -615,8 +615,8 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             this.drawCreativeTabHoveringText(I18n.format("inventory.binSlot", new Object[0]), mouseX, mouseY);
         }
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableLighting();
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().disableLighting();
     }
 
     protected void renderToolTip(ItemStack stack, int x, int y)
@@ -675,8 +675,8 @@ public class GuiContainerCreative extends InventoryEffectRenderer
      */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderHelper.enableGUIStandardItemLighting();
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderHelper.get().enableGUIStandardItemLighting();
         CreativeTabs creativetabs = CreativeTabs.creativeTabArray[selectedTabIndex];
 
         for (CreativeTabs creativetabs1 : CreativeTabs.creativeTabArray)
@@ -692,7 +692,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         this.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/container/creative_inventory/tab_" + creativetabs.getBackgroundImageName()));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         this.searchField.drawTextBox();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.guiLeft + 175;
         int j = this.guiTop + 18;
         int k = j + 112;
@@ -812,18 +812,18 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             i1 = i1 + (this.ySize - 4);
         }
 
-        GlStateManager.disableLighting();
+        GlStateManager.get().disableLighting();
         this.drawTexturedModalRect(l, i1, j, k, 28, j1);
         this.zLevel = 100.0F;
         this.itemRender.zLevel = 100.0F;
         l = l + 6;
         i1 = i1 + 8 + (flag1 ? 1 : -1);
-        GlStateManager.enableLighting();
-        GlStateManager.enableRescaleNormal();
+        GlStateManager.get().enableLighting();
+        GlStateManager.get().enableRescaleNormal();
         ItemStack itemstack = p_147051_1_.getIconItemStack();
         this.itemRender.renderItemAndEffectIntoGUI(itemstack, l, i1);
         this.itemRender.renderItemOverlays(this.fontRendererObj, itemstack, l, i1);
-        GlStateManager.disableLighting();
+        GlStateManager.get().disableLighting();
         this.itemRender.zLevel = 0.0F;
         this.zLevel = 0.0F;
     }

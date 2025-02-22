@@ -35,13 +35,13 @@ public class RenderSkeleton extends RenderBiped<EntitySkeleton>
     {
         if (entitylivingbaseIn.getSkeletonType() == 1)
         {
-            GlStateManager.scale(1.2F, 1.2F, 1.2F);
+            GlStateManager.get().scale(1.2F, 1.2F, 1.2F);
         }
     }
 
     public void transformHeldFull3DItemLayer()
     {
-        GlStateManager.translate(0.09375F, 0.1875F, 0.0F);
+        GlStateManager.get().translate(0.09375F, 0.1875F, 0.0F);
     }
 
     /**

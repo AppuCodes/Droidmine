@@ -16,16 +16,16 @@ public class VersionCheckThread extends Thread
 //            URL url = new URI("http://optifine.net/version/1.8.9/HD_U.txt").toURL();
 //            httpurlconnection = (HttpURLConnection)url.openConnection();
 //
-//            if (Config.getoptions().snooperEnabled)
+//            if (Config.get().getoptions().snooperEnabled)
 //            {
 //                httpurlconnection.setRequestProperty("OF-MC-Version", "1.8.9");
 //                httpurlconnection.setRequestProperty("OF-MC-Brand", "" + ClientBrandRetriever.getClientModName());
 //                httpurlconnection.setRequestProperty("OF-Edition", "HD_U");
 //                httpurlconnection.setRequestProperty("OF-Release", "H8");
 //                httpurlconnection.setRequestProperty("OF-Java-Version", "" + System.getProperty("java.version"));
-//                httpurlconnection.setRequestProperty("OF-CpuCount", "" + Config.getAvailableProcessors());
-//                httpurlconnection.setRequestProperty("OF-OpenGL-Version", "" + Config.openGlVersion);
-//                httpurlconnection.setRequestProperty("OF-OpenGL-Vendor", "" + Config.openGlVendor);
+//                httpurlconnection.setRequestProperty("OF-CpuCount", "" + Config.get().getAvailableProcessors());
+//                httpurlconnection.setRequestProperty("OF-OpenGL-Version", "" + Config.get().openGlVersion);
+//                httpurlconnection.setRequestProperty("OF-OpenGL-Vendor", "" + Config.get().openGlVendor);
 //            }
 //
 //            httpurlconnection.setDoInput(true);
@@ -47,7 +47,7 @@ public class VersionCheckThread extends Thread
 //        }
 //        catch (Exception exception)
 //        {
-//            Config.dbg(exception.getClass().getName() + ": " + exception.getMessage());
+//            Config.get().dbg(exception.getClass().getName() + ": " + exception.getMessage());
 //        }
     }
 }

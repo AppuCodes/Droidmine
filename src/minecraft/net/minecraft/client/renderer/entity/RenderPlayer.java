@@ -127,7 +127,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
 
     public void transformHeldFull3DItemLayer()
     {
-        GlStateManager.translate(0.0F, 0.1875F, 0.0F);
+        GlStateManager.get().translate(0.0F, 0.1875F, 0.0F);
     }
 
     /**
@@ -137,7 +137,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
     protected void preRenderCallback(AbstractClientPlayer entitylivingbaseIn, float partialTickTime)
     {
         float f = 0.9375F;
-        GlStateManager.scale(f, f, f);
+        GlStateManager.get().scale(f, f, f);
     }
 
     protected void renderOffsetLivingLabel(AbstractClientPlayer entityIn, double x, double y, double z, String str, float p_177069_9_, double p_177069_10_)
@@ -161,7 +161,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
     public void renderRightArm(AbstractClientPlayer clientPlayer)
     {
         float f = 1.0F;
-        GlStateManager.color(f, f, f);
+        GlStateManager.get().color(f, f, f);
         ModelPlayer modelplayer = this.getMainModel();
         this.setModelVisibilities(clientPlayer);
         modelplayer.swingProgress = 0.0F;
@@ -173,7 +173,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
     public void renderLeftArm(AbstractClientPlayer clientPlayer)
     {
         float f = 1.0F;
-        GlStateManager.color(f, f, f);
+        GlStateManager.get().color(f, f, f);
         ModelPlayer modelplayer = this.getMainModel();
         this.setModelVisibilities(clientPlayer);
         modelplayer.isSneak = false;
@@ -201,9 +201,9 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
     {
         if (bat.isEntityAlive() && bat.isPlayerSleeping())
         {
-            GlStateManager.rotate(bat.getBedOrientationInDegrees(), 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(this.getDeathMaxRotation(bat), 0.0F, 0.0F, 1.0F);
-            GlStateManager.rotate(270.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().rotate(bat.getBedOrientationInDegrees(), 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().rotate(this.getDeathMaxRotation(bat), 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(270.0F, 0.0F, 1.0F, 0.0F);
         }
         else
         {

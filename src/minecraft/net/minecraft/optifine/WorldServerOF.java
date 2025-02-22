@@ -23,15 +23,15 @@ public class WorldServerOF extends WorldServer
     {
         super.tick();
 
-        if (!Config.isTimeDefault())
+        if (!Config.get().isTimeDefault())
         {
             this.fixWorldTime();
         }
 
-        if (Config.waterOpacityChanged)
+        if (Config.get().waterOpacityChanged)
         {
-            Config.waterOpacityChanged = false;
-            ClearWater.updateWaterOpacity(Config.getoptions(), this);
+            Config.get().waterOpacityChanged = false;
+            ClearWater.updateWaterOpacity(Config.get().getoptions(), this);
         }
     }
 
@@ -40,11 +40,6 @@ public class WorldServerOF extends WorldServer
      */
     protected void updateWeather()
     {
-        if (!Config.isWeatherEnabled())
-        {
-            this.fixWorldWeather();
-        }
-
         super.updateWeather();
     }
 
@@ -71,7 +66,7 @@ public class WorldServerOF extends WorldServer
             long i = this.getWorldTime();
             long j = i % 24000L;
 
-            if (Config.isTimeDayOnly())
+            if (Config.get().isTimeDayOnly())
             {
                 if (j <= 1000L)
                 {
@@ -84,7 +79,7 @@ public class WorldServerOF extends WorldServer
                 }
             }
 
-            if (Config.isTimeNightOnly())
+            if (Config.get().isTimeNightOnly())
             {
                 if (j <= 14000L)
                 {

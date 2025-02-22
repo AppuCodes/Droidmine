@@ -26,7 +26,7 @@ import org.lwjgl.opengl.GL11;
 public class ChunkRenderDispatcher
 {
     private static final Logger logger = LogManager.getLogger();
-    private static final ThreadFactory threadFactory = (new ThreadFactoryBuilder()).setNameFormat("Chunk Batcher %d").setDaemon(true).build();
+    private static final ThreadFactory threadFactory = (new ThreadFactoryBuilder()).setNameFormat(Thread.currentThread().getName() + " Chunk Batcher %d").setDaemon(true).build();
     private final List<ChunkRenderWorker> listThreadedWorkers = Lists.<ChunkRenderWorker>newArrayList();
     private final BlockingQueue<ChunkCompileTaskGenerator> queueChunkUpdates = Queues.<ChunkCompileTaskGenerator>newArrayBlockingQueue(100);
     private final BlockingQueue<RegionRenderCacheBuilder> queueFreeRenderBuilders = Queues.<RegionRenderCacheBuilder>newArrayBlockingQueue(5);
@@ -265,10 +265,10 @@ public class ChunkRenderDispatcher
     private void uploadDisplayList(WorldRenderer p_178510_1_, int p_178510_2_, RenderChunk chunkRenderer)
     {
         GL11.glNewList(p_178510_2_, GL11.GL_COMPILE);
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
         chunkRenderer.multModelviewMatrix();
         this.worldVertexUploader.func_181679_a(p_178510_1_);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         GL11.glEndList();
     }
 

@@ -169,10 +169,10 @@ public class GuiPlayerTabOverlay extends Gui
             int j2 = j1 + l4 * i1 + l4 * 5;
             int k2 = k1 + i5 * 9;
             drawRect(j2, k2, j2 + i1, k2 + 8, 553648127);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableAlpha();
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().enableAlpha();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
 
             if (k4 < list.size())
             {
@@ -240,7 +240,7 @@ public class GuiPlayerTabOverlay extends Gui
 
     protected void drawPing(int p_175245_1_, int p_175245_2_, int p_175245_3_, NetworkPlayerInfo networkPlayerInfoIn)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);
         int i = 0;
         int j = 0;

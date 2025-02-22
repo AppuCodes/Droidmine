@@ -26,8 +26,8 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed>
     public void doRender(EntityTNTPrimed entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y + 0.5F, (float)z);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)x, (float)y + 0.5F, (float)z);
 
         if ((float)entity.fuse - partialTicks + 1.0F < 10.0F)
         {
@@ -36,34 +36,34 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed>
             f = f * f;
             f = f * f;
             float f1 = 1.0F + f * 0.3F;
-            GlStateManager.scale(f1, f1, f1);
+            GlStateManager.get().scale(f1, f1, f1);
         }
 
         float f2 = (1.0F - ((float)entity.fuse - partialTicks + 1.0F) / 100.0F) * 0.8F;
         this.bindEntityTexture(entity);
-        GlStateManager.translate(-0.5F, -0.5F, 0.5F);
+        GlStateManager.get().translate(-0.5F, -0.5F, 0.5F);
         blockrendererdispatcher.renderBlockBrightness(Blocks.tnt.getDefaultState(), entity.getBrightness(partialTicks));
-        GlStateManager.translate(0.0F, 0.0F, 1.0F);
+        GlStateManager.get().translate(0.0F, 0.0F, 1.0F);
 
         if (entity.fuse / 5 % 2 == 0)
         {
-            GlStateManager.disableTexture2D();
-            GlStateManager.disableLighting();
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(770, 772);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, f2);
-            GlStateManager.doPolygonOffset(-3.0F, -3.0F);
-            GlStateManager.enablePolygonOffset();
+            GlStateManager.get().disableTexture2D();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().blendFunc(770, 772);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, f2);
+            GlStateManager.get().doPolygonOffset(-3.0F, -3.0F);
+            GlStateManager.get().enablePolygonOffset();
             blockrendererdispatcher.renderBlockBrightness(Blocks.tnt.getDefaultState(), 1.0F);
-            GlStateManager.doPolygonOffset(0.0F, 0.0F);
-            GlStateManager.disablePolygonOffset();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.disableBlend();
-            GlStateManager.enableLighting();
-            GlStateManager.enableTexture2D();
+            GlStateManager.get().doPolygonOffset(0.0F, 0.0F);
+            GlStateManager.get().disablePolygonOffset();
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().disableBlend();
+            GlStateManager.get().enableLighting();
+            GlStateManager.get().enableTexture2D();
         }
 
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

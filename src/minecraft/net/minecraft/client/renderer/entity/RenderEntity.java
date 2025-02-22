@@ -19,9 +19,9 @@ public class RenderEntity extends Render<Entity>
      */
     public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
         renderOffsetAABB(entity.getEntityBoundingBox(), x - entity.lastTickPosX, y - entity.lastTickPosY, z - entity.lastTickPosZ);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

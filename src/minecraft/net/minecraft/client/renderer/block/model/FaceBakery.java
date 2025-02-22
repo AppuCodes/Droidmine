@@ -71,7 +71,7 @@ public class FaceBakery
     {
         int i = 28;
 
-        if (Config.isShaders())
+        if (Config.get().isShaders())
         {
             i = 56;
         }
@@ -98,7 +98,7 @@ public class FaceBakery
         switch (FaceBakery.FaceBakery$1.field_178400_a[facing.ordinal()])
         {
             case 1:
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     return Shaders.blockLightLevel05;
                 }
@@ -110,7 +110,7 @@ public class FaceBakery
 
             case 3:
             case 4:
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     return Shaders.blockLightLevel08;
                 }
@@ -119,7 +119,7 @@ public class FaceBakery
 
             case 5:
             case 6:
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     return Shaders.blockLightLevel06;
                 }

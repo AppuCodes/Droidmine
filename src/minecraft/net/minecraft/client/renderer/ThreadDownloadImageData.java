@@ -51,7 +51,7 @@ public class ThreadDownloadImageData extends SimpleTexture
                 this.deleteGlTexture();
             }
 
-            TextureUtil.uploadTextureImage(super.getGlTextureId(), this.bufferedImage);
+            TextureUtil.get().uploadTextureImage(super.getGlTextureId(), this.bufferedImage);
         }
     }
 
@@ -135,7 +135,7 @@ public class ThreadDownloadImageData extends SimpleTexture
                         {
                             if (connection.getErrorStream() != null)
                             {
-                                Config.readAll(connection.getErrorStream());
+                                Config.get().readAll(connection.getErrorStream());
                             }
 
                             return;
@@ -151,7 +151,7 @@ public class ThreadDownloadImageData extends SimpleTexture
 
                         else
                         {
-                            bufferedimage = TextureUtil.readBufferedImage(connection.getInputStream());
+                            bufferedimage = TextureUtil.get().readBufferedImage(connection.getInputStream());
                         }
 
                         if (imageBuffer != null)
@@ -164,7 +164,6 @@ public class ThreadDownloadImageData extends SimpleTexture
 
                     catch (Exception exception)
                     {
-                        logger.error("Couldn\'t download HTTP texture: " + exception.getClass().getName() + ": " + exception.getMessage());
                         return;
                     }
 
@@ -221,7 +220,7 @@ public class ThreadDownloadImageData extends SimpleTexture
             }
             else
             {
-                bufferedimage = TextureUtil.readBufferedImage(bytearrayinputstream);
+                bufferedimage = TextureUtil.get().readBufferedImage(bytearrayinputstream);
             }
 
             if (this.imageBuffer != null)

@@ -109,7 +109,7 @@ public class GuiShaderOptions extends GuiScreenOF
         }
         else
         {
-            FontRenderer fontrenderer = Config.getMinecraft().fontRendererObj;
+            FontRenderer fontrenderer = Config.get().getMinecraft().fontRendererObj;
 
             for (int i = fontrenderer.getStringWidth(": " + Lang.getOff()) + 5; fontrenderer.getStringWidth(s) + i >= btnWidth && s.length() > 0; s = s.substring(0, s.length() - 1))
             {
@@ -325,7 +325,7 @@ public class GuiShaderOptions extends GuiScreenOF
         else
         {
             String s = so.getNameText();
-            String s1 = Config.normalize(so.getDescriptionText()).trim();
+            String s1 = Config.get().normalize(so.getDescriptionText()).trim();
             String[] astring = this.splitDescription(s1);
             String s2 = null;
 
@@ -338,7 +338,7 @@ public class GuiShaderOptions extends GuiScreenOF
 
             if (so.getPaths() != null && this.settings.advancedItemTooltips)
             {
-                s3 = "\u00a78" + Lang.get("of.general.from") + ": " + Config.arrayToString((Object[])so.getPaths());
+                s3 = "\u00a78" + Lang.get("of.general.from") + ": " + Config.get().arrayToString((Object[])so.getPaths());
             }
 
             String s4 = null;
@@ -396,7 +396,7 @@ public class GuiShaderOptions extends GuiScreenOF
 
     private String[] makeTooltipLines(int width, List<String> args)
     {
-        FontRenderer fontrenderer = Config.getMinecraft().fontRendererObj;
+        FontRenderer fontrenderer = Config.get().getMinecraft().fontRendererObj;
         List<String> list = new ArrayList();
 
         for (int i = 0; i < args.size(); ++i)

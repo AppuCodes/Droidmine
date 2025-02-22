@@ -30,18 +30,18 @@ public class RenderBat extends RenderLiving<EntityBat>
      */
     protected void preRenderCallback(EntityBat entitylivingbaseIn, float partialTickTime)
     {
-        GlStateManager.scale(0.35F, 0.35F, 0.35F);
+        GlStateManager.get().scale(0.35F, 0.35F, 0.35F);
     }
 
     protected void rotateCorpse(EntityBat bat, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
         if (!bat.getIsBatHanging())
         {
-            GlStateManager.translate(0.0F, MathHelper.cos(p_77043_2_ * 0.3F) * 0.1F, 0.0F);
+            GlStateManager.get().translate(0.0F, MathHelper.cos(p_77043_2_ * 0.3F) * 0.1F, 0.0F);
         }
         else
         {
-            GlStateManager.translate(0.0F, -0.1F, 0.0F);
+            GlStateManager.get().translate(0.0F, -0.1F, 0.0F);
         }
 
         super.rotateCorpse(bat, p_77043_2_, p_77043_3_, partialTicks);

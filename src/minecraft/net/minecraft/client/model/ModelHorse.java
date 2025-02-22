@@ -241,9 +241,9 @@ public class ModelHorse extends ModelBase
 
         if (!flag)
         {
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(f1, 0.5F + f1 * 0.5F, f1);
-            GlStateManager.translate(0.0F, 0.95F * (1.0F - f1), 0.0F);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(f1, 0.5F + f1 * 0.5F, f1);
+            GlStateManager.get().translate(0.0F, 0.95F * (1.0F - f1), 0.0F);
         }
 
         this.backLeftLeg.render(scale);
@@ -261,10 +261,10 @@ public class ModelHorse extends ModelBase
 
         if (!flag)
         {
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(f1, f1, f1);
-            GlStateManager.translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(f1, f1, f1);
+            GlStateManager.get().translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
         }
 
         this.body.render(scale);
@@ -276,18 +276,18 @@ public class ModelHorse extends ModelBase
 
         if (!flag)
         {
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
             float f2 = 0.5F + f1 * f1 * 0.5F;
-            GlStateManager.scale(f2, f2, f2);
+            GlStateManager.get().scale(f2, f2, f2);
 
             if (f <= 0.0F)
             {
-                GlStateManager.translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
+                GlStateManager.get().translate(0.0F, 1.35F * (1.0F - f1), 0.0F);
             }
             else
             {
-                GlStateManager.translate(0.0F, 0.9F * (1.0F - f1) * f + 1.35F * (1.0F - f1) * (1.0F - f), 0.15F * (1.0F - f1) * f);
+                GlStateManager.get().translate(0.0F, 0.9F * (1.0F - f1) * f + 1.35F * (1.0F - f1) * (1.0F - f), 0.15F * (1.0F - f1) * f);
             }
         }
 
@@ -306,7 +306,7 @@ public class ModelHorse extends ModelBase
 
         if (!flag)
         {
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
 
         if (flag2)

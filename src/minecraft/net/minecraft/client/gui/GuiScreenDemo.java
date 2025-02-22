@@ -70,7 +70,7 @@ public class GuiScreenDemo extends GuiScreen
     public void drawDefaultBackground()
     {
         super.drawDefaultBackground();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(field_146348_f);
         int i = (this.width - 248) / 2;
         int j = (this.height - 166) / 2;

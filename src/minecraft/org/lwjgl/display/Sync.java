@@ -55,7 +55,6 @@ class Sync {
     private static RunningAvg sleepDurations = new RunningAvg(10);
     private static RunningAvg yieldDurations = new RunningAvg(10);
 
-
     /**
      * An accurate sync method that will attempt to run at a constant frame rate.
      * It should be called once every frame.

@@ -16,7 +16,7 @@ public class LayerEnderDragonDeath implements LayerRenderer<EntityDragon>
         {
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-            RenderHelper.disableStandardItemLighting();
+            RenderHelper.get().disableStandardItemLighting();
             float f = ((float)entitylivingbaseIn.deathTicks + partialTicks) / 200.0F;
             float f1 = 0.0F;
 
@@ -26,24 +26,24 @@ public class LayerEnderDragonDeath implements LayerRenderer<EntityDragon>
             }
 
             Random random = new Random(432L);
-            GlStateManager.disableTexture2D();
-            GlStateManager.shadeModel(7425);
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(770, 1);
-            GlStateManager.disableAlpha();
-            GlStateManager.enableCull();
-            GlStateManager.depthMask(false);
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.0F, -1.0F, -2.0F);
+            GlStateManager.get().disableTexture2D();
+            GlStateManager.get().shadeModel(7425);
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().blendFunc(770, 1);
+            GlStateManager.get().disableAlpha();
+            GlStateManager.get().enableCull();
+            GlStateManager.get().depthMask(false);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.0F, -1.0F, -2.0F);
 
             for (int i = 0; (float)i < (f + f * f) / 2.0F * 60.0F; ++i)
             {
-                GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-                GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
-                GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-                GlStateManager.rotate(random.nextFloat() * 360.0F + f * 90.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.get().rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().rotate(random.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.get().rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().rotate(random.nextFloat() * 360.0F + f * 90.0F, 0.0F, 0.0F, 1.0F);
                 float f2 = random.nextFloat() * 20.0F + 5.0F + f1 * 10.0F;
                 float f3 = random.nextFloat() * 2.0F + 1.0F + f1 * 2.0F;
                 worldrenderer.begin(6, DefaultVertexFormats.POSITION_COLOR);
@@ -55,15 +55,15 @@ public class LayerEnderDragonDeath implements LayerRenderer<EntityDragon>
                 tessellator.draw();
             }
 
-            GlStateManager.popMatrix();
-            GlStateManager.depthMask(true);
-            GlStateManager.disableCull();
-            GlStateManager.disableBlend();
-            GlStateManager.shadeModel(7424);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableTexture2D();
-            GlStateManager.enableAlpha();
-            RenderHelper.enableStandardItemLighting();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().depthMask(true);
+            GlStateManager.get().disableCull();
+            GlStateManager.get().disableBlend();
+            GlStateManager.get().shadeModel(7424);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().enableAlpha();
+            RenderHelper.get().enableStandardItemLighting();
         }
     }
 

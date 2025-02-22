@@ -6,7 +6,7 @@ public class RangeListInt
 
     public void addRange(RangeInt p_addRange_1_)
     {
-        this.ranges = (RangeInt[])((RangeInt[])Config.addObjectToArray(this.ranges, p_addRange_1_));
+        this.ranges = (RangeInt[])((RangeInt[])Config.get().addObjectToArray(this.ranges, p_addRange_1_));
     }
 
     public boolean isInRange(int p_isInRange_1_)

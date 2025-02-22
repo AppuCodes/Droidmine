@@ -982,12 +982,12 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
             this.drawVerticalLine(this.width / 2 + 90, 99, 185, -6250336);
             float f = 85.0F;
             float f1 = 180.0F;
-            GlStateManager.disableLighting();
-            GlStateManager.disableFog();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().disableFog();
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             this.mc.getTextureManager().bindTexture(optionsBackground);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             float f2 = 32.0F;
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
             worldrenderer.pos((double)(this.width / 2 - 90), 185.0D, 0.0D).tex(0.0D, 2.65625D).color(64, 64, 64, 64).endVertex();

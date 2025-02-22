@@ -1,0 +1,17 @@
+package org.lwjgl.input;
+
+import java.nio.ByteBuffer;
+
+public class HeadlessKeyboard extends Keyboard {
+    public void create() {
+        if(created)
+            return;
+
+        createGLFWKeyMap();
+        created = true;
+        repeat_enabled = false;
+        readBuffer = ByteBuffer.allocate(EVENT_SIZE * BUFFER_SIZE);
+        reset();
+    }
+
+}

@@ -24,7 +24,7 @@ public class CustomSky
     {
         reset();
 
-        if (Config.isCustomSky())
+        if (Config.get().isCustomSky())
         {
             worldSkyLayers = readCustomSkies();
         }
@@ -48,7 +48,7 @@ public class CustomSky
                 try
                 {
                     ResourceLocation resourcelocation = new ResourceLocation(s2);
-                    InputStream inputstream = Config.getResourceStream(resourcelocation);
+                    InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
                     if (inputstream == null)
                     {
@@ -114,7 +114,7 @@ public class CustomSky
     {
         if (worldSkyLayers != null)
         {
-            if (Config.getoptions().renderDistanceChunks >= 8)
+            if (Config.get().getoptions().renderDistanceChunks >= 8)
             {
                 int i = p_renderSky_0_.provider.getDimensionId();
 
@@ -150,7 +150,7 @@ public class CustomSky
         {
             return false;
         }
-        else if (Config.getoptions().renderDistanceChunks < 8)
+        else if (Config.get().getoptions().renderDistanceChunks < 8)
         {
             return false;
         }

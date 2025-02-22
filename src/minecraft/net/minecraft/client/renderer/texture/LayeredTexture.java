@@ -33,7 +33,7 @@ public class LayeredTexture extends AbstractTexture
                 if (s != null)
                 {
                     InputStream inputstream = resourceManager.getResource(new ResourceLocation(s)).getInputStream();
-                    BufferedImage bufferedimage1 = TextureUtil.readBufferedImage(inputstream);
+                    BufferedImage bufferedimage1 = TextureUtil.get().readBufferedImage(inputstream);
 
                     if (bufferedimage == null)
                     {
@@ -50,6 +50,6 @@ public class LayeredTexture extends AbstractTexture
             return;
         }
 
-        TextureUtil.uploadTextureImage(this.getGlTextureId(), bufferedimage);
+        TextureUtil.get().uploadTextureImage(this.getGlTextureId(), bufferedimage);
     }
 }

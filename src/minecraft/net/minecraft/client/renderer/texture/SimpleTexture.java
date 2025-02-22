@@ -33,7 +33,7 @@ public class SimpleTexture extends AbstractTexture
         {
             IResource iresource = resourceManager.getResource(this.textureLocation);
             inputstream = iresource.getInputStream();
-            BufferedImage bufferedimage = TextureUtil.readBufferedImage(inputstream);
+            BufferedImage bufferedimage = TextureUtil.get().readBufferedImage(inputstream);
             boolean flag = false;
             boolean flag1 = false;
 
@@ -54,13 +54,13 @@ public class SimpleTexture extends AbstractTexture
                 }
             }
 
-            if (Config.isShaders())
+            if (Config.get().isShaders())
             {
                 ShadersTex.loadSimpleTexture(this.getGlTextureId(), bufferedimage, flag, flag1, resourceManager, this.textureLocation, this.getMultiTexID());
             }
             else
             {
-                TextureUtil.uploadTextureImageAllocate(this.getGlTextureId(), bufferedimage, flag, flag1);
+                TextureUtil.get().uploadTextureImageAllocate(this.getGlTextureId(), bufferedimage, flag, flag1);
             }
         }
         finally

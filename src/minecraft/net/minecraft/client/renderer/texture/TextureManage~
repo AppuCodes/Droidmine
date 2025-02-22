@@ -41,7 +41,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
    }
 
    public void func_110577_a(ResourceLocation p_110577_1_) {
-      if(Config.isRandomMobs()) {
+      if(Config.get().isRandomMobs()) {
          p_110577_1_ = RandomMobs.getTextureLocation(p_110577_1_);
       }
 
@@ -51,10 +51,10 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
          this.func_110579_a(p_110577_1_, (ITextureObject)object);
       }
 
-      if(Config.isShaders()) {
+      if(Config.get().isShaders()) {
          ShadersTex.bindTexture((ITextureObject)object);
       } else {
-         TextureUtil.func_94277_a(((ITextureObject)object).func_110552_b());
+         TextureUtil.get().func_94277_a(((ITextureObject)object).func_110552_b());
       }
 
    }
@@ -76,7 +76,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
          p_110579_2_.func_110551_a(this.field_110582_d);
       } catch (IOException ioexception) {
          field_147646_a.warn((String)("Failed to load texture: " + p_110579_1_), (Throwable)ioexception);
-         itextureobject = TextureUtil.field_111001_a;
+         itextureobject = TextureUtil.get().field_111001_a;
          this.field_110585_a.put(p_110579_1_, itextureobject);
          flag = false;
       } catch (Throwable throwable) {
@@ -103,7 +103,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
 
    public ResourceLocation func_110578_a(String p_110578_1_, DynamicTexture p_110578_2_) {
       if(p_110578_1_.equals("logo")) {
-         p_110578_2_ = Config.getMojangLogoTexture(p_110578_2_);
+         p_110578_2_ = Config.get().getMojangLogoTexture(p_110578_2_);
       }
 
       Integer integer = (Integer)this.field_110584_c.get(p_110578_1_);
@@ -130,14 +130,14 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
       ITextureObject itextureobject = this.func_110581_b(p_147645_1_);
       if(itextureobject != null) {
          this.field_110585_a.remove(p_147645_1_);
-         TextureUtil.func_147942_a(itextureobject.func_110552_b());
+         TextureUtil.get().func_147942_a(itextureobject.func_110552_b());
       }
 
    }
 
    public void func_110549_a(IResourceManager p_110549_1_) {
-      Config.dbg("*** Reloading textures ***");
-      Config.log("Resource packs: " + Config.getResourcePackNames());
+      Config.get().dbg("*** Reloading textures ***");
+      Config.get().log("Resource packs: " + Config.get().getResourcePackNames());
       Iterator iterator = this.field_110585_a.keySet().iterator();
 
       while(iterator.hasNext()) {

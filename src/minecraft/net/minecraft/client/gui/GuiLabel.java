@@ -60,8 +60,8 @@ public class GuiLabel extends Gui
     {
         if (this.visible)
         {
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
             this.drawLabelBackground(mc, mouseX, mouseY);
             int i = this.field_146174_h + this.field_146161_f / 2 + this.field_146163_s / 2;
             int j = i - this.field_146173_k.size() * 10 / 2;

@@ -22,7 +22,7 @@ public class RegionRenderCache extends ChunkCache
     private static final String __OBFID = "CL_00002565";
     private static ArrayDeque<int[]> cacheLights = new ArrayDeque();
     private static ArrayDeque<IBlockState[]> cacheStates = new ArrayDeque();
-    private static int maxCacheSize = Config.limit(Runtime.getRuntime().availableProcessors(), 1, 32);
+    private static int maxCacheSize = Config.get().limit(Runtime.getRuntime().availableProcessors(), 1, 32);
 
     public RegionRenderCache(World worldIn, BlockPos posFromIn, BlockPos posToIn, int subIn)
     {
@@ -50,7 +50,7 @@ public class RegionRenderCache extends ChunkCache
         {
             j = super.getCombinedLight(pos, lightValue);
 
-            if (Config.isDynamicLights() && !this.getBlockState(pos).getBlock().isOpaqueCube())
+            if (Config.get().isDynamicLights() && !this.getBlockState(pos).getBlock().isOpaqueCube())
             {
                 j = DynamicLights.getCombinedLight(pos, j);
             }

@@ -91,7 +91,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
 
     public ResourceLocation getLocationCape()
     {
-        if (!Config.isShowCapes())
+        if (!Config.get().isShowCapes())
         {
             return null;
         }

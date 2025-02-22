@@ -54,13 +54,13 @@ public class TileEntityItemStackRenderer
 
             if (TileEntitySkullRenderer.instance != null)
             {
-                GlStateManager.pushMatrix();
-                GlStateManager.translate(-0.5F, 0.0F, -0.5F);
-                GlStateManager.scale(2.0F, 2.0F, 2.0F);
-                GlStateManager.disableCull();
+                GlStateManager.get().pushMatrix();
+                GlStateManager.get().translate(-0.5F, 0.0F, -0.5F);
+                GlStateManager.get().scale(2.0F, 2.0F, 2.0F);
+                GlStateManager.get().disableCull();
                 TileEntitySkullRenderer.instance.renderSkull(0.0F, 0.0F, 0.0F, EnumFacing.UP, 0.0F, itemStackIn.getMetadata(), gameprofile, -1);
-                GlStateManager.enableCull();
-                GlStateManager.popMatrix();
+                GlStateManager.get().enableCull();
+                GlStateManager.get().popMatrix();
             }
         }
         else

@@ -31,7 +31,7 @@ public class RenderCreeper extends RenderLiving<EntityCreeper>
         f = f * f;
         float f2 = (1.0F + f * 0.4F) * f1;
         float f3 = (1.0F + f * 0.1F) / f1;
-        GlStateManager.scale(f2, f3, f2);
+        GlStateManager.get().scale(f2, f3, f2);
     }
 
     /**

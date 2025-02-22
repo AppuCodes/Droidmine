@@ -24,22 +24,22 @@ public class LayerIronGolemFlower implements LayerRenderer<EntityIronGolem>
         if (entitylivingbaseIn.getHoldRoseTick() != 0)
         {
             BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.pushMatrix();
-            GlStateManager.rotate(5.0F + 180.0F * ((ModelIronGolem)this.ironGolemRenderer.getMainModel()).ironGolemRightArm.rotateAngleX / (float)Math.PI, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.translate(-0.9375F, -0.625F, -0.9375F);
+            GlStateManager.get().enableRescaleNormal();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().rotate(5.0F + 180.0F * ((ModelIronGolem)this.ironGolemRenderer.getMainModel()).ironGolemRightArm.rotateAngleX / (float)Math.PI, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().rotate(90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().translate(-0.9375F, -0.625F, -0.9375F);
             float f = 0.5F;
-            GlStateManager.scale(f, -f, f);
+            GlStateManager.get().scale(f, -f, f);
             int i = entitylivingbaseIn.getBrightnessForRender(partialTicks);
             int j = i % 65536;
             int k = i / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.ironGolemRenderer.bindTexture(TextureMap.locationBlocksTexture);
             blockrendererdispatcher.renderBlockBrightness(Blocks.red_flower.getDefaultState(), 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.disableRescaleNormal();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().disableRescaleNormal();
         }
     }
 

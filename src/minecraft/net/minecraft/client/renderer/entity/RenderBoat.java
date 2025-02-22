@@ -28,9 +28,9 @@ public class RenderBoat extends Render<EntityBoat>
      */
     public void doRender(EntityBoat entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y + 0.25F, (float)z);
-        GlStateManager.rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)x, (float)y + 0.25F, (float)z);
+        GlStateManager.get().rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
         float f = (float)entity.getTimeSinceHit() - partialTicks;
         float f1 = entity.getDamageTaken() - partialTicks;
 
@@ -41,16 +41,16 @@ public class RenderBoat extends Render<EntityBoat>
 
         if (f > 0.0F)
         {
-            GlStateManager.rotate(MathHelper.sin(f) * f * f1 / 10.0F * (float)entity.getForwardDirection(), 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().rotate(MathHelper.sin(f) * f * f1 / 10.0F * (float)entity.getForwardDirection(), 1.0F, 0.0F, 0.0F);
         }
 
         float f2 = 0.75F;
-        GlStateManager.scale(f2, f2, f2);
-        GlStateManager.scale(1.0F / f2, 1.0F / f2, 1.0F / f2);
+        GlStateManager.get().scale(f2, f2, f2);
+        GlStateManager.get().scale(1.0F / f2, 1.0F / f2, 1.0F / f2);
         this.bindEntityTexture(entity);
-        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+        GlStateManager.get().scale(-1.0F, -1.0F, 1.0F);
         this.modelBoat.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 

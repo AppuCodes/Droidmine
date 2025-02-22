@@ -133,7 +133,7 @@ public class TeleportToTeam implements ISpectatorMenuView, ISpectatorMenuObject
             }
 
             mc.getTextureManager().bindTexture(this.field_178677_c);
-            GlStateManager.color(p_178663_1_, p_178663_1_, p_178663_1_, (float)alpha / 255.0F);
+            GlStateManager.get().color(p_178663_1_, p_178663_1_, p_178663_1_, (float)alpha / 255.0F);
             Gui.drawScaledCustomSizeModalRect(2, 2, 8.0F, 8.0F, 8, 8, 12, 12, 64.0F, 64.0F);
             Gui.drawScaledCustomSizeModalRect(2, 2, 40.0F, 8.0F, 8, 8, 12, 12, 64.0F, 64.0F);
         }

@@ -31,7 +31,7 @@ public class NbtTagValue
 
     public NbtTagValue(String p_i69_1_, String p_i69_2_)
     {
-        String[] astring = Config.tokenize(p_i69_1_, ".");
+        String[] astring = Config.get().tokenize(p_i69_1_, ".");
         this.parents = (String[])Arrays.copyOfRange(astring, 0, astring.length - 1);
         this.name = astring[astring.length - 1];
 
@@ -155,7 +155,7 @@ public class NbtTagValue
         else if (p_getChildTag_0_ instanceof NBTTagList)
         {
             NBTTagList nbttaglist = (NBTTagList)p_getChildTag_0_;
-            int i = Config.parseInt(p_getChildTag_1_, -1);
+            int i = Config.get().parseInt(p_getChildTag_1_, -1);
             return i < 0 ? null : nbttaglist.get(i);
         }
         else

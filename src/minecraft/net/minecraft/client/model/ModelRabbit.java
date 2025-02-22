@@ -131,16 +131,16 @@ public class ModelRabbit extends ModelBase
         if (this.isChild)
         {
             float f = 2.0F;
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.0F, 5.0F * scale, 2.0F * scale);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.0F, 5.0F * scale, 2.0F * scale);
             this.rabbitHead.render(scale);
             this.rabbitLeftEar.render(scale);
             this.rabbitRightEar.render(scale);
             this.rabbitNose.render(scale);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F / f, 1.0F / f, 1.0F / f);
-            GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(1.0F / f, 1.0F / f, 1.0F / f);
+            GlStateManager.get().translate(0.0F, 24.0F * scale, 0.0F);
             this.rabbitLeftFoot.render(scale);
             this.rabbitRightFoot.render(scale);
             this.rabbitLeftThigh.render(scale);
@@ -149,7 +149,7 @@ public class ModelRabbit extends ModelBase
             this.rabbitLeftArm.render(scale);
             this.rabbitRightArm.render(scale);
             this.rabbitTail.render(scale);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
         else
         {

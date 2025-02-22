@@ -49,7 +49,7 @@ public class PlayerConfigurationParser
 
                         if (s == null)
                         {
-                            Config.warn("Item type is null, player: " + this.player);
+                            Config.get().warn("Item type is null, player: " + this.player);
                         }
                         else
                         {
@@ -108,7 +108,7 @@ public class PlayerConfigurationParser
         }
         catch (IOException ioexception)
         {
-            Config.warn("Error loading item texture " + p_downloadTextureImage_1_ + ": " + ioexception.getClass().getName() + ": " + ioexception.getMessage());
+            Config.get().warn("Error loading item texture " + p_downloadTextureImage_1_ + ": " + ioexception.getClass().getName() + ": " + ioexception.getMessage());
             return null;
         }
     }
@@ -129,7 +129,7 @@ public class PlayerConfigurationParser
         }
         catch (Exception exception)
         {
-            Config.warn("Error loading item model " + p_downloadModel_1_ + ": " + exception.getClass().getName() + ": " + exception.getMessage());
+            Config.get().warn("Error loading item model " + p_downloadModel_1_ + ": " + exception.getClass().getName() + ": " + exception.getMessage());
             return null;
         }
     }

@@ -51,7 +51,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     public void initGui()
     {
         oldServerPinger = new OldServerPinger(mc);
-        Keyboard.enableRepeatEvents(true);
+        Keyboard.get().enableRepeatEvents(true);
         this.buttonList.clear();
 
         if (!this.initialized)
@@ -124,7 +124,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
      */
     public void onGuiClosed()
     {
-        Keyboard.enableRepeatEvents(false);
+        Keyboard.get().enableRepeatEvents(false);
 
         if (this.lanServerDetector != null)
         {

@@ -21,10 +21,10 @@ public class LayerCape implements LayerRenderer
     {
         if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && entitylivingbaseIn.getLocationCape() != null)
         {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.playerRenderer.bindTexture(entitylivingbaseIn.getLocationCape());
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.0F, 0.0F, 0.125F);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.0F, 0.0F, 0.125F);
             double d0 = entitylivingbaseIn.prevChasingPosX + (entitylivingbaseIn.chasingPosX - entitylivingbaseIn.prevChasingPosX) * (double)partialTicks - (entitylivingbaseIn.prevPosX + (entitylivingbaseIn.posX - entitylivingbaseIn.prevPosX) * (double)partialTicks);
             double d1 = entitylivingbaseIn.prevChasingPosY + (entitylivingbaseIn.chasingPosY - entitylivingbaseIn.prevChasingPosY) * (double)partialTicks - (entitylivingbaseIn.prevPosY + (entitylivingbaseIn.posY - entitylivingbaseIn.prevPosY) * (double)partialTicks);
             double d2 = entitylivingbaseIn.prevChasingPosZ + (entitylivingbaseIn.chasingPosZ - entitylivingbaseIn.prevChasingPosZ) * (double)partialTicks - (entitylivingbaseIn.prevPosZ + (entitylivingbaseIn.posZ - entitylivingbaseIn.prevPosZ) * (double)partialTicks);
@@ -52,15 +52,15 @@ public class LayerCape implements LayerRenderer
             if (entitylivingbaseIn.isSneaking())
             {
                 f1 += 25.0F;
-                GlStateManager.translate(0.0F, 0.142F, -0.0178F);
+                GlStateManager.get().translate(0.0F, 0.142F, -0.0178F);
             }
 
-            GlStateManager.rotate(6.0F + f2 / 2.0F + f1, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
-            GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().rotate(6.0F + f2 / 2.0F + f1, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().rotate(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.get().rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().rotate(180.0F, 0.0F, 1.0F, 0.0F);
             this.playerRenderer.getMainModel().renderCape(0.0625F);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 

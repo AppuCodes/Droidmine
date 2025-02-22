@@ -177,10 +177,10 @@ public class GuiWinGame extends GuiScreen
         int j = this.width / 2 - i / 2;
         int k = this.height + 50;
         float f = -((float)this.field_146581_h + partialTicks) * this.field_146578_s;
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(0.0F, f, 0.0F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate(0.0F, f, 0.0F);
         this.mc.getTextureManager().bindTexture(MINECRAFT_LOGO);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(j, k, 0, 0, 155, 44);
         this.drawTexturedModalRect(j + 155, k, 0, 45, 155, 44);
         int l = k + 200;
@@ -193,7 +193,7 @@ public class GuiWinGame extends GuiScreen
 
                 if (f1 < 0.0F)
                 {
-                    GlStateManager.translate(0.0F, -f1, 0.0F);
+                    GlStateManager.get().translate(0.0F, -f1, 0.0F);
                 }
             }
 
@@ -215,10 +215,10 @@ public class GuiWinGame extends GuiScreen
             l += 12;
         }
 
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         this.mc.getTextureManager().bindTexture(VIGNETTE_TEXTURE);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(0, 769);
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().blendFunc(0, 769);
         int j1 = this.width;
         int k1 = this.height;
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
@@ -227,7 +227,7 @@ public class GuiWinGame extends GuiScreen
         worldrenderer.pos((double)j1, 0.0D, (double)this.zLevel).tex(1.0D, 0.0D).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
         worldrenderer.pos(0.0D, 0.0D, (double)this.zLevel).tex(0.0D, 0.0D).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
         tessellator.draw();
-        GlStateManager.disableBlend();
+        GlStateManager.get().disableBlend();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

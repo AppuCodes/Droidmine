@@ -26,23 +26,23 @@ public class LayerHeldBlock implements LayerRenderer<EntityEnderman>
         if (iblockstate.getBlock().getMaterial() != Material.air)
         {
             BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(0.0F, 0.6875F, -0.75F);
-            GlStateManager.rotate(20.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(0.25F, 0.1875F, 0.25F);
+            GlStateManager.get().enableRescaleNormal();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().translate(0.0F, 0.6875F, -0.75F);
+            GlStateManager.get().rotate(20.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.get().rotate(45.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().translate(0.25F, 0.1875F, 0.25F);
             float f = 0.5F;
-            GlStateManager.scale(-f, -f, f);
+            GlStateManager.get().scale(-f, -f, f);
             int i = entitylivingbaseIn.getBrightnessForRender(partialTicks);
             int j = i % 65536;
             int k = i / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
             this.endermanRenderer.bindTexture(TextureMap.locationBlocksTexture);
             blockrendererdispatcher.renderBlockBrightness(iblockstate, 1.0F);
-            GlStateManager.popMatrix();
-            GlStateManager.disableRescaleNormal();
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().disableRescaleNormal();
         }
     }
 

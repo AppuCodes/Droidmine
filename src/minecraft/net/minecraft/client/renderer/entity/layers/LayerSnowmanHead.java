@@ -23,14 +23,14 @@ public class LayerSnowmanHead implements LayerRenderer<EntitySnowman>
     {
         if (!entitylivingbaseIn.isInvisible())
         {
-            GlStateManager.pushMatrix();
+            GlStateManager.get().pushMatrix();
             this.snowManRenderer.getMainModel().head.postRender(0.0625F);
             float f = 0.625F;
-            GlStateManager.translate(0.0F, -0.34375F, 0.0F);
-            GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.scale(f, -f, -f);
+            GlStateManager.get().translate(0.0F, -0.34375F, 0.0F);
+            GlStateManager.get().rotate(180.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().scale(f, -f, -f);
             mc.getItemRenderer().renderItem(entitylivingbaseIn, new ItemStack(Blocks.pumpkin, 1), ItemCameraTransforms.TransformType.HEAD);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 

@@ -139,21 +139,21 @@ public class GuiVideoSettings extends GuiScreen
 
             if (button.id == 231)
             {
-                if (Config.isAntialiasing() || Config.isAntialiasingConfigured())
+                if (Config.get().isAntialiasing() || Config.get().isAntialiasingConfigured())
                 {
-                    Config.showGuiMessage(Lang.get("of.message.shaders.aa1"), Lang.get("of.message.shaders.aa2"));
+                    Config.get().showGuiMessage(Lang.get("of.message.shaders.aa1"), Lang.get("of.message.shaders.aa2"));
                     return;
                 }
 
-                if (Config.isAnisotropicFiltering())
+                if (Config.get().isAnisotropicFiltering())
                 {
-                    Config.showGuiMessage(Lang.get("of.message.shaders.af1"), Lang.get("of.message.shaders.af2"));
+                    Config.get().showGuiMessage(Lang.get("of.message.shaders.af1"), Lang.get("of.message.shaders.af2"));
                     return;
                 }
 
-                if (Config.isFastRender())
+                if (Config.get().isFastRender())
                 {
-                    Config.showGuiMessage(Lang.get("of.message.shaders.fr1"), Lang.get("of.message.shaders.fr2"));
+                    Config.get().showGuiMessage(Lang.get("of.message.shaders.fr1"), Lang.get("of.message.shaders.fr2"));
                     return;
                 }
 
@@ -171,7 +171,7 @@ public class GuiVideoSettings extends GuiScreen
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 15, 16777215);
-        String s = Config.getVersion();
+        String s = Config.get().getVersion();
         String s1 = "HD_U";
 
         if (s1.equals("HD"))

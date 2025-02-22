@@ -46,7 +46,7 @@ public class ArmorStandRenderer extends RendererLivingEntity<EntityArmorStand>
 
     protected void rotateCorpse(EntityArmorStand bat, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
-        GlStateManager.rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
+        GlStateManager.get().rotate(180.0F - p_77043_3_, 0.0F, 1.0F, 0.0F);
     }
 
     protected boolean canRenderName(EntityArmorStand entity)

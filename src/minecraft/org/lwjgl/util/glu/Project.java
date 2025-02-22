@@ -31,13 +31,13 @@
  */
 package org.lwjgl.util.glu;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.HashMap;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GLUtil;
-
-import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Project.java
@@ -56,21 +56,22 @@ public class Project extends Util {
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f };
 
-	private static final FloatBuffer matrix = BufferUtils.createFloatBuffer(16);
-	private static final FloatBuffer finalMatrix = BufferUtils.createFloatBuffer(16);
+	private static HashMap<String, Project> projects = new HashMap<>();
+	private final FloatBuffer matrix = BufferUtils.createFloatBuffer(16);
+	private final FloatBuffer finalMatrix = BufferUtils.createFloatBuffer(16);
 
-	private static final FloatBuffer tempMatrix = BufferUtils.createFloatBuffer(16);
-	private static final float[] in = new float[4];
-	private static final float[] out = new float[4];
+	private final FloatBuffer tempMatrix = BufferUtils.createFloatBuffer(16);
+	private final float[] in = new float[4];
+	private final float[] out = new float[4];
 
-	private static final float[] forward = new float[3];
-	private static final float[] side = new float[3];
-	private static final float[] up = new float[3];
+	private final float[] forward = new float[3];
+	private final float[] side = new float[3];
+	private final float[] up = new float[3];
 
 	/**
 	 * Make matrix an identity matrix
 	 */
-	private static void __gluMakeIdentityf(FloatBuffer m) {
+	private void __gluMakeIdentityf(FloatBuffer m) {
 		int oldPos = m.position();
 		m.put(IDENTITY_MATRIX);
 		m.position(oldPos);
@@ -83,7 +84,7 @@ public class Project extends Util {
 	 * @param in
 	 * @param out
 	 */
-	private static void __gluMultMatrixVecf(FloatBuffer m, float[] in, float[] out) {
+	private void __gluMultMatrixVecf(FloatBuffer m, float[] in, float[] out) {
 		for (int i = 0; i < 4; i++) {
 			out[i] =
 				in[0] * m.get(m.position() + 0*4 + i)
@@ -100,10 +101,10 @@ public class Project extends Util {
 	 *
 	 * @return true if the matrix was succesfully inverted
 	 */
-	private static boolean __gluInvertMatrixf(FloatBuffer src, FloatBuffer inverse) {
+	private boolean __gluInvertMatrixf(FloatBuffer src, FloatBuffer inverse) {
 		int i, j, k, swap;
 		float t;
-		FloatBuffer temp = Project.tempMatrix;
+		FloatBuffer temp = tempMatrix;
 
 
 		for (i = 0; i < 16; i++) {
@@ -176,7 +177,7 @@ public class Project extends Util {
 	 * @param b
 	 * @param r
 	 */
-	private static void __gluMultMatricesf(FloatBuffer a, FloatBuffer b, FloatBuffer r) {
+	private void __gluMultMatricesf(FloatBuffer a, FloatBuffer b, FloatBuffer r) {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				r.put(r.position() + i*4 + j,
@@ -193,7 +194,7 @@ public class Project extends Util {
 	 * @param zNear
 	 * @param zFar
 	 */
-	public static void gluPerspective(float fovy, float aspect, float zNear, float zFar) {
+	public void gluPerspective(float fovy, float aspect, float zNear, float zFar) {
 		float sine, cotangent, deltaZ;
 		float radians = fovy / 2 * GLU.PI / 180;
 
@@ -231,7 +232,7 @@ public class Project extends Util {
 	 * @param upy
 	 * @param upz
 	 */
-	public static void gluLookAt(
+	public void gluLookAt(
 		float eyex,
 		float eyey,
 		float eyez,
@@ -241,9 +242,9 @@ public class Project extends Util {
 		float upx,
 		float upy,
 		float upz) {
-		float[] forward = Project.forward;
-		float[] side = Project.side;
-		float[] up = Project.up;
+		float[] forward = this.forward;
+		float[] side = this.side;
+		float[] up = this.up;
 
 		forward[0] = centerx - eyex;
 		forward[1] = centery - eyey;
@@ -290,7 +291,7 @@ public class Project extends Util {
 	 * @param viewport
 	 * @param win_pos
 	 */
-	public static boolean gluProject(
+	public boolean gluProject(
 		float objx,
 		float objy,
 		float objz,
@@ -299,8 +300,8 @@ public class Project extends Util {
 		IntBuffer viewport,
 		FloatBuffer win_pos) {
 
-		float[] in = Project.in;
-		float[] out = Project.out;
+		float[] in = this.in;
+		float[] out = this.out;
 
 		in[0] = objx;
 		in[1] = objy;
@@ -339,7 +340,7 @@ public class Project extends Util {
 	 * @param viewport
 	 * @param obj_pos
 	 */
-	public static boolean gluUnProject(
+	public boolean gluUnProject(
 		float winx,
 		float winy,
 		float winz,
@@ -347,8 +348,8 @@ public class Project extends Util {
 		FloatBuffer projMatrix,
 		IntBuffer viewport,
 		FloatBuffer obj_pos) {
-		float[] in = Project.in;
-		float[] out = Project.out;
+		float[] in = this.in;
+		float[] out = this.out;
 
 		__gluMultMatricesf(modelMatrix, projMatrix, finalMatrix);
 
@@ -392,7 +393,7 @@ public class Project extends Util {
 	 * @param deltaY
 	 * @param viewport
 	 */
-	public static void gluPickMatrix(
+	public void gluPickMatrix(
 		float x,
 		float y,
 		float deltaX,
@@ -408,5 +409,19 @@ public class Project extends Util {
 			(viewport.get(viewport.position() + 3) - 2 * (y - viewport.get(viewport.position() + 1))) / deltaY,
 			0);
 		glScalef(viewport.get(viewport.position() + 2) / deltaX, viewport.get(viewport.position() + 3) / deltaY, 1.0f);
+	}
+	
+	public static Project get()
+	{
+	    String name = Thread.currentThread().getName();
+	    
+	    if (projects.containsKey(name))
+	    {
+	        return projects.get(name);
+	    }
+	    
+	    Project project = new Project();
+	    projects.put(name, project);
+	    return project;
 	}
 }

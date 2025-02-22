@@ -34,7 +34,7 @@ public class SmartLeaves
 
     public static IBakedModel getLeavesModel(IBakedModel p_getLeavesModel_0_)
     {
-        if (!Config.isTreesSmart())
+        if (!Config.get().isTreesSmart())
         {
             return p_getLeavesModel_0_;
         }
@@ -75,7 +75,7 @@ public class SmartLeaves
 
     static IBakedModel getModelCull(String p_getModelCull_0_, List p_getModelCull_1_)
     {
-        ModelManager modelmanager = Config.getModelManager();
+        ModelManager modelmanager = Config.get().getModelManager();
 
         if (modelmanager == null)
         {
@@ -85,7 +85,7 @@ public class SmartLeaves
         {
             ResourceLocation resourcelocation = new ResourceLocation("blockstates/" + p_getModelCull_0_ + "_leaves.json");
 
-            if (Config.getDefiningResourcePack(resourcelocation) != Config.getDefaultResourcePack())
+            if (Config.get().getDefiningResourcePack(resourcelocation) != Config.get().getDefaultResourcePack())
             {
                 return null;
             }
@@ -93,7 +93,7 @@ public class SmartLeaves
             {
                 ResourceLocation resourcelocation1 = new ResourceLocation("models/block/" + p_getModelCull_0_ + "_leaves.json");
 
-                if (Config.getDefiningResourcePack(resourcelocation1) != Config.getDefaultResourcePack())
+                if (Config.get().getDefiningResourcePack(resourcelocation1) != Config.get().getDefaultResourcePack())
                 {
                     return null;
                 }
@@ -150,7 +150,7 @@ public class SmartLeaves
         }
         else if (p_getModelDoubleFace_0_.getGeneralQuads().size() > 0)
         {
-            Config.warn("SmartLeaves: Model is not cube, general quads: " + p_getModelDoubleFace_0_.getGeneralQuads().size() + ", model: " + p_getModelDoubleFace_0_);
+            Config.get().warn("SmartLeaves: Model is not cube, general quads: " + p_getModelDoubleFace_0_.getGeneralQuads().size() + ", model: " + p_getModelDoubleFace_0_);
             return p_getModelDoubleFace_0_;
         }
         else
@@ -164,7 +164,7 @@ public class SmartLeaves
 
                 if (list.size() != 1)
                 {
-                    Config.warn("SmartLeaves: Model is not cube, side: " + enumfacing + ", quads: " + list.size() + ", model: " + p_getModelDoubleFace_0_);
+                    Config.get().warn("SmartLeaves: Model is not cube, side: " + enumfacing + ", quads: " + list.size() + ", model: " + p_getModelDoubleFace_0_);
                     return p_getModelDoubleFace_0_;
                 }
             }

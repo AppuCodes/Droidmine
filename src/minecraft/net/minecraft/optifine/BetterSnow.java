@@ -30,7 +30,7 @@ public class BetterSnow
 
     public static void update()
     {
-        modelSnowLayer = Config.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(Blocks.snow_layer.getDefaultState());
+        modelSnowLayer = Config.get().getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(Blocks.snow_layer.getDefaultState());
     }
 
     public static IBakedModel getModelSnowLayer()

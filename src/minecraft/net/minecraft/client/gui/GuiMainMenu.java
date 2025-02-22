@@ -260,14 +260,14 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         int i = 96;
         int j = this.width / 2 - i / 2;
         int k = 30;
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)(this.width / 2 + 90), 70.0F, 0.0F);
-        GlStateManager.rotate(-20.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().translate((float)(this.width / 2 + 90), 70.0F, 0.0F);
+        GlStateManager.get().rotate(-20.0F, 0.0F, 0.0F, 1.0F);
         float f = 1.8F - MathHelper.abs(MathHelper.sin((float)(ClientEngine.getSystemTime() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
         f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(this.splashText) + 32);
-        GlStateManager.scale(f, f, f);
+        GlStateManager.get().scale(f, f, f);
         this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256, f);
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {

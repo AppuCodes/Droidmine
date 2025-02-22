@@ -70,7 +70,7 @@ public class WorldVertexBufferUploader
             {
                 p_181679_1_.drawMultiTexture();
             }
-            else if (Config.isShaders())
+            else if (Config.get().isShaders())
             {
                 SVertexBuilder.drawArrays(p_181679_1_.getDrawMode(), 0, p_181679_1_.getVertexCount(), p_181679_1_);
             }
@@ -108,7 +108,7 @@ public class WorldVertexBufferUploader
 
                         case 3:
                             GL11.glDisableClientState(GL11.GL_COLOR_ARRAY);
-                            GlStateManager.resetColor();
+                            GlStateManager.get().resetColor();
                             break;
 
                         case 4:

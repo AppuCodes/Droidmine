@@ -45,15 +45,15 @@ public class Shader
 
     private void preLoadShader()
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableBlend();
-        GlStateManager.disableDepth();
-        GlStateManager.disableAlpha();
-        GlStateManager.disableFog();
-        GlStateManager.disableLighting();
-        GlStateManager.disableColorMaterial();
-        GlStateManager.enableTexture2D();
-        GlStateManager.bindTexture(0);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().disableBlend();
+        GlStateManager.get().disableDepth();
+        GlStateManager.get().disableAlpha();
+        GlStateManager.get().disableFog();
+        GlStateManager.get().disableLighting();
+        GlStateManager.get().disableColorMaterial();
+        GlStateManager.get().enableTexture2D();
+        GlStateManager.get().bindTexture(0);
     }
 
     public void setProjectionMatrix(Matrix4f p_148045_1_)
@@ -67,7 +67,7 @@ public class Shader
         this.framebufferIn.unbindFramebuffer();
         float f = (float)this.framebufferOut.framebufferTextureWidth;
         float f1 = (float)this.framebufferOut.framebufferTextureHeight;
-        GlStateManager.viewport(0, 0, (int)f, (int)f1);
+        GlStateManager.get().viewport(0, 0, (int)f, (int)f1);
         this.manager.addSamplerTexture("DiffuseSampler", this.framebufferIn);
 
         for (int i = 0; i < this.listAuxFramebuffers.size(); ++i)
@@ -85,8 +85,8 @@ public class Shader
         this.manager.useShader();
         this.framebufferOut.framebufferClear();
         this.framebufferOut.bindFramebuffer(false);
-        GlStateManager.depthMask(false);
-        GlStateManager.colorMask(true, true, true, true);
+        GlStateManager.get().depthMask(false);
+        GlStateManager.get().colorMask(true, true, true, true);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
@@ -95,8 +95,8 @@ public class Shader
         worldrenderer.pos((double)f, 0.0D, 500.0D).color(255, 255, 255, 255).endVertex();
         worldrenderer.pos(0.0D, 0.0D, 500.0D).color(255, 255, 255, 255).endVertex();
         tessellator.draw();
-        GlStateManager.depthMask(true);
-        GlStateManager.colorMask(true, true, true, true);
+        GlStateManager.get().depthMask(true);
+        GlStateManager.get().colorMask(true, true, true, true);
         this.manager.endShader();
         this.framebufferOut.unbindFramebuffer();
         this.framebufferIn.unbindFramebufferTexture();

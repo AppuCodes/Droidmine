@@ -41,7 +41,7 @@ public class RenderHorse extends RenderLiving<EntityHorse>
             f *= 0.92F;
         }
 
-        GlStateManager.scale(f, f, f);
+        GlStateManager.get().scale(f, f, f);
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     }
 

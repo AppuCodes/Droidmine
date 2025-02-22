@@ -103,11 +103,11 @@ public class RandomMobsProperties
 
             if (s != null)
             {
-                i = Config.parseInt(s, -1);
+                i = Config.get().parseInt(s, -1);
 
                 if (i < 0)
                 {
-                    Config.warn("Invalid minHeight: " + s);
+                    Config.get().warn("Invalid minHeight: " + s);
                     return null;
                 }
             }
@@ -116,18 +116,18 @@ public class RandomMobsProperties
 
             if (s1 != null)
             {
-                j = Config.parseInt(s1, -1);
+                j = Config.get().parseInt(s1, -1);
 
                 if (j < 0)
                 {
-                    Config.warn("Invalid maxHeight: " + s1);
+                    Config.get().warn("Invalid maxHeight: " + s1);
                     return null;
                 }
             }
 
             if (j < 0)
             {
-                Config.warn("Invalid minHeight, maxHeight: " + s + ", " + s1);
+                Config.get().warn("Invalid minHeight, maxHeight: " + s + ", " + s1);
                 return null;
             }
             else
@@ -143,7 +143,7 @@ public class RandomMobsProperties
     {
         if (this.resourceLocations == null && this.rules == null)
         {
-            Config.warn("No skins specified: " + p_isValid_1_);
+            Config.get().warn("No skins specified: " + p_isValid_1_);
             return false;
         }
         else
@@ -167,9 +167,9 @@ public class RandomMobsProperties
                 {
                     ResourceLocation resourcelocation = this.resourceLocations[j];
 
-                    if (!Config.hasResource(resourcelocation))
+                    if (!Config.get().hasResource(resourcelocation))
                     {
-                        Config.warn("Texture not found: " + resourcelocation.getResourcePath());
+                        Config.get().warn("Texture not found: " + resourcelocation.getResourcePath());
                         return false;
                     }
                 }

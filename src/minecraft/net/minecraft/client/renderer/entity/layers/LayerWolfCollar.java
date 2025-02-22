@@ -29,12 +29,12 @@ public class LayerWolfCollar implements LayerRenderer
             EnumDyeColor enumdyecolor = EnumDyeColor.byMetadata(entitylivingbaseIn.getCollarColor().getMetadata());
             float[] afloat = EntitySheep.func_175513_a(enumdyecolor);
 
-            if (Config.isCustomColors())
+            if (Config.get().isCustomColors())
             {
                 afloat = CustomColors.getWolfCollarColors(enumdyecolor, afloat);
             }
 
-            GlStateManager.color(afloat[0], afloat[1], afloat[2]);
+            GlStateManager.get().color(afloat[0], afloat[1], afloat[2]);
             this.wolfRenderer.getMainModel().render(entitylivingbaseIn, p_177141_2_, p_177141_3_, p_177141_5_, p_177141_6_, p_177141_7_, scale);
         }
     }

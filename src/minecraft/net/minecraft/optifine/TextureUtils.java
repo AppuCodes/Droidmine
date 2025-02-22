@@ -201,20 +201,20 @@ public class TextureUtils
 
     public static ITextureObject getTexture(ResourceLocation p_getTexture_0_)
     {
-        ITextureObject itextureobject = Config.getTextureManager().getTexture(p_getTexture_0_);
+        ITextureObject itextureobject = Config.get().getTextureManager().getTexture(p_getTexture_0_);
 
         if (itextureobject != null)
         {
             return itextureobject;
         }
-        else if (!Config.hasResource(p_getTexture_0_))
+        else if (!Config.get().hasResource(p_getTexture_0_))
         {
             return null;
         }
         else
         {
             SimpleTexture simpletexture = new SimpleTexture(p_getTexture_0_);
-            Config.getTextureManager().loadTexture(p_getTexture_0_, simpletexture);
+            Config.get().getTextureManager().loadTexture(p_getTexture_0_, simpletexture);
             return simpletexture;
         }
     }
@@ -236,9 +236,9 @@ public class TextureUtils
             CustomItems.updateModels(mc);
             Shaders.resourcesReloaded();
             Lang.resourcesReloaded();
-            Config.updateTexturePackClouds();
+            Config.get().updateTexturePackClouds();
             SmartLeaves.updateLeavesModels();
-            Config.getTextureManager().tick();
+            Config.get().getTextureManager().tick();
         }
     }
 
@@ -249,7 +249,7 @@ public class TextureUtils
 
     public static void registerResourceListener(ClientEngine mc)
     {
-        IResourceManager iresourcemanager = Config.getResourceManager();
+        IResourceManager iresourcemanager = Config.get().getResourceManager();
 
         if (iresourcemanager instanceof IReloadableResourceManager)
         {
@@ -289,7 +289,7 @@ public class TextureUtils
             }
         };
         ResourceLocation resourcelocation = new ResourceLocation("optifine/TickableTextures");
-        Config.getTextureManager().loadTickableTexture(resourcelocation, itickabletextureobject);
+        Config.get().getTextureManager().loadTickableTexture(resourcelocation, itickabletextureobject);
     }
 
     public static String fixResourcePath(String p_fixResourcePath_0_, String p_fixResourcePath_1_)
@@ -351,7 +351,7 @@ public class TextureUtils
         if (GLContext.getCapabilities().GL_EXT_texture_filter_anisotropic)
         {
             float f = GL11.glGetFloat(34047);
-            float f1 = (float)Config.getAnisotropicFilterLevel();
+            float f1 = (float)Config.get().getAnisotropicFilterLevel();
             f1 = Math.min(f1, f);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, 34046, f1);
         }
@@ -359,7 +359,7 @@ public class TextureUtils
 
     public static void bindTexture(int p_bindTexture_0_)
     {
-        GlStateManager.bindTexture(p_bindTexture_0_);
+        GlStateManager.get().bindTexture(p_bindTexture_0_);
     }
 
     public static boolean isPowerOfTwo(int p_isPowerOfTwo_0_)
@@ -541,8 +541,8 @@ public class TextureUtils
             }
             catch (Exception exception)
             {
-                Config.warn("Error writing: " + file4);
-                Config.warn("" + exception.getClass().getName() + ": " + exception.getMessage());
+                Config.get().warn("Error writing: " + file4);
+                Config.get().warn("" + exception.getClass().getName() + ": " + exception.getMessage());
             }
         }
     }

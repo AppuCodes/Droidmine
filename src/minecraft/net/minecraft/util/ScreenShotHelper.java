@@ -71,7 +71,7 @@ public class ScreenShotHelper
 
             if (OpenGlHelper.isFramebufferEnabled())
             {
-                GlStateManager.bindTexture(buffer.framebufferTexture);
+                GlStateManager.get().bindTexture(buffer.framebufferTexture);
                 GL11.glGetTexImage(GL11.GL_TEXTURE_2D, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, (IntBuffer)pixelBuffer);
             }
             else
@@ -80,7 +80,7 @@ public class ScreenShotHelper
             }
 
             pixelBuffer.get(pixelValues);
-            TextureUtil.processPixelValues(pixelValues, width, height);
+            TextureUtil.get().processPixelValues(pixelValues, width, height);
             BufferedImage bufferedimage = null;
 
             if (OpenGlHelper.isFramebufferEnabled())

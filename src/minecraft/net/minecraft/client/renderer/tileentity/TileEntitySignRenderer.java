@@ -33,14 +33,14 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer
     public void renderTileEntityAt(TileEntitySign te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         Block block = te.getBlockType();
-        GlStateManager.pushMatrix();
+        GlStateManager.get().pushMatrix();
         float f = 0.6666667F;
 
         if (block == Blocks.standing_sign)
         {
-            GlStateManager.translate((float)x + 0.5F, (float)y + 0.75F * f, (float)z + 0.5F);
+            GlStateManager.get().translate((float)x + 0.5F, (float)y + 0.75F * f, (float)z + 0.5F);
             float f2 = (float)(te.getBlockMetadata() * 360) / 16.0F;
-            GlStateManager.rotate(-f2, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().rotate(-f2, 0.0F, 1.0F, 0.0F);
             this.model.signStick.showModel = true;
         }
         else
@@ -63,40 +63,40 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer
                 f1 = -90.0F;
             }
 
-            GlStateManager.translate((float)x + 0.5F, (float)y + 0.75F * f, (float)z + 0.5F);
-            GlStateManager.rotate(-f1, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translate(0.0F, -0.3125F, -0.4375F);
+            GlStateManager.get().translate((float)x + 0.5F, (float)y + 0.75F * f, (float)z + 0.5F);
+            GlStateManager.get().rotate(-f1, 0.0F, 1.0F, 0.0F);
+            GlStateManager.get().translate(0.0F, -0.3125F, -0.4375F);
             this.model.signStick.showModel = false;
         }
 
         if (destroyStage >= 0)
         {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
-            GlStateManager.matrixMode(5890);
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(4.0F, 2.0F, 1.0F);
-            GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
-            GlStateManager.matrixMode(5888);
+            GlStateManager.get().matrixMode(5890);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(4.0F, 2.0F, 1.0F);
+            GlStateManager.get().translate(0.0625F, 0.0625F, 0.0625F);
+            GlStateManager.get().matrixMode(5888);
         }
         else
         {
             this.bindTexture(SIGN_TEXTURE);
         }
 
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.pushMatrix();
-        GlStateManager.scale(f, -f, -f);
+        GlStateManager.get().enableRescaleNormal();
+        GlStateManager.get().pushMatrix();
+        GlStateManager.get().scale(f, -f, -f);
         this.model.renderSign();
-        GlStateManager.popMatrix();
+        GlStateManager.get().popMatrix();
         FontRenderer fontrenderer = this.getFontRenderer();
         float f3 = 0.015625F * f;
-        GlStateManager.translate(0.0F, 0.5F * f, 0.065F * f);
-        GlStateManager.scale(f3, -f3, f3);
+        GlStateManager.get().translate(0.0F, 0.5F * f, 0.065F * f);
+        GlStateManager.get().scale(f3, -f3, f3);
         GL11.glNormal3f(0.0F, 0.0F, -1.0F * f3);
-        GlStateManager.depthMask(false);
+        GlStateManager.get().depthMask(false);
         int i = 0;
 
-        if (Config.isCustomColors())
+        if (Config.get().isCustomColors())
         {
             i = CustomColors.getSignTextColor(i);
         }
@@ -124,15 +124,15 @@ public class TileEntitySignRenderer extends TileEntitySpecialRenderer
             }
         }
 
-        GlStateManager.depthMask(true);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.popMatrix();
+        GlStateManager.get().depthMask(true);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().popMatrix();
 
         if (destroyStage >= 0)
         {
-            GlStateManager.matrixMode(5890);
-            GlStateManager.popMatrix();
-            GlStateManager.matrixMode(5888);
+            GlStateManager.get().matrixMode(5890);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().matrixMode(5888);
         }
     }
 

@@ -46,7 +46,7 @@ public abstract class ShaderOption
 
     public String getDescriptionText()
     {
-        String s = Config.normalize(this.description);
+        String s = Config.get().normalize(this.description);
         s = StrUtils.removePrefix(s, "//");
         s = Shaders.translate("option." + this.getName() + ".comment", s);
         return s;
@@ -139,7 +139,7 @@ public abstract class ShaderOption
 
             if (!list.contains(s))
             {
-                this.paths = (String[])((String[])Config.addObjectToArray(this.paths, s));
+                this.paths = (String[])((String[])Config.get().addObjectToArray(this.paths, s));
             }
         }
     }
@@ -156,7 +156,7 @@ public abstract class ShaderOption
 
     public boolean isChanged()
     {
-        return !Config.equals(this.value, this.valueDefault);
+        return !Config.get().equals(this.value, this.valueDefault);
     }
 
     public boolean isVisible()
@@ -216,6 +216,6 @@ public abstract class ShaderOption
 
     public String toString()
     {
-        return "" + this.name + ", value: " + this.value + ", valueDefault: " + this.valueDefault + ", paths: " + Config.arrayToString((Object[])this.paths);
+        return "" + this.name + ", value: " + this.value + ", valueDefault: " + this.valueDefault + ", paths: " + Config.get().arrayToString((Object[])this.paths);
     }
 }

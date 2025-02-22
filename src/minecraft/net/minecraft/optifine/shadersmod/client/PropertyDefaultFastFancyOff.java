@@ -34,7 +34,7 @@ public class PropertyDefaultFastFancyOff extends Property
 
     public boolean setPropertyValue(String propVal)
     {
-        if (Config.equals(propVal, "none"))
+        if (Config.get().equals(propVal, "none"))
         {
             propVal = "off";
         }

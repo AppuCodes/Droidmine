@@ -49,7 +49,7 @@ public class HttpPipelineReceiver extends Thread
     private HttpResponse readResponse(InputStream p_readResponse_1_) throws IOException
     {
         String s = this.readLine(p_readResponse_1_);
-        String[] astring = Config.tokenize(s, " ");
+        String[] astring = Config.get().tokenize(s, " ");
 
         if (astring.length < 3)
         {
@@ -58,7 +58,7 @@ public class HttpPipelineReceiver extends Thread
         else
         {
             String s1 = astring[0];
-            int i = Config.parseInt(astring[1], 0);
+            int i = Config.get().parseInt(astring[1], 0);
             String s2 = astring[2];
             Map<String, String> map = new LinkedHashMap();
 
@@ -73,7 +73,7 @@ public class HttpPipelineReceiver extends Thread
 
                     if (s6 != null)
                     {
-                        int k = Config.parseInt(s6, -1);
+                        int k = Config.get().parseInt(s6, -1);
 
                         if (k > 0)
                         {
@@ -85,7 +85,7 @@ public class HttpPipelineReceiver extends Thread
                     {
                         String s7 = (String)map.get("Transfer-Encoding");
 
-                        if (Config.equals(s7, "chunked"))
+                        if (Config.get().equals(s7, "chunked"))
                         {
                             abyte = this.readContentChunked(p_readResponse_1_);
                         }
@@ -113,7 +113,7 @@ public class HttpPipelineReceiver extends Thread
         while (true)
         {
             String s = this.readLine(p_readContentChunked_1_);
-            String[] astring = Config.tokenize(s, "; ");
+            String[] astring = Config.get().tokenize(s, "; ");
             int i = Integer.parseInt(astring[0], 16);
             byte[] abyte = new byte[i];
             this.readFull(abyte, p_readContentChunked_1_);

@@ -33,7 +33,7 @@ public class RenderGiantZombie extends RenderLiving<EntityGiantZombie>
 
     public void transformHeldFull3DItemLayer()
     {
-        GlStateManager.translate(0.0F, 0.1875F, 0.0F);
+        GlStateManager.get().translate(0.0F, 0.1875F, 0.0F);
     }
 
     /**
@@ -42,7 +42,7 @@ public class RenderGiantZombie extends RenderLiving<EntityGiantZombie>
      */
     protected void preRenderCallback(EntityGiantZombie entitylivingbaseIn, float partialTickTime)
     {
-        GlStateManager.scale(this.scale, this.scale, this.scale);
+        GlStateManager.get().scale(this.scale, this.scale, this.scale);
     }
 
     /**

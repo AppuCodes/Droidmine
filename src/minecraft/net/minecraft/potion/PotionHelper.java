@@ -89,7 +89,7 @@ public class PotionHelper
                 {
                     int j = Potion.potionTypes[potioneffect.getPotionID()].getLiquidColor();
 
-                    if (Config.isCustomColors())
+                    if (Config.get().isCustomColors())
                     {
                         j = CustomColors.getPotionColor(potioneffect.getPotionID(), j);
                     }
@@ -118,7 +118,7 @@ public class PotionHelper
         }
         else
         {
-            if (Config.isCustomColors())
+            if (Config.get().isCustomColors())
             {
                 i = CustomColors.getPotionColor(0, i);
             }

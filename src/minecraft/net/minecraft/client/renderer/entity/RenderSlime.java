@@ -39,7 +39,7 @@ public class RenderSlime extends RenderLiving<EntitySlime>
         float f = (float)entitylivingbaseIn.getSlimeSize();
         float f1 = (entitylivingbaseIn.prevSquishFactor + (entitylivingbaseIn.squishFactor - entitylivingbaseIn.prevSquishFactor) * partialTickTime) / (f * 0.5F + 1.0F);
         float f2 = 1.0F / (f1 + 1.0F);
-        GlStateManager.scale(f2 * f, 1.0F / f2 * f, f2 * f);
+        GlStateManager.get().scale(f2 * f, 1.0F / f2 * f, f2 * f);
     }
 
     /**

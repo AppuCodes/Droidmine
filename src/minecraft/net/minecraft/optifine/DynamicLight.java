@@ -35,7 +35,7 @@ public class DynamicLight
 
     public void update(RenderGlobal p_update_1_)
     {
-        if (Config.isDynamicLightsFast())
+        if (Config.get().isDynamicLightsFast())
         {
             long i = System.currentTimeMillis();
 

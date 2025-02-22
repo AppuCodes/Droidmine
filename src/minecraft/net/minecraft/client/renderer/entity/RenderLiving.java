@@ -70,7 +70,7 @@ public abstract class RenderLiving<T extends EntityLiving> extends RendererLivin
 
     protected void renderLeash(T entityLivingIn, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        if (!Config.isShaders() || !Shaders.isShadowPass)
+        if (!Config.get().isShaders() || !Shaders.isShadowPass)
         {
             Entity entity = entityLivingIn.getLeashedToEntity();
 
@@ -107,11 +107,11 @@ public abstract class RenderLiving<T extends EntityLiving> extends RendererLivin
                 double d13 = (double)((float)(d6 - d10));
                 double d14 = (double)((float)(d7 - d11));
                 double d15 = (double)((float)(d8 - d12));
-                GlStateManager.disableTexture2D();
-                GlStateManager.disableLighting();
-                GlStateManager.disableCull();
+                GlStateManager.get().disableTexture2D();
+                GlStateManager.get().disableLighting();
+                GlStateManager.get().disableCull();
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     Shaders.beginLeash();
                 }
@@ -161,14 +161,14 @@ public abstract class RenderLiving<T extends EntityLiving> extends RendererLivin
 
                 tessellator.draw();
 
-                if (Config.isShaders())
+                if (Config.get().isShaders())
                 {
                     Shaders.endLeash();
                 }
 
-                GlStateManager.enableLighting();
-                GlStateManager.enableTexture2D();
-                GlStateManager.enableCull();
+                GlStateManager.get().enableLighting();
+                GlStateManager.get().enableTexture2D();
+                GlStateManager.get().enableCull();
             }
         }
     }

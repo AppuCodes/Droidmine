@@ -39,11 +39,11 @@ public class LayerCustomHead implements LayerRenderer<EntityLivingBase>
         {
             Item item = itemstack.getItem();
             ClientEngine minecraft = mc;
-            GlStateManager.pushMatrix();
+            GlStateManager.get().pushMatrix();
 
             if (entitylivingbaseIn.isSneaking())
             {
-                GlStateManager.translate(0.0F, 0.2F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.2F, 0.0F);
             }
 
             boolean flag = entitylivingbaseIn instanceof EntityVillager || entitylivingbaseIn instanceof EntityZombie && ((EntityZombie)entitylivingbaseIn).isVillager();
@@ -52,23 +52,23 @@ public class LayerCustomHead implements LayerRenderer<EntityLivingBase>
             {
                 float f = 2.0F;
                 float f1 = 1.4F;
-                GlStateManager.scale(f1 / f, f1 / f, f1 / f);
-                GlStateManager.translate(0.0F, 16.0F * scale, 0.0F);
+                GlStateManager.get().scale(f1 / f, f1 / f, f1 / f);
+                GlStateManager.get().translate(0.0F, 16.0F * scale, 0.0F);
             }
 
             this.field_177209_a.postRender(0.0625F);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
 
             if (item instanceof ItemBlock)
             {
                 float f2 = 0.625F;
-                GlStateManager.translate(0.0F, -0.25F, 0.0F);
-                GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-                GlStateManager.scale(f2, -f2, -f2);
+                GlStateManager.get().translate(0.0F, -0.25F, 0.0F);
+                GlStateManager.get().rotate(180.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().scale(f2, -f2, -f2);
 
                 if (flag)
                 {
-                    GlStateManager.translate(0.0F, 0.1875F, 0.0F);
+                    GlStateManager.get().translate(0.0F, 0.1875F, 0.0F);
                 }
 
                 minecraft.getItemRenderer().renderItem(entitylivingbaseIn, itemstack, ItemCameraTransforms.TransformType.HEAD);
@@ -76,11 +76,11 @@ public class LayerCustomHead implements LayerRenderer<EntityLivingBase>
             else if (item == Items.skull)
             {
                 float f3 = 1.1875F;
-                GlStateManager.scale(f3, -f3, -f3);
+                GlStateManager.get().scale(f3, -f3, -f3);
 
                 if (flag)
                 {
-                    GlStateManager.translate(0.0F, 0.0625F, 0.0F);
+                    GlStateManager.get().translate(0.0F, 0.0625F, 0.0F);
                 }
 
                 GameProfile gameprofile = null;
@@ -108,7 +108,7 @@ public class LayerCustomHead implements LayerRenderer<EntityLivingBase>
                 TileEntitySkullRenderer.instance.renderSkull(-0.5F, 0.0F, -0.5F, EnumFacing.UP, 180.0F, itemstack.getMetadata(), gameprofile, -1);
             }
 
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 

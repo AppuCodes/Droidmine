@@ -47,10 +47,10 @@ public class CustomItems
         enchantmentProperties = (CustomItemProperties[][])null;
         useGlint = true;
 
-        if (Config.isCustomItems())
+        if (Config.get().isCustomItems())
         {
             readCitProperties("mcpatcher/cit.properties");
-            IResourcePack[] airesourcepack = Config.getResourcePacks();
+            IResourcePack[] airesourcepack = Config.get().getResourcePacks();
 
             for (int i = airesourcepack.length - 1; i >= 0; --i)
             {
@@ -58,7 +58,7 @@ public class CustomItems
                 updateIcons(p_updateIcons_0_, iresourcepack, mc);
             }
 
-            updateIcons(p_updateIcons_0_, Config.getDefaultResourcePack(), mc);
+            updateIcons(p_updateIcons_0_, Config.get().getDefaultResourcePack(), mc);
 
             if (itemProperties.length <= 0)
             {
@@ -77,7 +77,7 @@ public class CustomItems
         try
         {
             ResourceLocation resourcelocation = new ResourceLocation(p_readCitProperties_0_);
-            InputStream inputstream = Config.getResourceStream(resourcelocation);
+            InputStream inputstream = Config.get().getResourceStream(resourcelocation);
 
             if (inputstream == null)
             {
@@ -87,7 +87,7 @@ public class CustomItems
             Properties properties = new Properties();
             properties.load(inputstream);
             inputstream.close();
-            useGlint = Config.parseBoolean(properties.getProperty("useGlint"), true);
+            useGlint = Config.get().parseBoolean(properties.getProperty("useGlint"), true);
         }
         catch (FileNotFoundException var4)
         {
@@ -108,7 +108,7 @@ public class CustomItems
         {
             Set set = map.keySet();
             String[] astring1 = (String[])((String[])set.toArray(new String[set.size()]));
-            astring = (String[])((String[])Config.addObjectsToArray(astring, astring1));
+            astring = (String[])((String[])Config.get().addObjectsToArray(astring, astring1));
         }
 
         Arrays.sort((Object[])astring);
@@ -135,7 +135,7 @@ public class CustomItems
 
                     if (inputstream == null)
                     {
-                        Config.warn("CustomItems file not found: " + s);
+                        Config.get().warn("CustomItems file not found: " + s);
                         continue;
                     }
 
@@ -153,7 +153,7 @@ public class CustomItems
             }
             catch (FileNotFoundException var12)
             {
-                Config.warn("CustomItems file not found: " + s);
+                Config.get().warn("CustomItems file not found: " + s);
             }
             catch (Exception exception)
             {
@@ -279,7 +279,7 @@ public class CustomItems
 
             if (aint == null)
             {
-                Config.warn("Potion not found for image: " + p_makePotionProperties_2_);
+                Config.get().warn("Potion not found for image: " + p_makePotionProperties_2_);
                 return null;
             }
             else
@@ -442,7 +442,7 @@ public class CustomItems
 
                 if (j <= 0)
                 {
-                    Config.warn("Invalid item ID: " + j);
+                    Config.get().warn("Invalid item ID: " + j);
                 }
                 else
                 {
@@ -520,7 +520,7 @@ public class CustomItems
             }
             else
             {
-                Config.getTextureManager().bindTexture(resourcelocation);
+                Config.get().getTextureManager().bindTexture(resourcelocation);
                 return true;
             }
         }
@@ -758,7 +758,7 @@ public class CustomItems
             {
                 Set set = null;
                 boolean flag = false;
-                TextureManager texturemanager = Config.getTextureManager();
+                TextureManager texturemanager = Config.get().getTextureManager();
 
                 for (int i = 0; i < aint.length; ++i)
                 {
@@ -787,20 +787,20 @@ public class CustomItems
                                     if (!flag)
                                     {
                                         flag = true;
-                                        GlStateManager.depthMask(false);
-                                        GlStateManager.depthFunc(514);
-                                        GlStateManager.disableLighting();
-                                        GlStateManager.matrixMode(5890);
+                                        GlStateManager.get().depthMask(false);
+                                        GlStateManager.get().depthFunc(514);
+                                        GlStateManager.get().disableLighting();
+                                        GlStateManager.get().matrixMode(5890);
                                     }
 
                                     Blender.setupBlend(customitemproperties.blend, 1.0F);
-                                    GlStateManager.pushMatrix();
-                                    GlStateManager.scale(f / 2.0F, f / 2.0F, f / 2.0F);
+                                    GlStateManager.get().pushMatrix();
+                                    GlStateManager.get().scale(f / 2.0F, f / 2.0F, f / 2.0F);
                                     float f1 = customitemproperties.speed * (float)(ClientEngine.getSystemTime() % 3000L) / 3000.0F / 8.0F;
-                                    GlStateManager.translate(f1, 0.0F, 0.0F);
-                                    GlStateManager.rotate(customitemproperties.rotation, 0.0F, 0.0F, 1.0F);
+                                    GlStateManager.get().translate(f1, 0.0F, 0.0F);
+                                    GlStateManager.get().rotate(customitemproperties.rotation, 0.0F, 0.0F, 1.0F);
                                     p_renderCustomEffect_0_.renderModel(p_renderCustomEffect_2_, -1);
-                                    GlStateManager.popMatrix();
+                                    GlStateManager.get().popMatrix();
                                 }
                             }
                         }
@@ -809,14 +809,14 @@ public class CustomItems
 
                 if (flag)
                 {
-                    GlStateManager.enableAlpha();
-                    GlStateManager.enableBlend();
-                    GlStateManager.blendFunc(770, 771);
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.matrixMode(5888);
-                    GlStateManager.enableLighting();
-                    GlStateManager.depthFunc(515);
-                    GlStateManager.depthMask(true);
+                    GlStateManager.get().enableAlpha();
+                    GlStateManager.get().enableBlend();
+                    GlStateManager.get().blendFunc(770, 771);
+                    GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+                    GlStateManager.get().matrixMode(5888);
+                    GlStateManager.get().enableLighting();
+                    GlStateManager.get().depthFunc(515);
+                    GlStateManager.get().depthMask(true);
                     texturemanager.bindTexture(TextureMap.locationBlocksTexture);
                 }
 
@@ -831,7 +831,7 @@ public class CustomItems
         {
             return false;
         }
-        else if (Config.isShaders() && Shaders.isShadowPass)
+        else if (Config.get().isShaders() && Shaders.isShadowPass)
         {
             return false;
         }
@@ -851,7 +851,7 @@ public class CustomItems
             {
                 Set set = null;
                 boolean flag = false;
-                TextureManager texturemanager = Config.getTextureManager();
+                TextureManager texturemanager = Config.get().getTextureManager();
 
                 for (int i = 0; i < aint.length; ++i)
                 {
@@ -881,26 +881,26 @@ public class CustomItems
                                     {
                                         flag = true;
 
-                                        if (Config.isShaders())
+                                        if (Config.get().isShaders())
                                         {
                                             ShadersRender.renderEnchantedGlintBegin();
                                         }
 
-                                        GlStateManager.enableBlend();
-                                        GlStateManager.depthFunc(514);
-                                        GlStateManager.depthMask(false);
+                                        GlStateManager.get().enableBlend();
+                                        GlStateManager.get().depthFunc(514);
+                                        GlStateManager.get().depthMask(false);
                                     }
 
                                     Blender.setupBlend(customitemproperties.blend, 1.0F);
-                                    GlStateManager.disableLighting();
-                                    GlStateManager.matrixMode(5890);
-                                    GlStateManager.loadIdentity();
-                                    GlStateManager.rotate(customitemproperties.rotation, 0.0F, 0.0F, 1.0F);
+                                    GlStateManager.get().disableLighting();
+                                    GlStateManager.get().matrixMode(5890);
+                                    GlStateManager.get().loadIdentity();
+                                    GlStateManager.get().rotate(customitemproperties.rotation, 0.0F, 0.0F, 1.0F);
                                     float f1 = f / 8.0F;
-                                    GlStateManager.scale(f1, f1 / 2.0F, f1);
+                                    GlStateManager.get().scale(f1, f1 / 2.0F, f1);
                                     float f2 = customitemproperties.speed * (float)(ClientEngine.getSystemTime() % 3000L) / 3000.0F / 8.0F;
-                                    GlStateManager.translate(0.0F, f2, 0.0F);
-                                    GlStateManager.matrixMode(5888);
+                                    GlStateManager.get().translate(0.0F, f2, 0.0F);
+                                    GlStateManager.get().matrixMode(5888);
                                     p_renderCustomArmorEffect_2_.render(p_renderCustomArmorEffect_0_, p_renderCustomArmorEffect_3_, p_renderCustomArmorEffect_4_, p_renderCustomArmorEffect_6_, p_renderCustomArmorEffect_7_, p_renderCustomArmorEffect_8_, p_renderCustomArmorEffect_9_);
                                 }
                             }
@@ -910,19 +910,19 @@ public class CustomItems
 
                 if (flag)
                 {
-                    GlStateManager.enableAlpha();
-                    GlStateManager.enableBlend();
-                    GlStateManager.blendFunc(770, 771);
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.matrixMode(5890);
-                    GlStateManager.loadIdentity();
-                    GlStateManager.matrixMode(5888);
-                    GlStateManager.enableLighting();
-                    GlStateManager.depthMask(true);
-                    GlStateManager.depthFunc(515);
-                    GlStateManager.disableBlend();
+                    GlStateManager.get().enableAlpha();
+                    GlStateManager.get().enableBlend();
+                    GlStateManager.get().blendFunc(770, 771);
+                    GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
+                    GlStateManager.get().matrixMode(5890);
+                    GlStateManager.get().loadIdentity();
+                    GlStateManager.get().matrixMode(5888);
+                    GlStateManager.get().enableLighting();
+                    GlStateManager.get().depthMask(true);
+                    GlStateManager.get().depthFunc(515);
+                    GlStateManager.get().disableBlend();
 
-                    if (Config.isShaders())
+                    if (Config.get().isShaders())
                     {
                         ShadersRender.renderEnchantedGlintEnd();
                     }

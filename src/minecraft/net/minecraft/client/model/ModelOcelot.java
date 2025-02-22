@@ -79,14 +79,14 @@ public class ModelOcelot extends ModelBase
         if (this.isChild)
         {
             float f = 2.0F;
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(1.5F / f, 1.5F / f, 1.5F / f);
-            GlStateManager.translate(0.0F, 10.0F * scale, 4.0F * scale);
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(1.5F / f, 1.5F / f, 1.5F / f);
+            GlStateManager.get().translate(0.0F, 10.0F * scale, 4.0F * scale);
             this.ocelotHead.render(scale);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(1.0F / f, 1.0F / f, 1.0F / f);
-            GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+            GlStateManager.get().popMatrix();
+            GlStateManager.get().pushMatrix();
+            GlStateManager.get().scale(1.0F / f, 1.0F / f, 1.0F / f);
+            GlStateManager.get().translate(0.0F, 24.0F * scale, 0.0F);
             this.ocelotBody.render(scale);
             this.ocelotBackLeftLeg.render(scale);
             this.ocelotBackRightLeg.render(scale);
@@ -94,7 +94,7 @@ public class ModelOcelot extends ModelBase
             this.ocelotFrontRightLeg.render(scale);
             this.ocelotTail.render(scale);
             this.ocelotTail2.render(scale);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
         else
         {

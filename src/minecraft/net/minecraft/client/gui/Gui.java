@@ -69,18 +69,18 @@ public class Gui
         float f2 = (float)(color & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(f, f1, f2, f3);
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().disableTexture2D();
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().color(f, f1, f2, f3);
         worldrenderer.begin(7, DefaultVertexFormats.POSITION);
         worldrenderer.pos((double)left, (double)bottom, 0.0D).endVertex();
         worldrenderer.pos((double)right, (double)bottom, 0.0D).endVertex();
         worldrenderer.pos((double)right, (double)top, 0.0D).endVertex();
         worldrenderer.pos((double)left, (double)top, 0.0D).endVertex();
         tessellator.draw();
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
+        GlStateManager.get().enableTexture2D();
+        GlStateManager.get().disableBlend();
     }
 
     /**
@@ -97,11 +97,11 @@ public class Gui
         float f5 = (float)(endColor >> 16 & 255) / 255.0F;
         float f6 = (float)(endColor >> 8 & 255) / 255.0F;
         float f7 = (float)(endColor & 255) / 255.0F;
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.disableAlpha();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.shadeModel(7425);
+        GlStateManager.get().disableTexture2D();
+        GlStateManager.get().enableBlend();
+        GlStateManager.get().disableAlpha();
+        GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.get().shadeModel(7425);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
@@ -110,10 +110,10 @@ public class Gui
         worldrenderer.pos((double)left, (double)bottom, (double)this.zLevel).color(f5, f6, f7, f4).endVertex();
         worldrenderer.pos((double)right, (double)bottom, (double)this.zLevel).color(f5, f6, f7, f4).endVertex();
         tessellator.draw();
-        GlStateManager.shadeModel(7424);
-        GlStateManager.disableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableTexture2D();
+        GlStateManager.get().shadeModel(7424);
+        GlStateManager.get().disableBlend();
+        GlStateManager.get().enableAlpha();
+        GlStateManager.get().enableTexture2D();
     }
 
     /**

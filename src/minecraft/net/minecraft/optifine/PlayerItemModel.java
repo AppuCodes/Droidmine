@@ -39,7 +39,7 @@ public class PlayerItemModel
 
     public void render(ModelBiped p_render_1_, AbstractClientPlayer p_render_2_, float p_render_3_, float p_render_4_)
     {
-        TextureManager texturemanager = Config.getTextureManager();
+        TextureManager texturemanager = Config.get().getTextureManager();
 
         if (this.usePlayerTexture)
         {
@@ -63,15 +63,15 @@ public class PlayerItemModel
         for (int i = 0; i < this.modelRenderers.length; ++i)
         {
             PlayerItemRenderer playeritemrenderer = this.modelRenderers[i];
-            GlStateManager.pushMatrix();
+            GlStateManager.get().pushMatrix();
 
             if (p_render_2_.isSneaking())
             {
-                GlStateManager.translate(0.0F, 0.2F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.2F, 0.0F);
             }
 
             playeritemrenderer.render(p_render_1_, p_render_3_);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 

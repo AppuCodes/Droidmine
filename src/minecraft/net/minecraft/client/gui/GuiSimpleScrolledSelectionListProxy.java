@@ -92,8 +92,8 @@ public class GuiSimpleScrolledSelectionListProxy extends GuiSlot
             int i = this.getScrollBarX();
             int j = i + 6;
             this.bindAmountScrolled();
-            GlStateManager.disableLighting();
-            GlStateManager.disableFog();
+            GlStateManager.get().disableLighting();
+            GlStateManager.get().disableFog();
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             int k = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
@@ -105,15 +105,15 @@ public class GuiSimpleScrolledSelectionListProxy extends GuiSlot
             }
 
             this.drawSelectionBox(k, l, mouseXIn, mouseYIn);
-            GlStateManager.disableDepth();
+            GlStateManager.get().disableDepth();
             int i1 = 4;
             this.overlayBackground(0, this.top, 255, 255);
             this.overlayBackground(this.bottom, this.height, 255, 255);
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-            GlStateManager.disableAlpha();
-            GlStateManager.shadeModel(7425);
-            GlStateManager.disableTexture2D();
+            GlStateManager.get().enableBlend();
+            GlStateManager.get().tryBlendFuncSeparate(770, 771, 0, 1);
+            GlStateManager.get().disableAlpha();
+            GlStateManager.get().shadeModel(7425);
+            GlStateManager.get().disableTexture2D();
             int j1 = this.func_148135_f();
 
             if (j1 > 0)
@@ -148,10 +148,10 @@ public class GuiSimpleScrolledSelectionListProxy extends GuiSlot
             }
 
             this.func_148142_b(mouseXIn, mouseYIn);
-            GlStateManager.enableTexture2D();
-            GlStateManager.shadeModel(7424);
-            GlStateManager.enableAlpha();
-            GlStateManager.disableBlend();
+            GlStateManager.get().enableTexture2D();
+            GlStateManager.get().shadeModel(7424);
+            GlStateManager.get().enableAlpha();
+            GlStateManager.get().disableBlend();
         }
     }
 }

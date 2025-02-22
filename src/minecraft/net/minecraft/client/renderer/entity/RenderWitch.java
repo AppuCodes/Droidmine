@@ -40,7 +40,7 @@ public class RenderWitch extends RenderLiving<EntityWitch>
 
     public void transformHeldFull3DItemLayer()
     {
-        GlStateManager.translate(0.0F, 0.1875F, 0.0F);
+        GlStateManager.get().translate(0.0F, 0.1875F, 0.0F);
     }
 
     /**
@@ -50,6 +50,6 @@ public class RenderWitch extends RenderLiving<EntityWitch>
     protected void preRenderCallback(EntityWitch entitylivingbaseIn, float partialTickTime)
     {
         float f = 0.9375F;
-        GlStateManager.scale(f, f, f);
+        GlStateManager.get().scale(f, f, f);
     }
 }

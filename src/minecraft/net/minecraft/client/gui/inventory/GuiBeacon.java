@@ -174,7 +174,7 @@ public class GuiBeacon extends GuiContainer
      */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        RenderHelper.disableStandardItemLighting();
+        RenderHelper.get().disableStandardItemLighting();
         this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.primary", new Object[0]), 62, 10, 14737632);
         this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.secondary", new Object[0]), 169, 10, 14737632);
 
@@ -187,7 +187,7 @@ public class GuiBeacon extends GuiContainer
             }
         }
 
-        RenderHelper.enableGUIStandardItemLighting();
+        RenderHelper.get().enableGUIStandardItemLighting();
     }
 
     /**
@@ -195,7 +195,7 @@ public class GuiBeacon extends GuiContainer
      */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(beaconGuiTextures);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
@@ -228,7 +228,7 @@ public class GuiBeacon extends GuiContainer
             if (this.visible)
             {
                 mc.getTextureManager().bindTexture(GuiBeacon.beaconGuiTextures);
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.get().color(1.0F, 1.0F, 1.0F, 1.0F);
                 this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
                 int i = 219;
                 int j = 0;

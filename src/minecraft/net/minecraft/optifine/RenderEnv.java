@@ -34,7 +34,7 @@ public class RenderEnv
         this.blockAccess = p_i94_1_;
         this.blockState = p_i94_2_;
         this.blockPos = p_i94_3_;
-        this.options = Config.getoptions();
+        this.options = Config.get().getoptions();
     }
 
     public static RenderEnv getInstance(IBlockAccess p_getInstance_0_, IBlockState p_getInstance_1_, BlockPos p_getInstance_2_)

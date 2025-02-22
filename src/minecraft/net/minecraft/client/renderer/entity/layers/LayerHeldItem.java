@@ -28,18 +28,18 @@ public class LayerHeldItem implements LayerRenderer<EntityLivingBase>
 
         if (itemstack != null)
         {
-            GlStateManager.pushMatrix();
+            GlStateManager.get().pushMatrix();
 
             if (this.livingEntityRenderer.getMainModel().isChild)
             {
                 float f = 0.5F;
-                GlStateManager.translate(0.0F, 0.625F, 0.0F);
-                GlStateManager.rotate(-20.0F, -1.0F, 0.0F, 0.0F);
-                GlStateManager.scale(f, f, f);
+                GlStateManager.get().translate(0.0F, 0.625F, 0.0F);
+                GlStateManager.get().rotate(-20.0F, -1.0F, 0.0F, 0.0F);
+                GlStateManager.get().scale(f, f, f);
             }
 
             ((ModelBiped)this.livingEntityRenderer.getMainModel()).postRenderArm(0.0625F);
-            GlStateManager.translate(-0.0625F, 0.4375F, 0.0625F);
+            GlStateManager.get().translate(-0.0625F, 0.4375F, 0.0625F);
 
             if (entitylivingbaseIn instanceof EntityPlayer && ((EntityPlayer)entitylivingbaseIn).fishEntity != null)
             {
@@ -51,20 +51,20 @@ public class LayerHeldItem implements LayerRenderer<EntityLivingBase>
 
             if (item instanceof ItemBlock && Block.getBlockFromItem(item).getRenderType() == 2)
             {
-                GlStateManager.translate(0.0F, 0.1875F, -0.3125F);
-                GlStateManager.rotate(20.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.1875F, -0.3125F);
+                GlStateManager.get().rotate(20.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.get().rotate(45.0F, 0.0F, 1.0F, 0.0F);
                 float f1 = 0.375F;
-                GlStateManager.scale(-f1, -f1, f1);
+                GlStateManager.get().scale(-f1, -f1, f1);
             }
 
             if (entitylivingbaseIn.isSneaking())
             {
-                GlStateManager.translate(0.0F, 0.203125F, 0.0F);
+                GlStateManager.get().translate(0.0F, 0.203125F, 0.0F);
             }
 
             minecraft.getItemRenderer().renderItem(entitylivingbaseIn, itemstack, ItemCameraTransforms.TransformType.THIRD_PERSON);
-            GlStateManager.popMatrix();
+            GlStateManager.get().popMatrix();
         }
     }
 
