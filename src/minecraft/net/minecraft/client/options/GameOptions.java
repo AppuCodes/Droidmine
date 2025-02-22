@@ -48,7 +48,7 @@ public class GameOptions
 
     /** Clouds flag */
     public int clouds = 2;
-    public boolean fancyGraphics = true;
+    public boolean fancyGraphics = false;
 
     /** Smooth Lighting */
     public int ambientOcclusion = 2;
@@ -1172,7 +1172,7 @@ public class GameOptions
         if (p_setOptionValueOF_1_ == GameOptions.Options.CUSTOM_COLORS)
         {
             this.ofCustomColors = !this.ofCustomColors;
-            CustomColors.update();
+            CustomColors.update(mc);
             this.mc.renderGlobal.loadRenderers();
         }
 
@@ -1196,7 +1196,7 @@ public class GameOptions
         if (p_setOptionValueOF_1_ == GameOptions.Options.NATURAL_TEXTURES)
         {
             this.ofNaturalTextures = !this.ofNaturalTextures;
-            NaturalTextures.update();
+            NaturalTextures.update(mc);
             this.mc.renderGlobal.loadRenderers();
         }
 

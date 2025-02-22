@@ -2,6 +2,8 @@ package net.minecraft.optifine;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
@@ -12,8 +14,9 @@ public class NaturalProperties
     public int rotation = 1;
     public boolean flip = false;
     private Map[] quadMaps = new Map[8];
+    private ClientEngine mc;
 
-    public NaturalProperties(String p_i68_1_)
+    public NaturalProperties(String p_i68_1_, ClientEngine mc)
     {
         if (p_i68_1_.equals("4"))
         {
@@ -41,6 +44,8 @@ public class NaturalProperties
         {
             Config.warn("NaturalTextures: Unknown type: " + p_i68_1_);
         }
+        
+        this.mc = mc;
     }
 
     public boolean isValid()
@@ -97,7 +102,7 @@ public class NaturalProperties
         else
         {
             aint = this.transformVertexData(aint, p_makeQuad_2_, p_makeQuad_3_);
-            BakedQuad bakedquad = new BakedQuad(aint, i, enumfacing, textureatlassprite);
+            BakedQuad bakedquad = new BakedQuad(aint, i, enumfacing, textureatlassprite, mc);
             return bakedquad;
         }
     }

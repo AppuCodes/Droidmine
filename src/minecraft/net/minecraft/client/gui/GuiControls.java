@@ -47,7 +47,7 @@ public class GuiControls extends GuiScreen
         {
             if (options$options.getEnumFloat())
             {
-                this.buttonList.add(new GuiOptionSlider(options$options.returnEnumOrdinal(), this.width / 2 - 155 + i % 2 * 160, 18 + 24 * (i >> 1), options$options));
+                this.buttonList.add(new GuiOptionSlider(options$options.returnEnumOrdinal(), this.width / 2 - 155 + i % 2 * 160, 18 + 24 * (i >> 1), options$options, mc));
             }
             else
             {

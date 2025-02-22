@@ -2,37 +2,33 @@ package net.minecraft.client.renderer;
 
 import java.util.BitSet;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.optifine.*;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.Vec3i;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockModelRenderer
 {
     private static final String __OBFID = "CL_00002518";
     private static float aoLightValueOpaque = 0.0F;
-    private ClientEngine engine;
+    private ClientEngine mc;
 
     public static void updateAoLightValue()
     {
         aoLightValueOpaque = 1.0F - Config.getAmbientOcclusionLevel();
     }
 
-    public BlockModelRenderer(ClientEngine engine)
+    public BlockModelRenderer(ClientEngine mc)
     {
+        this.mc = mc;
+
         if (Reflector.ForgeModContainer_forgeLightPipelineEnabled.exists())
         {
             Reflector.setFieldValue(Reflector.ForgeModContainer_forgeLightPipelineEnabled, Boolean.valueOf(false));
@@ -50,7 +46,7 @@ public class BlockModelRenderer
     {
         try
         {
-            boolean flag = engine.isAmbientOcclusionEnabled() && blockStateIn.getBlock().getLightValue() == 0 && modelIn.isAmbientOcclusion();
+            boolean flag = mc.isAmbientOcclusionEnabled() && blockStateIn.getBlock().getLightValue() == 0 && modelIn.isAmbientOcclusion();
             Block block = blockStateIn.getBlock();
 
             if (Config.isTreesSmart() && blockStateIn.getBlock() instanceof BlockLeavesBase)
@@ -218,7 +214,7 @@ public class BlockModelRenderer
 
                 if (Config.isConnectedTextures())
                 {
-                    bakedquad = ConnectedTextures.getConnectedTexture(p_renderModelAmbientOcclusionQuads_1_, iblockstate, p_renderModelAmbientOcclusionQuads_3_, bakedquad, p_renderModelAmbientOcclusionQuads_6_);
+                    bakedquad = ConnectedTextures.getConnectedTexture(p_renderModelAmbientOcclusionQuads_1_, iblockstate, p_renderModelAmbientOcclusionQuads_3_, bakedquad, p_renderModelAmbientOcclusionQuads_6_, mc);
                 }
 
                 if (bakedquad == bakedquad1 && Config.isNaturalTextures())
@@ -261,11 +257,6 @@ public class BlockModelRenderer
                 else
                 {
                     j = p_renderModelAmbientOcclusionQuads_2_.colorMultiplier(p_renderModelAmbientOcclusionQuads_1_, p_renderModelAmbientOcclusionQuads_3_, bakedquad.getTintIndex());
-                }
-
-                if (EntityRenderer.anaglyphEnable)
-                {
-                    j = TextureUtil.anaglyphColor(j);
                 }
 
                 float f = (float)(j >> 16 & 255) / 255.0F;
@@ -390,7 +381,7 @@ public class BlockModelRenderer
 
                 if (Config.isConnectedTextures())
                 {
-                    bakedquad = ConnectedTextures.getConnectedTexture(p_renderModelStandardQuads_1_, iblockstate, p_renderModelStandardQuads_3_, bakedquad, p_renderModelStandardQuads_9_);
+                    bakedquad = ConnectedTextures.getConnectedTexture(p_renderModelStandardQuads_1_, iblockstate, p_renderModelStandardQuads_3_, bakedquad, p_renderModelStandardQuads_9_, mc);
                 }
 
                 if (bakedquad == bakedquad1 && Config.isNaturalTextures())
@@ -431,11 +422,6 @@ public class BlockModelRenderer
                     l = p_renderModelStandardQuads_2_.colorMultiplier(p_renderModelStandardQuads_1_, p_renderModelStandardQuads_3_, bakedquad.getTintIndex());
                 }
 
-                if (EntityRenderer.anaglyphEnable)
-                {
-                    l = TextureUtil.anaglyphColor(l);
-                }
-
                 float f = (float)(l >> 16 & 255) / 255.0F;
                 float f1 = (float)(l >> 8 & 255) / 255.0F;
                 float f2 = (float)(l & 255) / 255.0F;
@@ -465,12 +451,6 @@ public class BlockModelRenderer
         block.setBlockBoundsForItemRender();
         GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
         int i = block.getRenderColor(block.getStateForEntityRender(p_178266_2_));
-
-        if (EntityRenderer.anaglyphEnable)
-        {
-            i = TextureUtil.anaglyphColor(i);
-        }
-
         float f = (float)(i >> 16 & 255) / 255.0F;
         float f1 = (float)(i >> 8 & 255) / 255.0F;
         float f2 = (float)(i & 255) / 255.0F;

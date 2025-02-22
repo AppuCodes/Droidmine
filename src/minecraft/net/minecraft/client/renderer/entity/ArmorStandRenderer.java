@@ -27,8 +27,8 @@ public class ArmorStandRenderer extends RendererLivingEntity<EntityArmorStand>
             }
         };
         this.addLayer(layerbipedarmor);
-        this.addLayer(new LayerHeldItem(this));
-        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+        this.addLayer(new LayerHeldItem(this, mc));
+        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead, mc));
     }
 
     /**

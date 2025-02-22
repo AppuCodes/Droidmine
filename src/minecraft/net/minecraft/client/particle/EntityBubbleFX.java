@@ -1,14 +1,15 @@
 package net.minecraft.client.particle;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityBubbleFX extends EntityFX
 {
-    protected EntityBubbleFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
+    protected EntityBubbleFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, mc);
         this.particleRed = 1.0F;
         this.particleGreen = 1.0F;
         this.particleBlue = 1.0F;
@@ -48,9 +49,9 @@ public class EntityBubbleFX extends EntityFX
 
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityBubbleFX(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+            return new EntityBubbleFX(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, mc);
         }
     }
 }

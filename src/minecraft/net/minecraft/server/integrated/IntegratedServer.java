@@ -49,14 +49,14 @@ public class IntegratedServer extends MinecraftServer
 
     public IntegratedServer(ClientEngine mcIn)
     {
-        super(mcIn.getProxy(), new File(mcIn.mcDataDir, USER_CACHE_FILE.getName()));
+        super(mcIn.getProxy(), new File(mcIn.mcDataDir, USER_CACHE_FILE.getName()), mcIn);
         this.mc = mcIn;
         this.theWorldSettings = null;
     }
 
     public IntegratedServer(ClientEngine mcIn, String folderName, String worldName, WorldSettings settings)
     {
-        super(new File(mcIn.mcDataDir, "saves"), mcIn.getProxy(), new File(mcIn.mcDataDir, USER_CACHE_FILE.getName()));
+        super(new File(mcIn.mcDataDir, "saves"), mcIn.getProxy(), new File(mcIn.mcDataDir, USER_CACHE_FILE.getName()), mcIn);
         this.setServerOwner(mcIn.getSession().name);
         this.setFolderName(folderName);
         this.setWorldName(worldName);
@@ -221,7 +221,7 @@ public class IntegratedServer extends MinecraftServer
     public void tick()
     {
         boolean flag = this.isGamePaused;
-        this.isGamePaused = ClientEngine.get().getNetHandler() != null && ClientEngine.get().isGamePaused();
+        this.isGamePaused = mc.getNetHandler() != null && mc.isGamePaused();
 
         if (!flag && this.isGamePaused)
         {
@@ -383,7 +383,7 @@ public class IntegratedServer extends MinecraftServer
      */
     public boolean isSnooperEnabled()
     {
-        return ClientEngine.get().isSnooperEnabled();
+        return mc.isSnooperEnabled();
     }
 
     /**

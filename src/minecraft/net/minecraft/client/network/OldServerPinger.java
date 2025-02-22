@@ -1,58 +1,52 @@
 package net.minecraft.client.network;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.*;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelException;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.network.EnumConnectionState;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.ServerStatusResponse;
+import net.minecraft.network.*;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.status.INetHandlerStatusClient;
 import net.minecraft.network.status.client.C00PacketServerQuery;
 import net.minecraft.network.status.client.C01PacketPing;
 import net.minecraft.network.status.server.S00PacketServerInfo;
 import net.minecraft.network.status.server.S01PacketPong;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.util.*;
 
 public class OldServerPinger
 {
     private static final Splitter PING_RESPONSE_SPLITTER = Splitter.on('\u0000').limit(6);
     private static final Logger logger = LogManager.getLogger();
     private final List<NetworkManager> pingDestinations = Collections.<NetworkManager>synchronizedList(Lists.<NetworkManager>newArrayList());
+    private ClientEngine mc;
+    
+    public OldServerPinger(ClientEngine mc)
+    {
+        this.mc = mc;
+    }
 
     public void ping(final ServerData server) throws UnknownHostException
     {
         ServerAddress serveraddress = ServerAddress.func_78860_a(server.serverIP);
-        final NetworkManager networkmanager = NetworkManager.create(InetAddress.getByName(serveraddress.getIP()), serveraddress.getPort(), false);
+        final NetworkManager networkmanager = NetworkManager.create(InetAddress.getByName(serveraddress.getIP()), serveraddress.getPort(), false, mc);
         this.pingDestinations.add(networkmanager);
         server.serverMOTD = "Pinging...";
         server.pingToServer = -1L;

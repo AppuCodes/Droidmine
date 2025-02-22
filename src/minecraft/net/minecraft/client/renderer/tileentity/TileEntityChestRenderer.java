@@ -1,8 +1,10 @@
 package net.minecraft.client.renderer.tileentity;
 
 import java.util.Calendar;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,8 +23,9 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer<TileEntit
     private ModelChest largeChest = new ModelLargeChest();
     private boolean isChristams;
 
-    public TileEntityChestRenderer()
+    public TileEntityChestRenderer(ClientEngine mc)
     {
+        super(mc);
         Calendar calendar = Calendar.getInstance();
 
         if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26)

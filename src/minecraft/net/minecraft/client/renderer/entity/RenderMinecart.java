@@ -124,7 +124,7 @@ public class RenderMinecart<T extends EntityMinecart> extends Render<T>
     protected void func_180560_a(T minecart, float partialTicks, IBlockState state)
     {
         GlStateManager.pushMatrix();
-        ClientEngine.get().getBlockRendererDispatcher().renderBlockBrightness(state, minecart.getBrightness(partialTicks));
+        renderManager.mc.getBlockRendererDispatcher().renderBlockBrightness(state, minecart.getBrightness(partialTicks));
         GlStateManager.popMatrix();
     }
 }

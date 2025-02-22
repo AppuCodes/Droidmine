@@ -26,10 +26,7 @@ public class S2EPacketCloseWindow implements Packet<INetHandlerPlayClient>
      */
     public void processPacket(INetHandlerPlayClient handler)
     {
-        if (!(ClientEngine.get().currentScreen instanceof GuiChat))
-        {
-            handler.handleCloseWindow(this);
-        }
+        handler.handleCloseWindow(this);
     }
 
     /**

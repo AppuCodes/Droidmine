@@ -19,7 +19,7 @@ public class HttpUtils
         try
         {
             URL url = new URI(p_get_0_).toURL();
-            httpurlconnection = (HttpURLConnection)url.openConnection(ClientEngine.get().getProxy());
+            httpurlconnection = (HttpURLConnection)url.openConnection();
             httpurlconnection.setDoInput(true);
             httpurlconnection.setDoOutput(false);
             httpurlconnection.connect();
@@ -79,7 +79,7 @@ public class HttpUtils
         try
         {
             URL url = new URI(p_post_0_).toURL();
-            httpurlconnection = (HttpURLConnection)url.openConnection(ClientEngine.get().getProxy());
+            httpurlconnection = (HttpURLConnection)url.openConnection();
             httpurlconnection.setRequestMethod("POST");
 
             if (p_post_1_ != null)

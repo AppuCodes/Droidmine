@@ -70,7 +70,7 @@ public class GuiAchievement extends Gui
 
     public void updateAchievementWindow()
     {
-        if (this.theAchievement != null && this.notificationTime != 0L && ClientEngine.get().player != null)
+        if (this.theAchievement != null && this.notificationTime != 0L && mc.player != null)
         {
             double d0 = (double)(ClientEngine.getSystemTime() - this.notificationTime) / 3000.0D;
 

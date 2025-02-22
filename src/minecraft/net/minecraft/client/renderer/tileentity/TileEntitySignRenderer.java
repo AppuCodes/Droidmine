@@ -2,6 +2,7 @@ package net.minecraft.client.renderer.tileentity;
 
 import java.util.List;
 import net.minecraft.block.Block;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.model.ModelSign;
@@ -18,6 +19,11 @@ import org.lwjgl.opengl.GL11;
 
 public class TileEntitySignRenderer extends TileEntitySpecialRenderer
 {
+    public TileEntitySignRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     private static final ResourceLocation SIGN_TEXTURE = new ResourceLocation("textures/entity/sign.png");
 
     /** The ModelSign instance for use in this renderer */

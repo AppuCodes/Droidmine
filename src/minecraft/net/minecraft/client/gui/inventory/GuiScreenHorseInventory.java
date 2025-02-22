@@ -26,9 +26,9 @@ public class GuiScreenHorseInventory extends GuiContainer
     /** The mouse y-position recorded during the last renderered frame. */
     private float mousePosY;
 
-    public GuiScreenHorseInventory(IInventory playerInv, IInventory horseInv, EntityHorse horse)
+    public GuiScreenHorseInventory(IInventory playerInv, IInventory horseInv, EntityHorse horse, ClientEngine mc)
     {
-        super(new ContainerHorseInventory(playerInv, horseInv, horse, ClientEngine.get().player));
+        super(new ContainerHorseInventory(playerInv, horseInv, horse, mc.player));
         this.playerInventory = playerInv;
         this.horseInventory = horseInv;
         this.horseEntity = horse;
@@ -65,7 +65,7 @@ public class GuiScreenHorseInventory extends GuiContainer
             this.drawTexturedModalRect(i + 7, j + 35, 0, this.ySize + 54, 18, 18);
         }
 
-        GuiInventory.drawEntityOnScreen(i + 51, j + 60, 17, (float)(i + 51) - this.mousePosx, (float)(j + 75 - 50) - this.mousePosY, this.horseEntity);
+        GuiInventory.drawEntityOnScreen(i + 51, j + 60, 17, (float)(i + 51) - this.mousePosx, (float)(j + 75 - 50) - this.mousePosY, this.horseEntity, mc);
     }
 
     /**

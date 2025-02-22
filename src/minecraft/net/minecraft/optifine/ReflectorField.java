@@ -46,7 +46,7 @@ public class ReflectorField
         else
         {
             this.checked = true;
-            this.targetField = this.fieldLocator.getField();
+            this.targetField = this.fieldLocator.getField(null);
 
             if (this.targetField != null)
             {

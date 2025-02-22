@@ -17,15 +17,15 @@ public class TextureCompass extends TextureAtlasSprite
     public static String field_176608_l;
     private static final String __OBFID = "CL_00001071";
 
-    public TextureCompass(String iconName)
+    public TextureCompass(String iconName, ClientEngine mc)
     {
-        super(iconName);
+        super(iconName, mc);
         field_176608_l = iconName;
     }
 
     public void updateAnimation()
     {
-        ClientEngine minecraft = ClientEngine.get();
+        ClientEngine minecraft = mc;
 
         if (minecraft.world != null && minecraft.player != null)
         {

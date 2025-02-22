@@ -3,7 +3,6 @@ package net.minecraft.client.renderer;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
-import java.net.Proxy.Type;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
@@ -127,7 +126,7 @@ public class ThreadDownloadImageData extends SimpleTexture
                 {
                     try
                     {
-                        connection = (HttpURLConnection) new URI(ThreadDownloadImageData.this.imageUrl).toURL().openConnection(ClientEngine.get().getProxy());
+                        connection = (HttpURLConnection) new URI(ThreadDownloadImageData.this.imageUrl).toURL().openConnection();
                         connection.setDoInput(true);
                         connection.setDoOutput(false);
                         connection.connect();
@@ -195,8 +194,7 @@ public class ThreadDownloadImageData extends SimpleTexture
 
         else
         {
-            Proxy proxy = ClientEngine.get().getProxy();
-            return proxy.type() != Type.DIRECT && proxy.type() != Type.SOCKS ? false : this.imageUrl.startsWith("http://");
+            return this.imageUrl.startsWith("http://");
         }
     }
 
@@ -204,7 +202,7 @@ public class ThreadDownloadImageData extends SimpleTexture
     {
         try
         {
-            HttpRequest httprequest = HttpPipeline.makeRequest(this.imageUrl, ClientEngine.get().getProxy());
+            HttpRequest httprequest = HttpPipeline.makeRequest(this.imageUrl, Proxy.NO_PROXY);
             HttpResponse httpresponse = HttpPipeline.executeRequest(httprequest);
 
             if (httpresponse.getStatus() != 200)

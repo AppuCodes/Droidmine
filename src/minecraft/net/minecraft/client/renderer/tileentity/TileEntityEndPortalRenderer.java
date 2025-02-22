@@ -14,6 +14,11 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileEntityEndPortalRenderer extends TileEntitySpecialRenderer<TileEntityEndPortal>
 {
+    public TileEntityEndPortalRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     private static final ResourceLocation END_SKY_TEXTURE = new ResourceLocation("textures/environment/end_sky.png");
     private static final ResourceLocation END_PORTAL_TEXTURE = new ResourceLocation("textures/entity/end_portal.png");
     private static final Random field_147527_e = new Random(31100L);

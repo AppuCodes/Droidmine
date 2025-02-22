@@ -69,7 +69,7 @@ public abstract class GuiContainer extends GuiScreen
     protected boolean dragSplitting;
     private int dragSplittingLimit;
     private int dragSplittingButton;
-    private boolean ignoreMouseUp;
+    protected boolean ignoreMouseUp;
     private int dragSplittingRemnant;
     private long lastClickTime;
     private Slot lastClickSlot;

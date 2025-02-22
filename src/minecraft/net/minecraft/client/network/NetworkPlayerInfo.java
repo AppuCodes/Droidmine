@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
@@ -37,14 +38,17 @@ public class NetworkPlayerInfo
     private long field_178871_k = 0L;
     private long field_178868_l = 0L;
     private long field_178869_m = 0L;
+    private ClientEngine mc;
 
-    public NetworkPlayerInfo(GameProfile p_i46294_1_)
+    public NetworkPlayerInfo(GameProfile p_i46294_1_, ClientEngine mc)
     {
         this.gameProfile = p_i46294_1_;
+        this.mc = mc;
     }
 
-    public NetworkPlayerInfo(S38PacketPlayerListItem.AddPlayerData p_i46295_1_)
+    public NetworkPlayerInfo(S38PacketPlayerListItem.AddPlayerData p_i46295_1_, ClientEngine mc)
     {
+        this.mc = mc;
         this.gameProfile = p_i46295_1_.getProfile();
         this.gameType = p_i46295_1_.getGameMode();
         this.responseTime = p_i46295_1_.getPing();
@@ -111,7 +115,7 @@ public class NetworkPlayerInfo
 
     public ScorePlayerTeam getPlayerTeam()
     {
-        return ClientEngine.get().world.getScoreboard().getPlayersTeam(this.getGameProfile().getName());
+        return mc.world.getScoreboard().getPlayersTeam(this.getGameProfile().getName());
     }
 
     protected void loadPlayerTextures()
@@ -121,7 +125,8 @@ public class NetworkPlayerInfo
             if (!this.playerTexturesLoaded)
             {
                 this.playerTexturesLoaded = true;
-                ClientEngine.get().getSkinManager().loadProfileTextures(this.gameProfile, new SkinManager.SkinAvailableCallback()
+                
+                mc.getSkinManager().loadProfileTextures(this.gameProfile, new SkinManager.SkinAvailableCallback()
                 {
                     public void skinAvailable(Type p_180521_1_, ResourceLocation location, MinecraftProfileTexture profileTexture)
                     {

@@ -41,7 +41,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         }
 
         CapeUtils.downloadCape(this);
-        PlayerConfigurations.getPlayerConfiguration(this);
+        PlayerConfigurations.getPlayerConfiguration(this, mc);
     }
 
     /**

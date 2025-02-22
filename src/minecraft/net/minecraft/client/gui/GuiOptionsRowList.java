@@ -1,7 +1,9 @@
 package net.minecraft.client.gui;
 
-import com.google.common.collect.Lists;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.options.GameOptions;
 
@@ -20,7 +22,7 @@ public class GuiOptionsRowList extends GuiListExtended
             GameOptions.Options options$options1 = i < p_i45015_7_.length - 1 ? p_i45015_7_[i + 1] : null;
             GuiButton guibutton = this.func_148182_a(mcIn, p_i45015_2_ / 2 - 155, 0, options$options);
             GuiButton guibutton1 = this.func_148182_a(mcIn, p_i45015_2_ / 2 - 155 + 160, 0, options$options1);
-            this.field_148184_k.add(new GuiOptionsRowList.Row(guibutton, guibutton1));
+            this.field_148184_k.add(new GuiOptionsRowList.Row(guibutton, guibutton1, mc));
         }
     }
 
@@ -33,7 +35,7 @@ public class GuiOptionsRowList extends GuiListExtended
         else
         {
             int i = p_148182_4_.returnEnumOrdinal();
-            return (GuiButton)(p_148182_4_.getEnumFloat() ? new GuiOptionSlider(i, p_148182_2_, p_148182_3_, p_148182_4_) : new GuiOptionButton(i, p_148182_2_, p_148182_3_, p_148182_4_, mcIn.options.getKeyBinding(p_148182_4_)));
+            return (GuiButton)(p_148182_4_.getEnumFloat() ? new GuiOptionSlider(i, p_148182_2_, p_148182_3_, p_148182_4_, mc) : new GuiOptionButton(i, p_148182_2_, p_148182_3_, p_148182_4_, mcIn.options.getKeyBinding(p_148182_4_)));
         }
     }
 
@@ -65,12 +67,13 @@ public class GuiOptionsRowList extends GuiListExtended
 
     public static class Row implements GuiListExtended.IGuiListEntry
     {
-        private final ClientEngine field_148325_a = ClientEngine.get();
+        private final ClientEngine field_148325_a;
         private final GuiButton field_148323_b;
         private final GuiButton field_148324_c;
 
-        public Row(GuiButton p_i45014_1_, GuiButton p_i45014_2_)
+        public Row(GuiButton p_i45014_1_, GuiButton p_i45014_2_, ClientEngine mc)
         {
+            this.field_148325_a = mc;
             this.field_148323_b = p_i45014_1_;
             this.field_148324_c = p_i45014_2_;
         }

@@ -9,17 +9,17 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 
 public class LayerHeldItem implements LayerRenderer<EntityLivingBase>
 {
     private final RendererLivingEntity<?> livingEntityRenderer;
+    private ClientEngine mc;
 
-    public LayerHeldItem(RendererLivingEntity<?> livingEntityRendererIn)
+    public LayerHeldItem(RendererLivingEntity<?> livingEntityRendererIn, ClientEngine mc)
     {
         this.livingEntityRenderer = livingEntityRendererIn;
+        this.mc = mc;
     }
 
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
@@ -47,7 +47,7 @@ public class LayerHeldItem implements LayerRenderer<EntityLivingBase>
             }
 
             Item item = itemstack.getItem();
-            ClientEngine minecraft = ClientEngine.get();
+            ClientEngine minecraft = mc;
 
             if (item instanceof ItemBlock && Block.getBlockFromItem(item).getRenderType() == 2)
             {

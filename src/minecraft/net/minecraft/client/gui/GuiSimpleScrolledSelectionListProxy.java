@@ -12,9 +12,9 @@ public class GuiSimpleScrolledSelectionListProxy extends GuiSlot
 {
     private final RealmsSimpleScrolledSelectionList field_178050_u;
 
-    public GuiSimpleScrolledSelectionListProxy(RealmsSimpleScrolledSelectionList p_i45525_1_, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn)
+    public GuiSimpleScrolledSelectionListProxy(ClientEngine mc, RealmsSimpleScrolledSelectionList p_i45525_1_, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn)
     {
-        super(ClientEngine.get(), widthIn, heightIn, topIn, bottomIn, slotHeightIn);
+        super(mc, widthIn, heightIn, topIn, bottomIn, slotHeightIn);
         this.field_178050_u = p_i45525_1_;
     }
 

@@ -2,6 +2,8 @@ package net.minecraft.optifine;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockFaceUV;
 import net.minecraft.client.renderer.block.model.BlockPartFace;
@@ -17,13 +19,13 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class BlockModelUtils
 {
-    public static IBakedModel makeModelCube(String p_makeModelCube_0_, int p_makeModelCube_1_)
+    public static IBakedModel makeModelCube(String p_makeModelCube_0_, int p_makeModelCube_1_, ClientEngine mc)
     {
-        TextureAtlasSprite textureatlassprite = Config.getMinecraft().getTextureMapBlocks().getAtlasSprite(p_makeModelCube_0_);
-        return makeModelCube(textureatlassprite, p_makeModelCube_1_);
+        TextureAtlasSprite textureatlassprite = mc.getTextureMapBlocks().getAtlasSprite(p_makeModelCube_0_);
+        return makeModelCube(textureatlassprite, p_makeModelCube_1_, mc);
     }
 
-    public static IBakedModel makeModelCube(TextureAtlasSprite p_makeModelCube_0_, int p_makeModelCube_1_)
+    public static IBakedModel makeModelCube(TextureAtlasSprite p_makeModelCube_0_, int p_makeModelCube_1_, ClientEngine mc)
     {
         List list = new ArrayList();
         EnumFacing[] aenumfacing = EnumFacing.VALUES;
@@ -33,7 +35,7 @@ public class BlockModelUtils
         {
             EnumFacing enumfacing = aenumfacing[i];
             List list2 = new ArrayList();
-            list2.add(makeBakedQuad(enumfacing, p_makeModelCube_0_, p_makeModelCube_1_));
+            list2.add(makeBakedQuad(enumfacing, p_makeModelCube_0_, p_makeModelCube_1_, mc));
             list1.add(list2);
         }
 
@@ -41,7 +43,7 @@ public class BlockModelUtils
         return ibakedmodel;
     }
 
-    private static BakedQuad makeBakedQuad(EnumFacing p_makeBakedQuad_0_, TextureAtlasSprite p_makeBakedQuad_1_, int p_makeBakedQuad_2_)
+    private static BakedQuad makeBakedQuad(EnumFacing p_makeBakedQuad_0_, TextureAtlasSprite p_makeBakedQuad_1_, int p_makeBakedQuad_2_, ClientEngine mc)
     {
         Vector3f vector3f = new Vector3f(0.0F, 0.0F, 0.0F);
         Vector3f vector3f1 = new Vector3f(16.0F, 16.0F, 16.0F);
@@ -51,7 +53,7 @@ public class BlockModelUtils
         BlockPartRotation blockpartrotation = null;
         boolean flag = false;
         boolean flag1 = true;
-        FaceBakery facebakery = new FaceBakery();
+        FaceBakery facebakery = new FaceBakery(mc);
         BakedQuad bakedquad = facebakery.makeBakedQuad(vector3f, vector3f1, blockpartface, p_makeBakedQuad_1_, p_makeBakedQuad_0_, modelrotation, blockpartrotation, flag, flag1);
         return bakedquad;
     }

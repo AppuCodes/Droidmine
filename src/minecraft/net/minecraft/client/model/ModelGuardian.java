@@ -12,9 +12,11 @@ public class ModelGuardian extends ModelBase
     private ModelRenderer guardianEye;
     private ModelRenderer[] guardianSpines;
     private ModelRenderer[] guardianTail;
+    private ClientEngine mc;
 
-    public ModelGuardian()
+    public ModelGuardian(ClientEngine mc)
     {
+        this.mc = mc;
         this.textureWidth = 64;
         this.textureHeight = 64;
         this.guardianSpines = new ModelRenderer[12];
@@ -92,7 +94,7 @@ public class ModelGuardian extends ModelBase
         }
 
         this.guardianEye.rotationPointZ = -8.25F;
-        Entity entity = ClientEngine.get().getRenderViewEntity();
+        Entity entity = mc.getRenderViewEntity();
 
         if (entityguardian.hasTargetedEntity())
         {

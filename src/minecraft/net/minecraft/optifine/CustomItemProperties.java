@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockPart;
@@ -63,10 +65,12 @@ public class CustomItemProperties
     public static final int TYPE_ITEM = 1;
     public static final int TYPE_ENCHANTMENT = 2;
     public static final int TYPE_ARMOR = 3;
+    private ClientEngine mc;
 
-    public CustomItemProperties(Properties p_i34_1_, String p_i34_2_)
+    public CustomItemProperties(Properties p_i34_1_, String p_i34_2_, ClientEngine mc)
     {
         this.name = parseName(p_i34_2_);
+        this.mc = mc;
         this.basePath = parseBasePath(p_i34_2_);
         this.type = this.parseType(p_i34_1_.getProperty("type"));
         this.items = this.parseItems(p_i34_1_.getProperty("items"), p_i34_1_.getProperty("matchItems"));
@@ -654,7 +658,7 @@ public class CustomItemProperties
     {
         String[] astring = this.getModelTextures();
         boolean flag = this.isUseTint();
-        this.model = makeBakedModel(p_updateModel_1_, p_updateModel_2_, astring, flag);
+        this.model = makeBakedModel(p_updateModel_1_, p_updateModel_2_, astring, flag, mc);
 
         if (this.type == 1 && this.mapTextures != null)
         {
@@ -666,7 +670,7 @@ public class CustomItemProperties
                 if (s2.startsWith("bow") || s2.startsWith("fishing_rod"))
                 {
                     String[] astring1 = new String[] {s1};
-                    IBakedModel ibakedmodel = makeBakedModel(p_updateModel_1_, p_updateModel_2_, astring1, flag);
+                    IBakedModel ibakedmodel = makeBakedModel(p_updateModel_1_, p_updateModel_2_, astring1, flag, mc);
 
                     if (this.mapModels == null)
                     {
@@ -684,11 +688,11 @@ public class CustomItemProperties
         return true;
     }
 
-    private static IBakedModel makeBakedModel(TextureMap p_makeBakedModel_0_, ItemModelGenerator p_makeBakedModel_1_, String[] p_makeBakedModel_2_, boolean p_makeBakedModel_3_)
+    private static IBakedModel makeBakedModel(TextureMap p_makeBakedModel_0_, ItemModelGenerator p_makeBakedModel_1_, String[] p_makeBakedModel_2_, boolean p_makeBakedModel_3_, ClientEngine mc)
     {
         ModelBlock modelblock = makeModelBlock(p_makeBakedModel_2_);
         ModelBlock modelblock1 = p_makeBakedModel_1_.makeItemModel(p_makeBakedModel_0_, modelblock);
-        IBakedModel ibakedmodel = bakeModel(p_makeBakedModel_0_, modelblock1, p_makeBakedModel_3_);
+        IBakedModel ibakedmodel = bakeModel(p_makeBakedModel_0_, modelblock1, p_makeBakedModel_3_, mc);
         return ibakedmodel;
     }
 
@@ -794,7 +798,7 @@ public class CustomItemProperties
         return modelblock;
     }
 
-    private static IBakedModel bakeModel(TextureMap p_bakeModel_0_, ModelBlock p_bakeModel_1_, boolean p_bakeModel_2_)
+    private static IBakedModel bakeModel(TextureMap p_bakeModel_0_, ModelBlock p_bakeModel_1_, boolean p_bakeModel_2_, ClientEngine mc)
     {
         ModelRotation modelrotation = ModelRotation.X0_Y0;
         boolean flag = false;
@@ -813,7 +817,7 @@ public class CustomItemProperties
                 }
 
                 TextureAtlasSprite textureatlassprite1 = p_bakeModel_0_.getSpriteSafe(p_bakeModel_1_.resolveTextureName(blockpartface.texture));
-                BakedQuad bakedquad = makeBakedQuad(blockpart, blockpartface, textureatlassprite1, enumfacing, modelrotation, flag);
+                BakedQuad bakedquad = makeBakedQuad(blockpart, blockpartface, textureatlassprite1, enumfacing, modelrotation, flag, mc);
 
                 if (blockpartface.cullFace == null)
                 {
@@ -829,9 +833,9 @@ public class CustomItemProperties
         return simplebakedmodel$builder.makeBakedModel();
     }
 
-    private static BakedQuad makeBakedQuad(BlockPart p_makeBakedQuad_0_, BlockPartFace p_makeBakedQuad_1_, TextureAtlasSprite p_makeBakedQuad_2_, EnumFacing p_makeBakedQuad_3_, ModelRotation p_makeBakedQuad_4_, boolean p_makeBakedQuad_5_)
+    private static BakedQuad makeBakedQuad(BlockPart p_makeBakedQuad_0_, BlockPartFace p_makeBakedQuad_1_, TextureAtlasSprite p_makeBakedQuad_2_, EnumFacing p_makeBakedQuad_3_, ModelRotation p_makeBakedQuad_4_, boolean p_makeBakedQuad_5_, ClientEngine mc)
     {
-        FaceBakery facebakery = new FaceBakery();
+        FaceBakery facebakery = new FaceBakery(mc);
         return facebakery.makeBakedQuad(p_makeBakedQuad_0_.positionFrom, p_makeBakedQuad_0_.positionTo, p_makeBakedQuad_1_, p_makeBakedQuad_2_, p_makeBakedQuad_3_, p_makeBakedQuad_4_, p_makeBakedQuad_0_.partRotation, p_makeBakedQuad_5_, p_makeBakedQuad_0_.shade);
     }
 

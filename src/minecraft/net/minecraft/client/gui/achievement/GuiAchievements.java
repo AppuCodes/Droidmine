@@ -555,7 +555,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
     private TextureAtlasSprite func_175371_a(Block p_175371_1_)
     {
-        return ClientEngine.get().getBlockRendererDispatcher().getBlockModelShapes().getTexture(p_175371_1_.getDefaultState());
+        return mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(p_175371_1_.getDefaultState());
     }
 
     /**

@@ -11,10 +11,12 @@ import net.minecraft.item.ItemStack;
 public class LayerSnowmanHead implements LayerRenderer<EntitySnowman>
 {
     private final RenderSnowMan snowManRenderer;
+    private ClientEngine mc;
 
-    public LayerSnowmanHead(RenderSnowMan snowManRendererIn)
+    public LayerSnowmanHead(RenderSnowMan snowManRendererIn, ClientEngine mc)
     {
         this.snowManRenderer = snowManRendererIn;
+        this.mc = mc;
     }
 
     public void doRenderLayer(EntitySnowman entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
@@ -27,7 +29,7 @@ public class LayerSnowmanHead implements LayerRenderer<EntitySnowman>
             GlStateManager.translate(0.0F, -0.34375F, 0.0F);
             GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.scale(f, -f, -f);
-            ClientEngine.get().getItemRenderer().renderItem(entitylivingbaseIn, new ItemStack(Blocks.pumpkin, 1), ItemCameraTransforms.TransformType.HEAD);
+            mc.getItemRenderer().renderItem(entitylivingbaseIn, new ItemStack(Blocks.pumpkin, 1), ItemCameraTransforms.TransformType.HEAD);
             GlStateManager.popMatrix();
         }
     }

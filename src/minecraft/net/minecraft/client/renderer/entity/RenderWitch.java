@@ -15,7 +15,7 @@ public class RenderWitch extends RenderLiving<EntityWitch>
     public RenderWitch(RenderManager renderManagerIn, ClientEngine mc)
     {
         super(renderManagerIn, new ModelWitch(0.0F), 0.5F, mc);
-        this.addLayer(new LayerHeldItemWitch(this));
+        this.addLayer(new LayerHeldItemWitch(this, mc));
     }
 
     /**

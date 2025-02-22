@@ -53,15 +53,16 @@ public class WorldClient extends World
      * spawn up to 10 pending entities with each subsequent tick until the spawn queue is empty.
      */
     private final Set entitySpawnQueue = Sets.newHashSet();
-    private final ClientEngine mc = ClientEngine.get();
+    private final ClientEngine mc;
     private final Set previousActiveChunkSet = Sets.newHashSet();
     private static final String __OBFID = "CL_00000882";
     private BlockPosM randomTickPosM = new BlockPosM(0, 0, 0, 3);
     private boolean playerUpdate = false;
 
-    public WorldClient(NetHandlerPlayClient p_i45063_1_, WorldSettings p_i45063_2_, int p_i45063_3_, EnumDifficulty p_i45063_4_)
+    public WorldClient(NetHandlerPlayClient p_i45063_1_, WorldSettings p_i45063_2_, int p_i45063_3_, EnumDifficulty p_i45063_4_, ClientEngine mc)
     {
-        super(new SaveHandlerMP(), new WorldInfo(p_i45063_2_, "MpServer"), WorldProvider.getProviderForDimension(p_i45063_3_), true);
+        super(new SaveHandlerMP(), new WorldInfo(p_i45063_2_, "MpServer"), WorldProvider.getProviderForDimension(p_i45063_3_), true, mc);
+        this.mc = mc;
         this.sendQueue = p_i45063_1_;
         this.getWorldInfo().setDifficulty(p_i45063_4_);
         this.provider.registerWorld(this);
@@ -438,7 +439,7 @@ public class WorldClient extends World
 
     public void makeFireworks(double x, double y, double z, double motionX, double motionY, double motionZ, NBTTagCompound compund)
     {
-        this.mc.effectRenderer.addEffect(new EntityFirework.StarterFX(this, x, y, z, motionX, motionY, motionZ, this.mc.effectRenderer, compund));
+        this.mc.effectRenderer.addEffect(new EntityFirework.StarterFX(this, x, y, z, motionX, motionY, motionZ, this.mc.effectRenderer, compund, mc));
     }
 
     public void setWorldScoreboard(Scoreboard p_96443_1_)

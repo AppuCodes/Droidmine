@@ -45,7 +45,6 @@
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="net.droidmine.Session"/>
     <fullyQualifiedTypeName name="java.awt.Canvas"/>
-    <fullyQualifiedTypeName name="java.net.Proxy"/>
     <fullyQualifiedTypeName name="net.minecraft.client.gui.Gui"/>
     <fullyQualifiedTypeName name="java.util.function.Consumer"/>
     <fullyQualifiedTypeName name="java.time.Duration"/>
@@ -53,4 +52,6 @@
     <fullyQualifiedTypeName name="net.minecraft.network.Packet"/>
     <fullyQualifiedTypeName name="java.util.function.Function"/>
     <fullyQualifiedTypeName name="net.minecraft.client.ClientEngine"/>
+    <fullyQualifiedTypeName name="java.net.Proxy"/>
+    <fullyQualifiedTypeName name="net.minecraft.optifine.Config"/>
 </qualifiedTypeNameHistroy>

@@ -62,7 +62,6 @@ public class RealmsButton
 
     public void render(int p_render_1_, int p_render_2_)
     {
-        this.proxy.drawButton(ClientEngine.get(), p_render_1_, p_render_2_);
     }
 
     public void clicked(int p_clicked_1_, int p_clicked_2_)

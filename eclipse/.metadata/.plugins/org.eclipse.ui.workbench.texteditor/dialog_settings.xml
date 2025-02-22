@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="minecraft"/>
+		<item key="selection" value="isHeadless"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="minecraft"/>
-			<item value="minecraft ="/>
-			<item value="hasCrashed"/>
-			<item value="hasCrashed="/>
-			<item value="crashed"/>
-			<item value="theMin"/>
-			<item value="get"/>
+			<item value="isheadless"/>
+			<item value="mc.ish"/>
+			<item value="fancyGr"/>
+			<item value="fancyG"/>
+			<item value="fanc"/>
+			<item value="isHeadless"/>
+			<item value="isHeadls"/>
+			<item value=" Config."/>
+			<item value="Config."/>
 			<item value="isheadles"/>
-			<item value="startGame"/>
-			<item value="startGam"/>
-			<item value="window"/>
-			<item value="refres"/>
-			<item value="windowon"/>
-			<item value="//"/>
-			<item value="// "/>
+			<item value="updatean"/>
+			<item value="closeWin"/>
+			<item value="close"/>
+			<item value="minecraft ="/>
+			<item value="minecraft"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mc"/>
 			<item value="port "/>
 			<item value="a"/>
 			<item value="port"/>
@@ -39,7 +40,6 @@
 			<item value="green"/>
 			<item value="red"/>
 			<item value="box"/>
-			<item value="x("/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

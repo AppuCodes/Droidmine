@@ -1,24 +1,13 @@
 package net.minecraft.world;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockHopper;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockSnow;
-import net.minecraft.block.BlockStairs;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
@@ -33,17 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.IntHashMap;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.village.VillageCollection;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
@@ -51,9 +30,7 @@ import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.MapStorage;
-import net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.storage.*;
 
 public abstract class World implements IBlockAccess
 {
@@ -150,9 +127,11 @@ public abstract class World implements IBlockAccess
      * the original block, plus 32 (i.e. value of 31 would mean a -1 offset
      */
     int[] lightUpdateBlockList;
+    private ClientEngine mc;
 
-    protected World(ISaveHandler saveHandlerIn, WorldInfo info, WorldProvider providerIn, boolean client)
+    protected World(ISaveHandler saveHandlerIn, WorldInfo info, WorldProvider providerIn, boolean client, ClientEngine mc)
     {
+        this.mc = mc;
         this.ambientTickCountdown = this.rand.nextInt(12000);
         this.spawnHostileMobs = true;
         this.spawnPeacefulMobs = true;
@@ -1126,8 +1105,6 @@ public abstract class World implements IBlockAccess
 
     private void spawnParticle(int particleID, boolean p_175720_2_, double xCood, double yCoord, double zCoord, double xOffset, double yOffset, double zOffset, int... p_175720_15_)
     {
-        if (particleID == 0 && ClientEngine.get().options.particleSetting == 2) return;
-        
         for (int i = 0; i < this.worldAccesses.size(); ++i)
         {
             ((IWorldAccess)this.worldAccesses.get(i)).spawnParticle(particleID, p_175720_2_, xCood, yCoord, zCoord, xOffset, yOffset, zOffset, p_175720_15_);
@@ -3590,6 +3567,7 @@ public abstract class World implements IBlockAccess
 
     public void playAuxSFX(int p_175718_1_, BlockPos pos, int p_175718_3_)
     {
+        if (mc != null && mc.isHeadless()) return;
         this.playAuxSFXAtEntity((EntityPlayer)null, p_175718_1_, pos, p_175718_3_);
     }
 

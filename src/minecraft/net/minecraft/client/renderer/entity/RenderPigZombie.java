@@ -14,7 +14,7 @@ public class RenderPigZombie extends RenderBiped<EntityPigZombie>
     public RenderPigZombie(RenderManager renderManagerIn, ClientEngine mc)
     {
         super(renderManagerIn, new ModelZombie(), 0.5F, 1.0F, mc);
-        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerHeldItem(this, mc));
         this.addLayer(new LayerBipedArmor(this)
         {
             protected void initArmor()

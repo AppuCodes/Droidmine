@@ -15,6 +15,7 @@ class EntityRenderer2 implements Callable
 
     public String call() throws Exception
     {
-        return ClientEngine.get().currentScreen.getClass().getCanonicalName();
+//        return ClientEngine.get().currentScreen.getClass().getCanonicalName();
+        return "";
     }
 }

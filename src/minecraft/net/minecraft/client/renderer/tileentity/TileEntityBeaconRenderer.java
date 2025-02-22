@@ -1,6 +1,8 @@
 package net.minecraft.client.renderer.tileentity;
 
 import java.util.List;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -12,6 +14,11 @@ import org.lwjgl.opengl.GL11;
 
 public class TileEntityBeaconRenderer extends TileEntitySpecialRenderer<TileEntityBeacon>
 {
+    public TileEntityBeaconRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
 
     public void renderTileEntityAt(TileEntityBeacon te, double x, double y, double z, float partialTicks, int destroyStage)

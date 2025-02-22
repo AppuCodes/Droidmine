@@ -25,7 +25,7 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
 
     public RenderGuardian(RenderManager renderManagerIn, ClientEngine mc)
     {
-        super(renderManagerIn, new ModelGuardian(), 0.5F, mc);
+        super(renderManagerIn, new ModelGuardian(mc), 0.5F, mc);
         this.field_177115_a = ((ModelGuardian)this.mainModel).func_178706_a();
     }
 
@@ -75,7 +75,7 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
     {
         if (this.field_177115_a != ((ModelGuardian)this.mainModel).func_178706_a())
         {
-            this.mainModel = new ModelGuardian();
+            this.mainModel = new ModelGuardian(mc);
             this.field_177115_a = ((ModelGuardian)this.mainModel).func_178706_a();
         }
 

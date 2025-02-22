@@ -49,7 +49,7 @@ public class ConnectedTextures
     public static final IBlockState AIR_DEFAULT_STATE = Blocks.air.getDefaultState();
     private static TextureAtlasSprite emptySprite = null;
 
-    public static synchronized BakedQuad getConnectedTexture(IBlockAccess p_getConnectedTexture_0_, IBlockState p_getConnectedTexture_1_, BlockPos p_getConnectedTexture_2_, BakedQuad p_getConnectedTexture_3_, RenderEnv p_getConnectedTexture_4_)
+    public static synchronized BakedQuad getConnectedTexture(IBlockAccess p_getConnectedTexture_0_, IBlockState p_getConnectedTexture_1_, BlockPos p_getConnectedTexture_2_, BakedQuad p_getConnectedTexture_3_, RenderEnv p_getConnectedTexture_4_, ClientEngine mc)
     {
         TextureAtlasSprite textureatlassprite = p_getConnectedTexture_3_.getSprite();
 
@@ -68,16 +68,16 @@ public class ConnectedTextures
 
                 if (iblockstate == p_getConnectedTexture_1_)
                 {
-                    return getQuad(emptySprite, block, p_getConnectedTexture_1_, p_getConnectedTexture_3_);
+                    return getQuad(emptySprite, block, p_getConnectedTexture_1_, p_getConnectedTexture_3_, mc);
                 }
             }
 
             TextureAtlasSprite textureatlassprite1 = getConnectedTextureMultiPass(p_getConnectedTexture_0_, p_getConnectedTexture_1_, p_getConnectedTexture_2_, enumfacing, textureatlassprite, p_getConnectedTexture_4_);
-            return textureatlassprite1 == textureatlassprite ? p_getConnectedTexture_3_ : getQuad(textureatlassprite1, block, p_getConnectedTexture_1_, p_getConnectedTexture_3_);
+            return textureatlassprite1 == textureatlassprite ? p_getConnectedTexture_3_ : getQuad(textureatlassprite1, block, p_getConnectedTexture_1_, p_getConnectedTexture_3_, mc);
         }
     }
 
-    private static BakedQuad getQuad(TextureAtlasSprite p_getQuad_0_, Block p_getQuad_1_, IBlockState p_getQuad_2_, BakedQuad p_getQuad_3_)
+    private static BakedQuad getQuad(TextureAtlasSprite p_getQuad_0_, Block p_getQuad_1_, IBlockState p_getQuad_2_, BakedQuad p_getQuad_3_, ClientEngine mc)
     {
         if (spriteQuadMaps == null)
         {
@@ -101,7 +101,7 @@ public class ConnectedTextures
 
                 if (bakedquad == null)
                 {
-                    bakedquad = makeSpriteQuad(p_getQuad_3_, p_getQuad_0_);
+                    bakedquad = makeSpriteQuad(p_getQuad_3_, p_getQuad_0_, mc);
                     map.put(p_getQuad_3_, bakedquad);
                 }
 
@@ -114,7 +114,7 @@ public class ConnectedTextures
         }
     }
 
-    private static BakedQuad makeSpriteQuad(BakedQuad p_makeSpriteQuad_0_, TextureAtlasSprite p_makeSpriteQuad_1_)
+    private static BakedQuad makeSpriteQuad(BakedQuad p_makeSpriteQuad_0_, TextureAtlasSprite p_makeSpriteQuad_1_, ClientEngine mc)
     {
         int[] aint = (int[])p_makeSpriteQuad_0_.getVertexData().clone();
         TextureAtlasSprite textureatlassprite = p_makeSpriteQuad_0_.getSprite();
@@ -124,7 +124,7 @@ public class ConnectedTextures
             fixVertex(aint, i, textureatlassprite, p_makeSpriteQuad_1_);
         }
 
-        BakedQuad bakedquad = new BakedQuad(aint, p_makeSpriteQuad_0_.getTintIndex(), p_makeSpriteQuad_0_.getFace(), p_makeSpriteQuad_1_);
+        BakedQuad bakedquad = new BakedQuad(aint, p_makeSpriteQuad_0_.getTintIndex(), p_makeSpriteQuad_0_.getFace(), p_makeSpriteQuad_1_, mc);
         return bakedquad;
     }
 

@@ -14,9 +14,9 @@ public class EntityFirework
 {
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, ClientEngine.get().effectRenderer);
+            EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, mc.effectRenderer, mc);
             entityfirework$sparkfx.setAlphaF(0.99F);
             return entityfirework$sparkfx;
         }
@@ -24,9 +24,9 @@ public class EntityFirework
 
     public static class OverlayFX extends EntityFX
     {
-        protected OverlayFX(World p_i46466_1_, double p_i46466_2_, double p_i46466_4_, double p_i46466_6_)
+        protected OverlayFX(World p_i46466_1_, double p_i46466_2_, double p_i46466_4_, double p_i46466_6_, ClientEngine mc)
         {
-            super(p_i46466_1_, p_i46466_2_, p_i46466_4_, p_i46466_6_);
+            super(p_i46466_1_, p_i46466_2_, p_i46466_4_, p_i46466_6_, mc);
             this.particleMaxAge = 4;
         }
 
@@ -62,9 +62,9 @@ public class EntityFirework
         private float fadeColourBlue;
         private boolean hasFadeColour;
 
-        public SparkFX(World p_i46465_1_, double p_i46465_2_, double p_i46465_4_, double p_i46465_6_, double p_i46465_8_, double p_i46465_10_, double p_i46465_12_, EffectRenderer p_i46465_14_)
+        public SparkFX(World p_i46465_1_, double p_i46465_2_, double p_i46465_4_, double p_i46465_6_, double p_i46465_8_, double p_i46465_10_, double p_i46465_12_, EffectRenderer p_i46465_14_, ClientEngine mc)
         {
-            super(p_i46465_1_, p_i46465_2_, p_i46465_4_, p_i46465_6_);
+            super(p_i46465_1_, p_i46465_2_, p_i46465_4_, p_i46465_6_, mc);
             this.motionX = p_i46465_8_;
             this.motionY = p_i46465_10_;
             this.motionZ = p_i46465_12_;
@@ -157,7 +157,7 @@ public class EntityFirework
 
             if (this.trail && this.particleAge < this.particleMaxAge / 2 && (this.particleAge + this.particleMaxAge) % 2 == 0)
             {
-                EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(this.worldObj, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, this.field_92047_az);
+                EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(this.worldObj, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, this.field_92047_az, mc);
                 entityfirework$sparkfx.setAlphaF(0.99F);
                 entityfirework$sparkfx.setRBGColorF(this.particleRed, this.particleGreen, this.particleBlue);
                 entityfirework$sparkfx.particleAge = entityfirework$sparkfx.particleMaxAge / 2;
@@ -193,9 +193,9 @@ public class EntityFirework
         private NBTTagList fireworkExplosions;
         boolean twinkle;
 
-        public StarterFX(World p_i46464_1_, double p_i46464_2_, double p_i46464_4_, double p_i46464_6_, double p_i46464_8_, double p_i46464_10_, double p_i46464_12_, EffectRenderer p_i46464_14_, NBTTagCompound p_i46464_15_)
+        public StarterFX(World p_i46464_1_, double p_i46464_2_, double p_i46464_4_, double p_i46464_6_, double p_i46464_8_, double p_i46464_10_, double p_i46464_12_, EffectRenderer p_i46464_14_, NBTTagCompound p_i46464_15_, ClientEngine mc)
         {
-            super(p_i46464_1_, p_i46464_2_, p_i46464_4_, p_i46464_6_, 0.0D, 0.0D, 0.0D);
+            super(p_i46464_1_, p_i46464_2_, p_i46464_4_, p_i46464_6_, 0.0D, 0.0D, 0.0D, mc);
             this.motionX = p_i46464_8_;
             this.motionY = p_i46464_10_;
             this.motionZ = p_i46464_12_;
@@ -302,7 +302,7 @@ public class EntityFirework
                 float f = (float)((j & 16711680) >> 16) / 255.0F;
                 float f1 = (float)((j & 65280) >> 8) / 255.0F;
                 float f2 = (float)((j & 255) >> 0) / 255.0F;
-                EntityFirework.OverlayFX entityfirework$overlayfx = new EntityFirework.OverlayFX(this.worldObj, this.posX, this.posY, this.posZ);
+                EntityFirework.OverlayFX entityfirework$overlayfx = new EntityFirework.OverlayFX(this.worldObj, this.posX, this.posY, this.posZ, mc);
                 entityfirework$overlayfx.setRBGColorF(f, f1, f2);
                 this.theEffectRenderer.addEffect(entityfirework$overlayfx);
             }
@@ -324,13 +324,13 @@ public class EntityFirework
 
         private boolean func_92037_i()
         {
-            ClientEngine minecraft = ClientEngine.get();
+            ClientEngine minecraft = mc;
             return minecraft == null || minecraft.getRenderViewEntity() == null || minecraft.getRenderViewEntity().getDistanceSq(this.posX, this.posY, this.posZ) >= 256.0D;
         }
 
         private void createParticle(double p_92034_1_, double p_92034_3_, double p_92034_5_, double p_92034_7_, double p_92034_9_, double p_92034_11_, int[] p_92034_13_, int[] p_92034_14_, boolean p_92034_15_, boolean p_92034_16_)
         {
-            EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(this.worldObj, p_92034_1_, p_92034_3_, p_92034_5_, p_92034_7_, p_92034_9_, p_92034_11_, this.theEffectRenderer);
+            EntityFirework.SparkFX entityfirework$sparkfx = new EntityFirework.SparkFX(this.worldObj, p_92034_1_, p_92034_3_, p_92034_5_, p_92034_7_, p_92034_9_, p_92034_11_, this.theEffectRenderer, mc);
             entityfirework$sparkfx.setAlphaF(0.99F);
             entityfirework$sparkfx.setTrail(p_92034_15_);
             entityfirework$sparkfx.setTwinkle(p_92034_16_);

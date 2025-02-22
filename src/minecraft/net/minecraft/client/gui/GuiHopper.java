@@ -19,9 +19,9 @@ public class GuiHopper extends GuiContainer
     /** The hopper inventory bound to this GUI instance */
     private IInventory hopperInventory;
 
-    public GuiHopper(InventoryPlayer playerInv, IInventory hopperInv)
+    public GuiHopper(InventoryPlayer playerInv, IInventory hopperInv, ClientEngine mc)
     {
-        super(new ContainerHopper(playerInv, hopperInv, ClientEngine.get().player));
+        super(new ContainerHopper(playerInv, hopperInv, mc.player));
         this.playerInventory = playerInv;
         this.hopperInventory = hopperInv;
         this.allowUserInput = false;

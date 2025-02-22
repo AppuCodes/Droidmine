@@ -9,9 +9,9 @@ public class GuiClickableScrolledSelectionListProxy extends GuiSlot
 {
     private final RealmsClickableScrolledSelectionList field_178046_u;
 
-    public GuiClickableScrolledSelectionListProxy(RealmsClickableScrolledSelectionList selectionList, int p_i45526_2_, int p_i45526_3_, int p_i45526_4_, int p_i45526_5_, int p_i45526_6_)
+    public GuiClickableScrolledSelectionListProxy(RealmsClickableScrolledSelectionList selectionList, int p_i45526_2_, int p_i45526_3_, int p_i45526_4_, int p_i45526_5_, int p_i45526_6_, ClientEngine mc)
     {
-        super(ClientEngine.get(), p_i45526_2_, p_i45526_3_, p_i45526_4_, p_i45526_5_, p_i45526_6_);
+        super(mc, p_i45526_2_, p_i45526_3_, p_i45526_4_, p_i45526_5_, p_i45526_6_);
         this.field_178046_u = selectionList;
     }
 

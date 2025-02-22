@@ -1,14 +1,15 @@
 package net.minecraft.client.resources;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
 
 public class ResourcePackListEntryFound extends ResourcePackListEntry
 {
     private final ResourcePackRepository.Entry field_148319_c;
 
-    public ResourcePackListEntryFound(GuiScreenResourcePacks resourcePacksGUIIn, ResourcePackRepository.Entry p_i45053_2_)
+    public ResourcePackListEntryFound(GuiScreenResourcePacks resourcePacksGUIIn, ResourcePackRepository.Entry p_i45053_2_, ClientEngine mc)
     {
-        super(resourcePacksGUIIn);
+        super(resourcePacksGUIIn, mc);
         this.field_148319_c = p_i45053_2_;
     }
 

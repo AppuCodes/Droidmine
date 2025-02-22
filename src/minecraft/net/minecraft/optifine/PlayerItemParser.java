@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -41,7 +43,7 @@ public class PlayerItemParser
     public static final String ITEM_TYPE_MODEL = "PlayerItem";
     public static final String MODEL_TYPE_BOX = "ModelBox";
 
-    public static PlayerItemModel parseItemModel(JsonObject p_parseItemModel_0_)
+    public static PlayerItemModel parseItemModel(JsonObject p_parseItemModel_0_, ClientEngine mc)
     {
         String s = Json.getString(p_parseItemModel_0_, "type");
 
@@ -108,7 +110,7 @@ public class PlayerItemParser
             }
 
             PlayerItemRenderer[] aplayeritemrenderer = (PlayerItemRenderer[])((PlayerItemRenderer[])list.toArray(new PlayerItemRenderer[list.size()]));
-            return new PlayerItemModel(dimension, flag, aplayeritemrenderer);
+            return new PlayerItemModel(dimension, flag, aplayeritemrenderer, mc);
         }
     }
 

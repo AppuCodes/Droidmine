@@ -913,23 +913,23 @@ public class ShadersTex
 
     static void updateTextureMinMagFilter()
     {
-        TextureManager texturemanager = ClientEngine.get().getTextureManager();
-        ITextureObject itextureobject = texturemanager.getTexture(TextureMap.locationBlocksTexture);
-
-        if (itextureobject != null)
-        {
-            MultiTexID multitexid = itextureobject.getMultiTexID();
-            GlStateManager.bindTexture(multitexid.base);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.texMinFilValue[Shaders.configTexMinFilB]);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, Shaders.texMagFilValue[Shaders.configTexMagFilB]);
-            GlStateManager.bindTexture(multitexid.norm);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.texMinFilValue[Shaders.configTexMinFilN]);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, Shaders.texMagFilValue[Shaders.configTexMagFilN]);
-            GlStateManager.bindTexture(multitexid.spec);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.texMinFilValue[Shaders.configTexMinFilS]);
-            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, Shaders.texMagFilValue[Shaders.configTexMagFilS]);
-            GlStateManager.bindTexture(0);
-        }
+//        TextureManager texturemanager = ClientEngine.get().getTextureManager();
+//        ITextureObject itextureobject = texturemanager.getTexture(TextureMap.locationBlocksTexture);
+//
+//        if (itextureobject != null)
+//        {
+//            MultiTexID multitexid = itextureobject.getMultiTexID();
+//            GlStateManager.bindTexture(multitexid.base);
+//            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.texMinFilValue[Shaders.configTexMinFilB]);
+//            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, Shaders.texMagFilValue[Shaders.configTexMagFilB]);
+//            GlStateManager.bindTexture(multitexid.norm);
+//            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.texMinFilValue[Shaders.configTexMinFilN]);
+//            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, Shaders.texMagFilValue[Shaders.configTexMagFilN]);
+//            GlStateManager.bindTexture(multitexid.spec);
+//            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, Shaders.texMinFilValue[Shaders.configTexMinFilS]);
+//            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, Shaders.texMagFilValue[Shaders.configTexMagFilS]);
+//            GlStateManager.bindTexture(0);
+//        }
     }
 
     public static IResource loadResource(IResourceManager manager, ResourceLocation location) throws IOException

@@ -18,7 +18,7 @@ import org.lwjgl.input.Keyboard;
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
     private static final Logger logger = LogManager.getLogger();
-    private final OldServerPinger oldServerPinger = new OldServerPinger();
+    private OldServerPinger oldServerPinger;
     private GuiScreen parentScreen;
     private ServerSelectionList serverListSelector;
     private ServerList savedServerList;
@@ -50,6 +50,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
      */
     public void initGui()
     {
+        oldServerPinger = new OldServerPinger(mc);
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
 

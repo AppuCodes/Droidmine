@@ -80,8 +80,8 @@ public class Shader
         this.manager.getShaderUniformOrDefault("InSize").set((float)this.framebufferIn.framebufferTextureWidth, (float)this.framebufferIn.framebufferTextureHeight);
         this.manager.getShaderUniformOrDefault("OutSize").set(f, f1);
         this.manager.getShaderUniformOrDefault("Time").set(p_148042_1_);
-        ClientEngine minecraft = ClientEngine.get();
-        this.manager.getShaderUniformOrDefault("ScreenSize").set((float)minecraft.displayWidth, (float)minecraft.displayHeight);
+//        ClientEngine minecraft = ClientEngine.get();
+//        this.manager.getShaderUniformOrDefault("ScreenSize").set((float)minecraft.displayWidth, (float)minecraft.displayHeight);
         this.manager.useShader();
         this.framebufferOut.framebufferClear();
         this.framebufferOut.bindFramebuffer(false);

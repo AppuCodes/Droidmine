@@ -13,7 +13,7 @@ public class RenderSnowMan extends RenderLiving<EntitySnowman>
     public RenderSnowMan(RenderManager renderManagerIn, ClientEngine mc)
     {
         super(renderManagerIn, new ModelSnowMan(), 0.5F, mc);
-        this.addLayer(new LayerSnowmanHead(this));
+        this.addLayer(new LayerSnowmanHead(this, mc));
     }
 
     /**

@@ -1,10 +1,10 @@
 package net.minecraft.client.renderer.tileentity;
 
+import java.util.*;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBanner;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,15 +12,19 @@ import net.minecraft.client.renderer.texture.LayeredColorMaskTexture;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.tileentity.TileEntityBanner;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 
 public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEntityBanner>
 {
+    public TileEntityBannerRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     private static final Map<String, TileEntityBannerRenderer.TimedBannerTexture> DESIGNS = Maps.<String, TileEntityBannerRenderer.TimedBannerTexture>newHashMap();
     private static final ResourceLocation BANNERTEXTURES = new ResourceLocation("textures/entity/banner_base.png");
     private ModelBanner bannerModel = new ModelBanner();
+    private ClientEngine mc;
 
     public void renderTileEntityAt(TileEntityBanner te, double x, double y, double z, float partialTicks, int destroyStage)
     {
@@ -108,7 +112,7 @@ public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEnti
 
                         if (i - tileentitybannerrenderer$timedbannertexture1.systemTime > 60000L)
                         {
-                            ClientEngine.get().getTextureManager().deleteTexture(tileentitybannerrenderer$timedbannertexture1.bannerTexture);
+                            mc.getTextureManager().deleteTexture(tileentitybannerrenderer$timedbannertexture1.bannerTexture);
                             iterator.remove();
                         }
                     }
@@ -130,7 +134,7 @@ public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEnti
 
                 tileentitybannerrenderer$timedbannertexture = new TileEntityBannerRenderer.TimedBannerTexture();
                 tileentitybannerrenderer$timedbannertexture.bannerTexture = new ResourceLocation(s);
-                ClientEngine.get().getTextureManager().loadTexture(tileentitybannerrenderer$timedbannertexture.bannerTexture, new LayeredColorMaskTexture(BANNERTEXTURES, list2, list));
+                // mc.getTextureManager().loadTexture(tileentitybannerrenderer$timedbannertexture.bannerTexture, new LayeredColorMaskTexture(BANNERTEXTURES, list2, list));
                 DESIGNS.put(s, tileentitybannerrenderer$timedbannertexture);
             }
 

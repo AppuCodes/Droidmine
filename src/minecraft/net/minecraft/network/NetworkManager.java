@@ -92,10 +92,12 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
     private IChatComponent terminationReason;
     private boolean isEncrypted;
     private boolean disconnected;
+    public ClientEngine mc;
 
-    public NetworkManager(EnumPacketDirection packetDirection)
+    public NetworkManager(EnumPacketDirection packetDirection, ClientEngine mc)
     {
         this.direction = packetDirection;
+        this.mc = mc;
     }
 
     public void channelActive(ChannelHandlerContext p_channelActive_1_) throws Exception
@@ -150,9 +152,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         {
             try
             {
-                if (ClientEngine.get().packetReceiveEvent != null)
+                if (mc.packetReceiveEvent != null)
                 {
-                    Packet packet = (Packet) ClientEngine.get().packetReceiveEvent.apply(p_channelRead0_2_);
+                    Packet packet = (Packet) mc.packetReceiveEvent.apply(p_channelRead0_2_);
                     if (packet != null) packet.processPacket(packetListener);
                 }
 
@@ -177,9 +179,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     public void sendPacket(Packet packetIn)
     {
-        if (ClientEngine.get().packetSendEvent != null)
+        if (mc.packetSendEvent != null)
         {
-            packetIn = (Packet) ClientEngine.get().packetSendEvent.apply(packetIn);
+            packetIn = (Packet) mc.packetSendEvent.apply(packetIn);
             if (packetIn == null) return;
         }
 
@@ -347,9 +349,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         return this.channel instanceof LocalChannel || this.channel instanceof LocalServerChannel;
     }
 
-    public static NetworkManager create(InetAddress p_181124_0_, int p_181124_1_, boolean p_181124_2_)
+    public static NetworkManager create(InetAddress p_181124_0_, int p_181124_1_, boolean p_181124_2_, ClientEngine mc)
     {
-        final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
+        final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND, mc);
         Class <? extends SocketChannel > oclass;
         LazyLoadBase <? extends EventLoopGroup > lazyloadbase;
 
@@ -387,9 +389,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
      * Prepares a clientside NetworkManager: establishes a connection to the socket supplied and configures the channel
      * pipeline. Returns the newly created instance.
      */
-    public static NetworkManager provideLocalClient(SocketAddress address)
+    public static NetworkManager provideLocalClient(SocketAddress address, ClientEngine mc)
     {
-        final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
+        final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND, mc);
         ((Bootstrap)((Bootstrap)((Bootstrap)(new Bootstrap()).group((EventLoopGroup)CLIENT_LOCAL_EVENTLOOP.getValue())).handler(new ChannelInitializer<Channel>()
         {
             protected void initChannel(Channel p_initChannel_1_) throws Exception

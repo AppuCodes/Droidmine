@@ -20,9 +20,11 @@ public class BakedQuad implements IVertexProducer
     private static final String __OBFID = "CL_00002512";
     private TextureAtlasSprite sprite = null;
     private int[] vertexDataSingle = null;
+    public ClientEngine mc;
 
-    public BakedQuad(int[] p_i9_1_, int p_i9_2_, EnumFacing p_i9_3_, TextureAtlasSprite p_i9_4_)
+    public BakedQuad(int[] p_i9_1_, int p_i9_2_, EnumFacing p_i9_3_, TextureAtlasSprite p_i9_4_, ClientEngine mc)
     {
+        this.mc = mc;
         this.vertexData = p_i9_1_;
         this.tintIndex = p_i9_2_;
         this.face = p_i9_3_;
@@ -34,7 +36,7 @@ public class BakedQuad implements IVertexProducer
     {
         if (this.sprite == null)
         {
-            this.sprite = getSpriteByUv(this.getVertexData());
+            this.sprite = getSpriteByUv(this.getVertexData(), mc);
         }
 
         return this.sprite;

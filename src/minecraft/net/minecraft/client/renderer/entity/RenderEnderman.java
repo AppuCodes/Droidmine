@@ -23,7 +23,7 @@ public class RenderEnderman extends RenderLiving<EntityEnderman>
         super(renderManagerIn, new ModelEnderman(0.0F), 0.5F, mc);
         this.endermanModel = (ModelEnderman)super.mainModel;
         this.addLayer(new LayerEndermanEyes(this));
-        this.addLayer(new LayerHeldBlock(this));
+        this.addLayer(new LayerHeldBlock(this, mc));
     }
 
     /**

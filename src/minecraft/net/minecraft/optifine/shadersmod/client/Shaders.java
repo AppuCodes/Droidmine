@@ -1,45 +1,14 @@
 package net.minecraft.optifine.shadersmod.client;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.io.*;
+import java.nio.*;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.ARBFragmentShader;
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.ARBVertexShader;
-import org.lwjgl.opengl.ContextCapabilities;
-import org.lwjgl.opengl.EXTFramebufferObject;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GLContext;
+import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
 import net.minecraft.block.Block;
@@ -48,36 +17,23 @@ import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.*;
+import net.minecraft.item.*;
 import net.minecraft.optifine.*;
 import net.minecraft.optifine.shadersmod.common.SMCLog;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class Shaders
 {
-    static ClientEngine mc;
+    static ClientEngine mc = Config.getMinecraft();
     static EntityRenderer entityRenderer;
     public static boolean isInitializedOnce = false;
     public static boolean isShaderPackInitialized = false;
@@ -1255,7 +1211,7 @@ public class Shaders
     private static void saveOptionProperties(IShaderPack sp, Properties props) throws IOException
     {
         String s = shaderpacksdirname + "/" + sp.getName() + ".txt";
-        File file1 = new File(ClientEngine.get().mcDataDir, s);
+        File file1 = new File(mc.mcDataDir, s);
 
         if (props.isEmpty())
         {
@@ -1307,7 +1263,7 @@ public class Shaders
     {
         Properties properties = new Properties();
         String s = shaderpacksdirname + "/" + sp.getName() + ".txt";
-        File file1 = new File(ClientEngine.get().mcDataDir, s);
+        File file1 = new File(mc.mcDataDir, s);
 
         if (file1.exists() && file1.isFile() && file1.canRead())
         {
@@ -1507,7 +1463,6 @@ public class Shaders
     {
         checkShadersModInstalled();
         Shaders.mc = mc;
-        mc = ClientEngine.get();
         capabilities = GLContext.getCapabilities();
         glVersionString = GL11.glGetString(GL11.GL_VERSION);
         glVendorString = GL11.glGetString(GL11.GL_VENDOR);
@@ -3405,7 +3360,7 @@ public class Shaders
             }
 
             Vec3 vec3 = mc.world.getSkyColor(entity, partialTicks);
-            vec3 = CustomColors.getWorldSkyColor(vec3, currentWorld, entity, partialTicks);
+            vec3 = CustomColors.getWorldSkyColor(vec3, currentWorld, entity, partialTicks, mc);
             skyColorR = (float)vec3.xCoord;
             skyColorG = (float)vec3.yCoord;
             skyColorB = (float)vec3.zCoord;
@@ -4772,9 +4727,9 @@ public class Shaders
 
     static
     {
-        shadersdir = new File(ClientEngine.get().mcDataDir, "shaders");
-        shaderpacksdir = new File(ClientEngine.get().mcDataDir, shaderpacksdirname);
-        configFile = new File(ClientEngine.get().mcDataDir, optionsfilename);
+        shadersdir = new File(mc.mcDataDir, "shaders");
+        shaderpacksdir = new File(mc.mcDataDir, shaderpacksdirname);
+        configFile = new File(mc.mcDataDir, optionsfilename);
         drawBuffersNone.limit(0);
         drawBuffersColorAtt0.put(36064).position(0).limit(1);
     }

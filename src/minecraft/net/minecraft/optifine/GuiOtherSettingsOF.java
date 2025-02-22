@@ -43,7 +43,7 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
             }
             else
             {
-                this.buttonList.add(new GuiOptionSliderOF(options$options.returnEnumOrdinal(), j, k, options$options));
+                this.buttonList.add(new GuiOptionSliderOF(options$options.returnEnumOrdinal(), j, k, options$options, mc));
             }
         }
 

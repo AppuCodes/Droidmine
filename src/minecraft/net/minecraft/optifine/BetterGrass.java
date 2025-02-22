@@ -2,9 +2,9 @@ package net.minecraft.optifine;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockMycelium;
+
+import net.minecraft.block.*;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.IBakedModel;
@@ -21,11 +21,11 @@ public class BetterGrass
     private static IBakedModel modelCubeGrassSnowy = null;
     private static IBakedModel modelCubeGrass = null;
 
-    public static void update()
+    public static void update(ClientEngine mc)
     {
-        modelCubeGrass = BlockModelUtils.makeModelCube((String)"minecraft:blocks/grass_top", 0);
-        modelCubeGrassSnowy = BlockModelUtils.makeModelCube((String)"minecraft:blocks/snow", -1);
-        modelCubeMycelium = BlockModelUtils.makeModelCube((String)"minecraft:blocks/mycelium_top", -1);
+        modelCubeGrass = BlockModelUtils.makeModelCube((String)"minecraft:blocks/grass_top", 0, mc);
+        modelCubeGrassSnowy = BlockModelUtils.makeModelCube((String)"minecraft:blocks/snow", -1, mc);
+        modelCubeMycelium = BlockModelUtils.makeModelCube((String)"minecraft:blocks/mycelium_top", -1, mc);
     }
 
     public static List getFaceQuads(IBlockAccess p_getFaceQuads_0_, Block p_getFaceQuads_1_, BlockPos p_getFaceQuads_2_, EnumFacing p_getFaceQuads_3_, List p_getFaceQuads_4_)

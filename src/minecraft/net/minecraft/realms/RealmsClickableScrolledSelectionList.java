@@ -1,14 +1,15 @@
 package net.minecraft.realms;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.GuiClickableScrolledSelectionListProxy;
 
 public class RealmsClickableScrolledSelectionList
 {
     private final GuiClickableScrolledSelectionListProxy proxy;
 
-    public RealmsClickableScrolledSelectionList(int p_i46052_1_, int p_i46052_2_, int p_i46052_3_, int p_i46052_4_, int p_i46052_5_)
+    public RealmsClickableScrolledSelectionList(int p_i46052_1_, int p_i46052_2_, int p_i46052_3_, int p_i46052_4_, int p_i46052_5_, ClientEngine mc)
     {
-        this.proxy = new GuiClickableScrolledSelectionListProxy(this, p_i46052_1_, p_i46052_2_, p_i46052_3_, p_i46052_4_, p_i46052_5_);
+        this.proxy = new GuiClickableScrolledSelectionListProxy(this, p_i46052_1_, p_i46052_2_, p_i46052_3_, p_i46052_4_, p_i46052_5_, mc);
     }
 
     public void render(int p_render_1_, int p_render_2_, float p_render_3_)

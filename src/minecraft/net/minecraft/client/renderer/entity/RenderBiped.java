@@ -17,7 +17,7 @@ public class RenderBiped<T extends EntityLiving> extends RenderLiving<T>
     public RenderBiped(RenderManager renderManagerIn, ModelBiped modelBipedIn, float shadowSize, ClientEngine mc)
     {
         this(renderManagerIn, modelBipedIn, shadowSize, 1.0F, mc);
-        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerHeldItem(this, mc));
     }
 
     public RenderBiped(RenderManager renderManagerIn, ModelBiped modelBipedIn, float shadowSize, float p_i46169_4_, ClientEngine mc)
@@ -25,7 +25,7 @@ public class RenderBiped<T extends EntityLiving> extends RenderLiving<T>
         super(renderManagerIn, modelBipedIn, shadowSize, mc);
         this.modelBipedMain = modelBipedIn;
         this.field_77070_b = p_i46169_4_;
-        this.addLayer(new LayerCustomHead(modelBipedIn.bipedHead));
+        this.addLayer(new LayerCustomHead(modelBipedIn.bipedHead, mc));
     }
 
     /**

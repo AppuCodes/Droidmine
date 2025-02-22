@@ -633,7 +633,7 @@ public class OpenGlHelper
 
     public static boolean useVbo()
     {
-        return Config.isMultiTexture() ? false : vboSupported && ClientEngine.get().options.useVbo;
+        return Config.isMultiTexture() ? false : vboSupported;
     }
 
     public static void glBindFramebuffer(int target, int framebufferIn)
@@ -926,7 +926,7 @@ public class OpenGlHelper
 
     public static boolean isFramebufferEnabled()
     {
-        return Config.isFastRender() ? false : (Config.isAntialiasing() ? false : framebufferSupported && ClientEngine.get().options.fboEnable);
+        return Config.isFastRender() ? false : (Config.isAntialiasing() ? false : framebufferSupported);
     }
 
     public static String func_183029_j()

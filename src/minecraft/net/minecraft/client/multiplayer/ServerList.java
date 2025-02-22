@@ -1,14 +1,15 @@
 package net.minecraft.client.multiplayer;
 
-import com.google.common.collect.Lists;
 import java.io.File;
 import java.util.List;
-import net.minecraft.client.ClientEngine;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.collect.Lists;
+
+import net.minecraft.client.ClientEngine;
+import net.minecraft.nbt.*;
 
 public class ServerList
 {
@@ -126,9 +127,9 @@ public class ServerList
         this.servers.set(p_147413_1_, p_147413_2_);
     }
 
-    public static void func_147414_b(ServerData p_147414_0_)
+    public static void func_147414_b(ServerData p_147414_0_, ClientEngine mc)
     {
-        ServerList serverlist = new ServerList(ClientEngine.get());
+        ServerList serverlist = new ServerList(mc);
         serverlist.loadServerList();
 
         for (int i = 0; i < serverlist.countServers(); ++i)

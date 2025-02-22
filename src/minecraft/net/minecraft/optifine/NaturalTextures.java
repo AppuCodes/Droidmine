@@ -3,6 +3,8 @@ package net.minecraft.optifine;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -13,7 +15,7 @@ public class NaturalTextures
 {
     private static NaturalProperties[] propertiesByIndex = new NaturalProperties[0];
 
-    public static void update()
+    public static void update(ClientEngine mc)
     {
         propertiesByIndex = new NaturalProperties[0];
 
@@ -36,7 +38,7 @@ public class NaturalTextures
                 String s1 = Config.readInputStream(inputstream);
                 inputstream.close();
                 String[] astring = Config.tokenize(s1, "\n\r");
-                TextureMap texturemap = TextureUtils.getTextureMapBlocks();
+                TextureMap texturemap = TextureUtils.getTextureMapBlocks(mc);
 
                 for (int i = 0; i < astring.length; ++i)
                 {
@@ -75,7 +77,7 @@ public class NaturalTextures
                                         return;
                                     }
 
-                                    NaturalProperties naturalproperties = new NaturalProperties(s4);
+                                    NaturalProperties naturalproperties = new NaturalProperties(s4, mc);
 
                                     if (naturalproperties.isValid())
                                     {

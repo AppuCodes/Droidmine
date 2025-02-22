@@ -3,23 +3,16 @@ package net.minecraft.client.gui;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
 
-import com.ibm.icu.text.ArabicShaping;
-import com.ibm.icu.text.ArabicShapingException;
-import com.ibm.icu.text.Bidi;
+import com.ibm.icu.text.*;
 
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -67,14 +60,16 @@ public class FontRenderer implements IResourceManagerReloadListener
     public ResourceLocation locationFontTextureBase;
     public GameOptions options;
     public float offsetBold = 1.0F;
+    private ClientEngine mc;
 
-    public FontRenderer(GameOptions optionsIn, ResourceLocation location, TextureManager textureManagerIn, boolean unicode)
+    public FontRenderer(GameOptions optionsIn, ResourceLocation location, TextureManager textureManagerIn, boolean unicode, ClientEngine mc)
     {
         this.options = optionsIn;
         this.locationFontTextureBase = location;
         this.locationFontTexture = location;
         this.renderEngine = textureManagerIn;
         this.unicodeFlag = unicode;
+        this.mc = mc;
         this.locationFontTexture = FontUtils.getHdFontLocation(this.locationFontTextureBase);
         this.bindTexture(this.locationFontTexture);
 
@@ -1089,6 +1084,6 @@ public class FontRenderer implements IResourceManagerReloadListener
 
     protected InputStream getResourceInputStream(ResourceLocation p_getResourceInputStream_1_) throws IOException
     {
-        return ClientEngine.get().getResourceManager().getResource(p_getResourceInputStream_1_).getInputStream();
+        return mc.getResourceManager().getResource(p_getResourceInputStream_1_).getInputStream();
     }
 }

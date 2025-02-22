@@ -1,25 +1,18 @@
 package net.minecraft.client.resources;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Maps;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.InsecureTextureException;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+
+import com.google.common.cache.*;
+import com.google.common.collect.Maps;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.*;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
+
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.renderer.IImageBuffer;
-import net.minecraft.client.renderer.ImageBufferDownload;
-import net.minecraft.client.renderer.ThreadDownloadImageData;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
@@ -31,17 +24,19 @@ public class SkinManager
     private final File skinCacheDir;
     private final MinecraftSessionService sessionService;
     private final LoadingCache<GameProfile, Map<Type, MinecraftProfileTexture>> skinCacheLoader;
+    private ClientEngine mc;
 
-    public SkinManager(TextureManager textureManagerInstance, File skinCacheDirectory, MinecraftSessionService sessionService)
+    public SkinManager(TextureManager textureManagerInstance, File skinCacheDirectory, MinecraftSessionService sessionService, ClientEngine mc)
     {
         this.textureManager = textureManagerInstance;
+        this.mc = mc;
         this.skinCacheDir = skinCacheDirectory;
         this.sessionService = sessionService;
         this.skinCacheLoader = CacheBuilder.newBuilder().expireAfterAccess(15L, TimeUnit.SECONDS).<GameProfile, Map<Type, MinecraftProfileTexture>>build(new CacheLoader<GameProfile, Map<Type, MinecraftProfileTexture>>()
         {
             public Map<Type, MinecraftProfileTexture> load(GameProfile p_load_1_) throws Exception
             {
-                return ClientEngine.get().getSessionService().getTextures(p_load_1_, false);
+                return mc.getSessionService().getTextures(p_load_1_, false);
             }
         });
     }
@@ -121,14 +116,14 @@ public class SkinManager
                     ;
                 }
 
-                if (map.isEmpty() && profile.getId().equals(ClientEngine.get().getSession().profile().getId()))
+                if (map.isEmpty() && profile.getId().equals(mc.getSession().profile().getId()))
                 {
                     profile.getProperties().clear();
-                    profile.getProperties().putAll(ClientEngine.get().func_181037_M());
+                    profile.getProperties().putAll(mc.func_181037_M());
                     map.putAll(SkinManager.this.sessionService.getTextures(profile, false));
                 }
 
-                ClientEngine.get().addScheduledTask(new Runnable()
+                mc.addScheduledTask(new Runnable()
                 {
                     public void run()
                     {

@@ -16,7 +16,7 @@ public class RenderSkeleton extends RenderBiped<EntitySkeleton>
     public RenderSkeleton(RenderManager renderManagerIn, ClientEngine mc)
     {
         super(renderManagerIn, new ModelSkeleton(), 0.5F, mc);
-        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerHeldItem(this, mc));
         this.addLayer(new LayerBipedArmor(this)
         {
             protected void initArmor()

@@ -4,15 +4,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityRainFX extends EntityFX
 {
-    protected EntityRainFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn)
+    protected EntityRainFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, ClientEngine mc)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D, mc);
         this.motionX *= 0.30000001192092896D;
         this.motionY = Math.random() * 0.20000000298023224D + 0.10000000149011612D;
         this.motionZ *= 0.30000001192092896D;
@@ -85,9 +86,9 @@ public class EntityRainFX extends EntityFX
 
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityRainFX(worldIn, xCoordIn, yCoordIn, zCoordIn);
+            return new EntityRainFX(worldIn, xCoordIn, yCoordIn, zCoordIn, mc);
         }
     }
 }

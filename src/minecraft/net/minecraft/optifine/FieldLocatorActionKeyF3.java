@@ -1,17 +1,16 @@
 package net.minecraft.optifine;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 import net.minecraft.client.ClientEngine;
 
 public class FieldLocatorActionKeyF3 implements IFieldLocator
 {
-    public Field getField()
+    public Field getField(ClientEngine mc)
     {
         Class oclass = ClientEngine.class;
-        Field field = this.getFieldRenderChunksMany();
+        Field field = this.getFieldRenderChunksMany(mc);
 
         if (field == null)
         {
@@ -32,9 +31,9 @@ public class FieldLocatorActionKeyF3 implements IFieldLocator
         }
     }
 
-    private Field getFieldRenderChunksMany()
+    private Field getFieldRenderChunksMany(ClientEngine mc)
     {
-        ClientEngine minecraft = ClientEngine.get();
+        ClientEngine minecraft = mc;
         boolean flag = minecraft.renderChunksMany;
         Field[] afield = ClientEngine.class.getDeclaredFields();
         minecraft.renderChunksMany = true;

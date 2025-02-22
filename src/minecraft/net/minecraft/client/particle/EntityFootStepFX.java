@@ -1,9 +1,7 @@
 package net.minecraft.client.particle;
 
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -18,9 +16,9 @@ public class EntityFootStepFX extends EntityFX
     private int footstepMaxAge;
     private TextureManager currentFootSteps;
 
-    protected EntityFootStepFX(TextureManager currentFootStepsIn, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn)
+    protected EntityFootStepFX(TextureManager currentFootStepsIn, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, ClientEngine mc)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D, mc);
         this.currentFootSteps = currentFootStepsIn;
         this.motionX = this.motionY = this.motionZ = 0.0D;
         this.footstepMaxAge = 200;
@@ -80,9 +78,9 @@ public class EntityFootStepFX extends EntityFX
 
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityFootStepFX(ClientEngine.get().getTextureManager(), worldIn, xCoordIn, yCoordIn, zCoordIn);
+            return new EntityFootStepFX(mc.getTextureManager(), worldIn, xCoordIn, yCoordIn, zCoordIn, mc);
         }
     }
 }

@@ -27,9 +27,11 @@ public class PlayerItemModel
     public static final int ATTACH_LEFT_LEG = 4;
     public static final int ATTACH_RIGHT_LEG = 5;
     public static final int ATTACH_CAPE = 6;
+    private ClientEngine mc;
 
-    public PlayerItemModel(Dimension p_i74_1_, boolean p_i74_2_, PlayerItemRenderer[] p_i74_3_)
+    public PlayerItemModel(Dimension p_i74_1_, boolean p_i74_2_, PlayerItemRenderer[] p_i74_3_, ClientEngine mc)
     {
+        this.mc = mc;
         this.textureSize = p_i74_1_;
         this.usePlayerTexture = p_i74_2_;
         this.modelRenderers = p_i74_3_;
@@ -48,7 +50,7 @@ public class PlayerItemModel
             if (this.texture == null && this.textureImage != null)
             {
                 this.texture = new DynamicTexture(this.textureImage);
-                ClientEngine.get().getTextureManager().loadTexture(this.textureLocation, this.texture);
+                mc.getTextureManager().loadTexture(this.textureLocation, this.texture);
             }
 
             texturemanager.bindTexture(this.textureLocation);

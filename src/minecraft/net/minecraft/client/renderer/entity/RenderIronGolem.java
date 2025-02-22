@@ -14,7 +14,7 @@ public class RenderIronGolem extends RenderLiving<EntityIronGolem>
     public RenderIronGolem(RenderManager renderManagerIn, ClientEngine mc)
     {
         super(renderManagerIn, new ModelIronGolem(), 0.5F, mc);
-        this.addLayer(new LayerIronGolemFlower(this));
+        this.addLayer(new LayerIronGolemFlower(this, mc));
     }
 
     /**

@@ -4,13 +4,8 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.Callable;
 
 import org.apache.logging.log4j.LogManager;
@@ -30,9 +25,7 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.optifine.*;
 import net.minecraft.optifine.shadersmod.client.ShadersTex;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 
 public class TextureMap extends AbstractTexture implements ITickableTextureObject
 {
@@ -58,24 +51,26 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     private int counterIndexInMap;
     public int atlasWidth;
     public int atlasHeight;
+    private ClientEngine mc;
 
-    public TextureMap(String p_i46099_1_)
+    public TextureMap(String p_i46099_1_, ClientEngine mc)
     {
-        this(p_i46099_1_, (IIconCreator)null);
+        this(p_i46099_1_, (IIconCreator)null, mc);
     }
 
-    public TextureMap(String p_i10_1_, boolean p_i10_2_)
+    public TextureMap(String p_i10_1_, boolean p_i10_2_, ClientEngine mc)
     {
-        this(p_i10_1_, (IIconCreator)null, p_i10_2_);
+        this(p_i10_1_, (IIconCreator)null, p_i10_2_, mc);
     }
 
-    public TextureMap(String p_i46100_1_, IIconCreator iconCreatorIn)
+    public TextureMap(String p_i46100_1_, IIconCreator iconCreatorIn, ClientEngine mc)
     {
-        this(p_i46100_1_, iconCreatorIn, false);
+        this(p_i46100_1_, iconCreatorIn, false, mc);
     }
 
-    public TextureMap(String p_i11_1_, IIconCreator p_i11_2_, boolean p_i11_3_)
+    public TextureMap(String p_i11_1_, IIconCreator p_i11_2_, boolean p_i11_3_, ClientEngine mc)
     {
+        this.mc = mc;
         this.skipFirst = false;
         this.iconGrid = null;
         this.iconGridSize = -1;
@@ -89,7 +84,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         this.listAnimatedSprites = Lists.newArrayList();
         this.mapRegisteredSprites = Maps.newHashMap();
         this.mapUploadedSprites = Maps.newHashMap();
-        this.missingImage = new TextureAtlasSprite("missingno");
+        this.missingImage = new TextureAtlasSprite("missingno", mc);
         this.basePath = p_i11_1_;
         this.iconCreator = p_i11_2_;
         this.skipFirst = p_i11_3_ && ENABLE_SKIP;
@@ -521,7 +516,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 
             if (textureatlassprite == null)
             {
-                textureatlassprite = TextureAtlasSprite.makeAtlasSprite(location);
+                textureatlassprite = TextureAtlasSprite.makeAtlasSprite(location, mc);
                 this.mapRegisteredSprites.put(location.toString(), textureatlassprite);
 
                 if (textureatlassprite.getIndexInMap() < 0)

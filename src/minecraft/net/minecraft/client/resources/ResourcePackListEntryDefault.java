@@ -2,6 +2,8 @@ package net.minecraft.client.resources;
 
 import com.google.gson.JsonParseException;
 import java.io.IOException;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -17,9 +19,9 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry
     private final IResourcePack field_148320_d;
     private final ResourceLocation resourcePackIcon;
 
-    public ResourcePackListEntryDefault(GuiScreenResourcePacks resourcePacksGUIIn)
+    public ResourcePackListEntryDefault(GuiScreenResourcePacks resourcePacksGUIIn, ClientEngine mc)
     {
-        super(resourcePacksGUIIn);
+        super(resourcePacksGUIIn, mc);
         this.field_148320_d = this.mc.getResourcePackRepository().rprDefaultResourcePack;
         DynamicTexture dynamictexture;
 

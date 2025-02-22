@@ -27,6 +27,11 @@ public class TileEntityPistonRenderer extends TileEntitySpecialRenderer<TileEnti
 //        blockRenderer = engine.getBlockRendererDispatcher();
 //    }
 
+    public TileEntityPistonRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     public void renderTileEntityAt(TileEntityPiston te, double x, double y, double z, float partialTicks, int destroyStage)
     {
         BlockPos blockpos = te.getPos();

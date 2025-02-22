@@ -83,11 +83,11 @@ public class Lagometer
         return runtime.totalMemory() - runtime.freeMemory();
     }
 
-    public static void updateLagometer()
+    public static void updateLagometer(ClientEngine mc)
     {
-        if (mc == null)
+        if (Lagometer.mc == null)
         {
-            mc = ClientEngine.get();
+            Lagometer.mc = mc;
             options = mc.options;
         }
 

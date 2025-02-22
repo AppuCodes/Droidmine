@@ -1,38 +1,28 @@
 package net.minecraft.optifine;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.IntBuffer;
 import java.util.Iterator;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.ITickableTextureObject;
-import net.minecraft.client.renderer.texture.SimpleTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.resources.IResourceManagerReloadListener;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraft.client.resources.*;
 import net.minecraft.optifine.shadersmod.client.MultiTexID;
 import net.minecraft.optifine.shadersmod.client.Shaders;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GLContext;
 
 public class TextureUtils
 {
@@ -123,9 +113,9 @@ public class TextureUtils
     public static final String SPRITE_PREFIX_ITEMS = "minecraft:items/";
     private static IntBuffer staticBuffer = GLAllocation.createDirectIntBuffer(256);
 
-    public static void update()
+    public static void update(ClientEngine mc)
     {
-        TextureMap texturemap = getTextureMapBlocks();
+        TextureMap texturemap = getTextureMapBlocks(mc);
 
         if (texturemap != null)
         {
@@ -229,21 +219,21 @@ public class TextureUtils
         }
     }
 
-    public static void resourcesReloaded(IResourceManager p_resourcesReloaded_0_)
+    public static void resourcesReloaded(IResourceManager p_resourcesReloaded_0_, ClientEngine mc)
     {
-        if (getTextureMapBlocks() != null)
+        if (getTextureMapBlocks(mc) != null)
         {
             CustomSky.reset();
             TextureAnimations.reset();
-            update();
-            NaturalTextures.update();
-            BetterGrass.update();
+            update(mc);
+            NaturalTextures.update(mc);
+            BetterGrass.update(mc);
             BetterSnow.update();
             TextureAnimations.update();
-            CustomColors.update();
+            CustomColors.update(mc);
             CustomSky.update();
             RandomMobs.resetTextures();
-            CustomItems.updateModels();
+            CustomItems.updateModels(mc);
             Shaders.resourcesReloaded();
             Lang.resourcesReloaded();
             Config.updateTexturePackClouds();
@@ -252,12 +242,12 @@ public class TextureUtils
         }
     }
 
-    public static TextureMap getTextureMapBlocks()
+    public static TextureMap getTextureMapBlocks(ClientEngine mc)
     {
-        return ClientEngine.get().getTextureMapBlocks();
+        return mc.getTextureMapBlocks();
     }
 
-    public static void registerResourceListener()
+    public static void registerResourceListener(ClientEngine mc)
     {
         IResourceManager iresourcemanager = Config.getResourceManager();
 
@@ -268,7 +258,7 @@ public class TextureUtils
             {
                 public void onResourceManagerReload(IResourceManager resourceManager)
                 {
-                    TextureUtils.resourcesReloaded(resourceManager);
+                    TextureUtils.resourcesReloaded(resourceManager, mc);
                 }
             };
             ireloadableresourcemanager.registerReloadListener(iresourcemanagerreloadlistener);

@@ -1,14 +1,14 @@
 package net.minecraft.client.renderer.tileentity;
 
+import java.util.Map;
+import java.util.UUID;
+
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-import java.util.Map;
-import java.util.UUID;
+
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelHumanoidHead;
-import net.minecraft.client.model.ModelSkeletonHead;
+import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.entity.Entity;
@@ -19,6 +19,11 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntitySkull>
 {
+    public TileEntitySkullRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     private static final ResourceLocation SKELETON_TEXTURES = new ResourceLocation("textures/entity/skeleton/skeleton.png");
     private static final ResourceLocation WITHER_SKELETON_TEXTURES = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
     private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("textures/entity/zombie/zombie.png");
@@ -76,7 +81,7 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
 
                     if (p_180543_7_ != null)
                     {
-                        ClientEngine minecraft = ClientEngine.get();
+                        ClientEngine minecraft = mc;
                         Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(p_180543_7_);
 
                         if (map.containsKey(Type.SKIN))

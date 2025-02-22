@@ -3,9 +3,8 @@ package net.minecraft.client.particle;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.client.ClientEngine;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class EntityDropParticleFX extends EntityFX
@@ -16,9 +15,9 @@ public class EntityDropParticleFX extends EntityFX
     /** The height of the current bob */
     private int bobTimer;
 
-    protected EntityDropParticleFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, Material p_i1203_8_)
+    protected EntityDropParticleFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, Material p_i1203_8_, ClientEngine mc)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D, mc);
         this.motionX = this.motionY = this.motionZ = 0.0D;
 
         if (p_i1203_8_ == Material.water)
@@ -142,17 +141,17 @@ public class EntityDropParticleFX extends EntityFX
 
     public static class LavaFactory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityDropParticleFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Material.lava);
+            return new EntityDropParticleFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Material.lava, mc);
         }
     }
 
     public static class WaterFactory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new EntityDropParticleFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Material.water);
+            return new EntityDropParticleFX(worldIn, xCoordIn, yCoordIn, zCoordIn, Material.water, mc);
         }
     }
 }

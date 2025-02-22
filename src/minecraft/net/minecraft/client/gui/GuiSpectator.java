@@ -34,7 +34,7 @@ public class GuiSpectator extends Gui implements ISpectatorMenuRecipient
         }
         else
         {
-            this.field_175271_i = new SpectatorMenu(this);
+            this.field_175271_i = new SpectatorMenu(this, field_175268_g);
         }
     }
 
@@ -180,7 +180,7 @@ public class GuiSpectator extends Gui implements ISpectatorMenuRecipient
         }
         else
         {
-            this.field_175271_i = new SpectatorMenu(this);
+            this.field_175271_i = new SpectatorMenu(this, field_175268_g);
         }
     }
 }

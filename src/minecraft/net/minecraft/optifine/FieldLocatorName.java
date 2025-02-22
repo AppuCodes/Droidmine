@@ -2,6 +2,8 @@ package net.minecraft.optifine;
 
 import java.lang.reflect.Field;
 
+import net.minecraft.client.ClientEngine;
+
 public class FieldLocatorName implements IFieldLocator
 {
     private ReflectorClass reflectorClass = null;
@@ -13,7 +15,7 @@ public class FieldLocatorName implements IFieldLocator
         this.targetFieldName = p_i38_2_;
     }
 
-    public Field getField()
+    public Field getField(ClientEngine mc)
     {
         Class oclass = this.reflectorClass.getTargetClass();
 

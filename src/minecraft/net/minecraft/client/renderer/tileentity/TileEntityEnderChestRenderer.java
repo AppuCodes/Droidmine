@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.tileentity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.tileentity.TileEntityEnderChest;
@@ -7,6 +8,11 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileEntityEnderChestRenderer extends TileEntitySpecialRenderer<TileEntityEnderChest>
 {
+    public TileEntityEnderChestRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     private static final ResourceLocation ENDER_CHEST_TEXTURE = new ResourceLocation("textures/entity/chest/ender.png");
     private ModelChest field_147521_c = new ModelChest();
 

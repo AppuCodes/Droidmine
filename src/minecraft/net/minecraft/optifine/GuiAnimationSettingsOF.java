@@ -41,7 +41,7 @@ public class GuiAnimationSettingsOF extends GuiScreen
             }
             else
             {
-                this.buttonList.add(new GuiOptionSliderOF(options$options.returnEnumOrdinal(), j, k, options$options));
+                this.buttonList.add(new GuiOptionSliderOF(options$options.returnEnumOrdinal(), j, k, options$options, mc));
             }
         }
 

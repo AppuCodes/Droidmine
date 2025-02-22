@@ -30,7 +30,7 @@ public class RenderZombie extends RenderBiped<EntityZombie>
         LayerRenderer layerrenderer = (LayerRenderer)this.layerRenderers.get(0);
         this.field_82434_o = this.modelBipedMain;
         this.zombieVillagerModel = new ModelZombieVillager();
-        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerHeldItem(this, mc));
         LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
         {
             protected void initArmor()
@@ -45,7 +45,7 @@ public class RenderZombie extends RenderBiped<EntityZombie>
         if (layerrenderer instanceof LayerCustomHead)
         {
             this.removeLayer(layerrenderer);
-            this.addLayer(new LayerCustomHead(this.zombieVillagerModel.bipedHead));
+            this.addLayer(new LayerCustomHead(this.zombieVillagerModel.bipedHead, mc));
         }
 
         this.removeLayer(layerbipedarmor);

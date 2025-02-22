@@ -1,10 +1,10 @@
 package net.minecraft.client.gui;
 
-import com.google.common.base.Objects;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Lists;
 import java.util.List;
+
+import com.google.common.base.*;
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.util.IntHashMap;
 
@@ -38,7 +38,7 @@ public class GuiPageButtonList extends GuiListExtended
                 GuiPageButtonList.GuiListEntry guipagebuttonlist$guilistentry1 = i < aguipagebuttonlist$guilistentry.length - 1 ? aguipagebuttonlist$guilistentry[i + 1] : null;
                 Gui gui = this.func_178058_a(guipagebuttonlist$guilistentry, 0, guipagebuttonlist$guilistentry1 == null);
                 Gui gui1 = this.func_178058_a(guipagebuttonlist$guilistentry1, 160, guipagebuttonlist$guilistentry == null);
-                GuiPageButtonList.GuiEntry guipagebuttonlist$guientry = new GuiPageButtonList.GuiEntry(gui, gui1);
+                GuiPageButtonList.GuiEntry guipagebuttonlist$guientry = new GuiPageButtonList.GuiEntry(gui, gui1, mc);
                 this.field_178074_u.add(guipagebuttonlist$guientry);
 
                 if (guipagebuttonlist$guilistentry != null && gui != null)
@@ -74,7 +74,7 @@ public class GuiPageButtonList extends GuiListExtended
             GuiPageButtonList.GuiListEntry guipagebuttonlist$guilistentry1 = i < this.field_178078_x[this.field_178077_y].length - 1 ? this.field_178078_x[this.field_178077_y][i + 1] : null;
             Gui gui = (Gui)this.field_178073_v.lookup(guipagebuttonlist$guilistentry.func_178935_b());
             Gui gui1 = guipagebuttonlist$guilistentry1 != null ? (Gui)this.field_178073_v.lookup(guipagebuttonlist$guilistentry1.func_178935_b()) : null;
-            GuiPageButtonList.GuiEntry guipagebuttonlist$guientry = new GuiPageButtonList.GuiEntry(gui, gui1);
+            GuiPageButtonList.GuiEntry guipagebuttonlist$guientry = new GuiPageButtonList.GuiEntry(gui, gui1, mc);
             this.field_178074_u.add(guipagebuttonlist$guientry);
         }
     }
@@ -388,13 +388,14 @@ public class GuiPageButtonList extends GuiListExtended
 
     public static class GuiEntry implements GuiListExtended.IGuiListEntry
     {
-        private final ClientEngine field_178031_a = ClientEngine.get();
+        private final ClientEngine field_178031_a;
         private final Gui field_178029_b;
         private final Gui field_178030_c;
         private Gui field_178028_d;
 
-        public GuiEntry(Gui p_i45533_1_, Gui p_i45533_2_)
+        public GuiEntry(Gui p_i45533_1_, Gui p_i45533_2_, ClientEngine mc)
         {
+            this.field_178031_a = mc;
             this.field_178029_b = p_i45533_1_;
             this.field_178030_c = p_i45533_2_;
         }

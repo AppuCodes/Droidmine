@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.chunk;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.util.BlockPos;
@@ -10,9 +11,9 @@ public class ListedRenderChunk extends RenderChunk
 {
     private final int baseDisplayList = GLAllocation.generateDisplayLists(EnumWorldBlockLayer.values().length);
 
-    public ListedRenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos pos, int indexIn)
+    public ListedRenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos pos, int indexIn, ClientEngine mc)
     {
-        super(worldIn, renderGlobalIn, pos, indexIn);
+        super(worldIn, renderGlobalIn, pos, indexIn, mc);
     }
 
     public int getDisplayList(EnumWorldBlockLayer layer, CompiledChunk p_178600_2_)

@@ -1,49 +1,35 @@
 package net.minecraft.network;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketAddress;
+import java.util.*;
+import java.util.concurrent.Callable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelException;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.local.LocalAddress;
-import io.netty.channel.local.LocalEventLoopGroup;
-import io.netty.channel.local.LocalServerChannel;
+import io.netty.channel.*;
+import io.netty.channel.epoll.*;
+import io.netty.channel.local.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.SocketAddress;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.Callable;
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.network.NetHandlerHandshakeMemory;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.network.play.server.S40PacketDisconnect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.NetHandlerHandshakeTCP;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.LazyLoadBase;
-import net.minecraft.util.MessageDeserializer;
-import net.minecraft.util.MessageDeserializer2;
-import net.minecraft.util.MessageSerializer;
-import net.minecraft.util.MessageSerializer2;
-import net.minecraft.util.ReportedException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.util.*;
 
 public class NetworkSystem
 {
@@ -77,10 +63,12 @@ public class NetworkSystem
     public volatile boolean isAlive;
     private final List<ChannelFuture> endpoints = Collections.<ChannelFuture>synchronizedList(Lists.<ChannelFuture>newArrayList());
     private final List<NetworkManager> networkManagers = Collections.<NetworkManager>synchronizedList(Lists.<NetworkManager>newArrayList());
+    private ClientEngine mc;
 
-    public NetworkSystem(MinecraftServer server)
+    public NetworkSystem(MinecraftServer server, ClientEngine mc)
     {
         this.mcServer = server;
+        this.mc = mc;
         this.isAlive = true;
     }
 
@@ -121,7 +109,7 @@ public class NetworkSystem
                     }
 
                     p_initChannel_1_.pipeline().addLast((String)"timeout", (ChannelHandler)(new ReadTimeoutHandler(30))).addLast((String)"legacy_query", (ChannelHandler)(new PingResponseHandler(NetworkSystem.this))).addLast((String)"splitter", (ChannelHandler)(new MessageDeserializer2())).addLast((String)"decoder", (ChannelHandler)(new MessageDeserializer(EnumPacketDirection.SERVERBOUND))).addLast((String)"prepender", (ChannelHandler)(new MessageSerializer2())).addLast((String)"encoder", (ChannelHandler)(new MessageSerializer(EnumPacketDirection.CLIENTBOUND)));
-                    NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.SERVERBOUND);
+                    NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.SERVERBOUND, mc);
                     NetworkSystem.this.networkManagers.add(networkmanager);
                     p_initChannel_1_.pipeline().addLast((String)"packet_handler", (ChannelHandler)networkmanager);
                     networkmanager.setNetHandler(new NetHandlerHandshakeTCP(NetworkSystem.this.mcServer, networkmanager));
@@ -143,7 +131,7 @@ public class NetworkSystem
             {
                 protected void initChannel(Channel p_initChannel_1_) throws Exception
                 {
-                    NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.SERVERBOUND);
+                    NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.SERVERBOUND, mc);
                     networkmanager.setNetHandler(new NetHandlerHandshakeMemory(NetworkSystem.this.mcServer, networkmanager));
                     NetworkSystem.this.networkManagers.add(networkmanager);
                     p_initChannel_1_.pipeline().addLast((String)"packet_handler", (ChannelHandler)networkmanager);

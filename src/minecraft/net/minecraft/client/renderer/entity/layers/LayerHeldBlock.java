@@ -3,9 +3,7 @@ package net.minecraft.client.renderer.entity.layers;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderEnderman;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -13,10 +11,12 @@ import net.minecraft.entity.monster.EntityEnderman;
 public class LayerHeldBlock implements LayerRenderer<EntityEnderman>
 {
     private final RenderEnderman endermanRenderer;
+    private ClientEngine mc;
 
-    public LayerHeldBlock(RenderEnderman endermanRendererIn)
+    public LayerHeldBlock(RenderEnderman endermanRendererIn, ClientEngine mc)
     {
         this.endermanRenderer = endermanRendererIn;
+        this.mc = mc;
     }
 
     public void doRenderLayer(EntityEnderman entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
@@ -25,7 +25,7 @@ public class LayerHeldBlock implements LayerRenderer<EntityEnderman>
 
         if (iblockstate.getBlock().getMaterial() != Material.air)
         {
-            BlockRendererDispatcher blockrendererdispatcher = ClientEngine.get().getBlockRendererDispatcher();
+            BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
             GlStateManager.enableRescaleNormal();
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.6875F, -0.75F);

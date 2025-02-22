@@ -142,6 +142,7 @@ public class RenderManager
     public double viewerPosZ;
     private boolean renderOutlines = false;
     private boolean renderShadow = true;
+    public ClientEngine mc;
 
     /** whether bounding box should be rendered or not */
     private boolean debugBoundingBox = false;
@@ -149,6 +150,7 @@ public class RenderManager
 
     public RenderManager(TextureManager renderEngineIn, RenderItem itemRendererIn, ClientEngine mc)
     {
+        this.mc = mc;
         this.renderEngine = renderEngineIn;
         this.entityRenderMap.put(EntityCaveSpider.class, new RenderCaveSpider(this, mc));
         this.entityRenderMap.put(EntitySpider.class, new RenderSpider(this, mc));
@@ -212,7 +214,7 @@ public class RenderManager
         this.playerRenderer = new RenderPlayer(this, mc);
         this.skinMap.put("default", this.playerRenderer);
         this.skinMap.put("slim", new RenderPlayer(this, true, mc));
-        PlayerItemsLayer.register(this.skinMap);
+        PlayerItemsLayer.register(this.skinMap, mc);
 
         if (Reflector.RenderingRegistry_loadEntityRenderers.exists())
         {
@@ -404,7 +406,7 @@ public class RenderManager
                 }
                 catch (Throwable throwable2)
                 {
-                    throw new ReportedException(CrashReport.makeCrashReport(throwable2, "Rendering entity in world"));
+                    // throw new ReportedException(CrashReport.makeCrashReport(throwable2, "Rendering entity in world"));
                 }
 
                 try

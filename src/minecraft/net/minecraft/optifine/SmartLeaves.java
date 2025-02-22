@@ -2,6 +2,8 @@ package net.minecraft.optifine;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelManager;
@@ -175,7 +177,7 @@ public class SmartLeaves
                 EnumFacing enumfacing1 = aenumfacing[k];
                 List<BakedQuad> list1 = ibakedmodel.getFaceQuads(enumfacing1);
                 BakedQuad bakedquad = (BakedQuad)list1.get(0);
-                BakedQuad bakedquad1 = new BakedQuad((int[])bakedquad.getVertexData().clone(), bakedquad.getTintIndex(), bakedquad.getFace(), bakedquad.getSprite());
+                BakedQuad bakedquad1 = new BakedQuad((int[])bakedquad.getVertexData().clone(), bakedquad.getTintIndex(), bakedquad.getFace(), bakedquad.getSprite(), bakedquad.mc);
                 int[] aint = bakedquad1.getVertexData();
                 int[] aint1 = (int[])aint.clone();
                 int j = aint.length / 4;

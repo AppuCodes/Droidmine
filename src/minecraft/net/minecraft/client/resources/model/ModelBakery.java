@@ -1,48 +1,27 @@
 package net.minecraft.client.resources.model;
 
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Queues;
-import com.google.common.collect.Sets;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
+import com.google.common.collect.*;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.BlockModelShapes;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockPart;
-import net.minecraft.client.renderer.block.model.BlockPartFace;
-import net.minecraft.client.renderer.block.model.FaceBakery;
-import net.minecraft.client.renderer.block.model.ItemModelGenerator;
-import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraft.client.renderer.block.model.ModelBlockDefinition;
-import net.minecraft.client.renderer.texture.IIconCreator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IRegistry;
-import net.minecraft.util.RegistrySimple;
-import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.util.*;
 
 public class ModelBakery
 {
@@ -57,7 +36,7 @@ public class ModelBakery
     private final Map<ModelResourceLocation, ModelBlockDefinition.Variants> variants = Maps.<ModelResourceLocation, ModelBlockDefinition.Variants>newLinkedHashMap();
     private final TextureMap textureMap;
     private final BlockModelShapes blockModelShapes;
-    private final FaceBakery faceBakery = new FaceBakery();
+    private final FaceBakery faceBakery;
     private final ItemModelGenerator itemModelGenerator = new ItemModelGenerator();
     private RegistrySimple<ModelResourceLocation, IBakedModel> bakedRegistry = new RegistrySimple();
     private static final ModelBlock MODEL_GENERATED = ModelBlock.deserialize("{\"elements\":[{  \"from\": [0, 0, 0],   \"to\": [16, 16, 16],   \"faces\": {       \"down\": {\"uv\": [0, 0, 16, 16], \"texture\":\"\"}   }}]}");
@@ -68,8 +47,9 @@ public class ModelBakery
     private final Map<ResourceLocation, ModelBlockDefinition> blockDefinitions = Maps.<ResourceLocation, ModelBlockDefinition>newHashMap();
     private Map<Item, List<String>> variantNames = Maps.<Item, List<String>>newIdentityHashMap();
 
-    public ModelBakery(IResourceManager p_i46085_1_, TextureMap p_i46085_2_, BlockModelShapes p_i46085_3_)
+    public ModelBakery(IResourceManager p_i46085_1_, TextureMap p_i46085_2_, BlockModelShapes p_i46085_3_, ClientEngine mc)
     {
+        faceBakery = new FaceBakery(mc);
         this.resourceManager = p_i46085_1_;
         this.textureMap = p_i46085_2_;
         this.blockModelShapes = p_i46085_3_;

@@ -16,7 +16,7 @@ public class EntityDiggingFX extends EntityFX
 
     protected EntityDiggingFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state, ClientEngine mc)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, mc);
         this.field_174847_a = state;
         this.setParticleIcon(mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(state));
         this.particleGravity = state.getBlock().blockParticleGravity;

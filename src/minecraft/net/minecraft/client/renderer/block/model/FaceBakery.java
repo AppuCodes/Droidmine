@@ -1,25 +1,30 @@
 package net.minecraft.client.renderer.block.model;
 
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.EnumFaceDirection;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelRotation;
 import net.minecraft.optifine.Config;
 import net.minecraft.optifine.Reflector;
 import net.minecraft.optifine.shadersmod.client.Shaders;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3i;
+import net.minecraft.util.*;
 import net.minecraftforge.client.model.ITransformation;
-
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 public class FaceBakery
 {
     private static final float field_178418_a = 1.0F / (float)Math.cos(0.39269909262657166D) - 1.0F;
     private static final float field_178417_b = 1.0F / (float)Math.cos((Math.PI / 4D)) - 1.0F;
     private static final String __OBFID = "CL_00002490";
+    private ClientEngine mc;
+    
+    public FaceBakery(ClientEngine mc)
+    {
+        this.mc = mc;
+    }
 
     public BakedQuad makeBakedQuad(Vector3f posFrom, Vector3f posTo, BlockPartFace face, TextureAtlasSprite sprite, EnumFacing facing, ModelRotation modelRotationIn, BlockPartRotation partRotation, boolean uvLocked, boolean shade)
     {
@@ -36,7 +41,7 @@ public class FaceBakery
             this.applyFacing(aint, enumfacing);
         }
 
-        return new BakedQuad(aint, face.tintIndex, enumfacing, sprite);
+        return new BakedQuad(aint, face.tintIndex, enumfacing, sprite, mc);
     }
 
     public BakedQuad makeBakedQuad(Vector3f p_makeBakedQuad_1_, Vector3f p_makeBakedQuad_2_, BlockPartFace p_makeBakedQuad_3_, TextureAtlasSprite p_makeBakedQuad_4_, EnumFacing p_makeBakedQuad_5_, ITransformation p_makeBakedQuad_6_, BlockPartRotation p_makeBakedQuad_7_, boolean p_makeBakedQuad_8_, boolean p_makeBakedQuad_9_)
@@ -59,7 +64,7 @@ public class FaceBakery
             Reflector.callVoid(Reflector.ForgeHooksClient_fillNormal, new Object[] {aint, enumfacing});
         }
 
-        return new BakedQuad(aint, p_makeBakedQuad_3_.tintIndex, enumfacing, p_makeBakedQuad_4_);
+        return new BakedQuad(aint, p_makeBakedQuad_3_.tintIndex, enumfacing, p_makeBakedQuad_4_, mc);
     }
 
     private int[] makeQuadVertexData(BlockPartFace p_makeQuadVertexData_1_, TextureAtlasSprite p_makeQuadVertexData_2_, EnumFacing p_makeQuadVertexData_3_, float[] p_makeQuadVertexData_4_, ITransformation p_makeQuadVertexData_5_, BlockPartRotation p_makeQuadVertexData_6_, boolean p_makeQuadVertexData_7_, boolean p_makeQuadVertexData_8_)

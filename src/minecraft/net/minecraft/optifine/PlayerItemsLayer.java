@@ -2,6 +2,8 @@ package net.minecraft.optifine;
 
 import java.util.Map;
 import java.util.Set;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,10 +14,12 @@ import net.minecraft.entity.EntityLivingBase;
 public class PlayerItemsLayer implements LayerRenderer
 {
     private RenderPlayer renderPlayer = null;
+    public ClientEngine mc;
 
-    public PlayerItemsLayer(RenderPlayer p_i76_1_)
+    public PlayerItemsLayer(RenderPlayer p_i76_1_, ClientEngine mc)
     {
         this.renderPlayer = p_i76_1_;
+        this.mc = mc;
     }
 
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
@@ -34,7 +38,7 @@ public class PlayerItemsLayer implements LayerRenderer
                 GlStateManager.disableRescaleNormal();
                 GlStateManager.enableCull();
                 ModelBiped modelbiped = (ModelBiped)this.renderPlayer.getMainModel();
-                PlayerConfigurations.renderPlayerItems(modelbiped, abstractclientplayer, p_renderEquippedItems_2_, p_renderEquippedItems_3_);
+                PlayerConfigurations.renderPlayerItems(modelbiped, abstractclientplayer, p_renderEquippedItems_2_, p_renderEquippedItems_3_, mc);
                 GlStateManager.disableCull();
             }
         }
@@ -45,7 +49,7 @@ public class PlayerItemsLayer implements LayerRenderer
         return false;
     }
 
-    public static void register(Map p_register_0_)
+    public static void register(Map p_register_0_, ClientEngine mc)
     {
         Set set = p_register_0_.keySet();
         boolean flag = false;
@@ -57,7 +61,7 @@ public class PlayerItemsLayer implements LayerRenderer
             if (object1 instanceof RenderPlayer)
             {
                 RenderPlayer renderplayer = (RenderPlayer)object1;
-                renderplayer.addLayer(new PlayerItemsLayer(renderplayer));
+                renderplayer.addLayer(new PlayerItemsLayer(renderplayer, mc));
                 flag = true;
             }
         }

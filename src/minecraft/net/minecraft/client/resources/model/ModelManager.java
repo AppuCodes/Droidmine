@@ -13,16 +13,18 @@ public class ModelManager implements IResourceManagerReloadListener
     private final TextureMap texMap;
     private final BlockModelShapes modelProvider;
     private IBakedModel defaultModel;
+    private ClientEngine mc;
 
-    public ModelManager(TextureMap textures)
+    public ModelManager(TextureMap textures, ClientEngine mc)
     {
+        this.mc = mc;
         this.texMap = textures;
         this.modelProvider = new BlockModelShapes(this);
     }
 
     public void onResourceManagerReload(IResourceManager resourceManager)
     {
-        ModelBakery modelbakery = new ModelBakery(resourceManager, this.texMap, this.modelProvider);
+        ModelBakery modelbakery = new ModelBakery(resourceManager, this.texMap, this.modelProvider, mc);
         this.modelRegistry = modelbakery.setupModelRegistry();
         this.defaultModel = (IBakedModel)this.modelRegistry.getObject(ModelBakery.MODEL_MISSING);
         this.modelProvider.reloadModels();
@@ -36,7 +38,7 @@ public class ModelManager implements IResourceManagerReloadListener
         }
         else
         {
-            if (ClientEngine.get().isHeadless())
+            if (mc.isHeadless())
                 return null;
 
             IBakedModel ibakedmodel = (IBakedModel)this.modelRegistry.getObject(modelLocation);

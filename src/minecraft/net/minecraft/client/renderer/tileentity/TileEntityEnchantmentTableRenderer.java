@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.tileentity;
 
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -9,6 +10,11 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileEntityEnchantmentTableRenderer extends TileEntitySpecialRenderer<TileEntityEnchantmentTable>
 {
+    public TileEntityEnchantmentTableRenderer(ClientEngine mc) {
+        super(mc);
+        // TODO Auto-generated constructor stub
+    }
+
     /** The texture for the book above the enchantment table. */
     private static final ResourceLocation TEXTURE_BOOK = new ResourceLocation("textures/entity/enchanting_table_book.png");
     private ModelBook field_147541_c = new ModelBook();

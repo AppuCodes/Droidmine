@@ -29,12 +29,12 @@ public class TeleportToPlayer implements ISpectatorMenuView, ISpectatorMenuObjec
     });
     private final List<ISpectatorMenuObject> field_178673_b;
 
-    public TeleportToPlayer()
+    public TeleportToPlayer(ClientEngine mc)
     {
-        this(field_178674_a.<NetworkPlayerInfo>sortedCopy(ClientEngine.get().getNetHandler().getPlayerInfoMap()));
+        this(field_178674_a.<NetworkPlayerInfo>sortedCopy(mc.getNetHandler().getPlayerInfoMap()), mc);
     }
 
-    public TeleportToPlayer(Collection<NetworkPlayerInfo> p_i45493_1_)
+    public TeleportToPlayer(Collection<NetworkPlayerInfo> p_i45493_1_, ClientEngine mc)
     {
         this.field_178673_b = Lists.<ISpectatorMenuObject>newArrayList();
 
@@ -42,7 +42,7 @@ public class TeleportToPlayer implements ISpectatorMenuView, ISpectatorMenuObjec
         {
             if (networkplayerinfo.getGameType() != WorldSettings.GameType.SPECTATOR)
             {
-                this.field_178673_b.add(new PlayerMenuObject(networkplayerinfo.getGameProfile()));
+                this.field_178673_b.add(new PlayerMenuObject(networkplayerinfo.getGameProfile(), mc));
             }
         }
     }
@@ -69,8 +69,8 @@ public class TeleportToPlayer implements ISpectatorMenuView, ISpectatorMenuObjec
 
     public void func_178663_a(float p_178663_1_, int alpha)
     {
-        ClientEngine.get().getTextureManager().bindTexture(GuiSpectator.field_175269_a);
-        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0.0F, 0.0F, 16, 16, 256.0F, 256.0F);
+//        mc.getTextureManager().bindTexture(GuiSpectator.field_175269_a);
+//        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0.0F, 0.0F, 16, 16, 256.0F, 256.0F);
     }
 
     public boolean func_178662_A_()

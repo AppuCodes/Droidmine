@@ -3,8 +3,6 @@ package net.minecraft.client.entity;
 import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.audio.MovingSoundMinecartRiding;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -13,7 +11,6 @@ import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -582,11 +579,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
         if ("minecraft:chest".equals(s))
         {
-            this.mc.displayGuiScreen(new GuiChest(this.inventory, chestInventory));
+            this.mc.displayGuiScreen(new GuiChest(this.inventory, chestInventory, mc));
         }
         else if ("minecraft:hopper".equals(s))
         {
-            this.mc.displayGuiScreen(new GuiHopper(this.inventory, chestInventory));
+            this.mc.displayGuiScreen(new GuiHopper(this.inventory, chestInventory, mc));
         }
         else if ("minecraft:furnace".equals(s))
         {
@@ -602,7 +599,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
         else if (!"minecraft:dispenser".equals(s) && !"minecraft:dropper".equals(s))
         {
-            this.mc.displayGuiScreen(new GuiChest(this.inventory, chestInventory));
+            this.mc.displayGuiScreen(new GuiChest(this.inventory, chestInventory, mc));
         }
         else
         {
@@ -612,7 +609,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public void displayGUIHorse(EntityHorse horse, IInventory horseInventory)
     {
-        this.mc.displayGuiScreen(new GuiScreenHorseInventory(this.inventory, horseInventory, horse));
+        this.mc.displayGuiScreen(new GuiScreenHorseInventory(this.inventory, horseInventory, horse, mc));
     }
 
     public void displayGui(IInteractionObject guiOwner)
@@ -643,12 +640,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onCriticalHit(Entity entityHit)
     {
-        this.mc.effectRenderer.emitParticleAtEntity(entityHit, EnumParticleTypes.CRIT);
+        this.mc.effectRenderer.emitParticleAtEntity(entityHit, EnumParticleTypes.CRIT, mc);
     }
 
     public void onEnchantmentCritical(Entity entityHit)
     {
-        this.mc.effectRenderer.emitParticleAtEntity(entityHit, EnumParticleTypes.CRIT_MAGIC);
+        this.mc.effectRenderer.emitParticleAtEntity(entityHit, EnumParticleTypes.CRIT_MAGIC, mc);
     }
 
     /**

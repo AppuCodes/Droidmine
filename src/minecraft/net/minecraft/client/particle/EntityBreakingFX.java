@@ -28,7 +28,7 @@ public class EntityBreakingFX extends EntityFX
 
     protected EntityBreakingFX(World worldIn, double posXIn, double posYIn, double posZIn, Item p_i1196_8_, int p_i1196_9_, ClientEngine mc)
     {
-        super(worldIn, posXIn, posYIn, posZIn, 0.0D, 0.0D, 0.0D);
+        super(worldIn, posXIn, posYIn, posZIn, 0.0D, 0.0D, 0.0D, mc);
         this.setParticleIcon(mc.getRenderItem().getItemModelMesher().getParticleIcon(p_i1196_8_, p_i1196_9_));
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
         this.particleGravity = Blocks.snow.blockParticleGravity;

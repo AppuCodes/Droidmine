@@ -1,16 +1,14 @@
 package net.minecraft.client.gui;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
-
-import com.google.common.collect.Lists;
 
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.renderer.*;
@@ -62,57 +60,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     public GuiMainMenu()
     {
         this.openGLWarning2 = field_96138_a;
-        this.splashText = "missingno";
+        this.splashText = "";
         BufferedReader bufferedreader = null;
-
-        try
-        {
-            List<String> list = Lists.<String>newArrayList();
-            bufferedreader = new BufferedReader(new InputStreamReader(ClientEngine.get().getResourceManager().getResource(splashTexts).getInputStream(), Charsets.UTF_8));
-            String s;
-
-            while ((s = bufferedreader.readLine()) != null)
-            {
-                s = s.trim();
-
-                if (!s.isEmpty())
-                {
-                    list.add(s);
-                }
-            }
-
-            if (!list.isEmpty())
-            {
-                while (true)
-                {
-                    this.splashText = (String)list.get(RANDOM.nextInt(list.size()));
-
-                    if (this.splashText.hashCode() != 125780783)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        catch (IOException var12)
-        {
-            ;
-        }
-        finally
-        {
-            if (bufferedreader != null)
-            {
-                try
-                {
-                    bufferedreader.close();
-                }
-                catch (IOException var11)
-                {
-                    ;
-                }
-            }
-        }
-
         this.updateCounter = RANDOM.nextFloat();
         this.openGLWarning1 = "";
 

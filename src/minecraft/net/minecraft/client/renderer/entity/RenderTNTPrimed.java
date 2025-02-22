@@ -25,7 +25,7 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed>
      */
     public void doRender(EntityTNTPrimed entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        BlockRendererDispatcher blockrendererdispatcher = ClientEngine.get().getBlockRendererDispatcher();
+        BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)x, (float)y + 0.5F, (float)z);
 

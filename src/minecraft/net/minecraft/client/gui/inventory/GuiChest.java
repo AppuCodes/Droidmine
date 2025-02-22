@@ -18,9 +18,9 @@ public class GuiChest extends GuiContainer
      */
     private int inventoryRows;
 
-    public GuiChest(IInventory upperInv, IInventory lowerInv)
+    public GuiChest(IInventory upperInv, IInventory lowerInv, ClientEngine mc)
     {
-        super(new ContainerChest(upperInv, lowerInv, ClientEngine.get().player));
+        super(new ContainerChest(upperInv, lowerInv, mc.player));
         this.upperChestInventory = upperInv;
         this.lowerChestInventory = lowerInv;
         this.allowUserInput = false;

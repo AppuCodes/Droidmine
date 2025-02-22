@@ -18,7 +18,7 @@ public class RenderMinecartMobSpawner extends RenderMinecart<EntityMinecartMobSp
 
         if (state.getBlock() == Blocks.mob_spawner)
         {
-            TileEntityMobSpawnerRenderer.renderMob(minecart.func_98039_d(), minecart.posX, minecart.posY, minecart.posZ, partialTicks);
+            TileEntityMobSpawnerRenderer.renderMob(minecart.func_98039_d(), minecart.posX, minecart.posY, minecart.posZ, partialTicks, mc);
         }
     }
 }

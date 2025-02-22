@@ -1,15 +1,11 @@
 package net.minecraft.client.renderer.entity;
 
-import java.awt.Color;
-
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -19,10 +15,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.optifine.Config;
 import net.minecraft.optifine.shadersmod.client.Shaders;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public abstract class Render<T extends Entity>
@@ -36,10 +29,12 @@ public abstract class Render<T extends Entity>
      */
     protected float shadowOpaque = 1.0F;
     private static final String __OBFID = "CL_00000992";
+    protected ClientEngine mc;
 
     protected Render(RenderManager renderManager)
     {
         this.renderManager = renderManager;
+        this.mc = renderManager.mc;
     }
 
     public boolean shouldRender(T livingEntity, ICamera camera, double camX, double camY, double camZ)
@@ -114,7 +109,7 @@ public abstract class Render<T extends Entity>
     private void renderEntityOnFire(Entity entity, double x, double y, double z, float partialTicks)
     {
         GlStateManager.disableLighting();
-        TextureMap texturemap = ClientEngine.get().getTextureMapBlocks();
+        TextureMap texturemap = renderManager.mc.getTextureMapBlocks();
         TextureAtlasSprite textureatlassprite = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_0");
         TextureAtlasSprite textureatlassprite1 = texturemap.getAtlasSprite("minecraft:blocks/fire_layer_1");
         GlStateManager.pushMatrix();
@@ -354,7 +349,7 @@ public abstract class Render<T extends Entity>
             GlStateManager.translate((float)x + 0.0F, (float)y + entityIn.height + 0.5F, (float)z);
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(ClientEngine.get().options.thirdPersonView == 2 ? -this.renderManager.playerViewX : this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotate(this.renderManager.mc.options.thirdPersonView == 2 ? -this.renderManager.playerViewX : this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
             GlStateManager.scale(-f1, -f1, f1);
             GlStateManager.disableLighting();
             GlStateManager.depthMask(false);

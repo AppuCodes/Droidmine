@@ -1,22 +1,12 @@
 package net.minecraft.server;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Proxy;
 import java.security.KeyPair;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.*;
+import java.util.concurrent.*;
 
 import javax.imageio.ImageIO;
 
@@ -27,23 +17,16 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListenableFutureTask;
+import com.google.common.util.concurrent.*;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
+import io.netty.buffer.*;
 import io.netty.handler.codec.base64.Base64;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.ServerCommandManager;
+import net.minecraft.client.ClientEngine;
+import net.minecraft.command.*;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,29 +36,11 @@ import net.minecraft.network.ServerStatusResponse;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
 import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.server.management.ServerConfigurationManager;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.IProgressUpdate;
-import net.minecraft.util.IThreadListener;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.Util;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.MinecraftException;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldManager;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.WorldServerMulti;
-import net.minecraft.world.WorldSettings;
-import net.minecraft.world.WorldType;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
 import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import net.minecraft.world.demo.DemoWorldServer;
-import net.minecraft.world.storage.ISaveFormat;
-import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.storage.*;
 
 public abstract class MinecraftServer implements Runnable, ICommandSender, IThreadListener
 {
@@ -178,11 +143,13 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     protected final Queue < FutureTask<? >> futureTaskQueue = Queues. < FutureTask<? >> newArrayDeque();
     private Thread serverThread;
     private long currentTime = getCurrentTimeMillis();
+    private ClientEngine mc;
 
-    public MinecraftServer(Proxy proxy, File workDir)
+    public MinecraftServer(Proxy proxy, File workDir, ClientEngine mc)
     {
         this.serverProxy = proxy;
         mcServer = this;
+        this.mc = mc;
         this.anvilFile = null;
         this.networkSystem = null;
         this.profileCache = new PlayerProfileCache(this, workDir);
@@ -193,12 +160,13 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         this.profileRepo = this.authService.createProfileRepository();
     }
 
-    public MinecraftServer(File workDir, Proxy proxy, File profileCacheDir)
+    public MinecraftServer(File workDir, Proxy proxy, File profileCacheDir, ClientEngine mc)
     {
         this.serverProxy = proxy;
+        this.mc = mc;
         mcServer = this;
         this.anvilFile = workDir;
-        this.networkSystem = new NetworkSystem(this);
+        this.networkSystem = new NetworkSystem(this, mc);
         this.profileCache = new PlayerProfileCache(this, profileCacheDir);
         this.commandManager = this.createNewCommandManager();
         this.anvilConverterForAnvilFile = new AnvilSaveConverter(workDir);

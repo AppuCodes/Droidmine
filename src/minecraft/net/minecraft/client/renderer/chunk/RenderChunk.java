@@ -1,25 +1,16 @@
 package net.minecraft.client.renderer.chunk;
 
-import com.google.common.collect.Sets;
 import java.nio.FloatBuffer;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockRedstoneWire;
+
+import com.google.common.collect.Sets;
+
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RegionRenderCache;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -27,10 +18,7 @@ import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.optifine.*;
 import net.minecraft.optifine.shadersmod.client.SVertexBuilder;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class RenderChunk
@@ -58,9 +46,11 @@ public class RenderChunk
     private boolean isMipmaps = Config.isMipmaps();
     private boolean fixBlockLayer = !Reflector.BetterFoliageClient.exists();
     private boolean playerUpdate = false;
+    private ClientEngine mc;
 
-    public RenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos blockPosIn, int indexIn)
+    public RenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos blockPosIn, int indexIn, ClientEngine mc)
     {
+        this.mc = mc;
         this.world = worldIn;
         this.renderGlobal = renderGlobalIn;
         this.index = indexIn;
@@ -165,7 +155,7 @@ public class RenderChunk
         {
             ++renderChunksUpdated;
             boolean[] aboolean = new boolean[ENUM_WORLD_BLOCK_LAYERS.length];
-            BlockRendererDispatcher blockrendererdispatcher = ClientEngine.get().getBlockRendererDispatcher();
+            BlockRendererDispatcher blockrendererdispatcher = mc.getBlockRendererDispatcher();
             Iterator iterator = BlockPosM.getAllInBoxMutable(blockpos, blockpos1).iterator();
             boolean flag1 = Reflector.ForgeBlock_hasTileEntity.exists();
             boolean flag2 = Reflector.ForgeBlock_canRenderInLayer.exists();

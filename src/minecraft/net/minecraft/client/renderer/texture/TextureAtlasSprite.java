@@ -1,12 +1,13 @@
 package net.minecraft.client.renderer.texture;
 
-import com.google.common.collect.Lists;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Callable;
+
+import com.google.common.collect.Lists;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.data.AnimationFrame;
@@ -51,27 +52,30 @@ public class TextureAtlasSprite
     public TextureAtlasSprite spriteNormal = null;
     public TextureAtlasSprite spriteSpecular = null;
     public boolean isShadersSprite = false;
+    protected ClientEngine mc;
 
-    private TextureAtlasSprite(TextureAtlasSprite p_i12_1_)
+    private TextureAtlasSprite(TextureAtlasSprite p_i12_1_, ClientEngine mc)
     {
+        this.mc = mc;
         this.iconName = p_i12_1_.iconName;
         this.isSpriteSingle = true;
     }
 
-    protected TextureAtlasSprite(String spriteName)
+    protected TextureAtlasSprite(String spriteName, ClientEngine mc)
     {
         this.iconName = spriteName;
+        this.mc = mc;
 
         if (Config.isMultiTexture())
         {
-            this.spriteSingle = new TextureAtlasSprite(this);
+            this.spriteSingle = new TextureAtlasSprite(this, mc);
         }
     }
 
-    protected static TextureAtlasSprite makeAtlasSprite(ResourceLocation spriteResourceLocation)
+    protected static TextureAtlasSprite makeAtlasSprite(ResourceLocation spriteResourceLocation, ClientEngine mc)
     {
         String s = spriteResourceLocation.toString();
-        return (TextureAtlasSprite)(locationNameClock.equals(s) ? new TextureClock(s) : (locationNameCompass.equals(s) ? new TextureCompass(s) : new TextureAtlasSprite(s)));
+        return (TextureAtlasSprite)(locationNameClock.equals(s) ? new TextureClock(s, mc) : (locationNameCompass.equals(s) ? new TextureCompass(s, mc) : new TextureAtlasSprite(s, mc)));
     }
 
     public static void setLocationNameClock(String clockName)
@@ -697,7 +701,7 @@ public class TextureAtlasSprite
             {
                 try
                 {
-                    TextureAtlasSprite textureatlassprite = new TextureAtlasSprite(s);
+                    TextureAtlasSprite textureatlassprite = new TextureAtlasSprite(s, mc);
                     textureatlassprite.isShadersSprite = true;
                     textureatlassprite.copyFrom(this);
                     textureatlassprite.loadShaderSpriteFrames(resourcelocation, this.mipmapLevels + 1);
@@ -722,7 +726,7 @@ public class TextureAtlasSprite
             {
                 try
                 {
-                    TextureAtlasSprite textureatlassprite1 = new TextureAtlasSprite(s1);
+                    TextureAtlasSprite textureatlassprite1 = new TextureAtlasSprite(s1, mc);
                     textureatlassprite1.isShadersSprite = true;
                     textureatlassprite1.copyFrom(this);
                     textureatlassprite1.loadShaderSpriteFrames(resourcelocation1, this.mipmapLevels + 1);

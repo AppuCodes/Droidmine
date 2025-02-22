@@ -1,8 +1,10 @@
 package net.minecraft.client.gui.spectator;
 
+import java.util.List;
+
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
-import java.util.List;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiSpectator;
@@ -35,13 +37,16 @@ public class SpectatorMenu
     };
     private final ISpectatorMenuRecipient field_178651_f;
     private final List<SpectatorDetails> field_178652_g = Lists.<SpectatorDetails>newArrayList();
-    private ISpectatorMenuView field_178659_h = new BaseSpectatorGroup();
+    private ISpectatorMenuView field_178659_h;
     private int field_178660_i = -1;
     private int field_178658_j;
+    public ClientEngine mc;
 
-    public SpectatorMenu(ISpectatorMenuRecipient p_i45497_1_)
+    public SpectatorMenu(ISpectatorMenuRecipient p_i45497_1_, ClientEngine mc)
     {
+        this.mc = mc;
         this.field_178651_f = p_i45497_1_;
+        field_178659_h = new BaseSpectatorGroup(mc);
     }
 
     public ISpectatorMenuObject func_178643_a(int p_178643_1_)
@@ -130,7 +135,7 @@ public class SpectatorMenu
 
         public void func_178663_a(float p_178663_1_, int alpha)
         {
-            ClientEngine.get().getTextureManager().bindTexture(GuiSpectator.field_175269_a);
+            // mc.getTextureManager().bindTexture(GuiSpectator.field_175269_a);
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 128.0F, 0.0F, 16, 16, 256.0F, 256.0F);
         }
 
@@ -163,7 +168,7 @@ public class SpectatorMenu
 
         public void func_178663_a(float p_178663_1_, int alpha)
         {
-            ClientEngine.get().getTextureManager().bindTexture(GuiSpectator.field_175269_a);
+            // mc.getTextureManager().bindTexture(GuiSpectator.field_175269_a);
 
             if (this.field_178666_a < 0)
             {

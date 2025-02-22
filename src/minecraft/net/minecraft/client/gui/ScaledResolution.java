@@ -8,7 +8,7 @@ public class ScaledResolution
     /**
      * Cache ScaledResolution
      */
-    private static ScaledResolution INSTANCE = new ScaledResolution(ClientEngine.get());
+    private static ScaledResolution INSTANCE;
     private int scaledWidth, scaledHeight, scaleFactor;
     private double scaledWidthD, scaledHeightD;
 
@@ -64,6 +64,11 @@ public class ScaledResolution
     public int getScaleFactor()
     {
         return this.scaleFactor;
+    }
+
+    public static void init(ClientEngine mc)
+    {
+        INSTANCE = new ScaledResolution(mc);
     }
 
     public static ScaledResolution get()

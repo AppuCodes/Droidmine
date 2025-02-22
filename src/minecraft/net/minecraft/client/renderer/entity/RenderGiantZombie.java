@@ -20,7 +20,7 @@ public class RenderGiantZombie extends RenderLiving<EntityGiantZombie>
     {
         super(renderManagerIn, modelBaseIn, shadowSizeIn * scaleIn, mc);
         this.scale = scaleIn;
-        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerHeldItem(this, mc));
         this.addLayer(new LayerBipedArmor(this)
         {
             protected void initArmor()

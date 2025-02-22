@@ -44,7 +44,7 @@ public class GuiVideoSettings extends GuiScreen
 
                 if (options$options.getEnumFloat())
                 {
-                    this.buttonList.add(new GuiOptionSliderOF(options$options.returnEnumOrdinal(), j, k, options$options));
+                    this.buttonList.add(new GuiOptionSliderOF(options$options.returnEnumOrdinal(), j, k, options$options, mc));
                 }
                 else
                 {

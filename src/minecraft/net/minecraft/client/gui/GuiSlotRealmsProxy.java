@@ -7,9 +7,9 @@ public class GuiSlotRealmsProxy extends GuiSlot
 {
     private final RealmsScrolledSelectionList selectionList;
 
-    public GuiSlotRealmsProxy(RealmsScrolledSelectionList selectionListIn, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn)
+    public GuiSlotRealmsProxy(RealmsScrolledSelectionList selectionListIn, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn, ClientEngine mc)
     {
-        super(ClientEngine.get(), widthIn, heightIn, topIn, bottomIn, slotHeightIn);
+        super(mc, widthIn, heightIn, topIn, bottomIn, slotHeightIn);
         this.selectionList = selectionListIn;
     }
 

@@ -707,7 +707,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (creativetabs == CreativeTabs.tabInventory)
         {
-            GuiInventory.drawEntityOnScreen(this.guiLeft + 43, this.guiTop + 45, 20, (float)(this.guiLeft + 43 - mouseX), (float)(this.guiTop + 45 - 30 - mouseY), this.mc.player);
+            GuiInventory.drawEntityOnScreen(this.guiLeft + 43, this.guiTop + 45, 20, (float)(this.guiLeft + 43 - mouseX), (float)(this.guiTop + 45 - 30 - mouseY), this.mc.player, mc);
         }
     }
 

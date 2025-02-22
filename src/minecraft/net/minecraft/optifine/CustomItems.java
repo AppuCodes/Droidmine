@@ -1,18 +1,8 @@
 package net.minecraft.optifine;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,9 +15,7 @@ import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.optifine.shadersmod.client.Shaders;
@@ -53,7 +41,7 @@ public class CustomItems
     private static final int[] EMPTY_INT_ARRAY = new int[0];
     private static final int[][] EMPTY_INT2_ARRAY = new int[0][];
 
-    public static void updateIcons(TextureMap p_updateIcons_0_)
+    public static void updateIcons(TextureMap p_updateIcons_0_, ClientEngine mc)
     {
         itemProperties = (CustomItemProperties[][])null;
         enchantmentProperties = (CustomItemProperties[][])null;
@@ -67,10 +55,10 @@ public class CustomItems
             for (int i = airesourcepack.length - 1; i >= 0; --i)
             {
                 IResourcePack iresourcepack = airesourcepack[i];
-                updateIcons(p_updateIcons_0_, iresourcepack);
+                updateIcons(p_updateIcons_0_, iresourcepack, mc);
             }
 
-            updateIcons(p_updateIcons_0_, Config.getDefaultResourcePack());
+            updateIcons(p_updateIcons_0_, Config.getDefaultResourcePack(), mc);
 
             if (itemProperties.length <= 0)
             {
@@ -111,10 +99,10 @@ public class CustomItems
         }
     }
 
-    private static void updateIcons(TextureMap p_updateIcons_0_, IResourcePack p_updateIcons_1_)
+    private static void updateIcons(TextureMap p_updateIcons_0_, IResourcePack p_updateIcons_1_, ClientEngine mc)
     {
         String[] astring = ResUtils.collectFiles(p_updateIcons_1_, (String)"mcpatcher/cit/", (String)".properties", (String[])null);
-        Map map = makeAutoImageProperties(p_updateIcons_1_);
+        Map map = makeAutoImageProperties(p_updateIcons_1_, mc);
 
         if (map.size() > 0)
         {
@@ -153,7 +141,7 @@ public class CustomItems
 
                     Properties properties = new Properties();
                     properties.load(inputstream);
-                    customitemproperties = new CustomItemProperties(properties, s);
+                    customitemproperties = new CustomItemProperties(properties, s, mc);
                 }
 
                 if (customitemproperties.isValid(s))
@@ -237,15 +225,15 @@ public class CustomItems
         }
     }
 
-    private static Map makeAutoImageProperties(IResourcePack p_makeAutoImageProperties_0_)
+    private static Map makeAutoImageProperties(IResourcePack p_makeAutoImageProperties_0_, ClientEngine mc)
     {
         Map map = new HashMap();
-        map.putAll(makePotionImageProperties(p_makeAutoImageProperties_0_, false));
-        map.putAll(makePotionImageProperties(p_makeAutoImageProperties_0_, true));
+        map.putAll(makePotionImageProperties(p_makeAutoImageProperties_0_, false, mc));
+        map.putAll(makePotionImageProperties(p_makeAutoImageProperties_0_, true, mc));
         return map;
     }
 
-    private static Map makePotionImageProperties(IResourcePack p_makePotionImageProperties_0_, boolean p_makePotionImageProperties_1_)
+    private static Map makePotionImageProperties(IResourcePack p_makePotionImageProperties_0_, boolean p_makePotionImageProperties_1_, ClientEngine mc)
     {
         Map map = new HashMap();
         String s = p_makePotionImageProperties_1_ ? "splash/" : "normal/";
@@ -262,7 +250,7 @@ public class CustomItems
             if (properties != null)
             {
                 String s3 = StrUtils.removeSuffix(s1, astring1) + ".properties";
-                CustomItemProperties customitemproperties = new CustomItemProperties(properties, s3);
+                CustomItemProperties customitemproperties = new CustomItemProperties(properties, s3, mc);
                 map.put(s3, customitemproperties);
             }
         }

@@ -8,17 +8,17 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.RenderWitch;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 
 public class LayerHeldItemWitch implements LayerRenderer<EntityWitch>
 {
     private final RenderWitch witchRenderer;
+    private ClientEngine mc;
 
-    public LayerHeldItemWitch(RenderWitch witchRendererIn)
+    public LayerHeldItemWitch(RenderWitch witchRendererIn, ClientEngine mc)
     {
         this.witchRenderer = witchRendererIn;
+        this.mc = mc;
     }
 
     public void doRenderLayer(EntityWitch entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
@@ -41,7 +41,7 @@ public class LayerHeldItemWitch implements LayerRenderer<EntityWitch>
             ((ModelWitch)this.witchRenderer.getMainModel()).villagerNose.postRender(0.0625F);
             GlStateManager.translate(-0.0625F, 0.53125F, 0.21875F);
             Item item = itemstack.getItem();
-            ClientEngine minecraft = ClientEngine.get();
+            ClientEngine minecraft = mc;
 
             if (item instanceof ItemBlock && minecraft.getBlockRendererDispatcher().isRenderTypeChest(Block.getBlockFromItem(item), itemstack.getMetadata()))
             {

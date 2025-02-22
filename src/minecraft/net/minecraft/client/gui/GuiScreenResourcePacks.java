@@ -55,15 +55,15 @@ public class GuiScreenResourcePacks extends GuiScreen
 
             for (ResourcePackRepository.Entry resourcepackrepository$entry : list)
             {
-                this.availableResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry));
+                this.availableResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry, mc));
             }
 
             for (ResourcePackRepository.Entry resourcepackrepository$entry1 : Lists.reverse(resourcepackrepository.getRepositoryEntries()))
             {
-                this.selectedResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry1));
+                this.selectedResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry1, mc));
             }
 
-            this.selectedResourcePacks.add(new ResourcePackListEntryDefault(this));
+            this.selectedResourcePacks.add(new ResourcePackListEntryDefault(this, mc));
         }
 
         this.availableResourcePacksList = new GuiResourcePackAvailable(this.mc, 200, this.height, this.availableResourcePacks);

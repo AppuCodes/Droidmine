@@ -11,7 +11,7 @@ public class Barrier extends EntityFX
 {
     protected Barrier(World worldIn, double p_i46286_2_, double p_i46286_4_, double p_i46286_6_, Item p_i46286_8_, ClientEngine mc)
     {
-        super(worldIn, p_i46286_2_, p_i46286_4_, p_i46286_6_, 0.0D, 0.0D, 0.0D);
+        super(worldIn, p_i46286_2_, p_i46286_4_, p_i46286_6_, 0.0D, 0.0D, 0.0D, mc);
         this.setParticleIcon(mc.getRenderItem().getItemModelMesher().getParticleIcon(p_i46286_8_));
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
         this.motionX = this.motionY = this.motionZ = 0.0D;

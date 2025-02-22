@@ -1,15 +1,12 @@
 package net.minecraft.optifine;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+
 import javax.imageio.ImageIO;
+
+import com.google.gson.*;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.util.ResourceLocation;
 
@@ -19,9 +16,11 @@ public class PlayerConfigurationParser
     public static final String CONFIG_ITEMS = "items";
     public static final String ITEM_TYPE = "type";
     public static final String ITEM_ACTIVE = "active";
+    private ClientEngine mc;
 
-    public PlayerConfigurationParser(String p_i71_1_)
+    public PlayerConfigurationParser(String p_i71_1_, ClientEngine mc)
     {
+        this.mc = mc;
         this.player = p_i71_1_;
     }
 
@@ -103,7 +102,7 @@ public class PlayerConfigurationParser
 
         try
         {
-            byte[] abyte = HttpPipeline.get(s, ClientEngine.get().getProxy());
+            byte[] abyte = HttpPipeline.get(s);
             BufferedImage bufferedimage = ImageIO.read((InputStream)(new ByteArrayInputStream(abyte)));
             return bufferedimage;
         }
@@ -120,12 +119,12 @@ public class PlayerConfigurationParser
 
         try
         {
-            byte[] abyte = HttpPipeline.get(s, ClientEngine.get().getProxy());
+            byte[] abyte = HttpPipeline.get(s);
             String s1 = new String(abyte, "ASCII");
             JsonParser jsonparser = new JsonParser();
             JsonObject jsonobject = (JsonObject)jsonparser.parse(s1);
             PlayerItemParser playeritemparser = new PlayerItemParser();
-            PlayerItemModel playeritemmodel = PlayerItemParser.parseItemModel(jsonobject);
+            PlayerItemModel playeritemmodel = PlayerItemParser.parseItemModel(jsonobject, mc);
             return playeritemmodel;
         }
         catch (Exception exception)

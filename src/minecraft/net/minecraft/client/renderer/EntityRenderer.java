@@ -1224,6 +1224,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 GlStateManager.loadIdentity();
                 this.setupOverlayRendering();
                 this.renderEndNanoTime = System.nanoTime();
+                
+                if (TileEntityRendererDispatcher.instance == null)
+                {
+                    TileEntityRendererDispatcher.init(mc); 
+                }
+                
                 TileEntityRendererDispatcher.instance.renderEngine = this.mc.getTextureManager();
             }
 
@@ -1270,7 +1276,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         this.frameFinish();
         this.waitForServerThread();
-        Lagometer.updateLagometer();
+        Lagometer.updateLagometer(mc);
 
         if (this.mc.options.ofProfiler)
         {
@@ -1542,7 +1548,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
 
         renderglobal.renderBlockLayer(EnumWorldBlockLayer.CUTOUT, (double)partialTicks, pass, entity);
-        this.mc.getTextureManager().getTexture(TextureMap.locationBlocksTexture).restoreLastBlurMipmap();
+       // this.mc.getTextureManager().getTexture(TextureMap.locationBlocksTexture).restoreLastBlurMipmap();
 
         if (flag)
         {
@@ -2053,12 +2059,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
         float f = 0.25F + 0.75F * (float)this.mc.options.renderDistanceChunks / 32.0F;
         f = 1.0F - (float)Math.pow((double)f, 0.25D);
         Vec3 vec3 = worldclient.getSkyColor(this.mc.getRenderViewEntity(), partialTicks);
-        vec3 = CustomColors.getWorldSkyColor(vec3, worldclient, this.mc.getRenderViewEntity(), partialTicks);
+        vec3 = CustomColors.getWorldSkyColor(vec3, worldclient, this.mc.getRenderViewEntity(), partialTicks, mc);
         float f1 = (float)vec3.xCoord;
         float f2 = (float)vec3.yCoord;
         float f3 = (float)vec3.zCoord;
         Vec3 vec31 = worldclient.getFogColor(partialTicks);
-        vec31 = CustomColors.getWorldFogColor(vec31, worldclient, this.mc.getRenderViewEntity(), partialTicks);
+        vec31 = CustomColors.getWorldFogColor(vec31, worldclient, this.mc.getRenderViewEntity(), partialTicks, mc);
         this.fogColorRed = (float)vec31.xCoord;
         this.fogColorGreen = (float)vec31.yCoord;
         this.fogColorBlue = (float)vec31.zCoord;
@@ -2518,7 +2524,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
     {
         if (!this.initialized)
         {
-            TextureUtils.registerResourceListener();
+            TextureUtils.registerResourceListener(mc);
 
             if (Config.getBitsOs() == 64 && Config.getBitsJre() == 32)
             {

@@ -1,14 +1,12 @@
 package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.InventoryEffectRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -87,13 +85,13 @@ public class GuiInventory extends InventoryEffectRenderer
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-        drawEntityOnScreen(i + 51, j + 75, 30, (float)(i + 51) - this.oldMouseX, (float)(j + 75 - 50) - this.oldMouseY, this.mc.player);
+        drawEntityOnScreen(i + 51, j + 75, 30, (float)(i + 51) - this.oldMouseX, (float)(j + 75 - 50) - this.oldMouseY, this.mc.player, mc);
     }
 
     /**
      * Draws the entity to the screen. Args: xPos, yPos, scale, mouseX, mouseY, entityLiving
      */
-    public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseX, float mouseY, EntityLivingBase ent)
+    public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseX, float mouseY, EntityLivingBase ent, ClientEngine mc)
     {
         GlStateManager.enableColorMaterial();
         GlStateManager.pushMatrix();
@@ -115,7 +113,7 @@ public class GuiInventory extends InventoryEffectRenderer
         ent.rotationYawHead = ent.rotationYaw;
         ent.prevRotationYawHead = ent.rotationYaw;
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
-        RenderManager rendermanager = ClientEngine.get().getRenderManager();
+        RenderManager rendermanager = mc.getRenderManager();
         rendermanager.setPlayerViewY(180.0F);
         rendermanager.setRenderShadow(false);
         rendermanager.renderEntityWithPosYaw(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F);

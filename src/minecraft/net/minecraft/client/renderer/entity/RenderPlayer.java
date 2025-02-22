@@ -34,11 +34,11 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         super(renderManager, new ModelPlayer(0.0F, useSmallArms), 0.5F, mc);
         this.smallArms = useSmallArms;
         this.addLayer(new LayerBipedArmor(this));
-        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerHeldItem(this, mc));
         this.addLayer(new LayerArrow(this));
         this.addLayer(new LayerDeadmau5Head(this));
         this.addLayer(new LayerCape(this));
-        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead, mc));
     }
 
     public ModelPlayer getMainModel()

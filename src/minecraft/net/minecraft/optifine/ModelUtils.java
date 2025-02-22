@@ -2,6 +2,7 @@ package net.minecraft.optifine;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.SimpleBakedModel;
@@ -89,7 +90,7 @@ public class ModelUtils
 
     public static BakedQuad duplicateQuad(BakedQuad p_duplicateQuad_0_)
     {
-        BakedQuad bakedquad = new BakedQuad((int[])p_duplicateQuad_0_.getVertexData().clone(), p_duplicateQuad_0_.getTintIndex(), p_duplicateQuad_0_.getFace(), p_duplicateQuad_0_.getSprite());
+        BakedQuad bakedquad = new BakedQuad((int[])p_duplicateQuad_0_.getVertexData().clone(), p_duplicateQuad_0_.getTintIndex(), p_duplicateQuad_0_.getFace(), p_duplicateQuad_0_.getSprite(), p_duplicateQuad_0_.mc);
         return bakedquad;
     }
 }

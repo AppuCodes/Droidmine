@@ -1,7 +1,9 @@
 package net.minecraft.client.gui;
 
-import com.google.common.collect.Lists;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.LanServerDetector;
@@ -11,12 +13,13 @@ public class ServerSelectionList extends GuiListExtended
     private final GuiMultiplayer owner;
     private final List<ServerListEntryNormal> field_148198_l = Lists.<ServerListEntryNormal>newArrayList();
     private final List<ServerListEntryLanDetected> field_148199_m = Lists.<ServerListEntryLanDetected>newArrayList();
-    private final GuiListExtended.IGuiListEntry lanScanEntry = new ServerListEntryLanScan();
+    private final GuiListExtended.IGuiListEntry lanScanEntry;
     private int selectedSlotIndex = -1;
 
     public ServerSelectionList(GuiMultiplayer ownerIn, ClientEngine mcIn, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn)
     {
         super(mcIn, widthIn, heightIn, topIn, bottomIn, slotHeightIn);
+        lanScanEntry = new ServerListEntryLanScan(mcIn);
         this.owner = ownerIn;
     }
 
@@ -74,7 +77,7 @@ public class ServerSelectionList extends GuiListExtended
 
         for (int i = 0; i < p_148195_1_.countServers(); ++i)
         {
-            this.field_148198_l.add(new ServerListEntryNormal(this.owner, p_148195_1_.getServerData(i)));
+            this.field_148198_l.add(new ServerListEntryNormal(this.owner, p_148195_1_.getServerData(i), mc));
         }
     }
 
@@ -84,7 +87,7 @@ public class ServerSelectionList extends GuiListExtended
 
         for (LanServerDetector.LanServer lanserverdetector$lanserver : p_148194_1_)
         {
-            this.field_148199_m.add(new ServerListEntryLanDetected(this.owner, lanserverdetector$lanserver));
+            this.field_148199_m.add(new ServerListEntryLanDetected(this.owner, lanserverdetector$lanserver, mc));
         }
     }
 

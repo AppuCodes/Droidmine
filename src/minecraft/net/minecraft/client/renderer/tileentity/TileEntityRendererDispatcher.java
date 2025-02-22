@@ -1,7 +1,10 @@
 package net.minecraft.client.renderer.tileentity;
 
-import com.google.common.collect.Maps;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
+
+import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -9,17 +12,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBanner;
-import net.minecraft.tileentity.TileEntityBeacon;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.tileentity.TileEntityEnchantmentTable;
-import net.minecraft.tileentity.TileEntityEndPortal;
-import net.minecraft.tileentity.TileEntityEnderChest;
-import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.tileentity.TileEntityPiston;
-import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
@@ -27,7 +20,7 @@ import net.minecraft.world.World;
 public class TileEntityRendererDispatcher
 {
     private Map < Class <? extends TileEntity > , TileEntitySpecialRenderer <? extends TileEntity >> mapSpecialRenderers = Maps. < Class <? extends TileEntity > , TileEntitySpecialRenderer <? extends TileEntity >> newHashMap();
-    public static TileEntityRendererDispatcher instance = new TileEntityRendererDispatcher();
+    public static TileEntityRendererDispatcher instance;
     private FontRenderer fontRenderer;
 
     /** The player's current X position (same as playerX) */
@@ -46,19 +39,24 @@ public class TileEntityRendererDispatcher
     public double entityX;
     public double entityY;
     public double entityZ;
-
-    private TileEntityRendererDispatcher()
+    
+    public static void init(ClientEngine mc)
     {
-        this.mapSpecialRenderers.put(TileEntitySign.class, new TileEntitySignRenderer());
-        this.mapSpecialRenderers.put(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
-        this.mapSpecialRenderers.put(TileEntityPiston.class, new TileEntityPistonRenderer());
-        this.mapSpecialRenderers.put(TileEntityChest.class, new TileEntityChestRenderer());
-        this.mapSpecialRenderers.put(TileEntityEnderChest.class, new TileEntityEnderChestRenderer());
-        this.mapSpecialRenderers.put(TileEntityEnchantmentTable.class, new TileEntityEnchantmentTableRenderer());
-        this.mapSpecialRenderers.put(TileEntityEndPortal.class, new TileEntityEndPortalRenderer());
-        this.mapSpecialRenderers.put(TileEntityBeacon.class, new TileEntityBeaconRenderer());
-        this.mapSpecialRenderers.put(TileEntitySkull.class, new TileEntitySkullRenderer());
-        this.mapSpecialRenderers.put(TileEntityBanner.class, new TileEntityBannerRenderer());
+        instance = new TileEntityRendererDispatcher(mc);
+    }
+
+    private TileEntityRendererDispatcher(ClientEngine mc)
+    {
+        this.mapSpecialRenderers.put(TileEntitySign.class, new TileEntitySignRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityPiston.class, new TileEntityPistonRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityChest.class, new TileEntityChestRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityEnderChest.class, new TileEntityEnderChestRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityEnchantmentTable.class, new TileEntityEnchantmentTableRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityEndPortal.class, new TileEntityEndPortalRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityBeacon.class, new TileEntityBeaconRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntitySkull.class, new TileEntitySkullRenderer(mc));
+        this.mapSpecialRenderers.put(TileEntityBanner.class, new TileEntityBannerRenderer(mc));
 
         for (TileEntitySpecialRenderer<?> tileentityspecialrenderer : this.mapSpecialRenderers.values())
         {

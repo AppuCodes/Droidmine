@@ -3,65 +3,29 @@ package net.minecraft.client.renderer.entity;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockHugeMushroom;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockPrismarine;
-import net.minecraft.block.BlockQuartz;
-import net.minecraft.block.BlockRedSandstone;
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockSandStone;
-import net.minecraft.block.BlockSilverfish;
-import net.minecraft.block.BlockStone;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.block.BlockStoneSlabNew;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.BlockWall;
+import net.minecraft.block.*;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.*;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFishFood;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.optifine.*;
 import net.minecraft.optifine.shadersmod.client.Shaders;
 import net.minecraft.optifine.shadersmod.client.ShadersRender;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3i;
+import net.minecraft.util.*;
 
 public class RenderItem implements IResourceManagerReloadListener
 {
@@ -77,9 +41,11 @@ public class RenderItem implements IResourceManagerReloadListener
     private boolean renderItemGui = false;
     public ModelManager modelManager = null;
     private EntityLivingBase lastEntityToRenderFor = null;
+    private ClientEngine mc;
 
-    public RenderItem(TextureManager textureManager, ModelManager modelManager)
+    public RenderItem(TextureManager textureManager, ModelManager modelManager, ClientEngine mc)
     {
+        this.mc = mc;
         this.textureManager = textureManager;
         this.modelManager = modelManager;
 
@@ -139,7 +105,7 @@ public class RenderItem implements IResourceManagerReloadListener
     {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        boolean flag = ClientEngine.get().getTextureMapBlocks().isTextureBound();
+        boolean flag = mc.getTextureMapBlocks().isTextureBound();
         boolean flag1 = Config.isMultiTexture() && flag;
 
         if (flag1)
@@ -293,11 +259,6 @@ public class RenderItem implements IResourceManagerReloadListener
                 if (Config.isCustomColors())
                 {
                     k = CustomColors.getColorFromItemStack(stack, bakedquad.getTintIndex(), k);
-                }
-
-                if (EntityRenderer.anaglyphEnable)
-                {
-                    k = TextureUtil.anaglyphColor(k);
                 }
 
                 k = k | -16777216;

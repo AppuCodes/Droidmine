@@ -104,7 +104,7 @@ public class WorldServer extends World implements IThreadListener
 
     public WorldServer(MinecraftServer server, ISaveHandler saveHandlerIn, WorldInfo info, int dimensionId)
     {
-        super(saveHandlerIn, info, WorldProvider.getProviderForDimension(dimensionId), false);
+        super(saveHandlerIn, info, WorldProvider.getProviderForDimension(dimensionId), false, null);
         this.mcServer = server;
         this.theEntityTracker = new EntityTracker(this);
         this.thePlayerManager = new PlayerManager(this);

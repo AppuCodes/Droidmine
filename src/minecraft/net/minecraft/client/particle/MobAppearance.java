@@ -1,9 +1,7 @@
 package net.minecraft.client.particle;
 
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,9 +13,9 @@ public class MobAppearance extends EntityFX
 {
     private EntityLivingBase entity;
 
-    protected MobAppearance(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn)
+    protected MobAppearance(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, ClientEngine mc)
     {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D, mc);
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F;
         this.motionX = this.motionY = this.motionZ = 0.0D;
         this.particleGravity = 0.0F;
@@ -51,7 +49,7 @@ public class MobAppearance extends EntityFX
     {
         if (this.entity != null)
         {
-            RenderManager rendermanager = ClientEngine.get().getRenderManager();
+            RenderManager rendermanager = mc.getRenderManager();
             rendermanager.setRenderPosition(EntityFX.interpPosX, EntityFX.interpPosY, EntityFX.interpPosZ);
             float f = 0.42553192F;
             float f1 = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge;
@@ -79,9 +77,9 @@ public class MobAppearance extends EntityFX
 
     public static class Factory implements IParticleFactory
     {
-        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
+        public EntityFX getEntityFX(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, ClientEngine mc, int... p_178902_15_)
         {
-            return new MobAppearance(worldIn, xCoordIn, yCoordIn, zCoordIn);
+            return new MobAppearance(worldIn, xCoordIn, yCoordIn, zCoordIn, mc);
         }
     }
 }

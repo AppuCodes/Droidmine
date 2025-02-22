@@ -40,7 +40,7 @@ public class EntityFX extends Entity
     public static double interpPosX;
     public static double interpPosY;
     public static double interpPosZ;
-    private ClientEngine mc;
+    protected ClientEngine mc;
 
     protected EntityFX(World worldIn, double posXIn, double posYIn, double posZIn, ClientEngine mc)
     {

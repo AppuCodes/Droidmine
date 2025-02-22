@@ -21,10 +21,10 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
     protected final ClientEngine mc;
     protected final GuiScreenResourcePacks resourcePacksGUI;
 
-    public ResourcePackListEntry(GuiScreenResourcePacks resourcePacksGUIIn)
+    public ResourcePackListEntry(GuiScreenResourcePacks resourcePacksGUIIn, ClientEngine mc)
     {
         this.resourcePacksGUI = resourcePacksGUIIn;
-        this.mc = ClientEngine.get();
+        this.mc = mc;
     }
 
     public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected)

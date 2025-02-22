@@ -1,9 +1,7 @@
 package net.minecraft.client.renderer.texture;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
@@ -86,7 +84,7 @@ public class TextureManager implements ITickable, IResourceManagerReloadListener
         }
         catch (IOException ioexception)
         {
-            logger.warn((String)("Failed to load texture: " + textureLocation) + (Throwable)ioexception);
+            // logger.warn((String)("Failed to load texture: " + textureLocation) + (Throwable)ioexception);
             itextureobject = TextureUtil.missingTexture;
             this.mapTextureObjects.put(textureLocation, itextureobject);
             flag = false;

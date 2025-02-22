@@ -64,7 +64,7 @@ public class TooltipManager
                             k1 = 16719904;
                         }
 
-                        FontRenderer fontrenderer = ClientEngine.get().fontRendererObj;
+                        FontRenderer fontrenderer = guiScreen.mc.fontRendererObj;
                         fontrenderer.drawStringWithShadow(s, (float)(j + 5), (float)(k + 5 + j1 * 11), k1);
                     }
                 }

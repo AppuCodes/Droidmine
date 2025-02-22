@@ -1,20 +1,16 @@
 package net.minecraft.client.particle;
 
+import java.util.*;
+import java.util.concurrent.Callable;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.Callable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.ClientEngine;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -23,13 +19,7 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.optifine.Config;
 import net.minecraft.optifine.Reflector;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class EffectRenderer
@@ -115,9 +105,9 @@ public class EffectRenderer
         this.particleTypes.put(Integer.valueOf(id), particleFactory);
     }
 
-    public void emitParticleAtEntity(Entity entityIn, EnumParticleTypes particleTypes)
+    public void emitParticleAtEntity(Entity entityIn, EnumParticleTypes particleTypes, ClientEngine mc)
     {
-        this.particleEmitters.add(new EntityParticleEmitter(this.worldObj, entityIn, particleTypes));
+        this.particleEmitters.add(new EntityParticleEmitter(this.worldObj, entityIn, particleTypes, mc));
     }
 
     /**
