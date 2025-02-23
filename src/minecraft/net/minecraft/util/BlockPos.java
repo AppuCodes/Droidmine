@@ -178,6 +178,11 @@ public class BlockPos extends Vec3i
         return this.offset(facing, 1);
     }
 
+    public int manhattanDist(BlockPos pos)
+    {
+        return Math.abs(getX() - pos.getX()) + Math.abs(getY() - pos.getY()) + Math.abs(getZ() - pos.getZ());
+    }
+
     /**
      * Offsets this BlockPos n blocks in the given direction
      */

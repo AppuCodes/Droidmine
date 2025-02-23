@@ -21,7 +21,7 @@ public class GuiDisconnected extends GuiScreen
         this.parentScreen = screen;
         this.reason = I18n.format(reasonLocalizationKey, new Object[0]);
         this.message = chatComp;
-        LogManager.getLogger().info("Disconnected for reason \"" + chatComp.getUnformattedText() + "\".");
+        LogManager.getLogger().info("Disconnected for reason \"" + chatComp.getUnformattedText() + "\"");
     }
 
     /**

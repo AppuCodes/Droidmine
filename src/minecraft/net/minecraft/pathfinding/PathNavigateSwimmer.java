@@ -13,9 +13,9 @@ public class PathNavigateSwimmer extends PathNavigate
         super(entitylivingIn, worldIn);
     }
 
-    protected PathFinder getPathFinder()
+    protected VanillaPathFinder getPathFinder()
     {
-        return new PathFinder(new SwimNodeProcessor());
+        return new VanillaPathFinder(new SwimNodeProcessor());
     }
 
     /**

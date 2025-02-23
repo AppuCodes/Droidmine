@@ -1,0 +1,14 @@
+package roger.pathfind.main.processor.impl;
+
+import java.util.List;
+
+import net.minecraft.world.World;
+import roger.pathfind.main.path.PathElm;
+import roger.pathfind.main.processor.Processor;
+
+public class FallProcessor extends Processor {
+
+    @Override
+    public void process(List<PathElm> elms, World world) {
+    }
+}

@@ -1,0 +1,75 @@
+package net.minecraft.client.main;
+
+import java.time.Duration;
+
+import net.droidmine.MineBot;
+import net.droidmine.Session;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.Vec3;
+import roger.pathfind.main.walk.Walker;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        MineBot bot = new MineBot("blocksmc.com", Session.offline("yesfdp____"), true);
+        
+        bot.onChatReceive(msg ->
+        {
+            if (msg.contains("/login <password>"))
+            {
+                bot.player().sendChatMessage("/login pass");
+                bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
+                bot.sleep(Duration.ofSeconds(5));
+                bot.quit();
+            }
+            
+            else if (msg.contains("/register <password> <password>"))
+            {
+                bot.sleep(Duration.ofSeconds(3));
+                bot.player().sendChatMessage("/register pass pass");
+            }
+        });
+        
+        bot.onJoin(() ->
+        {
+            try
+            {
+                bot.sleep(Duration.ofSeconds(1));
+                BlockPos targetPos = new BlockPos(-74, 76, 236);
+                Walker.getInstance().walk(bot.player().getPosition(), targetPos, 10000);
+//                PathFinder pathFinder = new PathFinder(bot.world(), new BlockPos(-78, 76, 236), new BlockPos(-74, 76, 236));
+//                List<BlockPos> path = pathFinder.findPath();
+//                int currentStep = 0;
+//                
+//                if (currentStep < path.size())
+//                {
+//                    BlockPos nextPos = path.get(currentStep);
+//                    movePlayer(nextPos, bot.player());
+//                    currentStep++;
+//                    bot.sleep(50);
+//                }
+            }
+            
+            catch (Throwable t)
+            {
+                t.printStackTrace();
+            }
+        });
+        
+        bot.run();
+    }
+    
+    private static void movePlayer(BlockPos target, EntityPlayerSP player)
+    {
+        double speed = 0.1;
+        Vec3 currentPos = player.getPositionVector();
+        Vec3 targetPos = new Vec3(target.getX() + 0.5, target.getY(), target.getZ() + 0.5);
+        Vec3 direction = targetPos.subtract(currentPos).normalize().scale(speed);
+        player.motionX = direction.xCoord;
+        player.motionY = direction.yCoord;
+        player.motionZ = direction.zCoord;
+    }
+}

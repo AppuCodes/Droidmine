@@ -39,7 +39,7 @@ public abstract class PathNavigate
      */
     private Vec3 lastPosCheck = new Vec3(0.0D, 0.0D, 0.0D);
     private float heightRequirement = 1.0F;
-    private final PathFinder pathFinder;
+    private final VanillaPathFinder pathFinder;
 
     public PathNavigate(EntityLiving entitylivingIn, World worldIn)
     {
@@ -49,7 +49,7 @@ public abstract class PathNavigate
         this.pathFinder = this.getPathFinder();
     }
 
-    protected abstract PathFinder getPathFinder();
+    protected abstract VanillaPathFinder getPathFinder();
 
     /**
      * Sets the speed

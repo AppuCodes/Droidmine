@@ -5,6 +5,7 @@ import java.time.Duration;
 import net.droidmine.MineBot;
 import net.droidmine.Session;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
+import net.minecraft.util.EnumChatFormatting;
 
 public class Main
 {
@@ -18,8 +19,6 @@ public class Main
             {
                 bot.player().sendChatMessage("/login pass");
                 bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
-                bot.sleep(Duration.ofSeconds(5));
-                bot.quit();
             }
             
             else if (msg.contains("/register <password> <password>"))
@@ -27,6 +26,16 @@ public class Main
                 bot.sleep(Duration.ofSeconds(3));
                 bot.player().sendChatMessage("/register pass pass");
             }
+            
+            bot.logger("chat").info(EnumChatFormatting.getTextWithoutFormattingCodes(msg));
+        });
+        
+        bot.onJoin(() ->
+        {
+            bot.sleep(Duration.ofSeconds(2));
+            bot.player().inventory.currentItem = 0;
+            bot.player().controller().sendUseItem(bot.player(), bot.world(), bot.player().getHeldItem());
+            
         });
         
         bot.run();

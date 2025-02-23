@@ -141,6 +141,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
             super.onUpdate();
             if (mc.tickEvent != null) CompletableFuture.runAsync(() -> mc.tickEvent.run());
 
+            if (mc.pathWalker != null)
+            {
+                mc.pathWalker.tick();
+            }
+
             if (this.isRiding())
             {
                 this.sendQueue.sendPacket(new C03PacketPlayer.C05PacketPlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));

@@ -22,11 +22,11 @@ public class PathNavigateGround extends PathNavigate
         super(entitylivingIn, worldIn);
     }
 
-    protected PathFinder getPathFinder()
+    protected VanillaPathFinder getPathFinder()
     {
         this.nodeProcessor = new WalkNodeProcessor();
         this.nodeProcessor.setEnterDoors(true);
-        return new PathFinder(this.nodeProcessor);
+        return new VanillaPathFinder(this.nodeProcessor);
     }
 
     /**

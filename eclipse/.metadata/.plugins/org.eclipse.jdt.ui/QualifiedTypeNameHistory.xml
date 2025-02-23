@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.lang.InterruptedException"/>
     <fullyQualifiedTypeName name="net.minecraft.client.settings.GameSettings.Options"/>
     <fullyQualifiedTypeName name="net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType"/>
     <fullyQualifiedTypeName name="appleclient.mods.events.EventBus"/>
@@ -58,4 +57,7 @@
     <fullyQualifiedTypeName name="net.minecraft.client.gui.ScaledResolution"/>
     <fullyQualifiedTypeName name="org.lwjgl.util.glu.Project"/>
     <fullyQualifiedTypeName name="org.lwjgl.display.Display"/>
+    <fullyQualifiedTypeName name="net.minecraft.block.material.Material"/>
+    <fullyQualifiedTypeName name="net.minecraft.client.options.KeyBinding"/>
+    <fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
 </qualifiedTypeNameHistroy>

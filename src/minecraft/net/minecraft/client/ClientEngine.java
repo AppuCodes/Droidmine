@@ -30,13 +30,14 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import net.droidmine.MineBot;
 import net.droidmine.Session;
+import net.droidmine.pathfinder.PathWalker;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.achievement.GuiAchievement;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.*;
 import net.minecraft.client.network.NetHandlerLoginClient;
@@ -68,7 +69,6 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
-import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.optifine.Config;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.stats.*;
@@ -86,18 +86,20 @@ public class ClientEngine implements IThreadListener
     private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/mojang.png");
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
     private static final List<DisplayMode> macDisplayModes = Lists.newArrayList(new DisplayMode[] {new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
+    public Runnable gameLoop = null, tickEvent = null, joinEvent = null;
     public Function packetReceiveEvent = null, packetSendEvent = null;
-    public Runnable gameLoop = null, tickEvent = null;
     public Consumer chatEvent = null;
     private final File fileResourcepacks;
     private final PropertyMap twitchDetails;
     private final PropertyMap field_181038_N;
     private ServerData currentServerData;
+    public PathWalker pathWalker;
 
     /** The RenderEngine instance used by Minecraft */
     private TextureManager renderEngine;
 
     public PlayerControllerMP playerController;
+    public boolean disconnect = false;
     private boolean fullscreen;
     private boolean hasCrashed;
 
@@ -118,6 +120,7 @@ public class ClientEngine implements IThreadListener
     public EffectRenderer effectRenderer;
     private final Session session;
     private boolean isGamePaused;
+    public boolean exitGame = false;
 
     /** The font renderer used for displaying and measuring text */
     public FontRenderer fontRendererObj;
@@ -812,9 +815,16 @@ public class ClientEngine implements IThreadListener
                 ;
             }
         }
+
         finally
         {
             Display.get().destroy();
+            MineBot.instances--;
+            
+            if (MineBot.instances == 0)
+            {
+                System.exit(0);
+            }
         }
     }
 
@@ -825,7 +835,15 @@ public class ClientEngine implements IThreadListener
     {
         long i = System.nanoTime();
 
-        if (Display.get().isCreated() && Display.get().isCloseRequested())
+        if (disconnect && getCurrentServerData() != null)
+        {
+            world.sendQuittingDisconnectingPacket();
+            loadWorld(null);
+            stopIntegratedServer();
+            disconnect = false;
+        }
+
+        if ((Display.get().isCreated() && Display.get().isCloseRequested()) || exitGame)
         {
             this.shutdown();
             return;
@@ -1400,7 +1418,11 @@ public class ClientEngine implements IThreadListener
             while (Keyboard.get().next())
             {
                 int k = Keyboard.get().getEventKey() == 0 ? Keyboard.get().getEventCharacter() + 256 : Keyboard.get().getEventKey();
-                KeyBinding.setKeyBindState(k, Keyboard.get().getEventKeyState());
+                
+                if (k != options.keyBindForward.getKeyCode() && k != options.keyBindLeft.getKeyCode() && k != options.keyBindBack.getKeyCode() && k != options.keyBindRight.getKeyCode())
+                {
+                    KeyBinding.setKeyBindState(k, Keyboard.get().getEventKeyState());
+                }
 
                 if (Keyboard.get().getEventKeyState())
                 {
@@ -1782,6 +1804,11 @@ public class ClientEngine implements IThreadListener
         networkmanager.sendPacket(new C00Handshake(47, socketaddress.toString(), 0, EnumConnectionState.LOGIN));
         networkmanager.sendPacket(new C00PacketLoginStart(this.getSession().profile()));
         this.myNetworkManager = networkmanager;
+        
+        if (joinEvent != null)
+        {
+            CompletableFuture.runAsync(() -> joinEvent.run());
+        }
     }
 
     /**

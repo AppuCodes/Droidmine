@@ -3,7 +3,7 @@ package net.minecraft.client.multiplayer;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CompletableFuture;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,6 +62,11 @@ public class GuiConnecting extends GuiScreen
             GuiConnecting.this.networkManager.sendPacket(new C00PacketLoginStart(GuiConnecting.this.mc.getSession().profile()));
             String address = ip.endsWith(".") ? ip.substring(0, ip.length() - 1) : ip;
             logger.info("Connected to " + address + ", " + port + ".");
+
+            if (mc.joinEvent != null)
+            {
+                CompletableFuture.runAsync(() -> mc.joinEvent.run());
+            }
         }
         catch (UnknownHostException unknownhostexception)
         {

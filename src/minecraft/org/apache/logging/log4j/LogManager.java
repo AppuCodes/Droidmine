@@ -8,8 +8,11 @@ public class LogManager
     
     public static Logger getLogger()
     {
-        String name = Thread.currentThread().getName();
-        
+        return getLogger(Thread.currentThread().getName());
+    }
+    
+    public static Logger getLogger(String name)
+    {
         if (loggers.containsKey(name))
         {
             return loggers.get(name);

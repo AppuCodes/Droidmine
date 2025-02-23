@@ -1,0 +1,129 @@
+package net.droidmine.utils;
+
+import java.util.*;
+
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+
+public class PathFinder
+{
+    private final World world;
+    private final BlockPos start;
+    private final BlockPos goal;
+    
+    public PathFinder(World world, BlockPos start, BlockPos goal) {
+        this.world = world;
+        this.start = start;
+        this.goal = goal;
+    }
+
+    public List<BlockPos> findPath() {
+        // If the start and goal are the same, no need to run pathfinding
+        if (start.equals(goal)) {
+            return Collections.singletonList(start);
+        }
+
+        // Create priority queues for A* (open and closed sets)
+        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingDouble(node -> node.fCost));
+        Set<BlockPos> closedSet = new HashSet<>();
+        
+        // Add the start node to the open set
+        openSet.add(new Node(start, null, 0, heuristic(start, goal)));
+
+        while (!openSet.isEmpty()) {
+            Node currentNode = openSet.poll();
+
+            // If we reached the goal, reconstruct the path
+            if (currentNode.pos.equals(goal)) {
+                return reconstructPath(currentNode);
+            }
+
+            closedSet.add(currentNode.pos);
+
+            // Expand neighbors
+            for (BlockPos neighbor : getNeighbors(currentNode.pos)) {
+                if (closedSet.contains(neighbor) || !isWalkable(neighbor)) {
+                    continue;
+                }
+
+                // Calculate the gCost and hCost for the neighbor
+                double gCost = currentNode.gCost + 1; // Assume uniform cost between neighbors
+                double hCost = heuristic(neighbor, goal);
+                Node neighborNode = new Node(neighbor, currentNode, gCost, hCost);
+
+                // Add the neighbor to the open set if it improves the path
+                if (!openSet.contains(neighborNode) || gCost < neighborNode.gCost) {
+                    openSet.add(neighborNode);
+                }
+            }
+        }
+
+        return Collections.emptyList(); // Return empty if no path found
+    }
+
+    private double heuristic(BlockPos a, BlockPos b) {
+        // Manhattan distance heuristic (perfect for grid-based movement)
+        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getZ() - b.getZ());
+    }
+
+    private List<BlockPos> getNeighbors(BlockPos pos) {
+        List<BlockPos> neighbors = new ArrayList<>();
+        // Check in 4 cardinal directions (no diagonals for simplicity)
+        for (EnumFacing direction : EnumFacing.HORIZONTALS) {
+            BlockPos neighbor = pos.offset(direction);
+            if (isWalkable(neighbor)) {
+                neighbors.add(neighbor);
+            }
+        }
+        return neighbors;
+    }
+
+    private boolean isWalkable(BlockPos pos) {
+        // Implement logic to check if a block is walkable in the world (e.g., not solid)
+        return world.getBlockState(pos).getBlock().getMaterial() != Material.air;
+    }
+
+    private List<BlockPos> reconstructPath(Node node) {
+        List<BlockPos> path = new ArrayList<>();
+        while (node != null) {
+            path.add(node.pos);
+            node = node.parent;
+        }
+        Collections.reverse(path); // Reverse the path to start from the start position
+        return path;
+    }
+
+    // Node class to store information about each position
+    private static class Node {
+        BlockPos pos;
+        Node parent;
+        double gCost; // Cost from the start
+        double hCost; // Heuristic cost to the goal
+        double fCost; // f = g + h
+
+        public Node(BlockPos pos, Node parent, double gCost, double hCost) {
+            this.pos = pos;
+            this.parent = parent;
+            this.gCost = gCost;
+            this.hCost = hCost;
+            this.fCost = gCost + hCost;
+        }
+
+        // Override equals and hashCode to make the priority queue handle Node comparison properly
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Node node = (Node) obj;
+            return pos.equals(node.pos);
+        }
+
+        @Override
+        public int hashCode() {
+            return pos.hashCode();
+        }
+    }
+}

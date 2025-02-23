@@ -1,0 +1,10 @@
+package roger.pathfind.main.processor;
+
+import java.util.List;
+
+import net.minecraft.world.World;
+import roger.pathfind.main.path.PathElm;
+
+public abstract class Processor {
+    public abstract void process(List<PathElm> elms, World world);
+}

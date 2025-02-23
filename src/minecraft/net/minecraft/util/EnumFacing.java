@@ -35,7 +35,7 @@ public enum EnumFacing implements IStringSerializable
     public static final EnumFacing[] VALUES = new EnumFacing[6];
 
     /** All Facings with horizontal axis in order S-W-N-E */
-    private static final EnumFacing[] HORIZONTALS = new EnumFacing[4];
+    public static final EnumFacing[] HORIZONTALS = new EnumFacing[4];
     private static final Map NAME_LOOKUP = Maps.newHashMap();
     private static final EnumFacing[] $VALUES = new EnumFacing[]{DOWN, UP, NORTH, SOUTH, WEST, EAST};
     private static final String __OBFID = "CL_00001201";

@@ -731,7 +731,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
 
     public void startServerThread()
     {
-        this.serverThread = new Thread(this, "Server thread");
+        this.serverThread = new Thread(this, Thread.currentThread().getName() + " Server thread");
         this.serverThread.start();
     }
 

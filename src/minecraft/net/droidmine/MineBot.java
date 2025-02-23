@@ -6,26 +6,27 @@ import java.time.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.lwjgl.display.Display;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.properties.PropertyMap.Serializer;
 
+import net.droidmine.pathfinder.PathWalker;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.*;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.network.Packet;
-import net.minecraft.realms.RealmsBridge;
 
 public class MineBot
 {
+    public static volatile int instances = 0;
     private final ClientEngine engine;
     private boolean window = false;
     private String serverHost;
@@ -37,6 +38,7 @@ public class MineBot
         this.session = session;
         this.window = window.length != 0 && window[0];
         engine = new ClientEngine(getConfig(), !this.window);
+        instances++;
     }
     
     public void run()
@@ -47,7 +49,7 @@ public class MineBot
     public void quit()
     {
         disconnectFromServer();
-        engine.shutdown();
+        engine.exitGame = true;
     }
     
     public void changeServers(String serverHost)
@@ -58,18 +60,26 @@ public class MineBot
     
     public void disconnectFromServer()
     {
-        if (engine.getCurrentServerData() != null)
-        {
-            engine.world.sendQuittingDisconnectingPacket();
-            engine.loadWorld(null);
-            engine.stopIntegratedServer();
-        }
+        engine.disconnect = true;
     }
     
     /** sleeps the current thread */
     public void sleep(Duration duration)
     {
         try { Thread.sleep(duration.toMillis()); } catch (InterruptedException e) {}
+    }
+    
+    public void sleep(long duration)
+    {
+        try { Thread.sleep(duration); } catch (InterruptedException e) {}
+    }
+    
+    public PathWalker pathFinder()
+    {
+        if (engine.pathWalker == null)
+            engine.pathWalker = new PathWalker(engine);
+
+        return engine.pathWalker;
     }
     
     private GameConfiguration getConfig()
@@ -108,6 +118,11 @@ public class MineBot
         engine.packetReceiveEvent = packetReceiveEvent;
     }
     
+    public void onJoin(Runnable joinEvent)
+    {
+        engine.joinEvent = joinEvent;
+    }
+    
     public WorldClient world()
     {
         return engine.world;
@@ -121,6 +136,11 @@ public class MineBot
     public GameOptions options()
     {
         return engine.options;
+    }
+    
+    public Logger logger(String name)
+    {
+        return LogManager.getLogger(name);
     }
     
     public NetHandlerPlayClient network()
