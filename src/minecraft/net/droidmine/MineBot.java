@@ -3,6 +3,8 @@ package net.droidmine;
 import java.io.File;
 import java.net.Proxy;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -22,7 +24,10 @@ import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.*;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.options.GameOptions;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MovingObjectPosition;
 
 public class MineBot
 {
@@ -147,4 +152,23 @@ public class MineBot
     {
         return engine.player.sendQueue;
     }
+    
+    /** Finds an entity from the world, based on its name. */
+    public Entity findEntity(String name)
+    {
+        ArrayList<Entity> targets = new ArrayList<>();
+        
+        for (Entity entity : world().loadedEntityList)
+        {
+            if (EnumChatFormatting.getTextWithoutFormattingCodes(entity.getDisplayName().getUnformattedText()).equals(name))
+                targets.add(entity);
+        }
+        
+        if (targets.isEmpty()) return null;
+        /* finds the closet target */
+        targets.sort(Comparator.comparingDouble(entity -> entity.getDistanceToEntity(player())));
+        return targets.get(0);
+    }
+    
+    public MovingObjectPosition hitResult() { return engine.hitResult; }
 }

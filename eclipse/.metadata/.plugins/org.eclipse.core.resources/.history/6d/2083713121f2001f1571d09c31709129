@@ -1,0 +1,11 @@
+package appu.tasks;
+
+import net.droidmine.MineBot;
+
+public class CollectIronTask extends GameTask
+{
+    public void onTick(MineBot bot)
+    {
+        
+    }
+}

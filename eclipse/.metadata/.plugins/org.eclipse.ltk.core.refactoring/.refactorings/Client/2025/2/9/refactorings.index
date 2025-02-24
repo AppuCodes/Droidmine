@@ -7,3 +7,6 @@
 1740274037553	Rename package 'roger.pathfind.main'
 1740274046854	Move compilation unit
 1740274050185	Rename type 'Walker'
+1740336409276	Move compilation unit
+1740346530919	Rename type 'GetBedsTask'
+1740346838059	Rename type 'BuyWoolTask'

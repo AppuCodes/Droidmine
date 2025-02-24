@@ -1,0 +1,47 @@
+package appu.tasks;
+
+import net.droidmine.MineBot;
+import net.droidmine.utils.EntityRotations;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+
+/** The main task in Bedwars. It bridges to bases and gets beds. */
+public class FollowTeamTask extends GameTask
+{
+    private BlockPos bedTarget = null;
+    private boolean temp = true;
+    
+    public void onTick(MineBot bot)
+    {
+        if (bedTarget == null)
+        {
+            int rangeBlocks = 192;
+            
+            for (double x = bot.player().posX - rangeBlocks; x < bot.player().posX + rangeBlocks; x++)
+            {
+                for (double y = bot.player().posY - 32; y < bot.player().posY + 32; y++)
+                {
+                    for (double z = bot.player().posZ - rangeBlocks; z < bot.player().posZ + rangeBlocks; z++)
+                    {
+                        BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
+                        Block block = bot.world().getBlockState(pos).getBlock();
+                        
+                        if (Blocks.bed.equals(block) && bot.player().getDistance((int) x, (int) y, (int) z) > 32)
+                        {
+                            bedTarget = pos;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        else
+        {
+            float[] rotations = EntityRotations.getRotationsTo(bedTarget, bot, 0);
+            bot.player().rotationYaw = rotations[0];
+            bot.player().rotationPitch = rotations[1];
+        }
+    }
+}

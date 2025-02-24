@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="net.minecraft.client.settings.GameSettings.Options"/>
-    <fullyQualifiedTypeName name="net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType"/>
-    <fullyQualifiedTypeName name="appleclient.mods.events.EventBus"/>
-    <fullyQualifiedTypeName name="net.java.games.input.Keyboard"/>
-    <fullyQualifiedTypeName name="net.java.games.input.Controller.Type"/>
-    <fullyQualifiedTypeName name="appleclient.mods.events.Event"/>
-    <fullyQualifiedTypeName name="net.minecraft.util.Util.EnumOS"/>
-    <fullyQualifiedTypeName name="org.lwjgl.input.Keyboard"/>
-    <fullyQualifiedTypeName name="net.minecraft.client.renderer.GlStateManager.FogState"/>
-    <fullyQualifiedTypeName name="appleclient.gui.font.CustomFontRenderer.FontType"/>
-    <fullyQualifiedTypeName name="appleclient.gui.font.CustomFontRenderer"/>
     <fullyQualifiedTypeName name="com.google.gson.reflect.TypeToken"/>
     <fullyQualifiedTypeName name="com.google.common.base.Charsets"/>
     <fullyQualifiedTypeName name="appleclient.events.impl.EventPacketReceive"/>
@@ -20,7 +9,6 @@
     <fullyQualifiedTypeName name="appleclient.gui.PanoramaRenderer"/>
     <fullyQualifiedTypeName name="java.util.Collections"/>
     <fullyQualifiedTypeName name="java.util.Comparator"/>
-    <fullyQualifiedTypeName name="javax.swing.text.html.parser.Entity"/>
     <fullyQualifiedTypeName name="appleclient.mods.impl.EntitySelection"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="net.minecraft.client.renderer.texture.SimpleTexture"/>
@@ -59,5 +47,17 @@
     <fullyQualifiedTypeName name="org.lwjgl.display.Display"/>
     <fullyQualifiedTypeName name="net.minecraft.block.material.Material"/>
     <fullyQualifiedTypeName name="net.minecraft.client.options.KeyBinding"/>
+    <fullyQualifiedTypeName name="java.util.logging.Logger"/>
+    <fullyQualifiedTypeName name="org.apache.logging.log4j.LogManager"/>
+    <fullyQualifiedTypeName name="org.apache.logging.log4j.Logger"/>
+    <fullyQualifiedTypeName name="javax.swing.text.html.parser.Entity"/>
+    <fullyQualifiedTypeName name="net.droidmine.MineBot"/>
+    <fullyQualifiedTypeName name="net.droidmine.utils.EntityRotations"/>
+    <fullyQualifiedTypeName name="appu.modules.KillAura"/>
+    <fullyQualifiedTypeName name="appu.modules.TargetUtil"/>
+    <fullyQualifiedTypeName name="net.minecraft.util.EnumChatFormatting"/>
+    <fullyQualifiedTypeName name="net.minecraft.init.Items"/>
+    <fullyQualifiedTypeName name="net.minecraft.block.Block"/>
+    <fullyQualifiedTypeName name="net.minecraft.init.Blocks"/>
     <fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
 </qualifiedTypeNameHistroy>

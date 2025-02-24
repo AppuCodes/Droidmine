@@ -1,0 +1,9 @@
+package appu.tasks;
+
+import net.droidmine.MineBot;
+
+public abstract class GameTask
+{
+    protected boolean done = false;
+    public abstract void onTick(MineBot bot);
+}

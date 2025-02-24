@@ -491,12 +491,13 @@ public class PlayerControllerMP
         return this.currentGameType != WorldSettings.GameType.SPECTATOR && playerIn.interactWith(targetEntity);
     }
 
-    public boolean func_178894_a(EntityPlayer p_178894_1_, Entity p_178894_2_, MovingObjectPosition p_178894_3_)
+    /** Player is interacting using right click */
+    public boolean interactAt(EntityPlayer playerIn, Entity targetEntity, MovingObjectPosition hitResult)
     {
         this.syncCurrentPlayItem();
-        Vec3 vec3 = new Vec3(p_178894_3_.hitVec.xCoord - p_178894_2_.posX, p_178894_3_.hitVec.yCoord - p_178894_2_.posY, p_178894_3_.hitVec.zCoord - p_178894_2_.posZ);
-        this.netClientHandler.sendPacket(new C02PacketUseEntity(p_178894_2_, vec3));
-        return this.currentGameType != WorldSettings.GameType.SPECTATOR && p_178894_2_.interactAt(p_178894_1_, vec3);
+        Vec3 vec3 = new Vec3(hitResult.hitVec.xCoord - targetEntity.posX, hitResult.hitVec.yCoord - targetEntity.posY, hitResult.hitVec.zCoord - targetEntity.posZ);
+        this.netClientHandler.sendPacket(new C02PacketUseEntity(targetEntity, vec3));
+        return this.currentGameType != WorldSettings.GameType.SPECTATOR && targetEntity.interactAt(playerIn, vec3);
     }
 
     /**
@@ -504,6 +505,7 @@ public class PlayerControllerMP
      */
     public ItemStack windowClick(int windowId, int slotId, int mouseButtonClicked, int mode, EntityPlayer playerIn)
     {
+        System.out.println(windowId + " " + slotId + " " + mouseButtonClicked + " " + mode + " " + playerIn);
         short short1 = playerIn.openContainer.getNextTransactionID(playerIn.inventory);
         ItemStack itemstack = playerIn.openContainer.slotClick(slotId, mouseButtonClicked, mode, playerIn);
         this.netClientHandler.sendPacket(new C0EPacketClickWindow(windowId, slotId, mouseButtonClicked, mode, itemstack, short1));
@@ -595,7 +597,7 @@ public class PlayerControllerMP
         return this.currentGameType;
     }
 
-    public boolean func_181040_m()
+    public boolean hittingBlock()
     {
         return this.isHittingBlock;
     }

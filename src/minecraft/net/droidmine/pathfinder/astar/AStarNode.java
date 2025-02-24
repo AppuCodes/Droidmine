@@ -1,6 +1,7 @@
 package net.droidmine.pathfinder.astar;
 
 import net.minecraft.block.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -61,7 +62,7 @@ public class AStarNode {
     }
 
     public boolean canBeTraversed() {
-        if(isBlockSolid(blockPos, world) || isBlockSolid(new BlockPos(x, y + 1, z), world))
+        if (isBlockSolid(blockPos, world) || isBlockSolid(new BlockPos(x, y + 1, z), world))
             return false;
 
         // fall node and not falling return false
@@ -98,7 +99,7 @@ public class AStarNode {
     }
 
     public static boolean isBlockSolid(BlockPos block, World world) {
-        return world.getBlockState(block)
+        boolean solid = world.getBlockState(block)
                 .getBlock().isBlockSolid(world, block, null) ||
                 world.getBlockState(block).getBlock() instanceof BlockSlab ||
                 world.getBlockState(block).getBlock() instanceof BlockStainedGlass ||
@@ -115,7 +116,9 @@ public class AStarNode {
                 world.getBlockState(block).getBlock() instanceof BlockGlass ||
                 world.getBlockState(block).getBlock() instanceof BlockSkull ||
                 world.getBlockState(block).getBlock() instanceof BlockSand;
+        return solid;
     }
+
     private void calculateHeuristic(AStarNode endNode) {
         this.hCost = (Math.abs(endNode.getX() - x) + Math.abs(endNode.getY() - y) + Math.abs(endNode.getZ() - z)) * 10;
 

@@ -1,0 +1,24 @@
+package appu.modules;
+
+import net.droidmine.MineBot;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+
+public class TargetUtil
+{
+    public static EntityLivingBase getTarget(MineBot bot)
+    {
+        for (Entity entity : bot.world().loadedEntityList)
+        {
+            if (entity instanceof EntityLivingBase && !bot.player().equals(entity))
+            {
+                EntityLivingBase target = (EntityLivingBase) entity;
+                
+                if (target.getDistanceToEntity(bot.player()) <= 3)
+                    return target;
+            }
+        }
+        
+        return null;
+    }
+}

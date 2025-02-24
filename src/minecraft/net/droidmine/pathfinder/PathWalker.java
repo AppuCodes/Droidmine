@@ -14,12 +14,13 @@ import net.droidmine.pathfinder.walk.target.impl.*;
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.*;
 
 public class PathWalker
 {
     private Entity player, followEntity;
-    private boolean isActive;
+    private boolean active;
     private ClientEngine mc;
     private List<PathElm> path;
     private WalkTarget currentTarget;
@@ -27,43 +28,38 @@ public class PathWalker
     /** Makes the player walk to a specified destination. */
     public void goTo(BlockPos destination)
     {
+        if (active) cancel();
         this.player = mc.player;
-        isActive = true;
+        active = true;
+        
+        while (player.worldObj.getBlockState(destination.add(0, -1, 0)).getBlock().equals(Blocks.air))
+        {
+            destination = destination.add(0, -1, 0);
+        }
 
         List<AStarNode> nodes = AStarPathFinder.compute(player.getPosition(), destination, 10000, player.worldObj);
         path = ProcessorManager.process(nodes, player.worldObj);
 
         if (path.size() == 0) {
-            isActive = false;
+            active = false;
             currentTarget = null;
             return;
         }
 
         currentTarget = null;
     }
-
+    
     /** Makes the player follow an entity. */
     public void follow(Entity entity)
     {
-        this.player = mc.player;
+        if (active) cancel();
         followEntity = entity;
-        isActive = true;
-
-        List<AStarNode> nodes = AStarPathFinder.compute(player.getPosition(), entity.getPosition(), 10000, player.worldObj);
-        path = ProcessorManager.process(nodes, player.worldObj);
-
-        if (path.size() == 0) {
-            isActive = false;
-            currentTarget = null;
-            return;
-        }
-
-        currentTarget = null;
+        goTo(entity.getPosition());
     }
-
+    
     public void tick()
     {
-        if (!isActive || path == null)
+        if (!active || path == null || path.isEmpty())
             return;
 
         if (currentTarget == null)
@@ -81,7 +77,7 @@ public class PathWalker
 
             if (path.isEmpty())
             {
-                isActive = false;
+                active = false;
                 currentTarget = null;
                 KeyBinding.setKeyBindState(Keyboard.KEY_W, false);
                 KeyBinding.setKeyBindState(Keyboard.KEY_A, false);
@@ -90,7 +86,7 @@ public class PathWalker
 
                 if (followEntity != null)
                 {
-                    follow(followEntity);
+                    goTo(followEntity.getPosition());
                 }
 
                 return;
@@ -251,10 +247,15 @@ public class PathWalker
     /** cancels any pathfinding action */
     public void cancel()
     {
-        isActive = false;
+        active = false;
         currentTarget = null;
         followEntity = null;
         path = null;
+    }
+
+    public boolean isActive()
+    {
+        return active;
     }
 
     public PathWalker(ClientEngine mc) { this.mc = mc; }

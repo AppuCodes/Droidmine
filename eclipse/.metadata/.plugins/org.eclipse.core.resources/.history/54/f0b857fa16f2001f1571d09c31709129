@@ -1,0 +1,17 @@
+package appu.modules;
+
+import net.droidmine.MineBot;
+import net.minecraft.entity.EntityLivingBase;
+
+public class TargetUtil
+{
+    public static EntityLivingBase getTarget(MineBot bot)
+    {
+        for (Entity target : bot.world().loadedEntityList)
+        {
+            
+        }
+        
+        return null;
+    }
+}

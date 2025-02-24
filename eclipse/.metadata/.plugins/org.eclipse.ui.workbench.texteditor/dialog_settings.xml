@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="updateKeyBindState"/>
+		<item key="selection" value="inventorySlots"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="updateKeyBindState"/>
-			<item value="pressed"/>
-			<item value="isblocksoi"/>
-			<item value="isblock"/>
-			<item value="Minecraft.getMinecraft().theWorld"/>
-			<item value="joinEvent"/>
-			<item value="theIntegratedServer"/>
-			<item value="integ"/>
-			<item value="server"/>
-			<item value="runAs"/>
-			<item value="disconnect"/>
-			<item value="disconnected"/>
-			<item value="gameloop"/>
-			<item value="isclose"/>
-			<item value="created"/>
+			<item value="inventorySlots"/>
+			<item value="hotbar"/>
+			<item value="keybinding.s"/>
+			<item value="keyb"/>
+			<item value="fixkey"/>
+			<item value="keybinding.on"/>
+			<item value="loadedEntityList"/>
+			<item value="packet != null"/>
+			<item value="receive"/>
+			<item value="onpacketre"/>
+			<item value="onpacket"/>
+			<item value="onpackt"/>
+			<item value="pathfin"/>
+			<item value="path"/>
+			<item value="ontic"/>
 		</list>
 		<list key="replacehistory">
 			<item value="world"/>

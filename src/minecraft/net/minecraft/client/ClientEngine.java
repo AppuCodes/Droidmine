@@ -1090,11 +1090,11 @@ public class ClientEngine implements IThreadListener
     }
 
     /**
-     * Called when user clicked he's mouse right button (place)
+     * Called when user clicks their place button
      */
     private void rightClickMouse()
     {
-        if (!this.playerController.func_181040_m())
+        if (!this.playerController.hittingBlock())
         {
             this.rightClickDelayTimer = 4;
             boolean flag = true;
@@ -1109,7 +1109,7 @@ public class ClientEngine implements IThreadListener
                 switch (this.hitResult.typeOfHit)
                 {
                     case ENTITY:
-                        if (this.playerController.func_178894_a(this.player, this.hitResult.entityHit, this.hitResult))
+                        if (this.playerController.interactAt(this.player, this.hitResult.entityHit, this.hitResult))
                         {
                             flag = false;
                         }
@@ -1419,7 +1419,7 @@ public class ClientEngine implements IThreadListener
             {
                 int k = Keyboard.get().getEventKey() == 0 ? Keyboard.get().getEventCharacter() + 256 : Keyboard.get().getEventKey();
                 
-                if (k != options.keyBindForward.getKeyCode() && k != options.keyBindLeft.getKeyCode() && k != options.keyBindBack.getKeyCode() && k != options.keyBindRight.getKeyCode())
+                if (k != options.keyBindForward.getKeyCode() && k != options.keyBindLeft.getKeyCode() && k != options.keyBindBack.getKeyCode() && k != options.keyBindRight.getKeyCode() && k != options.keyBindJump.getKeyCode() && k != options.keyBindSneak.getKeyCode())
                 {
                     KeyBinding.setKeyBindState(k, Keyboard.get().getEventKeyState());
                 }

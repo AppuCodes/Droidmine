@@ -1,0 +1,149 @@
+package appu;
+
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import appu.modules.KillAura;
+import appu.tasks.*;
+import net.droidmine.MineBot;
+import net.droidmine.Session;
+import net.droidmine.utils.EntityRotations;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.EnumChatFormatting;
+
+public class Main
+{
+    private static volatile GameTask task = null;
+    
+    public static void main(String[] args)
+    {
+        AtomicBoolean delay = new AtomicBoolean(false), lobby = new AtomicBoolean(false);
+        MineBot bot = new MineBot("blocksmc.com", Session.offline("yesfdp_"), true);
+        KillAura killAura = new KillAura(bot);
+        
+        bot.onChatReceive(msg ->
+        {
+            if (msg.contains("/login <password>"))
+            {
+                bot.player().sendChatMessage("/login pass");
+                bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
+            }
+            
+            else if (msg.contains("/register <password> <password>"))
+            {
+                delay.set(true);
+                bot.sleep(Duration.ofSeconds(3));
+                bot.player().sendChatMessage("/register pass pass");
+                bot.network().sendPacket(new C04PacketPlayerPosition(0, 0, 0, true));
+            }
+            
+            else if (msg.contains("You are now playing"))
+            {
+                killAura.disabled = false;
+                task = new CollectIronTask();
+            }
+            
+            bot.logger("chat").info(EnumChatFormatting.getTextWithoutFormattingCodes(msg));
+        });
+        
+        bot.onTick(() ->
+        {
+            if (bot.player().inventory.getStackInSlot(7) != null && bot.player().inventory.getStackInSlot(7).getItem().equals(Items.paper))
+            {
+                bot.player().inventory.currentItem = 7;
+                bot.player().controller().sendUseItem(bot.player(), bot.world(), bot.player().getHeldItem());
+                task = null;
+            }
+            
+            if (killAura.onTick() && task != null)
+            {
+                task.onTick(bot);
+                
+                if (task.done && task instanceof CollectIronTask)
+                {
+                    task = new BuySwordTask();
+                }
+                
+                else if (task.done && task instanceof BuySwordTask)
+                {
+                    task = new FollowTeamTask();
+                }
+            }
+            
+            if (killAura.disabled && lobby.get() && bot.player().ticksExisted % 10 == 0)
+            {
+                if (bot.player().openContainer == null)
+                {
+                    bot.player().inventory.currentItem = 0;
+                    bot.player().controller().sendUseItem(bot.player(), bot.world(), bot.player().getHeldItem());
+                }
+                
+                else
+                {
+                    for (int i = 0; i < bot.player().openContainer.getInventory().size(); i++)
+                    {
+                        ItemStack stack = bot.player().openContainer.getSlot(i).getStack();
+                        
+                        if (stack.getDisplayName().contains("Appu26J"))
+                        {
+                            bot.player().controller().windowClick(bot.player().openContainer.windowId, i, 0, 0, bot.player());
+                            lobby.set(false);
+                            break;
+                        }
+                    }
+                    
+                    bot.player().closeScreen();
+                }
+            }
+        });
+        
+        /* Anti KB */
+        bot.onPacketReceive((packet) ->
+        {
+            if (packet instanceof S12PacketEntityVelocity)
+            {
+                S12PacketEntityVelocity velocity = (S12PacketEntityVelocity) packet;
+                
+                if (velocity.getEntityID() == bot.player().getEntityId())
+                {
+                    return null;
+                }
+            }
+            
+            return packet;
+        });
+        
+        bot.onJoin(() ->
+        {
+            killAura.disabled = true;
+            bot.sleep(delay.get() ? Duration.ofSeconds(6) : Duration.ofSeconds(3));
+            bot.player().inventory.currentItem = 0;
+            bot.player().controller().sendUseItem(bot.player(), bot.world(), bot.player().getHeldItem());
+            bot.player().controller().windowClick(1, 12, 0, 0, bot.player());
+            bot.sleep(Duration.ofSeconds(3));
+            bot.player().inventory.currentItem = 2;
+            Entity soloBedwars = bot.findEntity("Doubles");
+            
+            if (soloBedwars != null && bot.player().getDistanceToEntity(soloBedwars) > 3)
+            {
+                bot.pathFinder().goTo(soloBedwars.getPosition());
+                while (bot.pathFinder().isActive());
+            }
+            
+            float[] rotations = EntityRotations.getRotationsTo((EntityLivingBase) soloBedwars, bot);
+            bot.player().rotationYaw = rotations[0];
+            bot.player().rotationPitch = rotations[1];
+            bot.options().keyBindUseItem.onTick(bot.options().keyBindUseItem.getKeyCode());
+            bot.sleep(500);
+            bot.player().controller().windowClick(1, 11, 0, 0, bot.player());
+            lobby.set(true);
+        });
+        
+        bot.run();
+    }
+}

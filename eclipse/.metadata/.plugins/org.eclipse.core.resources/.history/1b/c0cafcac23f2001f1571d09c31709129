@@ -1,0 +1,35 @@
+package appu.tasks;
+
+import net.droidmine.MineBot;
+import net.droidmine.utils.EntityRotations;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+
+public class BuyWoolTask extends GameTask
+{
+    private int ticks = 0;
+    
+    public void onTick(MineBot bot)
+    {
+        ticks++;
+        Entity shop = bot.findEntity("ITEM SHOP");
+        if (shop == null) return;
+        
+        if (bot.player().getDistanceToEntity(shop) > 3)
+        {
+            bot.options().keyBindForward.setPressed(true);
+            
+            if (ticks > 20)
+            {
+                float[] rotations = EntityRotations.getRotationsTo((EntityLivingBase) shop, bot);
+                bot.player().rotationYaw = rotations[0];
+                bot.player().rotationPitch = rotations[1];
+            }
+        }
+        
+        else
+        {
+            //bot.options().keyBindUseItem.onTick(bot.options().keyBindUseItem.getKeyCode());
+        }
+    }
+}

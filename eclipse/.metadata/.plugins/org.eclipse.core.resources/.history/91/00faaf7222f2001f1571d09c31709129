@@ -1,0 +1,18 @@
+package appu.tasks;
+
+import net.droidmine.MineBot;
+import net.minecraft.init.Items;
+
+public class CollectIronTask extends GameTask
+{
+    public void onTick(MineBot bot)
+    {
+        //bot.options().keyBindBack.setPressed(true);
+        
+        if (bot.player().inventory.getStackInSlot(1) != null &&
+                bot.player().inventory.getStackInSlot(1).stackSize >= 16)
+        {
+            done = true;
+        }
+    }
+}

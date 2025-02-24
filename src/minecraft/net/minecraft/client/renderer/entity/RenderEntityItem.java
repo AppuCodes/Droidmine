@@ -26,7 +26,7 @@ public class RenderEntityItem extends Render<EntityItem>
         this.shadowOpaque = 0.75F;
     }
 
-    private int func_177077_a(EntityItem itemIn, double p_177077_2_, double p_177077_4_, double p_177077_6_, float p_177077_8_, IBakedModel p_177077_9_)
+    private int renderDroppedItem(EntityItem itemIn, double p_177077_2_, double p_177077_4_, double p_177077_6_, float p_177077_8_, IBakedModel p_177077_9_)
     {
         ItemStack itemstack = itemIn.getEntityItem();
         Item item = itemstack.getItem();
@@ -114,7 +114,7 @@ public class RenderEntityItem extends Render<EntityItem>
         GlStateManager.get().tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.get().pushMatrix();
         IBakedModel ibakedmodel = this.itemRenderer.getItemModelMesher().getItemModel(itemstack);
-        int i = this.func_177077_a(entity, x, y, z, partialTicks, ibakedmodel);
+        int i = this.renderDroppedItem(entity, x, y, z, partialTicks, ibakedmodel);
         
         if (this.renderManager.mc.options.ofDroppedItems != 2 && !(this.renderManager.mc.options.ofDroppedItems == 0 && this.renderManager.mc.isFancyGraphicsEnabled()))
         {

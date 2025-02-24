@@ -1,7 +1,5 @@
 package net.minecraft.client.entity;
 
-import java.util.concurrent.CompletableFuture;
-
 import net.minecraft.client.ClientEngine;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.*;
@@ -139,7 +137,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
             super.onUpdate();
-            if (mc.tickEvent != null) CompletableFuture.runAsync(() -> mc.tickEvent.run());
+
+            if (mc.tickEvent != null)
+            {
+                try { mc.tickEvent.run(); } catch (Throwable t) { t.printStackTrace(); }
+            }
 
             if (mc.pathWalker != null)
             {

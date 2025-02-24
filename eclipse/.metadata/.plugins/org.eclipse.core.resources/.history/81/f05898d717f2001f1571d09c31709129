@@ -1,0 +1,17 @@
+package appu.modules;
+
+import net.droidmine.MineBot;
+import net.minecraft.entity.EntityLivingBase;
+
+public class KillAura
+{
+    public static void onTick(MineBot bot)
+    {
+        EntityLivingBase target = TargetUtil.getTarget(bot);
+        
+        if (target != null)
+        {
+            
+        }
+    }
+}
