@@ -1,5 +1,0 @@
-package org.lwjgl.input;
-
-public class HeadlessKeyboard extends Keyboard {
-
-}

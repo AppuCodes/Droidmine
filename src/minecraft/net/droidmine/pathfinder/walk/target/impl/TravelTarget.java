@@ -9,14 +9,16 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class TravelTarget extends WalkTarget {
-
+    private int stuck = 0;
     TravelNode node;
+    
     public TravelTarget(TravelNode node) {
         this.node = node;
     }
 
     @Override
     public boolean tick(Vec3 predictedMotionOnStop, Vec3 playerPos, World world) {
+        stuck++;
         setCurrentTarget(node.getBlockPos());
 
         Vec3 dest = new Vec3(node.getBlockPos()).addVector(0.5d, 0d, 0.5d);
@@ -25,7 +27,8 @@ public class TravelTarget extends WalkTarget {
 
         double angle = calculateAnglePredictionDest(predictedMotionOnStop, dest.subtract(playerPos));
 
-        return (predicatedPositionDistance > destPositionDistance && angle < PREDICTED_MOTION_ANGLE) || new BlockPos(Math.floor(playerPos.xCoord), Math.floor(playerPos.yCoord), Math.floor(playerPos.zCoord)).equals(FallNode.toBlockPos(dest));
+        return (predicatedPositionDistance > destPositionDistance && angle < PREDICTED_MOTION_ANGLE) || new BlockPos(Math.floor(playerPos.xCoord), Math.floor(playerPos.yCoord), Math.floor(playerPos.zCoord)).equals(FallNode.toBlockPos(dest))
+                || playerPos.equals(dest) || stuck > 20;
     }
 
     public BlockPos getNodeBlockPos() {

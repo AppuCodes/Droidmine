@@ -9,6 +9,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class TravelVectorTarget extends WalkTarget {
+    private int stuck = 0;
     TravelVector node;
     boolean baseReached = false;
 
@@ -18,6 +19,7 @@ public class TravelVectorTarget extends WalkTarget {
 
     @Override
     public boolean tick(Vec3 predictedMotionOnStop, Vec3 playerPos, World world) {
+        stuck++;
         if(!baseReached) {
             // this means that the player is already on the vector and is suitable for skipping the base node.
             if(node.playerOn(playerPos)) {
@@ -34,8 +36,8 @@ public class TravelVectorTarget extends WalkTarget {
         double destPositionDistance = playerPos.distanceTo(dest);
         double angle = calculateAnglePredictionDest(predictedMotionOnStop, dest.subtract(playerPos));
 
-
-        if(((predicatedPositionDistance > destPositionDistance && angle < PREDICTED_MOTION_ANGLE) || new BlockPos(Math.floor(playerPos.xCoord), Math.floor(playerPos.yCoord), Math.floor(playerPos.zCoord)).equals(FallNode.toBlockPos(dest)))) {
+        if(((predicatedPositionDistance > destPositionDistance && angle < PREDICTED_MOTION_ANGLE) || new BlockPos(Math.floor(playerPos.xCoord), Math.floor(playerPos.yCoord), Math.floor(playerPos.zCoord)).equals(FallNode.toBlockPos(dest)))
+                || playerPos.equals(dest) || stuck > 20) {
             if(!baseReached) {
                 baseReached = true;
                 setCurrentTarget(node.getTo().getBlockPos());

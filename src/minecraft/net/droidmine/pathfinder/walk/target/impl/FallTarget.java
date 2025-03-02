@@ -8,8 +8,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class FallTarget extends WalkTarget {
-
+    private int stuck = 0;
     FallNode node;
+
     public FallTarget(FallNode node) {
         this.node = node;
     }
@@ -23,7 +24,7 @@ public class FallTarget extends WalkTarget {
         double destPositionDistance = playerPos.distanceTo(dest);
 
         double angle = calculateAnglePredictionDest(predictedMotionOnStop, dest.subtract(playerPos));
-        return (predicatedPositionDistance > destPositionDistance   && angle < PREDICTED_MOTION_ANGLE) || FallNode.toBlockPos(playerPos).equals(FallNode.toBlockPos(dest));
+        return (predicatedPositionDistance > destPositionDistance   && angle < PREDICTED_MOTION_ANGLE) || FallNode.toBlockPos(playerPos).equals(FallNode.toBlockPos(dest)) || playerPos.equals(dest) || stuck > 20;
     }
 
     public BlockPos getNodeBlockPos() {

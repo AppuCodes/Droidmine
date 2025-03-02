@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client.particle{EntityReddustFX.java[EntityReddustFX" modifiers="1" timestamp="1740112101610"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client.renderer{WorldRenderer.java[WorldRenderer" modifiers="1" timestamp="1740244209294"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.world{WorldProvider.java[WorldProvider" modifiers="1025" timestamp="1738990894000"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client.multiplayer{WorldClient.java[WorldClient" modifiers="1" timestamp="1740244209002"/>
-    <typeInfo handle="=Client/jars\/libraries\/io\/netty\/netty-all\/4.0.23.Final\/netty-all-4.0.23.Final.jar&lt;io.netty.util.internal(PlatformDependent.class[PlatformDependent" modifiers="17" timestamp="1738990894000"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client.gui{GuiOverlayDebug.java[GuiOverlayDebug" modifiers="1" timestamp="1740257605966"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.network.play.server{S1CPacketEntityMetadata.java[S1CPacketEntityMetadata" modifiers="1" timestamp="1738990894000"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client.gui{GuiScreen.java[GuiScreen" modifiers="1025" timestamp="1740257605987"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.client.particle{EntityFX.java[EntityFX" modifiers="1" timestamp="1740111138000"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.util{EnumParticleTypes.java[EnumParticleTypes" modifiers="16385" timestamp="1738990894000"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.entity{EntityLivingBase.java[EntityLivingBase" modifiers="1025" timestamp="1740260877174"/>
@@ -36,7 +28,6 @@
     <typeInfo handle="=Client/src&lt;net.minecraft.client.network{NetHandlerPlayClient.java[NetHandlerPlayClient" modifiers="1" timestamp="1740185361806"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.client.renderer{BlockRendererDispatcher.java[BlockRendererDispatcher" modifiers="1" timestamp="1740244209047"/>
     <typeInfo handle="=Client/src&lt;org.lwjgl.display{Display.java[Display" modifiers="1" timestamp="1740261749573"/>
-    <typeInfo handle="=Client/src&lt;net.droidmine{MineBot.java[MineBot" modifiers="1" timestamp="1740343392663"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.client.renderer{ActiveRenderInfo.java[ActiveRenderInfo" modifiers="1" timestamp="1740257606277"/>
     <typeInfo handle="=Client/src&lt;org.lwjgl.input{HeadlessMouse.java[HeadlessMouse" modifiers="1" timestamp="1740260055603"/>
     <typeInfo handle="=Client/src&lt;org.lwjgl.input{HeadlessKeyboard.java[HeadlessKeyboard" modifiers="1" timestamp="1740260429650"/>
@@ -50,14 +41,23 @@
     <typeInfo handle="=Client/src&lt;net.minecraft.client.renderer.entity{Render.java[Render" modifiers="1025" timestamp="1740257606432"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.util{Util.java[Util" modifiers="1" timestamp="1739850188245"/>
     <typeInfo handle="=Client/src&lt;net.droidmine.utils{EntityRotations.java[EntityRotations" modifiers="1" timestamp="1740336958608"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client.entity{EntityPlayerSP.java[EntityPlayerSP" modifiers="1" timestamp="1740339452930"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.network{NetworkManager.java[NetworkManager" modifiers="1" timestamp="1740247835012"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.client.renderer{EntityRenderer.java[EntityRenderer" modifiers="1" timestamp="1740260678142"/>
-    <typeInfo handle="=Client/src&lt;net.minecraft.client{ClientEngine.java[ClientEngine" modifiers="1" timestamp="1740340741446"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.client.gui{GuiIngame.java[GuiIngame" modifiers="1" timestamp="1740257605918"/>
     <typeInfo handle="=Client/src&lt;net.minecraft.client.options{GameOptions.java[GameOptions" modifiers="1" timestamp="1740260200284"/>
     <typeInfo handle="=Client/src&lt;net.droidmine.pathfinder.astar{AStarNode.java[AStarNode" modifiers="1" timestamp="1740346332356"/>
-    <typeInfo handle="=Client/src&lt;appu.modules{KillAura.java[KillAura" modifiers="1" timestamp="1740346409585"/>
     <typeInfo handle="=Client/src&lt;appu.modules{TargetUtil.java[TargetUtil" modifiers="1" timestamp="1740343999515"/>
-    <typeInfo handle="=Client/src&lt;appu{Main.java[Main" modifiers="1" timestamp="1740346838036"/>
+    <typeInfo handle="=Client/src&lt;net.droidmine{MineBot.java[MineBot" modifiers="1" timestamp="1740343392663"/>
+    <typeInfo handle="=Client/src&lt;appu{Main.java[Main" modifiers="1" timestamp="1740364237035"/>
+    <typeInfo handle="=Client/src&lt;net.droidmine.pathfinder.walk.target.impl{JumpTarget.java[JumpTarget" modifiers="1" timestamp="1740274037470"/>
+    <typeInfo handle="=Client/src&lt;net.droidmine.pathfinder.walk.target.impl{FallTarget.java[FallTarget" modifiers="1" timestamp="1740887889063"/>
+    <typeInfo handle="=Client/src&lt;appu.modules{KillAura.java[KillAura" modifiers="1" timestamp="1740363829889"/>
+    <typeInfo handle="=Client/src&lt;appu.tasks{CollectIronTask.java[CollectIronTask" modifiers="1" timestamp="1740346450913"/>
+    <typeInfo handle="=Client/jars\/libraries\/commons-io\/commons-io\/2.4\/commons-io-2.4.jar&lt;org.apache.commons.io.comparator(PathFileComparator.class[PathFileComparator" modifiers="33" timestamp="1738990894000"/>
+    <typeInfo handle="=Client/src&lt;net.droidmine.pathfinder{PathWalker.java[PathWalker" modifiers="1" timestamp="1740888393994"/>
+    <typeInfo handle="=Client/src&lt;net.droidmine.pathfinder.walk.target.impl{TravelVectorTarget.java[TravelVectorTarget" modifiers="1" timestamp="1740274037462"/>
+    <typeInfo handle="=Client/src&lt;net.minecraft.client.entity{EntityPlayerSP.java[EntityPlayerSP" modifiers="1" timestamp="1740339452930"/>
+    <typeInfo handle="=Client/src&lt;net.minecraft.client{ClientEngine.java[ClientEngine" modifiers="1" timestamp="1740340741446"/>
+    <typeInfo handle="=Client/src&lt;net.minecraft.network{NetworkManager.java[NetworkManager" modifiers="1" timestamp="1740247835012"/>
+    <typeInfo handle="=Client/src&lt;net.minecraft.crash{CrashReport.java[CrashReport" modifiers="1" timestamp="1740186660215"/>
+    <typeInfo handle="=Client/src&lt;appu.tasks{FollowTeamTask.java[FollowTeamTask" modifiers="1" timestamp="1740365165839"/>
 </typeInfoHistroy>

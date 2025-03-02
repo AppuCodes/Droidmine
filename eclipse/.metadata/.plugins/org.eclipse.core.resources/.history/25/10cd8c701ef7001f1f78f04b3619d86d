@@ -1,0 +1,12 @@
+package appu;
+
+public class MCRobot
+{
+    public static void run()
+    {
+        new Thread(() ->
+        {
+            
+        }).start();
+    }
+}
