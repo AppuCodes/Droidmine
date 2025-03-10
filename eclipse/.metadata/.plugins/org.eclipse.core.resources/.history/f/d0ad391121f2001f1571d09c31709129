@@ -1,6 +1,0 @@
-package appu.tasks;
-
-public abstract class GameTask
-{
-    public abstract void onTick();
-}

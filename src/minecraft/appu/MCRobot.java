@@ -10,14 +10,17 @@ import net.droidmine.Session;
 import net.droidmine.utils.EntityRotations;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.*;
 
 public class MCRobot
 {
+    private volatile String teammate = "Appu26J";
     private volatile GameTask task = null;
     
     public void run(String name)
@@ -50,6 +53,13 @@ public class MCRobot
                     task = new CollectIronTask();
                 }
                 
+                else if (EnumChatFormatting.getTextWithoutFormattingCodes(msg).contains(bot.session.name + " died!"))
+                {
+                    bot.pathFinder().cancel();
+                    killAura.disabled = false;
+                    task = new CollectIronTask();
+                }
+                
                 bot.logger("chat").info(EnumChatFormatting.getTextWithoutFormattingCodes(msg));
             });
             
@@ -58,13 +68,14 @@ public class MCRobot
                 if (bot.player().inventory.getStackInSlot(7) != null && bot.player().inventory.getStackInSlot(7).getItem().equals(Items.paper))
                 {
                     bot.player().inventory.currentItem = 7;
+                    bot.network().sendPacket(new C09PacketHeldItemChange(7));
                     bot.player().controller().sendUseItem(bot.player(), bot.world(), bot.player().getHeldItem());
                     task = null;
                     bot.pathFinder().cancel();
                     killAura.disabled = true;
                     lobby.set(true);
                 }
-
+                
                 if (killAura.onTick() && task != null)
                 {
                     task.onTick(bot);
@@ -77,6 +88,7 @@ public class MCRobot
                     else if (task.done && task instanceof BuySwordTask)
                     {
                         task = new FollowTeamTask();
+                        ((FollowTeamTask) task).teamName = teammate;
                     }
                 }
                 
@@ -106,6 +118,16 @@ public class MCRobot
                         bot.player().openContainer = null;
                     }
                 }
+                
+//                /* Safewalk */
+//                if (bot.world().getBlockState(new BlockPos(bot.player().getPosition().subtract(new Vec3i(0, 1, 0)))) == null
+//                    || bot.world().getBlockState(new BlockPos(bot.player().getPosition().subtract(new Vec3i(0, 1, 0)))) == Blocks.air)
+//                {
+//                    bot.options().keyBindSneak.setPressed(true);
+//                    bot.options().keyBindJump.setPressed(false);
+//                }
+//                
+//                else bot.options().keyBindSneak.setPressed(false);
             });
             
             /* Anti KB */
@@ -126,9 +148,11 @@ public class MCRobot
             
             bot.onJoin(() ->
             {
+                task = null;
                 killAura.disabled = true;
-                bot.sleep(delay.get() ? Duration.ofSeconds(6) : Duration.ofSeconds(3));
+                bot.sleep(delay.get() ? Duration.ofSeconds(6) : Duration.ofSeconds(4));
                 bot.player().inventory.currentItem = 0;
+                bot.network().sendPacket(new C09PacketHeldItemChange(0));
                 bot.player().controller().sendUseItem(bot.player(), bot.world(), bot.player().getHeldItem());
                 bot.sleep(250);
                 bot.player().controller().windowClick(1, 12, 0, 0, bot.player());

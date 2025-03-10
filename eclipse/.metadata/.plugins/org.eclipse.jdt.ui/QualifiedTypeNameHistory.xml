@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.google.gson.reflect.TypeToken"/>
     <fullyQualifiedTypeName name="com.google.common.base.Charsets"/>
     <fullyQualifiedTypeName name="appleclient.events.impl.EventPacketReceive"/>
     <fullyQualifiedTypeName name="appleclient.mods.impl.AutoGG"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="net.minecraft.block.Block"/>
     <fullyQualifiedTypeName name="net.minecraft.init.Blocks"/>
     <fullyQualifiedTypeName name="net.minecraft.entity.Entity"/>
+    <fullyQualifiedTypeName name="net.minecraft.util.MovingObjectPosition.MovingObjectType"/>
 </qualifiedTypeNameHistroy>

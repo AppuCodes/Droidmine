@@ -1,9 +1,0 @@
-package appu.tasks;
-
-public class CollectIronTask extends GameTask
-{
-    public void onTick()
-    {
-        
-    }
-}

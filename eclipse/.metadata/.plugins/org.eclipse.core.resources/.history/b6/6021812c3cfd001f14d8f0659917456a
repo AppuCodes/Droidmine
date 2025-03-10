@@ -1,0 +1,38 @@
+package appu.tasks;
+
+import net.droidmine.MineBot;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.Vec3;
+
+public class FollowTeamTask extends GameTask
+{
+    public void onTick(MineBot bot)
+    {
+        Entity teammate = bot.findEntity("Appu26J");
+        
+        if (entityOnScreen(teammate, bot.player()))
+        {
+            
+        }
+        
+        if (teammate != null && !bot.pathFinder().isActive())
+        {
+            bot.pathFinder().goTo(teammate.getPosition());
+        }
+    }
+    
+    public boolean entityOnScreen(Entity entity, EntityPlayerSP player)
+    {
+        Vec3 playerLook = player.getLookVec().normalize(),
+             toEntity = new Vec3
+             (
+                 entity.posX - player.posX,
+                 (entity.posY + entity.getEyeHeight()) - (player.posY + player.getEyeHeight()),
+                 entity.posZ - player.posZ
+             ).normalize();
+        
+        double dot = playerLook.dotProduct(toEntity);
+        return dot > 0;
+    }
+}

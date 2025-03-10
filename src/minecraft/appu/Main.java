@@ -4,6 +4,6 @@ public class Main
 {
     public static void main(String[] args)
     {
-        new MCRobot().run("yesfdp_");
+        new MCRobot().run("nopefdp");
     }
 }
